@@ -7,6 +7,7 @@
 //
 
 #import "MineVC.h"
+#import "LoginVC.h"
 
 @interface MineVC ()
 
@@ -28,7 +29,9 @@
 
 -(void)buttonClick
 {
-
+    
+    LoginVC *vc = [[LoginVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
     NSLog(@"fuowqugoqugoq3");
 }
 

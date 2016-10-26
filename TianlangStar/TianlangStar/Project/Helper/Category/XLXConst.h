@@ -9,32 +9,25 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-
-typedef enum
-{
-    saleCount = 3,
-    houseCount = 2,
-    customerCount = 1
-}timeType;
-
+// 这是测试push的
 
 /** 设置borderStyle的格式 */
 UIKIT_EXTERN CGFloat const TFborderStyle;
 
-/** 长度20 */
-UIKIT_EXTERN CGFloat const Klength20;
+/** lable左边的间距 */
+UIKIT_EXTERN CGFloat const KLabelLeft;
 
-/** 长度10 */
-UIKIT_EXTERN CGFloat const Klength10;
+/** lable左边的间距 */
+UIKIT_EXTERN CGFloat const KLeft;
 
-/** 长度5 */
-UIKIT_EXTERN CGFloat const Klength5;
+/** 距离上端的间距 */
+UIKIT_EXTERN CGFloat const KTop;
 
-/** 长度30 */
-UIKIT_EXTERN CGFloat const Klength30;
+/** 文本框的高度 */
+UIKIT_EXTERN CGFloat const KLabelHeight;
 
-/** 长度44 */
-UIKIT_EXTERN CGFloat const Klength44;
+/** button的高度 */
+UIKIT_EXTERN CGFloat const KButtonHeight;
 
 /** button的cornerRadius */
 UIKIT_EXTERN CGFloat const BtncornerRadius;

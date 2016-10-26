@@ -16,6 +16,33 @@
 #endif
 
 
+#define kWidth [UIScreen mainScreen].bounds.size.width
+#define kHeight [UIScreen mainScreen].bounds.size.height
+
+#define KVer 0.02 * kHeight
+#define KHor 0.02 * kWidth
+#define KRight 0.12 * kWidth
+
+
+
+/** 注册登录lable的字体大小 */
+#define lableFont [UIFont systemFontOfSize:14]
+#define labelFont16 [UIFont systemFontOfSize:16]
+/** 注册登录textField站位文字体大小 */
+#define textFieldPlaceholderFont [UIFont systemFontOfSize:12]
+/** 标题文字大小 18 */
+#define labelTitleFont [UIFont systemFontOfSize:18];
+
+
+//设置文字颜色RGB
+#define XLXcolor(r, g, b)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+
+//按钮的背景颜色设置
+#define buttonBG XLXcolor(100, 160, 250)
+//按钮的字体颜色设置
+#define buttonTitleC [UIColor whiteColor]
+
+
 
 #pragma mark - 字体大小
 
@@ -27,9 +54,27 @@
 
 
 #pragma mark - 第三方类库
+#import <AFNetworking.h>
+#import <MJRefresh/MJRefresh.h>
+#import <UIImageView+WebCache.h>
+#import <Masonry/Masonry.h>
+#import <SVProgressHUD.h>
+#import <MJExtension.h>
 
 
 #pragma mark - 分类
+
+
+#pragma mark - 分类
+#import "UITextField+extension.h"
+#import "NSString+extension.h"
+#import "UIView+XMGExtension.h"
+#import "UIImage+Tool.h"
+#import "UIImage+Cut.h"
+#import "TestFildJudge.h"
+#import "XLXConst.h"
+#import "UserInfo.h"
+#import "RSA.h"
 
 
 
