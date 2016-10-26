@@ -22,7 +22,7 @@
 {
     [super viewDidLoad];
     
-    [self setTabBarController];// 给TabBarController添加4个字控制器
+    [self setTabBarController];// 给TabBarController添加4个子控制器
 }
 
 

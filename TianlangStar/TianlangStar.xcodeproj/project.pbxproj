@@ -200,13 +200,13 @@
 			isa = PBXGroup;
 			children = (
 				D705CEDB1DC09C6400F65BE0 /* AppDelegate */,
+				D705CF0E1DC09C6400F65BE0 /* RootVC */,
+				D705CF091DC09C6400F65BE0 /* Reachability */,
 				D705CEDE1DC09C6400F65BE0 /* Helper */,
 				D705CEFD1DC09C6400F65BE0 /* HomePage */,
-				D705CF031DC09C6400F65BE0 /* Mine */,
-				D705CF091DC09C6400F65BE0 /* Reachability */,
-				D705CF0E1DC09C6400F65BE0 /* RootVC */,
-				D705CF111DC09C6400F65BE0 /* ShoppingCart */,
 				D705CF171DC09C6400F65BE0 /* TianlangXing */,
+				D705CF111DC09C6400F65BE0 /* ShoppingCart */,
+				D705CF031DC09C6400F65BE0 /* Mine */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -667,6 +667,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = TianlangStar/Project/Helper/PCH/PrefixHeader.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -709,6 +711,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = TianlangStar/Project/Helper/PCH/PrefixHeader.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -809,6 +813,7 @@
 				D705CED31DC09BBF00F65BE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D705CED41DC09BBF00F65BE0 /* Build configuration list for PBXNativeTarget "TianlangStarTests" */ = {
 			isa = XCConfigurationList;
@@ -817,6 +822,7 @@
 				D705CED61DC09BBF00F65BE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D705CED71DC09BBF00F65BE0 /* Build configuration list for PBXNativeTarget "TianlangStarUITests" */ = {
 			isa = XCConfigurationList;
@@ -825,6 +831,7 @@
 				D705CED91DC09BBF00F65BE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
