@@ -17,25 +17,24 @@ typedef enum
     customerCount = 1
 }timeType;
 
-// 这是测试push的
 
 /** 设置borderStyle的格式 */
 UIKIT_EXTERN CGFloat const TFborderStyle;
 
-/** lable左边的间距 */
-UIKIT_EXTERN CGFloat const KLabelLeft;
+/** 长度20 */
+UIKIT_EXTERN CGFloat const Klength20;
 
-/** lable左边的间距 */
-UIKIT_EXTERN CGFloat const KLeft;
+/** 长度10 */
+UIKIT_EXTERN CGFloat const Klength10;
 
-/** 距离上端的间距 */
-UIKIT_EXTERN CGFloat const KTop;
+/** 长度5 */
+UIKIT_EXTERN CGFloat const Klength5;
 
-/** 文本框的高度 */
-UIKIT_EXTERN CGFloat const KLabelHeight;
+/** 长度30 */
+UIKIT_EXTERN CGFloat const Klength30;
 
-/** button的高度 */
-UIKIT_EXTERN CGFloat const KButtonHeight;
+/** 长度44 */
+UIKIT_EXTERN CGFloat const Klength44;
 
 /** button的cornerRadius */
 UIKIT_EXTERN CGFloat const BtncornerRadius;

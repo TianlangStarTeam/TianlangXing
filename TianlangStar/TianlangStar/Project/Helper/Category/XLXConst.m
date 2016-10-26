@@ -10,31 +10,31 @@
 /** 设置borderStyle的格式 */
 CGFloat const TFborderStyle = 3;
 
-/** lable左边的间距 */
-CGFloat const KLabelLeft = 20;
+/** 长度20 */
+CGFloat const Klength20 = 20;
 
-/** 左边的间距 */
-CGFloat const KLeft = 10;
+/** 长度10 */
+CGFloat const Klength10 = 10;
 
-/** 距离上端的间距 */
-CGFloat const KTop = 5;
+/** 长度5 */
+CGFloat const Klength5 = 5;
 
-/** 距离上端的间距 */
-CGFloat const KLabelHeight = 30;
+/** 长度30 */
+CGFloat const Klength30 = 30;
 
-/** 文本框的高度 */
-CGFloat const KButtonHeight = 44;
+/** 长度44 */
+CGFloat const Klength44 = 44;
 
-/** button的高度cornerRadius */
+/** button的圆角cornerRadius */
 CGFloat const BtncornerRadius = 5.f;
 
 
-/** 图片的网址--云服务 */
+/** 图片和网址前段 - 云服务器 */
 NSString const *URL = @"http://117.34.105.4:32106/yysj/";
 NSString const *picURL = @"http://117.34.105.4:32106/";
 
 
-/* 网址前段 */
+/* 图片和网址前段 - 本地 */
 //NSString const *URL = @"http://192.168.1.104:8080/yysj/";
 //NSString const *picURL = @"http://192.168.1.104:8080/";
 
