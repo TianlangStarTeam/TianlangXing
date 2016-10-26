@@ -18,14 +18,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 30)];
+
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 200, 90, 30)];
+    [button addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitle:@"登录" forState:UIControlStateNormal];
     [self.view addSubview:button];
-    
+
 }
 
+-(void)buttonClick
+{
 
+    NSLog(@"fuowqugoqugoq3");
+}
 
 
 
