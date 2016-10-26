@@ -9,14 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-
-typedef enum
-{
-    saleCount = 3,
-    houseCount = 2,
-    customerCount = 1
-}timeType;
-
 // 这是测试push的
 
 /** 设置borderStyle的格式 */

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EA5BADAA63B9509A3B0A5A3 /* libPods-TianlangStar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */; };
 		D705CEA91DC09BBF00F65BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CEA81DC09BBF00F65BE0 /* main.m */; };
 		D705CEB41DC09BBF00F65BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */; };
 		D705CEB71DC09BBF00F65BE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB51DC09BBF00F65BE0 /* LaunchScreen.storyboard */; };
@@ -35,6 +36,8 @@
 		D705CF311DC09C6400F65BE0 /* ShoppingCartVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CF141DC09C6400F65BE0 /* ShoppingCartVC.m */; };
 		D705CF321DC09C6400F65BE0 /* TLStarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CF1A1DC09C6400F65BE0 /* TLStarVC.m */; };
 		D705CF351DC09CBB00F65BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CF331DC09CBB00F65BE0 /* Main.storyboard */; };
+		D744546E1DC0A4E3008B5E27 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D744546D1DC0A4E3008B5E27 /* LoginVC.m */; };
+		D74454711DC0A93A008B5E27 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454701DC0A93A008B5E27 /* UserModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TianlangStar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D705CEA41DC09BBF00F65BE0 /* TianlangStar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TianlangStar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D705CEA81DC09BBF00F65BE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -110,6 +114,12 @@
 		D705CF191DC09C6400F65BE0 /* TLStarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLStarVC.h; sourceTree = "<group>"; };
 		D705CF1A1DC09C6400F65BE0 /* TLStarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLStarVC.m; sourceTree = "<group>"; };
 		D705CF341DC09CBB00F65BE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D744546C1DC0A4E3008B5E27 /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
+		D744546D1DC0A4E3008B5E27 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
+		D744546F1DC0A93A008B5E27 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		D74454701DC0A93A008B5E27 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		F582932A18134E7F8CF97E5C /* Pods-TianlangStar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TianlangStar.release.xcconfig"; path = "Pods/Target Support Files/Pods-TianlangStar/Pods-TianlangStar.release.xcconfig"; sourceTree = "<group>"; };
+		FF78FE4AF5ED1C62DC57B309 /* Pods-TianlangStar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TianlangStar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TianlangStar/Pods-TianlangStar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA5BADAA63B9509A3B0A5A3 /* libPods-TianlangStar.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +148,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E8D643DB9722D041FC8744F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FF78FE4AF5ED1C62DC57B309 /* Pods-TianlangStar.debug.xcconfig */,
+				F582932A18134E7F8CF97E5C /* Pods-TianlangStar.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5370577114BDF5920017DEE6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D705CE9B1DC09BBE00F65BE0 = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +172,8 @@
 				D705CEC01DC09BBF00F65BE0 /* TianlangStarTests */,
 				D705CECB1DC09BBF00F65BE0 /* TianlangStarUITests */,
 				D705CEA51DC09BBF00F65BE0 /* Products */,
+				0E8D643DB9722D041FC8744F /* Pods */,
+				5370577114BDF5920017DEE6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -324,6 +354,8 @@
 		D705CF041DC09C6400F65BE0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D744546C1DC0A4E3008B5E27 /* LoginVC.h */,
+				D744546D1DC0A4E3008B5E27 /* LoginVC.m */,
 				D705CF051DC09C6400F65BE0 /* MineVC.h */,
 				D705CF061DC09C6400F65BE0 /* MineVC.m */,
 			);
@@ -333,6 +365,8 @@
 		D705CF071DC09C6400F65BE0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D744546F1DC0A93A008B5E27 /* UserModel.h */,
+				D74454701DC0A93A008B5E27 /* UserModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -437,9 +471,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D705CED11DC09BBF00F65BE0 /* Build configuration list for PBXNativeTarget "TianlangStar" */;
 			buildPhases = (
+				BB2726DCC74D49EFDFB089EC /* [CP] Check Pods Manifest.lock */,
 				D705CEA01DC09BBF00F65BE0 /* Sources */,
 				D705CEA11DC09BBF00F65BE0 /* Frameworks */,
 				D705CEA21DC09BBF00F65BE0 /* Resources */,
+				63782C31C4035C4333C71173 /* [CP] Embed Pods Frameworks */,
+				B7090D06A2D07FAC46CAA3B6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -559,6 +596,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		63782C31C4035C4333C71173 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TianlangStar/Pods-TianlangStar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7090D06A2D07FAC46CAA3B6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TianlangStar/Pods-TianlangStar-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB2726DCC74D49EFDFB089EC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D705CEA01DC09BBF00F65BE0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -570,6 +655,7 @@
 				D705CF1D1DC09C6400F65BE0 /* AppDelegate.m in Sources */,
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
 				D705CF271DC09C6400F65BE0 /* UITextField+extension.m in Sources */,
+				D74454711DC0A93A008B5E27 /* UserModel.m in Sources */,
 				D705CF2B1DC09C6400F65BE0 /* HomePageVC.m in Sources */,
 				D705CF291DC09C6400F65BE0 /* XLXConst.m in Sources */,
 				D705CF301DC09C6400F65BE0 /* RootVC.m in Sources */,
@@ -585,6 +671,7 @@
 				D705CF1F1DC09C6400F65BE0 /* NSString+extension.m in Sources */,
 				D705CF2A1DC09C6400F65BE0 /* UserInfo.m in Sources */,
 				D705CF2E1DC09C6400F65BE0 /* Reachability.m in Sources */,
+				D744546E1DC0A4E3008B5E27 /* LoginVC.m in Sources */,
 				D705CF201DC09C6400F65BE0 /* PinchPicture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -728,6 +815,7 @@
 		};
 		D705CED21DC09BBF00F65BE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF78FE4AF5ED1C62DC57B309 /* Pods-TianlangStar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TianlangStar/Info.plist;
@@ -739,6 +827,7 @@
 		};
 		D705CED31DC09BBF00F65BE0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F582932A18134E7F8CF97E5C /* Pods-TianlangStar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TianlangStar/Info.plist;
