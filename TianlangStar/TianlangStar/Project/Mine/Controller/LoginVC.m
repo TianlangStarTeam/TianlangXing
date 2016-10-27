@@ -394,7 +394,7 @@
              self.sessionId = [NSString stringWithFormat:@"%@",mun];
              
              //获取用户类型字典
-             NSDictionary * type1 = responseObject[@"obj"][@"user"];
+//             NSDictionary * type1 = responseObject[@"obj"][@"user"];
              //取出字典中的用户类型——转模型
 //             self.userM = [UserModel mj_objectWithKeyValues:type1];
              [SVProgressHUD  showSuccessWithStatus:@"登录成功"];

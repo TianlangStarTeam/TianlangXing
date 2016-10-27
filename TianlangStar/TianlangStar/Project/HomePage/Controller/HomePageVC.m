@@ -8,10 +8,12 @@
 
 #import "HomePageVC.h"
 
+#import "RegistVC.h"
+
 @interface HomePageVC ()
 
 /** 注册按钮 */
-@property (nonatomic,weak) UIButton *registButton;
+@property (nonatomic,strong) UIButton *registButton;
 
 @end
 
@@ -21,8 +23,8 @@
     [super viewDidLoad];
     
     // 注册按钮
-    self.registButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    self.registButton.frame = CGRectMake(30, 100, 80, 44);
+    self.registButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    self.registButton.frame = CGRectMake(30, 200, 80, 44);
     [self.registButton setTitle:@"注册" forState:(UIControlStateNormal)];
     [self.registButton addTarget:self action:@selector(actionRegist) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:self.registButton];
@@ -30,8 +32,14 @@
 }
 
 
+
+/**
+ *  时间:注册的点击事件
+ */
 - (void)actionRegist
 {
+    RegistVC *registVC = [[RegistVC alloc] init];
+    [self.navigationController pushViewController:registVC animated:YES];
 }
 
 
