@@ -42,9 +42,7 @@
 /** 提示先登录 */
 - (void)loginAlertView
 {
-    
 
-    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录已过期，请重新登录！" preferredStyle:(UIAlertControllerStyleAlert)];
     
     UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
