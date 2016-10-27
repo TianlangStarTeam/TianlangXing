@@ -39,6 +39,8 @@
 		D705CF351DC09CBB00F65BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CF331DC09CBB00F65BE0 /* Main.storyboard */; };
 		D744546E1DC0A4E3008B5E27 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D744546D1DC0A4E3008B5E27 /* LoginVC.m */; };
 		D74454711DC0A93A008B5E27 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454701DC0A93A008B5E27 /* UserModel.m */; };
+		D74454741DC0B4EC008B5E27 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454731DC0B4EC008B5E27 /* AlertView.m */; };
+		D74454771DC0BF7D008B5E27 /* FindPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454761DC0BF7D008B5E27 /* FindPwdVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,10 @@
 		D744546D1DC0A4E3008B5E27 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
 		D744546F1DC0A93A008B5E27 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		D74454701DC0A93A008B5E27 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		D74454721DC0B4EC008B5E27 /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
+		D74454731DC0B4EC008B5E27 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
+		D74454751DC0BF7D008B5E27 /* FindPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindPwdVC.h; sourceTree = "<group>"; };
+		D74454761DC0BF7D008B5E27 /* FindPwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPwdVC.m; sourceTree = "<group>"; };
 		F582932A18134E7F8CF97E5C /* Pods-TianlangStar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TianlangStar.release.xcconfig"; path = "Pods/Target Support Files/Pods-TianlangStar/Pods-TianlangStar.release.xcconfig"; sourceTree = "<group>"; };
 		FF78FE4AF5ED1C62DC57B309 /* Pods-TianlangStar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TianlangStar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TianlangStar/Pods-TianlangStar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -289,6 +295,8 @@
 				D705CEF41DC09C6400F65BE0 /* UIView+XMGExtension.m */,
 				D705CEF51DC09C6400F65BE0 /* XLXConst.h */,
 				D705CEF61DC09C6400F65BE0 /* XLXConst.m */,
+				D74454721DC0B4EC008B5E27 /* AlertView.h */,
+				D74454731DC0B4EC008B5E27 /* AlertView.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -363,6 +371,8 @@
 				D744546D1DC0A4E3008B5E27 /* LoginVC.m */,
 				D705CF051DC09C6400F65BE0 /* MineVC.h */,
 				D705CF061DC09C6400F65BE0 /* MineVC.m */,
+				D74454751DC0BF7D008B5E27 /* FindPwdVC.h */,
+				D74454761DC0BF7D008B5E27 /* FindPwdVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -661,6 +671,7 @@
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
 				D705CF271DC09C6400F65BE0 /* UITextField+extension.m in Sources */,
 				D74454711DC0A93A008B5E27 /* UserModel.m in Sources */,
+				D74454771DC0BF7D008B5E27 /* FindPwdVC.m in Sources */,
 				D705CF2B1DC09C6400F65BE0 /* HomePageVC.m in Sources */,
 				D705CF291DC09C6400F65BE0 /* XLXConst.m in Sources */,
 				D705CF301DC09C6400F65BE0 /* RootVC.m in Sources */,
@@ -674,6 +685,7 @@
 				D705CF321DC09C6400F65BE0 /* TLStarVC.m in Sources */,
 				D705CF241DC09C6400F65BE0 /* UIImage+Tool.m in Sources */,
 				D705CF1F1DC09C6400F65BE0 /* NSString+extension.m in Sources */,
+				D74454741DC0B4EC008B5E27 /* AlertView.m in Sources */,
 				D705CF2A1DC09C6400F65BE0 /* UserInfo.m in Sources */,
 				D705CF2E1DC09C6400F65BE0 /* Reachability.m in Sources */,
 				D744546E1DC0A4E3008B5E27 /* LoginVC.m in Sources */,

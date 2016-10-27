@@ -10,9 +10,11 @@
 /********** 登录 **********/
 
 
-#define Kver 0.04 * kHeight
-#define Khor 0.04 * kWidth
-#define KButtonHor (kWidth - 2 * userNamePicX - 2 * registButtonWidth)
+#define Kver 0.04 * KScreenHeight
+#define Khor 0.04 * KScreenWidth
+#define KButtonHor (KScreenWidth - 2 * userNamePicX - 2 * registButtonWidth)
+#define KRight 0.12 * KScreenWidth
+
 #import "LoginVC.h"
 #import "UserModel.h"
 #import "XLXConst.h"
@@ -57,6 +59,7 @@
 {
     [super viewDidLoad];
     self.title = @"登录";
+    self.view.backgroundColor = [UIColor orangeColor];
 
     
     //获取公钥
@@ -69,7 +72,7 @@
  */
 -(NSString *) getPubicKey
 {
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=4",URL];
+    NSString *url = [NSString stringWithFormat:@"%@unlogin/sendpubkeyservlet",URL];
     [[AFHTTPSessionManager manager]POST:url parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
@@ -100,8 +103,8 @@
 
         
         // 用户名
-        CGFloat userNamePicX = 0.12 * kWidth;
-        CGFloat userNamePicY = kHeight * 0.05;
+        CGFloat userNamePicX = 0.12 * KScreenWidth;
+        CGFloat userNamePicY = KScreenHeight * 0.15;
         CGFloat userNamePicWidth = 30;
         CGFloat userNamePicHeight = 30;
         self.userNamePic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, userNamePicY, userNamePicWidth, userNamePicHeight)];
@@ -110,12 +113,12 @@
         
         // 输入用户名
         CGFloat userNameTFX = userNamePicX + userNamePicWidth + Khor;
-        CGFloat userNameTFWidth = kWidth - userNamePicX - KRight - userNamePicWidth - Khor;
+        CGFloat userNameTFWidth = KScreenWidth - userNamePicX - KRight - userNamePicWidth - Khor;
         self.userNameTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, userNamePicY, userNameTFWidth, userNamePicHeight)];
         self.userNameTF.borderStyle = TFborderStyle;
         self.userNameTF.keyboardType = UIKeyboardTypeNumberPad;
         self.userNameTF.placeholder = @"请输入手机号";
-        self.userNameTF.font = textFieldPlaceholderFont;
+        self.userNameTF.font = Font14;
         self.userNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [self.view addSubview:self.userNameTF];
         
@@ -131,7 +134,7 @@
         self.pwdTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, pwdLabelY, userNameTFWidth, userNamePicHeight)];
         self.pwdTF.borderStyle = TFborderStyle;
         self.pwdTF.placeholder = @"请输入密码";
-        self.pwdTF.font = textFieldPlaceholderFont;
+        self.pwdTF.font = Font14;
         self.pwdTF.secureTextEntry= YES;
         self.pwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [self.view addSubview:self.pwdTF];
@@ -144,11 +147,11 @@
         self.captchaPic.image = [UIImage imageNamed:@"yanzhengma"];
         [self.view addSubview:self.captchaPic];
         // 请输入验证码
-        CGFloat captchaTFWidth = (kWidth - 2 * userNamePicX - userNamePicWidth - Khor) / 2;
+        CGFloat captchaTFWidth = (KScreenWidth - 2 * userNamePicX - userNamePicWidth - Khor) / 2;
         self.captchaTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, captchY, captchaTFWidth, userNamePicHeight)];
         self.captchaTF.borderStyle = TFborderStyle;
         self.captchaTF.placeholder = @"请输入验证码";
-        self.captchaTF.font = textFieldPlaceholderFont;
+        self.captchaTF.font = Font14;
         self.captchaTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         [self.view addSubview:self.captchaTF];
         
@@ -177,7 +180,7 @@
         
         CGFloat foundPwdX = registButtonX + registButtonWidth + KButtonHor;
         
-        //        CGFloat okButtonX = (kWidth / 2) - 30;
+        //        CGFloat okButtonX = (KScreenWidth / 2) - 30;
         //        CGFloat okButtonY = registButtonY + registButtonHeight + 30;
         //        CGFloat okButtonWidth = 60;
         //        CGFloat okButtonHeight = 30;
@@ -226,7 +229,7 @@
         regist.y = self.foundPwdButton.y;
         regist.width = self.foundPwdButton.width;
         regist.height = self.foundPwdButton.height;
-        [regist setTitle:@"新用户注册" forState:UIControlStateNormal];
+        [regist setTitle:@"新用户" forState:UIControlStateNormal];
         [regist addTarget:self action:@selector(registAction) forControlEvents:UIControlEventTouchUpInside];
         //        regist.backgroundColor = buttonBG;
         //        [regist setTintColor:buttonTitleC];
@@ -237,15 +240,15 @@
         
         
         // 确认Button
-        [self.okButton setTitle:@" 确 定 " forState:(UIControlStateNormal)];
+        [self.okButton setTitle:@" 登  录 " forState:(UIControlStateNormal)];
         [self.okButton addTarget:self action:@selector(okAction) forControlEvents:(UIControlEventTouchUpInside)];
         //        self.okButton.backgroundColor = [UIColor colorWithRed:31/255.0 green:42/255.0 blue:70/255.0 alpha:1.000];
         self.okButton.backgroundColor = buttonBG;
         self.okButton.layer.cornerRadius = BtncornerRadius;
         [self.okButton setTintColor:buttonTitleC];
         self.okButton.y = CGRectGetMaxY(self.foundPwdButton.frame) + 20;
-        self.okButton.width = kWidth * 0.65;
-        self.okButton.centerX = kWidth *0.5;
+        self.okButton.width = KScreenWidth * 0.65;
+        self.okButton.centerX = KScreenWidth *0.5;
         [self.view addSubview:self.okButton];
 
     }
@@ -349,7 +352,7 @@
 
     params[@"terminal"] = uuid;
 //    params[@"terminal"] = @"421A6988-DA96-49FE-B99E-16820320F1BB";
-    YYLog(@"%@",params);
+    YYLog(@"登录--%@",params);
 
     //    YYLog(@"序列号%@",uuid);
     /*
