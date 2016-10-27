@@ -84,17 +84,17 @@
         
         
         // 确认密码
-        CGFloat okPwdLabelY = pwdLableY + telLableHeight + KVer;
+        CGFloat okPwdLabelY = pwdLableY + telLableHeight + Klength10;
         self.okPwdLabel = [[UILabel alloc] initWithFrame:CGRectMake(telLableX, okPwdLabelY, telLableWidth, telLableHeight)];
         self.okPwdLabel.text = @"确认密码";
-        self.okPwdLabel.font = lableFont;
+        self.okPwdLabel.font = Font16;
         [self.view addSubview:self.okPwdLabel];
         
         // 确认输入的密码
         self.okPwdTF = [[UITextField alloc] initWithFrame:CGRectMake(telX, okPwdLabelY, telWidth, telLableHeight)];
         self.okPwdTF.placeholder = @"请确认密码";
         self.okPwdTF.secureTextEntry = YES;
-        self.okPwdTF.font = textFieldPlaceholderFont;
+        self.okPwdTF.font = Font12;
         self.okPwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         self.okPwdTF.borderStyle = TFborderStyle;
         self.okPwdTF.secureTextEntry = YES;
@@ -103,12 +103,12 @@
         
         
         // 验证码
-        CGFloat captchaLabelY = okPwdLabelY + telLableHeight + KVer;
+        CGFloat captchaLabelY = okPwdLabelY + telLableHeight + Klength10;
         self.captchaLabel = [[UILabel alloc] initWithFrame:CGRectMake(telLableX, captchaLabelY, telLableWidth, telLableHeight)];
         //        self.captchaLabel.hidden = YES;
         self.captchaLabel.text = @"验证码";
         self.captchaTF.keyboardType = UIKeyboardTypeNumberPad;
-        self.captchaLabel.font = lableFont;
+        self.captchaLabel.font = Font16;
         [self.view addSubview:self.captchaLabel];
         
         // 输入验证码
@@ -117,7 +117,7 @@
         //        self.captchaTF.hidden = YES;
         self.captchaTF.placeholder = @"请输入验证码";
         self.captchaTF.keyboardType = UIKeyboardTypeNumberPad;
-        self.captchaTF.font = textFieldPlaceholderFont;
+        self.captchaTF.font = Font12;
         self.captchaTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         self.captchaTF.borderStyle = TFborderStyle;
         [self.view addSubview:self.captchaTF];
@@ -132,24 +132,24 @@
         self.captchaButton.backgroundColor = buttonBG;
         self.captchaButton.layer.cornerRadius = BtncornerRadius;
         [self.captchaButton setTintColor:buttonTitleC];
-        self.captchaButton.titleLabel.font = lableFont;
+        self.captchaButton.titleLabel.font = Font14;
         [self.view addSubview:self.captchaButton];
         
         
         
         // 推荐人
-        CGFloat referrerLabelY = captchaLabelY + telLableHeight + KVer;
+        CGFloat referrerLabelY = captchaLabelY + telLableHeight + Klength10;
         self.referrerLabel = [[UILabel alloc] initWithFrame:CGRectMake(telLableX, referrerLabelY, telLableWidth, telLableHeight)];
         self.referrerLabel.text = @"推荐人";
-        self.referrerLabel.font = lableFont;
+        self.referrerLabel.font = Font16;
         [self.view addSubview:self.referrerLabel];
         
         // 输入推荐人号码
-        CGFloat referrerTFY = captchaLabelY + telLableHeight + KVer;
+        CGFloat referrerTFY = captchaLabelY + telLableHeight + Klength10;
         self.referrerTF = [[UITextField alloc] initWithFrame:CGRectMake(telX, referrerTFY, telWidth, telLableHeight)];
         self.referrerTF.placeholder = @"请输入推荐人电话号码";
         self.referrerTF.keyboardType = UIKeyboardTypeNumberPad;
-        self.referrerTF.font = textFieldPlaceholderFont;
+        self.referrerTF.font = Font12;
         self.referrerTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         self.referrerTF.borderStyle = TFborderStyle;
         [self.view addSubview:self.referrerTF];
@@ -190,6 +190,8 @@
 - (void)okRegistAction
 {
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
