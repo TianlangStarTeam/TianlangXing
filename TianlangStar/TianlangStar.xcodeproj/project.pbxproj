@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2EA5BADAA63B9509A3B0A5A3 /* libPods-TianlangStar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */; };
+		717D0D831DC0B5620036D5F4 /* RegistVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 717D0D821DC0B5620036D5F4 /* RegistVC.m */; };
 		D705CEA91DC09BBF00F65BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CEA81DC09BBF00F65BE0 /* main.m */; };
 		D705CEB41DC09BBF00F65BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */; };
 		D705CEB71DC09BBF00F65BE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB51DC09BBF00F65BE0 /* LaunchScreen.storyboard */; };
@@ -59,6 +60,8 @@
 
 /* Begin PBXFileReference section */
 		2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TianlangStar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		717D0D811DC0B5620036D5F4 /* RegistVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistVC.h; sourceTree = "<group>"; };
+		717D0D821DC0B5620036D5F4 /* RegistVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistVC.m; sourceTree = "<group>"; };
 		D705CEA41DC09BBF00F65BE0 /* TianlangStar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TianlangStar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D705CEA81DC09BBF00F65BE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -323,6 +326,8 @@
 			children = (
 				D705CEFF1DC09C6400F65BE0 /* HomePageVC.h */,
 				D705CF001DC09C6400F65BE0 /* HomePageVC.m */,
+				717D0D811DC0B5620036D5F4 /* RegistVC.h */,
+				717D0D821DC0B5620036D5F4 /* RegistVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -672,6 +677,7 @@
 				D705CF2A1DC09C6400F65BE0 /* UserInfo.m in Sources */,
 				D705CF2E1DC09C6400F65BE0 /* Reachability.m in Sources */,
 				D744546E1DC0A4E3008B5E27 /* LoginVC.m in Sources */,
+				717D0D831DC0B5620036D5F4 /* RegistVC.m in Sources */,
 				D705CF201DC09C6400F65BE0 /* PinchPicture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
