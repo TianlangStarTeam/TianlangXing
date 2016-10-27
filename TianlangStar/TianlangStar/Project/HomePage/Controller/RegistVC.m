@@ -37,7 +37,6 @@
         [self.view addSubview:self.pictureView];
         
         
-        // 测试
         
         // 手机号
         CGFloat telLableX = 0.1 * KScreenWidth;
