@@ -10,6 +10,8 @@
 
 @interface AlertView : NSObject
 
+/** 快速创建一个提示 */
++(instancetype)alert;
 
 /** 提示先登录 */
 - (void)loginAlertView;
@@ -24,7 +26,10 @@
  *  @param message 提示信息
  *  @param title   标题
  */
--(void)addAlertMessage:(NSString *)message title:(NSString *)title;
+- (void)addAlertMessage:(NSString *)message title:(NSString *)title;
+
+
+
 
 
 @end

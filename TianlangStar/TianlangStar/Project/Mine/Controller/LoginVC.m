@@ -18,6 +18,7 @@
 #import "LoginVC.h"
 #import "UserModel.h"
 #import "XLXConst.h"
+#import "AlertView.h"
 
 
 
@@ -64,6 +65,10 @@
     
     //获取公钥
     [self getPubicKey];
+    
+//    [[AlertView alert] addAlertMessage:@"第一个测试" title:@"43f3"];
+//    [[AlertView alert]loginAlertView] ;
+//    [[AlertView alert] loginUpdataSession];
 }
 
 
@@ -320,23 +325,24 @@
 - (void)okAction
 {
     [self.view endEditing:YES];
-
+    
     //判断用户输入数据的合法性
     if ( ![self.userNameTF.text isMobileNumber])
     {
-//        [self addAlertMessage:@"用户名为手机号，请核对！" title:@"提示"];
+        [[AlertView alert] addAlertMessage:@"用户名为手机号，请核对！" title:@"提示"];
         return;
     }
     
     if (! (self.pwdTF.text.length >5 && self.pwdTF.text.length <33) )
     {
-//        [self addAlertMessage:@"密码错误，请输入6-32位密码！" title:@"提示"];
+        [[AlertView alert] addAlertMessage:@"密码错误，请输入6-32位密码！" title:@"提示"];
         return;
     }
 
 //    if (![self.pwdTF.text isLegalInput])
 //    {
-//        [self addAlertMessage:@"密码为数字加字母组合" title:@"提示！"];
+
+//    [[AlertView alert] addAlertMessage:@"密码为数字加字母组合" title:@"提示！"];
 //    }
 
     
