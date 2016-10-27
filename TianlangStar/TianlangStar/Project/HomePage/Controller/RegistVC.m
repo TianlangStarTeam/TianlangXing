@@ -40,7 +40,7 @@
         
         // 手机号
         CGFloat telLableX = 0.1 * KScreenWidth;
-        CGFloat telLableY = kHeight * 0.05;
+        CGFloat telLableY = KScreenHeight * 0.05;
         CGFloat telLableWidth = 80;
         CGFloat telLableHeight = 30;
         self.telphoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(telLableX, telLableY, telLableWidth, telLableHeight)];
@@ -157,13 +157,13 @@
         
         
         // 确定
-        CGFloat okX = (kWidth / 2) - 40;
+        CGFloat okX = (KScreenWidth / 2) - 40;
         CGFloat okY = referrerLabelY + telLableHeight + Klength10;
-        CGFloat okWidth = kWidth *0.4;
+        CGFloat okWidth = KScreenWidth *0.4;
         CGFloat okHeight = 30;
         self.okButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
         self.okButton.frame = CGRectMake(okX, okY, okWidth, okHeight);
-        self.okButton.centerX = kWidth * 0.5;
+        self.okButton.centerX = KScreenWidth * 0.5;
         [self.okButton setTitle:@"确定" forState:
          (UIControlStateNormal)];
         self.okButton.backgroundColor = buttonBG;
