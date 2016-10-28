@@ -32,6 +32,11 @@ CGFloat const Klength44 = 44;
 CGFloat const BtncornerRadius = 5.f;
 
 
+
+
+
+
+
 /** 图片和网址前段 - 云服务器 */
 //NSString const *URL = @"http://117.34.105.4:32106/carservice/";
 //NSString const *picURL = @"http://117.34.105.4:32106/";

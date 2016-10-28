@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface AlertView : NSObject
+singleton_interface(AlertView);
 
-/** 快速创建一个提示 */
-+(instancetype)alert;
+///** 快速创建一个提示 */
+//+(instancetype)alert;
 
 /** 提示先登录 */
 - (void)loginAlertView;
