@@ -65,15 +65,9 @@
 {
     [super viewDidLoad];
     self.title = @"登录";
-    self.view.backgroundColor = [UIColor orangeColor];
 
-    
     //获取公钥
     [self getPubicKey];
-    
-//    [[AlertView alert] addAlertMessage:@"第一个测试" title:@"43f3"];
-//    [[AlertView alert]loginAlertView] ;
-//    [[AlertView alert] loginUpdataSession];
 }
 
 
@@ -112,14 +106,15 @@
     {
         UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         self.bgImageView = bgImageView;
-        bgImageView.image = [UIImage imageNamed:@"bg.png"];
+        bgImageView.image = [UIImage imageNamed:@"Background"];
+        self.bgImageView.userInteractionEnabled = YES;
         [self.view addSubview:bgImageView];
         
 
         
         // 用户名
         CGFloat userNamePicX = 0.12 * KScreenWidth;
-        CGFloat userNamePicY = KScreenHeight * 0.15;
+        CGFloat userNamePicY = KScreenHeight * 0.38;
         CGFloat userNamePicWidth = 30;
         CGFloat userNamePicHeight = 30;
         self.userNamePic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, userNamePicY, userNamePicWidth, userNamePicHeight)];

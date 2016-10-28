@@ -29,6 +29,11 @@ singleton_interface(AlertView);
  */
 - (void)addAlertMessage:(NSString *)message title:(NSString *)title;
 
+///**
+// * 判断服务器返回的数据，并进行数据处理
+// */
+//-(BOOL)CheckResult:(NSInteger)resultCode;
+
 
 
 
