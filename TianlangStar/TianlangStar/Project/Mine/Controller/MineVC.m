@@ -8,7 +8,8 @@
 
 #import "MineVC.h"
 #import "LoginVC.h"
-#import "FindPwdVC.h"
+#import "ForgetPwdVC.h"
+
 
 @interface MineVC ()
 
@@ -45,8 +46,9 @@
 
 -(void)findBtnClick
 {
-    FindPwdVC *vc = [[FindPwdVC alloc] init];
-    [self presentViewController:vc animated:YES completion:nil];
+    ForgetPwdVC *vc = [[ForgetPwdVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+
     NSLog(@"忘记密码");
 }
 
