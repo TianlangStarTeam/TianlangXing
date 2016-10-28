@@ -39,14 +39,14 @@
 -(void)buttonClick
 {
     LoginVC *vc = [[LoginVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self presentViewController:vc animated:YES completion:nil];
     NSLog(@"fuowqugoqugoq3");
 }
 
 -(void)findBtnClick
 {
     FindPwdVC *vc = [[FindPwdVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self presentViewController:vc animated:YES completion:nil];
     NSLog(@"忘记密码");
 }
 

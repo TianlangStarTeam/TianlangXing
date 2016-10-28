@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface AlertView : NSObject
+singleton_interface(AlertView);
 
-/** 快速创建一个提示 */
-+(instancetype)alert;
+///** 快速创建一个提示 */
+//+(instancetype)alert;
 
 /** 提示先登录 */
 - (void)loginAlertView;
@@ -27,6 +28,11 @@
  *  @param title   标题
  */
 - (void)addAlertMessage:(NSString *)message title:(NSString *)title;
+
+///**
+// * 判断服务器返回的数据，并进行数据处理
+// */
+//-(BOOL)CheckResult:(NSInteger)resultCode;
 
 
 

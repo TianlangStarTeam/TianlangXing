@@ -19,6 +19,7 @@
 #import "UserModel.h"
 #import "XLXConst.h"
 #import "AlertView.h"
+#import "FindPwdVC.h"
 
 
 
@@ -50,6 +51,10 @@
 @property (nonatomic,assign) CGFloat okY;
 
 
+/** 登录界面的背景的图片 */
+@property (nonatomic,weak) UIImageView *bgImageView;
+
+
 /** 注册 */
 @property (nonatomic,weak) UIButton *regist;
 
@@ -60,15 +65,9 @@
 {
     [super viewDidLoad];
     self.title = @"登录";
-    self.view.backgroundColor = [UIColor orangeColor];
 
-    
     //获取公钥
     [self getPubicKey];
-    
-//    [[AlertView alert] addAlertMessage:@"第一个测试" title:@"43f3"];
-//    [[AlertView alert]loginAlertView] ;
-//    [[AlertView alert] loginUpdataSession];
 }
 
 
@@ -105,16 +104,22 @@
     
     if (self)
     {
+        UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        self.bgImageView = bgImageView;
+        bgImageView.image = [UIImage imageNamed:@"Background"];
+        self.bgImageView.userInteractionEnabled = YES;
+        [self.view addSubview:bgImageView];
+        
 
         
         // 用户名
         CGFloat userNamePicX = 0.12 * KScreenWidth;
-        CGFloat userNamePicY = KScreenHeight * 0.15;
+        CGFloat userNamePicY = KScreenHeight * 0.38;
         CGFloat userNamePicWidth = 30;
         CGFloat userNamePicHeight = 30;
         self.userNamePic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, userNamePicY, userNamePicWidth, userNamePicHeight)];
         self.userNamePic.image = [UIImage imageNamed:@"admin"];
-        [self.view addSubview:self.userNamePic];
+        [self.bgImageView addSubview:self.userNamePic];
         
         // 输入用户名
         CGFloat userNameTFX = userNamePicX + userNamePicWidth + Khor;
@@ -125,7 +130,7 @@
         self.userNameTF.placeholder = @"请输入手机号";
         self.userNameTF.font = Font14;
         self.userNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self.view addSubview:self.userNameTF];
+        [self.bgImageView addSubview:self.userNameTF];
         
         
         
@@ -133,7 +138,7 @@
         CGFloat pwdLabelY = userNamePicY + userNamePicHeight +  Kver;
         self.pwdPic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, pwdLabelY, userNamePicWidth, userNamePicHeight)];
         self.pwdPic.image = [UIImage imageNamed:@"password"];
-        [self.view addSubview:self.pwdPic];
+        [self.bgImageView addSubview:self.pwdPic];
         
         // 请输入密码
         self.pwdTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, pwdLabelY, userNameTFWidth, userNamePicHeight)];
@@ -142,7 +147,7 @@
         self.pwdTF.font = Font14;
         self.pwdTF.secureTextEntry= YES;
         self.pwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self.view addSubview:self.pwdTF];
+        [self.bgImageView addSubview:self.pwdTF];
         
         
         
@@ -158,7 +163,7 @@
         self.captchaTF.placeholder = @"请输入验证码";
         self.captchaTF.font = Font14;
         self.captchaTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self.view addSubview:self.captchaTF];
+        [self.bgImageView addSubview:self.captchaTF];
         
         // 点击确认验证码
         self.captchaButton = [[UIButton alloc] init];
@@ -169,7 +174,7 @@
         self.captchaButton.layer.cornerRadius = BtncornerRadius;
         self.captchaButton.titleLabel.font = [UIFont systemFontOfSize:15];
         [self.captchaButton setTitleColor:buttonTitleC forState:UIControlStateNormal];
-        [self.view addSubview:self.captchaButton];
+        [self.bgImageView addSubview:self.captchaButton];
         
         self.captchaPic.hidden = YES;
         self.captchaTF.hidden = YES;
@@ -227,7 +232,7 @@
         //        [self.foundPwdButton setTintColor:buttonTitleC];
         [self.foundPwdButton setTintColor:[UIColor blackColor]];
         self.foundPwdButton.layer.cornerRadius = BtncornerRadius;
-        [self.view addSubview:self.foundPwdButton];
+        [self.bgImageView addSubview:self.foundPwdButton];
         
         UIButton *regist = [UIButton buttonWithType:UIButtonTypeSystem];
         regist.x = self.userNamePic.x;
@@ -241,7 +246,7 @@
         [regist setTintColor:[UIColor blackColor]];
         regist.layer.cornerRadius = BtncornerRadius;
         self.regist = regist;
-        [self.view addSubview:regist];
+        [self.bgImageView addSubview:regist];
         
         
         // 确认Button
@@ -254,7 +259,7 @@
         self.okButton.y = CGRectGetMaxY(self.foundPwdButton.frame) + 20;
         self.okButton.width = KScreenWidth * 0.65;
         self.okButton.centerX = KScreenWidth *0.5;
-        [self.view addSubview:self.okButton];
+        [self.bgImageView addSubview:self.okButton];
 
     }
     return self;
@@ -267,7 +272,7 @@
     //判断手机号输入是否正确
     if (![self.userNameTF.text isMobileNumber])
     {
-//        [self addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
         return;
     }
     
@@ -329,20 +334,20 @@
     //判断用户输入数据的合法性
     if ( ![self.userNameTF.text isMobileNumber])
     {
-        [[AlertView alert] addAlertMessage:@"用户名为手机号，请核对！" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"用户名为手机号，请核对！" title:@"提示"];
         return;
     }
     
     if (! (self.pwdTF.text.length >5 && self.pwdTF.text.length <33) )
     {
-        [[AlertView alert] addAlertMessage:@"密码错误，请输入6-32位密码！" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"密码错误，请输入6-32位密码！" title:@"提示"];
         return;
     }
 
 //    if (![self.pwdTF.text isLegalInput])
 //    {
 
-//    [[AlertView alert] addAlertMessage:@"密码为数字加字母组合" title:@"提示！"];
+//    [[AlertView sharedAlertView] addAlertMessage:@"密码为数字加字母组合" title:@"提示！"];
 //    }
 
     
@@ -429,7 +434,7 @@
         case 1000://登录成功
         {
             //0.设置用户提示
-            //            [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+            [SVProgressHUD showSuccessWithStatus:@"登录成功"];
             //1.保存用户名和密码到沙河
             UserInfo *userIn = [UserInfo sharedUserInfo];
             //加密过的sessionID
@@ -453,6 +458,7 @@
         {
             YYLog(@"数据库中没有记录");
 //            [self addAlertMessage:@"用户名或密码错误！" title:@"提示"];
+            [[AlertView sharedAlertView]addAlertMessage:@"用户名或密码错误！" title:@"提示"];
             return;
             break;
         }
@@ -460,26 +466,29 @@
         {
             YYLog(@"用户密码错误");
 //            [self addAlertMessage:@"用户名或密码错误！" title:@"提示"];
+            [[AlertView sharedAlertView]addAlertMessage:@"用户名或密码错误！" title:@"提示"];
             return;
             break;
         }
         case 1006://参数中有空
         {
             YYLog(@"参数中有空");
-//            [self addAlertMessage:@"输入有误，请核对！" title:@"提示"];
+
+            [[AlertView sharedAlertView]addAlertMessage:@"输入有误，请核对！" title:@"提示"];
             return;
             break;
         }
         case 1010://表示用户密码与用户确认密码不同
         {
             YYLog(@"用户密码与用户确认密码不同");
-//            [self addAlertMessage:@"用户名或密码错误！" title:@"提示"];
+            [[AlertView sharedAlertView]addAlertMessage:@"用户名或密码错误！" title:@"提示"];
             return;
         }
             
         case 1013://用户名在数据库中已经存在，需要发验码进行验证
         {
-//            [self addAlertMessage:@"登录设备发生改变，请输入验证码验证！" title:@"提示"];
+            [[AlertView sharedAlertView]addAlertMessage:@"登录设备发生改变，请输入验证码验证！" title:@"提示"];
+
             //            self.captchaTF.y = self.capY;
             self.regist.y = self.okY;
             self.foundPwdButton.y = self.okY;
@@ -494,13 +503,13 @@
         }
         case 1015://表示用户验证码不匹配
         {
-//            [self addAlertMessage:@"验证码错误！" title:@"提示"];
+            [[AlertView sharedAlertView]addAlertMessage:@"验证码错误！" title:@"提示"];
             return;
             break;
         }
         case 1014://表示用户验证码不匹配
         {
-//            [self addAlertMessage:@"此用户已存在！" title:@"提示"];
+            [[AlertView sharedAlertView]addAlertMessage:@"此用户已存在！" title:@"提示"];
             return;
             break;
         }
@@ -596,9 +605,9 @@
  */
 - (void)foundPwdAction
 {
-//    FindPwdVC *findPwdVC = [[FindPwdVC alloc] init];
-//    
-//    [self.navigationController pushViewController:findPwdVC animated:YES];
+    FindPwdVC *findPwdVC = [[FindPwdVC alloc] init];
+    
+    [self.navigationController pushViewController:findPwdVC animated:YES];
 }
 
 

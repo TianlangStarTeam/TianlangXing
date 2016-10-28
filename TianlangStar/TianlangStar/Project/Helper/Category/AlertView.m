@@ -11,32 +11,32 @@
 
 @interface AlertView ()
 
-/** dang */
-@property (nonatomic,strong) UIViewController *root;
+/** 当前界面的控制器 */
+@property (nonatomic,strong) UIViewController *rootVC;
 
 @end
 
 @implementation AlertView
 
+singleton_implementation(AlertView);
 
 #pragma mark====懒加载=====
 
-
--(UIViewController *)root
+-(UIViewController *)rootVC
 {
-    if (!_root)
+    if (!_rootVC)
     {
-        _root = [UIApplication sharedApplication].keyWindow.rootViewController;
+        _rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
     }
-    return _root;
+    return _rootVC;
 }
 
-/** 快速创建一个提示 */
-+(instancetype)alert
-{
-    AlertView *alert = [[self alloc] init];
-    return alert;
-}
+///** 快速创建一个提示 */
+//+(instancetype)alert
+//{
+//    AlertView *alert = [[self alloc] init];
+//    return alert;
+//}
 
 
 /** 提示先登录 */
@@ -51,13 +51,13 @@
            
            LoginVC *loginVC = [[LoginVC alloc] init];
            loginVC.view.y = 64;
-           [self.root.navigationController pushViewController:loginVC animated:YES];
+           [self.rootVC.navigationController pushViewController:loginVC animated:YES];
        }];
     
     [alert addAction:cancleAction];
     [alert addAction:okAction];
     
-    [self.root presentViewController:alert animated:YES completion:nil];
+    [self.rootVC presentViewController:alert animated:YES completion:nil];
 }
 
 
@@ -154,9 +154,12 @@
     
     [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) { }]];
     
-    [self.root presentViewController:alert animated:YES completion:^ {  }];
+    [self.rootVC presentViewController:alert animated:YES completion:^ {  }];
 
 }
+
+
+
 
 
 
