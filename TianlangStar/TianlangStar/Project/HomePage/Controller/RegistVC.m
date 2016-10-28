@@ -9,6 +9,7 @@
 
 #import "RegistVC.h"
 #import "RegistProtocolVC.h"
+#import "AlertView.h"
 
 @interface RegistVC ()
 
@@ -150,8 +151,8 @@
         CGFloat selectButtonWidth = 30;
         self.selectButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
         self.selectButton.frame = CGRectMake(telX, selectButtonY, selectButtonWidth, selectButtonWidth);
-        [self.selectButton setImage:[UIImage imageNamed:@"select"] forState:(UIControlStateNormal)];
-        [self.selectButton setImage:[UIImage imageNamed:@"selected"] forState:(UIControlStateSelected)];
+        [self.selectButton setImage:[UIImage imageNamed:@"selected"] forState:(UIControlStateNormal)];
+        [self.selectButton setImage:[UIImage imageNamed:@"select"] forState:(UIControlStateSelected)];
         [self.selectButton addTarget:self action:@selector(selectAction) forControlEvents:(UIControlEventTouchUpInside)];
         [self.view addSubview:self.selectButton];
         
@@ -174,12 +175,12 @@
         /**
          *  设置字体大小
          */
-        self.telphoneTF.font = Font14;
-        self.captchaTF.font = Font14;
-        self.captchaButton.titleLabel.font = Font14;
-        self.pwdTF.font = Font14;
-        self.okPwdTF.font = Font14;
-        [self.okButton.titleLabel setFont:Font18];
+        self.telphoneTF.font = Font16;
+        self.captchaTF.font = Font16;
+        self.captchaButton.titleLabel.font = Font16;
+        self.pwdTF.font = Font16;
+        self.okPwdTF.font = Font16;
+        [self.okButton.titleLabel setFont:[UIFont systemFontOfSize:20]];
         
         
         
@@ -254,6 +255,8 @@
          */
         self.pwdTF.secureTextEntry = YES;
         self.okPwdTF.secureTextEntry = YES;
+        
+        
         
     }
     
@@ -373,151 +376,157 @@
 /** 事件:确定注册按钮的点击事件 */
 - (void)okRegistAction
 {
-    /** 判断输入框是否为空 */
-    if (self.telphoneTF.text == nil || self.telphoneTF.text.length ==0 ||
-        self.pwdTF.text == nil || self.pwdTF.text.length ==0           ||
-        self.okPwdTF.text == nil || self.okPwdTF.text.length ==0)
+    if (self.selectButton.selected == NO)
     {
-        [self addAlertMessage:@"信息不全，请核对！" title:@"提示"];
-        return;
-    }
-    
-    //电话号
-    if ( ![self.telphoneTF.text isMobileNumber])
-    {
-        [self addAlertMessage:@"手机号有误，请核对!" title:@"提示"];
-        return;
-    }
-    else if (! (self.pwdTF.text.length >5 && self.pwdTF.text.length <18))
-        //密码
-    {
-        [self addAlertMessage:@"密码错误，请输入6-18位密码！" title:@"提示"];
-        return;
-    }
-    
-    //确认密码
-    else if (! [self.okPwdTF.text isEqualToString:self.pwdTF.text] )
-    {
-        [self addAlertMessage:@"密码不一致，请核对！" title:@"提示"];
-        return;
-    }
-    
-    //验证码
-    if (!(self.captchaTF.text.length == 6))
-    {
-        [self addAlertMessage:@"验证码不能为空，请核对！" title:@"提示"];
-        return;
-    }
-    
-    if (![self.captchaTF.text isPureInt])
-    {
-        [self addAlertMessage:@"验证码不能为空，请核对！" title:@"提示"];
-        return;
-    }
-    
-    
-    
-    //rsa加密
-    NSString *password = [RSA encryptString:self.pwdTF.text publicKey:self.publicKey];
-    //拼接注册参数
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"username"] = self.telphoneTF.text;
-    params[@"value"] = password;
-    params[@"checkCode"] = self.captchaTF.text;
-    
-    /*
-     Int resultCode  1006 表示参数中有null
-     Int resultCode  1007表示没有登录
-     Int resultCode  1010表示用户密码与用户确认密码不同
-     Int resultCode  1011 表示年龄不符合条件
-     Int resultCode  1013  表示用户名在数据库中已经存在
-     Int resultCode  1015  表示用户验证码不匹配
-     */
-    
-    //注册post请求
-    //设置遮盖
-    // 显示指示器
-    [SVProgressHUD setMinimumDismissTimeInterval:3];
-    [SVProgressHUD showWithStatus:@"正在注册"];
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=2",URL];
-    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
-     {
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         
-         //取消提示
-         YYLog(@"请求成功----%@",responseObject);
-         //1.获取返回值
-         NSNumber *resultCode = responseObject[@"resultCode"];
-         //转换
-         NSInteger result = [resultCode integerValue];
-         //判断并处理返回值
-         //         [self checkResultCode:result];
-         YYLog(@"result----%ld",(long)result);
-         
-         switch (result)
+        /** 判断输入框是否为空 */
+        if (self.telphoneTF.text == nil || self.telphoneTF.text.length ==0 ||
+            self.pwdTF.text == nil || self.pwdTF.text.length ==0           ||
+            self.okPwdTF.text == nil || self.okPwdTF.text.length ==0)
+        {
+            [self addAlertMessage:@"信息不全，请核对！" title:@"提示"];
+            return;
+        }
+        
+        //电话号
+        if ( ![self.telphoneTF.text isMobileNumber])
+        {
+            [self addAlertMessage:@"手机号有误，请核对!" title:@"提示"];
+            return;
+        }
+        else if (! (self.pwdTF.text.length >5 && self.pwdTF.text.length <18))
+            //密码
+        {
+            [self addAlertMessage:@"密码错误，请输入6-18位密码！" title:@"提示"];
+            return;
+        }
+        
+        //确认密码
+        else if (! [self.okPwdTF.text isEqualToString:self.pwdTF.text] )
+        {
+            [self addAlertMessage:@"密码不一致，请核对！" title:@"提示"];
+            return;
+        }
+        
+        //验证码
+        if (!(self.captchaTF.text.length == 6))
+        {
+            [self addAlertMessage:@"验证码不能为空，请核对！" title:@"提示"];
+            return;
+        }
+        
+        if (![self.captchaTF.text isPureInt])
+        {
+            [self addAlertMessage:@"验证码不能为空，请核对！" title:@"提示"];
+            return;
+        }
+        
+        
+        
+        //rsa加密
+        NSString *password = [RSA encryptString:self.pwdTF.text publicKey:self.publicKey];
+        //拼接注册参数
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        params[@"username"] = self.telphoneTF.text;
+        params[@"value"] = password;
+        params[@"checkCode"] = self.captchaTF.text;
+        
+        /*
+         Int resultCode  1006 表示参数中有null
+         Int resultCode  1007表示没有登录
+         Int resultCode  1010表示用户密码与用户确认密码不同
+         Int resultCode  1011 表示年龄不符合条件
+         Int resultCode  1013  表示用户名在数据库中已经存在
+         Int resultCode  1015  表示用户验证码不匹配
+         */
+        
+        //注册post请求
+        //设置遮盖
+        // 显示指示器
+        [SVProgressHUD setMinimumDismissTimeInterval:3];
+        [SVProgressHUD showWithStatus:@"正在注册"];
+        NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=2",URL];
+        [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
          {
-             case 1000://注册成功
+         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+         {
+             
+             //取消提示
+             YYLog(@"请求成功----%@",responseObject);
+             //1.获取返回值
+             NSNumber *resultCode = responseObject[@"resultCode"];
+             //转换
+             NSInteger result = [resultCode integerValue];
+             //判断并处理返回值
+             //         [self checkResultCode:result];
+             YYLog(@"result----%ld",(long)result);
+             
+             switch (result)
              {
-                 //0.设置用户提示
-                 [SVProgressHUD showSuccessWithStatus:@"注册成功"];
-                 //1.保存用户名和密码到沙河
-                 UserInfo *userIn = [UserInfo sharedUserInfo];
-                 userIn.username = self.telphoneTF.text;
-                 userIn.passWord = self.pwdTF.text;
-                 [userIn synchronizeToSandBox];
-                 
-                 [self.navigationController popViewControllerAnimated:YES];
-                 break;
+                 case 1000://注册成功
+                 {
+                     //0.设置用户提示
+                     [SVProgressHUD showSuccessWithStatus:@"注册成功"];
+                     //1.保存用户名和密码到沙河
+                     UserInfo *userIn = [UserInfo sharedUserInfo];
+                     userIn.username = self.telphoneTF.text;
+                     userIn.passWord = self.pwdTF.text;
+                     [userIn synchronizeToSandBox];
+                     
+                     [self.navigationController popViewControllerAnimated:YES];
+                     break;
+                 }
+                 case 1006://参数中有空
+                 {
+                     YYLog(@"参数中有空");
+                     //                 [SVProgressHUD showSuccessWithStatus:@"注册成功"];
+                     break;
+                 }
+                 case 1008://参数中有空
+                 {
+                     YYLog(@"参数中有空");
+                     [SVProgressHUD showErrorWithStatus:@"验证码错误，请核对！"];
+                     break;
+                 }
+                 case 1010://表示用户密码与用户确认密码不同
+                 {
+                     YYLog(@"用户密码与用户确认密码不同");
+                     break;
+                 }
+                 case 1013://用户名在数据库中已经存在
+                 {
+                     YYLog(@"用户名在数据库中已经存在");
+                     [SVProgressHUD showErrorWithStatus:@"此用户名已存在，请更换！"];
+                     break;
+                 }
+                 case 1014://用户名在数据库中已经存在
+                 {
+                     YYLog(@"用户名在数据库中已经存在");
+                     [SVProgressHUD showErrorWithStatus:@"此用户名已存在，请更换！"];
+                     break;
+                 }
+                 case 1015://表示用户验证码不匹配
+                 {
+                     YYLog(@"表示用户验证码不匹配");
+                     [SVProgressHUD showErrorWithStatus:@"验证码不匹配！"];
+                     break;
+                 }
+                 default:
+                     break;
              }
-             case 1006://参数中有空
-             {
-                 YYLog(@"参数中有空");
-                 //                 [SVProgressHUD showSuccessWithStatus:@"注册成功"];
-                 break;
-             }
-             case 1008://参数中有空
-             {
-                 YYLog(@"参数中有空");
-                 [SVProgressHUD showErrorWithStatus:@"验证码错误，请核对！"];
-                 break;
-             }
-             case 1010://表示用户密码与用户确认密码不同
-             {
-                 YYLog(@"用户密码与用户确认密码不同");
-                 break;
-             }
-             case 1013://用户名在数据库中已经存在
-             {
-                 YYLog(@"用户名在数据库中已经存在");
-                 [SVProgressHUD showErrorWithStatus:@"此用户名已存在，请更换！"];
-                 break;
-             }
-             case 1014://用户名在数据库中已经存在
-             {
-                 YYLog(@"用户名在数据库中已经存在");
-                 [SVProgressHUD showErrorWithStatus:@"此用户名已存在，请更换！"];
-                 break;
-             }
-             case 1015://表示用户验证码不匹配
-             {
-                 YYLog(@"表示用户验证码不匹配");
-                 [SVProgressHUD showErrorWithStatus:@"验证码不匹配！"];
-                 break;
-             }
-             default:
-                 break;
-         }
-         [SVProgressHUD dismissWithDelay:3];
-         
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-         YYLog(@"失败----%@",error);
-         // 显示失败信息
-         [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试!"];
-         [SVProgressHUD dismiss];
-     }];
-
+             [SVProgressHUD dismissWithDelay:3];
+             
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+         {
+             YYLog(@"失败----%@",error);
+             // 显示失败信息
+             [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试!"];
+             [SVProgressHUD dismiss];
+         }];
+    }
+    else
+    {
+        [[AlertView sharedAlertView] addAlertMessage:@"请同意用户注册协议" title:@"提示"];
+    }
 }
 
 

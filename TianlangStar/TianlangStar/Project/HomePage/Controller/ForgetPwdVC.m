@@ -6,11 +6,16 @@
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
-#define kver3 (0.03 * KScreenHeight)
+#define kver4 (0.04 * KScreenHeight)
 
 #import "ForgetPwdVC.h"
 
 @interface ForgetPwdVC ()
+
+/** 验证码是否可用 */
+@property (nonatomic,assign) BOOL selectedBTN;
+
+@property (nonatomic,strong) NSArray *fields;
 
 @end
 
@@ -22,6 +27,81 @@
     self.title = @"忘记密码";// 导航栏按钮
     
     self.view.backgroundColor = [UIColor whiteColor];// 忘记密码页面的背景色
+}
+
+
+/** 加载输入框数组 */
+-(NSArray *)fields
+{
+    NSArray *views = self.view.subviews;
+    NSMutableArray *fieldM = [NSMutableArray array];
+    for (UIView *child in views)
+    {
+        if ([child isKindOfClass:[UITextField class]])
+        {
+            [fieldM addObject:child];
+        }
+        _fields = fieldM;
+    }
+    return _fields;
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [UIView animateWithDuration:0.25 animations:^
+     {
+         [self.view endEditing:YES];
+     }];
+}
+
+/**
+ 监听键盘的变化事件
+ */
+-(void) setupKeyboardNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
+}
+
+
+-(void)keyboardFrameChange:(NSNotification *)notificat
+{
+    //获取键盘变化的Y值
+    //此时为键盘结束时的frame
+    CGRect kbEndFrame = [notificat.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    //获取键盘结束时的Y值
+    CGFloat kbEndY = kbEndFrame.origin.y;
+    
+    //获取当前Textfield的响应者
+    UITextField *textf = nil;
+    for (UITextField *textF in self.fields)
+    {
+        if (textF.isFirstResponder)
+        {
+            textf = textF;
+        }
+    }
+    
+    //获取textField的Y值
+    CGFloat textY = CGRectGetMaxY(textf.frame);
+    if (textY >kbEndY)
+    {
+        [UIView animateWithDuration:0.25 animations:^
+         {
+             self.view.transform = CGAffineTransformMakeTranslation(0, kbEndY - textY);
+         }];
+        
+    }else{
+        [UIView animateWithDuration:0.25 animations:^
+         {
+             self.view.transform = CGAffineTransformIdentity;
+         }];
+    }
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 
@@ -46,7 +126,7 @@
 
 
         // 输入验证码
-        CGFloat captchaTFY = telY + telHeight + kver3;
+        CGFloat captchaTFY = telY + telHeight + kver4;
         CGFloat captchaWidth = 0.55 * telWidth;
         self.captchaTF = [[UITextField alloc] initWithFrame:CGRectMake(telX, captchaTFY, captchaWidth, telHeight)];
         [self.view addSubview:self.captchaTF];
@@ -64,14 +144,14 @@
 
 
         // 输入密码
-        CGFloat pwdTFY = captchaTFY + telHeight + kver3;
+        CGFloat pwdTFY = captchaTFY + telHeight + kver4;
         self.pwdTF = [[UITextField alloc] initWithFrame:CGRectMake(telX, pwdTFY, telWidth, telHeight)];
         [self.view addSubview:self.pwdTF];
 
 
 
         // 确认输入的密码
-        CGFloat okPwdTFY = pwdTFY + telHeight + kver3;
+        CGFloat okPwdTFY = pwdTFY + telHeight + kver4;
         self.okPwdTF = [[UITextField alloc] initWithFrame:CGRectMake(telX, okPwdTFY, telWidth, telHeight)];
         [self.view addSubview:self.okPwdTF];
 
@@ -80,7 +160,7 @@
         // 确定提交按钮
         CGFloat handButtonWidth = telWidth;
         CGFloat handButtonX = (KScreenWidth / 2) - (handButtonWidth / 2);
-        CGFloat handButtonY = okPwdTFY + telHeight + 0.05 * KScreenHeight;
+        CGFloat handButtonY = okPwdTFY + telHeight + 0.14 * KScreenHeight;
         CGFloat handButtonHeight = 0.07 * KScreenHeight;
         self.handButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
         self.handButton.frame = CGRectMake(handButtonX, handButtonY, handButtonWidth, handButtonHeight);
@@ -95,12 +175,12 @@
         /**
          *  设置字体大小
          */
-        self.telphoneTF.font = Font14;
-        self.captchaTF.font = Font14;
-        self.captchaButton.titleLabel.font = Font14;
-        self.pwdTF.font = Font14;
-        self.okPwdTF.font = Font14;
-        [self.handButton.titleLabel setFont:Font18];
+        self.telphoneTF.font = Font16;
+        self.captchaTF.font = Font16;
+        self.captchaButton.titleLabel.font = Font16;
+        self.pwdTF.font = Font16;
+        self.okPwdTF.font = Font16;
+        [self.handButton.titleLabel setFont:[UIFont systemFontOfSize:20]];
 
 
 
@@ -183,9 +263,92 @@
 
 
 
+//获取验证码
+-(void)getNumbers:(NSString *)iphoneNum
+{
+    //设置界面的按钮显示 根据自己需求设置
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"username"] = iphoneNum;
+    YYLog(@"接收验证码的手机--%@",iphoneNum);
+    
+    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=3",URL];
+    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
+     {
+         //进度
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         YYLog(@"验证码成功----%@",responseObject);
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         YYLog(@"验证码失败----%@",error);
+     }];
+}
+
+
+
 // 事件:获取验证码点击事件
 - (void)captchaAction
 {
+    //判断手机号输入是否正确
+    if (![self.telphoneTF.text isMobileNumber])
+    {
+        [self addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
+        return;
+    }
+    
+    //判断验证码是否可用，第一次进入时调用
+    if (!self.selectedBTN)
+    {
+        [self getNumbers:self.telphoneTF.text];
+    }
+    
+    __block int timeout=30; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+        if(timeout<=0)
+        { //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               //记录按钮的是否可以点击事件
+                               self.selectedBTN = NO;
+                               [self.captchaButton setTitle:@"重发验证码" forState:UIControlStateNormal];
+                               self.captchaButton.userInteractionEnabled = YES; });
+        }else
+        {
+            int seconds = timeout % 30;
+            self.selectedBTN = YES;
+            
+            NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               //设置界面的按钮显示 根据自己需求设置
+                               //        YYLog(@"____%@",strTime);
+                               self.selectedBTN = YES;
+                               [UIView beginAnimations:nil context:nil];
+                               [UIView setAnimationDuration:1];
+                               [self.captchaButton setTitle:[NSString stringWithFormat:@"%@秒后重发",strTime] forState:UIControlStateNormal];
+                               [UIView commitAnimations];
+                               self.captchaButton.userInteractionEnabled = NO;
+                           });
+            timeout--;
+        }
+    });
+    dispatch_resume(_timer);
+}
+
+
+
+-(void)addAlertMessage:(NSString *)message title:(NSString *)title
+{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) { }]];
+    
+    [self presentViewController:alert animated:YES completion:^ {  }];
 }
 
 
@@ -193,6 +356,133 @@
 // 事件:提交按钮点击事件
 - (void)handAction
 {
+    [self.view endEditing:YES];
+    //    //核对输入参数
+    
+    
+    //总体
+    NSInteger count  = self.fields.count;
+    for (int i =0; i < count ; i++)
+    {
+        UITextField * field= self.fields[i];
+        if (field.text.length ==0 || field.text ==nil)
+        {
+            [self addAlertMessage:@"信息不全，请核对！" title:@"提示"];
+            return;
+        }}
+    
+    //电话号
+    if ( ![self.telphoneTF.text isMobileNumber])
+    {
+        [self addAlertMessage:@"手机号输入有误，请核对!" title:@"提示"];
+        return;
+    }
+    //密码
+    if (! (self.pwdTF.text.length >5 && self.pwdTF.text.length <33) )
+    {
+        
+        [self addAlertMessage:@"密码输入错误，请输入6-32位密码！" title:@"提示"];
+        return;
+    }
+    
+    //确认密码
+    if (! [self.okPwdTF.text isEqualToString:self.pwdTF.text] )
+    {
+        
+        [self addAlertMessage:@"密码输入不一致，请核对！" title:@"提示"];
+        return;
+    }
+    
+    //验证码
+    if (!(self.captchaTF.text.length == 6))
+    {
+        [self addAlertMessage:@"验证码输入有误，请核对！" title:@"提示"];
+        return;
+    }
+    
+    /*
+     忘记密码
+     地    址:	http://192.168.10.114:8080/yysj/userservlet?movtion=5
+     需要参数:	String username 用户名 (必填)
+     String password 密码 (必填)
+     String repassword 确认密码 (必填)
+     String checkCode 验证码
+     请求方式	POST
+     执行操作:	当前用户忘记密码时，通过这个接口进行更改密码。
+     返回结果:	Int resultCode  1000表示成功
+     Int resultCode  1006 表示参数中有null
+     Int resultCode  1007表示没有登录
+     Int resultCode  1021  表示用户名不存在
+     */
+    
+    UserInfo *userIn = [UserInfo sharedUserInfo];
+    
+    NSString *password = [RSA encryptString:self.pwdTF.text publicKey:userIn.publicKey];
+    
+    //拼接注册参数
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    params[@"username"] = self.telphoneTF.text;
+    params[@"value"] = password;
+    params[@"checkCode"] = self.captchaTF.text;
+    
+    YYLog(@"params----%@",params);
+    
+    //设置遮盖
+    [SVProgressHUD show];
+    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=5",URL];
+    
+    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
+     {
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         YYLog(@"%@找回密码返回==========",responseObject);
+         //1.移除遮盖
+         [SVProgressHUD setMinimumDismissTimeInterval:3];
+         
+         NSNumber *resultCode = responseObject[@"resultCode"];
+         int result = [resultCode intValue];
+         
+         [self checkFindPwdResult:result];
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         YYLog(@"找回密码失败失败----%@",error);
+         // 显示失败信息
+         [SVProgressHUD showErrorWithStatus:@"加载推荐信息失败!"];
+     }];
+}
+
+
+
+-(void)checkFindPwdResult:(int)result
+{
+    switch (result)
+    {
+        case 1000:
+        {
+            [SVProgressHUD showSuccessWithStatus:@"找回成功！"];
+            break;
+        }
+        case 1020:
+        {
+            [SVProgressHUD showErrorWithStatus:@"修改密码失败！"];
+            break;
+        }
+        case 1021:
+        {
+            [SVProgressHUD showErrorWithStatus:@"用户名不存在！"];
+            break;
+        }
+        case 1008:
+        {
+            [SVProgressHUD showErrorWithStatus:@"验证码错误！"];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 
