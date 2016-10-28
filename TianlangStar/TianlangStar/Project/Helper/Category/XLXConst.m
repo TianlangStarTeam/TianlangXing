@@ -29,7 +29,7 @@ CGFloat const Klength30 = 30;
 CGFloat const Klength44 = 44;
 
 /** button的圆角cornerRadius */
-CGFloat const BtncornerRadius = 5.f;
+CGFloat const BtncornerRadius = 8.f;
 
 
 /** 图片和网址前段 - 云服务器 */
@@ -38,8 +38,8 @@ CGFloat const BtncornerRadius = 5.f;
 
 
 /* 图片和网址前段 - 本地 */
-NSString const *URL = @"http://192.168.1.125:8080/carservice/";
-NSString const *picURL = @"http://192.168.1.125:8080/";
+NSString const *URL = @"http://192.168.1.123:8080/carservice/";
+NSString const *picURL = @"http://192.168.1.123:8080/";
 
 
 
