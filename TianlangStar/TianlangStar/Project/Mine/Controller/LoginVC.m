@@ -19,7 +19,8 @@
 #import "UserModel.h"
 #import "XLXConst.h"
 #import "AlertView.h"
-#import "FindPwdVC.h"
+#import "ForgetPwdVC.h"
+
 
 
 
@@ -106,160 +107,238 @@
     {
         UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         self.bgImageView = bgImageView;
-        bgImageView.image = [UIImage imageNamed:@"Background"];
+        bgImageView.image = [UIImage imageNamed:@"loginBg"];
         self.bgImageView.userInteractionEnabled = YES;
         [self.view addSubview:bgImageView];
         
 
+        //用户名的输入框
+        UIView *userView = [[UIView alloc] init];
+        userView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.4];
+        userView.y = KScreenHeight * 0.38;
+        userView.x = KScreenWidth * 0.06;
+        userView.width = KScreenWidth - 2 * userView.x;
+        userView.height = KScreenHeight * 0.07;
+        
+        [self.bgImageView addSubview:userView];
         
         // 用户名
-        CGFloat userNamePicX = 0.12 * KScreenWidth;
-        CGFloat userNamePicY = KScreenHeight * 0.38;
-        CGFloat userNamePicWidth = 30;
-        CGFloat userNamePicHeight = 30;
-        self.userNamePic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, userNamePicY, userNamePicWidth, userNamePicHeight)];
-        self.userNamePic.image = [UIImage imageNamed:@"admin"];
-        [self.bgImageView addSubview:self.userNamePic];
+
+        CGFloat marginX = 10;
+        UIImageView *userNamePic = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user"]];
+        userNamePic.x = marginX;
+        userNamePic.centerY = userView.height * 0.5;
+        self.userNamePic = userNamePic;
+        [userView addSubview:self.userNamePic];
         
         // 输入用户名
-        CGFloat userNameTFX = userNamePicX + userNamePicWidth + Khor;
-        CGFloat userNameTFWidth = KScreenWidth - userNamePicX - KRight - userNamePicWidth - Khor;
-        self.userNameTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, userNamePicY, userNameTFWidth, userNamePicHeight)];
+        UITextField *userNameTF = [[UITextField alloc] init];
+        userNameTF.width = userView.width - userNamePic.width - 2 * marginX;
+        userNameTF.height = userView.height * 0.8;
+        userNameTF.x = CGRectGetMaxX(userNamePic.frame) + marginX;
+        userNameTF.centerY = userView.height * 0.6;
+        userNameTF.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
+        
+        self.userNameTF = userNameTF;
         self.userNameTF.borderStyle = TFborderStyle;
         self.userNameTF.keyboardType = UIKeyboardTypeNumberPad;
         self.userNameTF.placeholder = @"请输入手机号";
-        self.userNameTF.font = Font14;
+        self.userNameTF.textColor = [UIColor whiteColor];
+        self.userNameTF.font = Font18;
         self.userNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self.bgImageView addSubview:self.userNameTF];
+        [userView addSubview:self.userNameTF];
+        
+        
+        //密码框的输入容器
+        UIView *passWordView = [[UIView alloc] init];
+        passWordView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.4];
+        passWordView.y = CGRectGetMaxY(userView.frame) + KScreenHeight * 0.02;
+        passWordView.x = userView.x;
+        passWordView.width = userView.width;
+        passWordView.height = userView.height;
+        [self.bgImageView addSubview:passWordView];
         
         
         
         // 密码
-        CGFloat pwdLabelY = userNamePicY + userNamePicHeight +  Kver;
-        self.pwdPic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, pwdLabelY, userNamePicWidth, userNamePicHeight)];
-        self.pwdPic.image = [UIImage imageNamed:@"password"];
-        [self.bgImageView addSubview:self.pwdPic];
+        UIImageView * pwdPic = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"password"]];
+        pwdPic.x = marginX + 3;
+        pwdPic.centerY = passWordView.height * 0.5;
+        self.pwdPic = pwdPic;
+        [passWordView addSubview:pwdPic];
         
         // 请输入密码
-        self.pwdTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, pwdLabelY, userNameTFWidth, userNamePicHeight)];
-        self.pwdTF.borderStyle = TFborderStyle;
+        UITextField *pwdTF = [[UITextField alloc] init];
+        
+        pwdTF.width = userNameTF.width;
+        pwdTF.height = userNameTF.height;
+        pwdTF.x = CGRectGetMaxX(pwdPic.frame) + marginX + 3;
+        pwdTF.centerY = userView.height * 0.6;
+        pwdTF.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
+        
+        self.pwdTF = pwdTF;
+        self.pwdTF.borderStyle = UITextBorderStyleNone;
         self.pwdTF.placeholder = @"请输入密码";
-        self.pwdTF.font = Font14;
+        self.pwdTF.font = Font18;
         self.pwdTF.secureTextEntry= YES;
+        self.pwdTF.textColor = [UIColor whiteColor];
         self.pwdTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self.bgImageView addSubview:self.pwdTF];
+        [passWordView addSubview:self.pwdTF];
+        
+        //设置密码框下面的白条
+        UIView *cutView = [[UIView alloc] init];
+        cutView.x = 0;
+        cutView.y = passWordView.height + 1;
+        cutView.width = passWordView.width;
+        cutView.height = 3;
+        cutView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.7];
+        [passWordView addSubview:cutView];
         
         
+        //新用户的和忘记密码
+        UIButton *registButton = [[UIButton alloc ] init];
+        registButton.x = KScreenWidth * 0.07;
+        registButton.y = CGRectGetMidY(passWordView.frame) + 55;
+        registButton.width = 90;
+        registButton.height = 40;
+        [registButton setTitleColor:[UIColor colorWithWhite:1 alpha:0.8] forState:UIControlStateNormal];
+        registButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [registButton setTitle:@"新用户" forState:UIControlStateNormal];
+        [registButton addTarget:self action:@selector(registAction) forControlEvents:UIControlEventTouchUpInside];
+        self.registButton = registButton;
+        [self.bgImageView addSubview:registButton];
         
-        // 验证码
-        CGFloat captchY = pwdLabelY + userNamePicHeight + Kver;
-        self.captchaPic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, captchY, userNamePicWidth, userNamePicHeight)];
-        self.captchaPic.image = [UIImage imageNamed:@"yanzhengma"];
-        [self.view addSubview:self.captchaPic];
-        // 请输入验证码
-        CGFloat captchaTFWidth = (KScreenWidth - 2 * userNamePicX - userNamePicWidth - Khor) / 2;
-        self.captchaTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, captchY, captchaTFWidth, userNamePicHeight)];
-        self.captchaTF.borderStyle = TFborderStyle;
-        self.captchaTF.placeholder = @"请输入验证码";
-        self.captchaTF.font = Font14;
-        self.captchaTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self.bgImageView addSubview:self.captchaTF];
+        //忘记密码
+        UIButton *foundPwdButton = [[UIButton alloc ] init];
+        foundPwdButton.y = registButton.y;
+        foundPwdButton.width = 90;
+        foundPwdButton.height = 40;
+        foundPwdButton.x = KScreenWidth * 0.93 - foundPwdButton.width;
+        [foundPwdButton setTitleColor:[UIColor colorWithWhite:1 alpha:0.8] forState:UIControlStateNormal];
+        [foundPwdButton setTitle:@"忘记密码" forState:UIControlStateNormal];
+        [foundPwdButton addTarget:self action:@selector(foundPwdAction) forControlEvents:UIControlEventTouchUpInside];
+        self.foundPwdButton = registButton;
+        [self.bgImageView addSubview:foundPwdButton];
         
-        // 点击确认验证码
-        self.captchaButton = [[UIButton alloc] init];
-        self.captchaButton.frame = CGRectMake(userNameTFX + captchaTFWidth, captchY, captchaTFWidth, userNamePicHeight);
-        [self.captchaButton setTitle:@"获取验证码" forState:(UIControlStateNormal)];
-        [self.captchaButton addTarget:self action:@selector(captchaAction) forControlEvents:(UIControlEventTouchUpInside)];
-        self.captchaButton.backgroundColor = buttonBG;
-        self.captchaButton.layer.cornerRadius = BtncornerRadius;
-        self.captchaButton.titleLabel.font = [UIFont systemFontOfSize:15];
-        [self.captchaButton setTitleColor:buttonTitleC forState:UIControlStateNormal];
-        [self.bgImageView addSubview:self.captchaButton];
-        
-        self.captchaPic.hidden = YES;
-        self.captchaTF.hidden = YES;
-        self.captchaButton.hidden = YES;
-        
-        
-        
-        // 注册Button
-        CGFloat registButtonWidth = 100;
-        CGFloat registButtonX = userNamePicX;
-        CGFloat registButtonY = captchY + userNamePicHeight + 40;
-        CGFloat registButtonHeight = 30;
-        
-        CGFloat foundPwdX = registButtonX + registButtonWidth + KButtonHor;
-        
-        //        CGFloat okButtonX = (KScreenWidth / 2) - 30;
-        //        CGFloat okButtonY = registButtonY + registButtonHeight + 30;
-        //        CGFloat okButtonWidth = 60;
-        //        CGFloat okButtonHeight = 30;
-        
-        CGFloat okButtonX = userNamePicX;
-        CGFloat okButtonY = captchY + userNamePicHeight + 15;
-        
-        self.okY = okButtonY;
-        CGFloat okButtonWidth = 100;
-        CGFloat okButtonHeight = 30;
-        
-        self.registButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        self.foundPwdButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        self.okButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        self.registButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        
-        if ((self.captchaPic.hidden == YES) && (self.captchaTF.hidden == YES) && self.captchaButton.hidden == YES)
-        {
-            CGFloat registY = pwdLabelY + userNamePicHeight + 15;
-            CGFloat okButtonY = pwdLabelY + registButtonHeight + 40;
-            
-            self.registButton.frame = CGRectMake(registButtonX, registY, registButtonWidth, registButtonHeight);
-            self.foundPwdButton.frame = CGRectMake(foundPwdX, registY, registButtonWidth, registButtonHeight);
-            self.okButton.frame = CGRectMake(okButtonX, okButtonY, okButtonWidth, okButtonHeight);
-        }
-        else
-        {
-            self.registButton.frame = CGRectMake(registButtonX, registButtonY, registButtonWidth, registButtonHeight);
-            self.foundPwdButton.frame = CGRectMake(foundPwdX, registButtonY, registButtonWidth, registButtonHeight);
-            self.okButton.frame = CGRectMake(okButtonX, okButtonY, okButtonWidth, okButtonHeight);
-        }
-        
-        
-        // 找回密码Button
-        [self.foundPwdButton setTitle:@"忘记密码?" forState:(UIControlStateNormal)];
-        [self.foundPwdButton addTarget:self action:@selector(foundPwdAction) forControlEvents:(UIControlEventTouchUpInside)];
-        self.foundPwdButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        //        self.foundPwdButton.backgroundColor = buttonBG;
-        //        [self.foundPwdButton setTintColor:buttonTitleC];
-        [self.foundPwdButton setTintColor:[UIColor blackColor]];
-        self.foundPwdButton.layer.cornerRadius = BtncornerRadius;
-        [self.bgImageView addSubview:self.foundPwdButton];
-        
-        UIButton *regist = [UIButton buttonWithType:UIButtonTypeSystem];
-        regist.x = self.userNamePic.x;
-        regist.y = self.foundPwdButton.y;
-        regist.width = self.foundPwdButton.width;
-        regist.height = self.foundPwdButton.height;
-        [regist setTitle:@"新用户" forState:UIControlStateNormal];
-        [regist addTarget:self action:@selector(registAction) forControlEvents:UIControlEventTouchUpInside];
-        //        regist.backgroundColor = buttonBG;
-        //        [regist setTintColor:buttonTitleC];
-        [regist setTintColor:[UIColor blackColor]];
-        regist.layer.cornerRadius = BtncornerRadius;
-        self.regist = regist;
-        [self.bgImageView addSubview:regist];
         
         
         // 确认Button
-        [self.okButton setTitle:@" 登  录 " forState:(UIControlStateNormal)];
+        UIButton *okButton = [[UIButton alloc] init];
+        okButton.width = KScreenWidth * 0.86;
+        okButton.height = userView.height;
+        okButton.y = KScreenHeight * 0.76 - okButton.height;
+        okButton.centerX = KScreenWidth * 0.5;
+        self.okButton  = okButton;
+        [self.okButton setTitle:@" 登    录 " forState:(UIControlStateNormal)];
         [self.okButton addTarget:self action:@selector(okAction) forControlEvents:(UIControlEventTouchUpInside)];
-        //        self.okButton.backgroundColor = [UIColor colorWithRed:31/255.0 green:42/255.0 blue:70/255.0 alpha:1.000];
-        self.okButton.backgroundColor = buttonBG;
-        self.okButton.layer.cornerRadius = BtncornerRadius;
-        [self.okButton setTintColor:buttonTitleC];
-        self.okButton.y = CGRectGetMaxY(self.foundPwdButton.frame) + 20;
-        self.okButton.width = KScreenWidth * 0.65;
-        self.okButton.centerX = KScreenWidth *0.5;
+        okButton.titleLabel.font = Font22;
+                self.okButton.backgroundColor = XLXcolor(37, 215, 252);
+        self.okButton.layer.cornerRadius = 25;
+//        [self.okButton setTintColor:buttonTitleC];
+
         [self.bgImageView addSubview:self.okButton];
+
+        
+        
+
+//        // 验证码
+//        CGFloat captchY = pwdLabelY + userNamePicHeight + Kver;
+//        self.captchaPic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, captchY, userNamePicWidth, userNamePicHeight)];
+//        self.captchaPic.image = [UIImage imageNamed:@"yanzhengma"];
+//        [self.view addSubview:self.captchaPic];
+//        // 请输入验证码
+//        CGFloat captchaTFWidth = (KScreenWidth - 2 * userNamePicX - userNamePicWidth - Khor) / 2;
+//        self.captchaTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, captchY, captchaTFWidth, userNamePicHeight)];
+//        self.captchaTF.borderStyle = TFborderStyle;
+//        self.captchaTF.placeholder = @"请输入验证码";
+//        self.captchaTF.font = Font14;
+//        self.captchaTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+//        [self.bgImageView addSubview:self.captchaTF];
+//        
+//        // 点击确认验证码
+//        self.captchaButton = [[UIButton alloc] init];
+//        self.captchaButton.frame = CGRectMake(userNameTFX + captchaTFWidth, captchY, captchaTFWidth, userNamePicHeight);
+//        [self.captchaButton setTitle:@"获取验证码" forState:(UIControlStateNormal)];
+//        [self.captchaButton addTarget:self action:@selector(captchaAction) forControlEvents:(UIControlEventTouchUpInside)];
+//        self.captchaButton.backgroundColor = buttonBG;
+//        self.captchaButton.layer.cornerRadius = BtncornerRadius;
+//        self.captchaButton.titleLabel.font = [UIFont systemFontOfSize:15];
+//        [self.captchaButton setTitleColor:buttonTitleC forState:UIControlStateNormal];
+//        [self.bgImageView addSubview:self.captchaButton];
+//        
+//        self.captchaPic.hidden = YES;
+//        self.captchaTF.hidden = YES;
+//        self.captchaButton.hidden = YES;
+//        
+//        
+//        
+//        // 注册Button
+//        CGFloat registButtonWidth = 100;
+//        CGFloat registButtonX = userNamePicX;
+//        CGFloat registButtonY = captchY + userNamePicHeight + 40;
+//        CGFloat registButtonHeight = 30;
+//        
+//        CGFloat foundPwdX = registButtonX + registButtonWidth + KButtonHor;
+//        
+//        //        CGFloat okButtonX = (KScreenWidth / 2) - 30;
+//        //        CGFloat okButtonY = registButtonY + registButtonHeight + 30;
+//        //        CGFloat okButtonWidth = 60;
+//        //        CGFloat okButtonHeight = 30;
+//        
+//        CGFloat okButtonX = userNamePicX;
+//        CGFloat okButtonY = captchY + userNamePicHeight + 15;
+//        
+//        self.okY = okButtonY;
+//        CGFloat okButtonWidth = 100;
+//        CGFloat okButtonHeight = 30;
+//        
+//        self.registButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//        self.foundPwdButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//        self.okButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//        self.registButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//        
+//        if ((self.captchaPic.hidden == YES) && (self.captchaTF.hidden == YES) && self.captchaButton.hidden == YES)
+//        {
+//            CGFloat registY = pwdLabelY + userNamePicHeight + 15;
+//            CGFloat okButtonY = pwdLabelY + registButtonHeight + 40;
+//            
+//            self.registButton.frame = CGRectMake(registButtonX, registY, registButtonWidth, registButtonHeight);
+//            self.foundPwdButton.frame = CGRectMake(foundPwdX, registY, registButtonWidth, registButtonHeight);
+//            self.okButton.frame = CGRectMake(okButtonX, okButtonY, okButtonWidth, okButtonHeight);
+//        }
+//        else
+//        {
+//            self.registButton.frame = CGRectMake(registButtonX, registButtonY, registButtonWidth, registButtonHeight);
+//            self.foundPwdButton.frame = CGRectMake(foundPwdX, registButtonY, registButtonWidth, registButtonHeight);
+//            self.okButton.frame = CGRectMake(okButtonX, okButtonY, okButtonWidth, okButtonHeight);
+//        }
+//        
+//        
+//        // 找回密码Button
+//        [self.foundPwdButton setTitle:@"忘记密码?" forState:(UIControlStateNormal)];
+//        [self.foundPwdButton addTarget:self action:@selector(foundPwdAction) forControlEvents:(UIControlEventTouchUpInside)];
+//        self.foundPwdButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//        //        self.foundPwdButton.backgroundColor = buttonBG;
+//        //        [self.foundPwdButton setTintColor:buttonTitleC];
+//        [self.foundPwdButton setTintColor:[UIColor blackColor]];
+//        self.foundPwdButton.layer.cornerRadius = BtncornerRadius;
+//        [self.bgImageView addSubview:self.foundPwdButton];
+//        
+//        UIButton *regist = [UIButton buttonWithType:UIButtonTypeSystem];
+//        regist.x = self.userNamePic.x;
+//        regist.y = self.foundPwdButton.y;
+//        regist.width = self.foundPwdButton.width;
+//        regist.height = self.foundPwdButton.height;
+//        [regist setTitle:@"新用户" forState:UIControlStateNormal];
+//        [regist addTarget:self action:@selector(registAction) forControlEvents:UIControlEventTouchUpInside];
+//        //        regist.backgroundColor = buttonBG;
+//        //        [regist setTintColor:buttonTitleC];
+//        [regist setTintColor:[UIColor blackColor]];
+//        regist.layer.cornerRadius = BtncornerRadius;
+//        self.regist = regist;
+//        [self.bgImageView addSubview:regist];
+//        
+//        
 
     }
     return self;
@@ -321,6 +400,10 @@
 
 
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
 
 
 
@@ -594,6 +677,7 @@
  */
 - (void)registAction
 {
+    YYLog(@"注册");
 //    [self.pictureView endEditing:YES];
 //    RegistVC *registVC = [[RegistVC alloc] init];
 //    [self.navigationController pushViewController:registVC animated:YES];
@@ -605,9 +689,19 @@
  */
 - (void)foundPwdAction
 {
-    FindPwdVC *findPwdVC = [[FindPwdVC alloc] init];
+    YYLog(@"忘记密码");
     
-    [self.navigationController pushViewController:findPwdVC animated:YES];
+    UIWindow *window = [[UIApplication sharedApplication]keyWindow];
+    UINavigationController *nav = (UINavigationController *)window.rootViewController;
+    UIViewController *viewController = [nav.viewControllers objectAtIndex:1];
+    
+        ForgetPwdVC *vc = [[ForgetPwdVC alloc] init];
+    [viewController.navigationController pushViewController:vc animated:YES];
+    
+    
+
+    
+
 }
 
 
