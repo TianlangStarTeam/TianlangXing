@@ -394,9 +394,6 @@
     //拼接注册参数
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
-    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
-    
-    params[@"sessionid"] = sessionid;
     params[@"username"] = self.telphoneTF.text;
     params[@"value"] = password;
     params[@"checkcode"] = self.captchaTF.text;
@@ -406,8 +403,7 @@
     //设置遮盖
     [SVProgressHUD show];
     NSString *url = [NSString stringWithFormat:@"%@updateuserpasswdservlet",URL];
-//    http://192.168.1.118:8080/carservice/updateuserpasswdservlet?
-    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
+    [[AFHTTPSessionManager manager] POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
      {
      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
@@ -437,6 +433,7 @@
         case 1000:
         {
             [SVProgressHUD showSuccessWithStatus:@"找回成功！"];
+            [self.navigationController popViewControllerAnimated:YES];
             break;
         }
         case 1020:
