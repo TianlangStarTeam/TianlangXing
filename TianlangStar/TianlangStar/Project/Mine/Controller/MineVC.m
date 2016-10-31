@@ -14,7 +14,8 @@
 
 @interface MineVC ()
 
-
+/** 公钥 */
+@property (nonatomic,copy) NSString *publicKey;
 
 @end
 
@@ -22,11 +23,42 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     
-    LoginView *logView = [[LoginView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:logView];
 
+    [self getPubicKey];
+
+}
+
+
+-(NSString *) getPubicKey
+{
+    NSString *url = [NSString stringWithFormat:@"%@unlogin/sendpubkeyservlet",URL];
+    [[AFHTTPSessionManager manager]POST:url parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         YYLog(@"公钥----%@",responseObject);
+         UserInfo *userIn = [UserInfo sharedUserInfo];
+         
+         self.publicKey =responseObject[@"pubKey"];
+         //若一开始从未从服务器获取到公钥，则从本地获取公钥
+         if (_publicKey == nil )
+         {
+             self.publicKey = userIn.publicKey;
+             YYLog(@"本地公钥%@",self.publicKey);
+         }else
+         {
+             userIn.publicKey = self.publicKey;
+             [userIn synchronizeToSandBox];
+         }
+         LoginView *logView = [[LoginView alloc] initWithFrame:self.view.bounds];
+         [self.view addSubview:logView];
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         YYLog(@"公钥获取失败---%@",error);
+     }];
+    
+    return self.publicKey;
 }
 
 

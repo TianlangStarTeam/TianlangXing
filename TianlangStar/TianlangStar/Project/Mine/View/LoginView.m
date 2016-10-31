@@ -286,6 +286,9 @@
 
     //判断验证码是否可用，第一次进入时调用
 //    if (self.captchaButton.enabled == NO) return;
+    //获取验证码
+    YYLog(@"self.captchaTF.text0---%@",self.userNameTF.text);
+    [[AlertView sharedAlertView] getNumbers:self.userNameTF.text];
 
     __block int timeout=60; //倒计时时间
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -351,18 +354,20 @@
     //    }
     
     
+    UserInfo *userInfo = [UserInfo sharedUserInfo];
+    
+    
     //拼接参数
     //rsa加密
-//    NSString *password = [RSA encryptString:self.pwdTF.text publicKey:self.publicKey];
+    NSString *password = [RSA encryptString:self.pwdTF.text publicKey:userInfo.publicKey];
     //手机序列号的获取
     NSString *uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"userName"] = self.userNameTF.text;
-//    params[@"value"] = password;
+    params[@"username"] = self.userNameTF.text;
+    params[@"value"] = password;
     params[@"code"] = self.captchaTF.text;
-    
-    params[@"terminal"] = uuid;
-    //    params[@"terminal"] = @"421A6988-DA96-49FE-B99E-16820320F1BB";
+//    params[@"terminal"] = uuid;
+    params[@"terminal"] = @"421A6988-DA96-49FE-B99E-16820320F1BB";
     YYLog(@"登录--%@",params);
     
     //    YYLog(@"序列号%@",uuid);
@@ -376,12 +381,25 @@
      Int resultCode  1003 密码错误
      1001数据库没有记录
      1014账户名重复
+     
+     
+     
+     地    址:	/unlogin/userlogin
+     需要参数:	String username 用户名 (必填)
+     String value 密码 (必填)
+     String terminal 序列号（必填）
+     String  code 验证码（有就填，没有不填）
+     执行操作:	验证密码和用户名
+     Tbl_session 插入一条数据
+     Tbl_record 中插入一条数据
+     返回结果:	1000表示成功
      */
     //设置这遮盖
     
     [SVProgressHUD showWithStatus:@"正在登录"];
     
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=1",URL];
+    NSString *url = [NSString stringWithFormat:@"%@unlogin/userlogin",URL];
+    YYLog(@"url---%@",url);
     
     [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
      {         //进度
@@ -535,23 +553,7 @@
         YYLog(@"用户类型为空");
         return;
     }
-    
-    //判断是否为管理员
-    if ([userM.ID isEqualToString:@"1"])
-    {
-        //        YYLog(@"管理员");
-        //
-        //        if ([self.delegate respondsToSelector:@selector(backEachElement:)])
-        //        {
-        //            [self.delegate backEachElement:1];
-        //        }
-        //        [self.navigationController popViewControllerAnimated:YES];
-        //
-        //        return;
-        //        AdminVC *vc = [[AdminVC alloc] init];
-        //        [self.navigationController pushViewController:vc animated:YES];
-        
-    }
+
     
 }
 
