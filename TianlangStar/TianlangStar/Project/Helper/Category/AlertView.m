@@ -162,17 +162,19 @@ singleton_implementation(AlertView);
     params[@"username"] = iphoneNum;
     YYLog(@"接收验证码的手机--%@",iphoneNum);
     
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=3",URL];
-    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
+    NSString *url = [NSString stringWithFormat:@"%@sendcheckcodeservlet",URL];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    [manager POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
      {
          //进度
      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
-         YYLog(@"验证码成功----%@",responseObject);
+         YYLog(@"验证码获取成功----%@",responseObject);
          
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
-         YYLog(@"验证码失败----%@",error);
+         YYLog(@"验证码获取失败----%@",error);
          
      }];
 }

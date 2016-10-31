@@ -406,7 +406,7 @@
     //设置遮盖
     [SVProgressHUD show];
     NSString *url = [NSString stringWithFormat:@"%@updateuserpasswdservlet",URL];
-    
+//    http://192.168.1.118:8080/carservice/updateuserpasswdservlet?
     [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
      {
      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
