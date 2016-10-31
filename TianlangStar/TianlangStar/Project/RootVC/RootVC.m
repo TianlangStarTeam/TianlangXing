@@ -78,7 +78,6 @@
     tlStarVC.view.backgroundColor = [UIColor orangeColor];
     shoppingCartVC.view.backgroundColor = [UIColor orangeColor];
     mineVC.view.backgroundColor = [UIColor orangeColor];
-    
 }
 
 

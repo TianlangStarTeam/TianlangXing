@@ -9,6 +9,7 @@
 #import "MineVC.h"
 #import "LoginVC.h"
 #import "ForgetPwdVC.h"
+#import "LoginView.h"
 
 
 @interface MineVC ()
@@ -31,6 +32,9 @@
     [findBtn addTarget:self action:@selector(findBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [findBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
     [self.view addSubview:findBtn];
+    
+    LoginView *logView = [[LoginView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:logView];
 
 }
 
