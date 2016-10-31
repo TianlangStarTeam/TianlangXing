@@ -134,12 +134,12 @@
         
         pwdTF.width = userNameTF.width;
         pwdTF.height = userNameTF.height;
-        pwdTF.x = CGRectGetMaxX(pwdPic.frame) + marginX + 3;
+        pwdTF.x = CGRectGetMaxX(pwdPic.frame) + marginX -2;
         pwdTF.centerY = userView.height * 0.6;
         pwdTF.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
         
         self.pwdTF = pwdTF;
-        self.pwdTF.borderStyle = UITextBorderStyleNone;
+        self.pwdTF.borderStyle = TFborderStyle;
         self.pwdTF.placeholder = @"请输入密码";
         self.pwdTF.font = Font18;
         self.pwdTF.secureTextEntry= YES;
@@ -553,7 +553,6 @@
 {
     ForgetPwdVC *vc = [[ForgetPwdVC alloc] init];
     [self.nav pushViewController:vc animated:YES];
-
 }
 
 
