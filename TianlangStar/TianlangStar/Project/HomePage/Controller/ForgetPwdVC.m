@@ -31,7 +31,7 @@
 
 
 /** 加载输入框数组 */
--(NSArray *)fields
+- (NSArray *)fields
 {
     NSArray *views = self.view.subviews;
     NSMutableArray *fieldM = [NSMutableArray array];
@@ -57,10 +57,11 @@
 /**
  监听键盘的变化事件
  */
--(void) setupKeyboardNotification
+- (void)setupKeyboardNotification
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
 }
+
 
 
 -(void)keyboardFrameChange:(NSNotification *)notificat
@@ -137,7 +138,7 @@
         self.captchaButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
         self.captchaButton.frame = CGRectMake(captchaButtonX, captchaTFY, captchaButtonWidth, telHeight);
         [self.captchaButton setTitle:@"获取验证码" forState:(UIControlStateNormal)];
-        [self.captchaButton addTarget:self action:@selector(captchaAction) forControlEvents:(UIControlEventTouchUpInside)];
+        [self.captchaButton addTarget:self action:@selector(captchaActionForgetpwd) forControlEvents:(UIControlEventTouchUpInside)];
         [self.captchaButton setTintColor:buttonTitleC];
         [self.view addSubview:self.captchaButton];
 
@@ -263,45 +264,20 @@
 
 
 
-// 获取验证码
--(void)getNumbers:(NSString *)iphoneNum
-{
-    //设置界面的按钮显示 根据自己需求设置
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"username"] = iphoneNum;
-    YYLog(@"接收验证码的手机--%@",iphoneNum);
-    
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=3",URL];
-    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
-     {
-         //进度
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         YYLog(@"验证码成功----%@",responseObject);
-         
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-         YYLog(@"验证码失败----%@",error);
-         
-     }];
-}
-
-
-
 // 事件:获取验证码点击事件
-- (void)captchaAction
+- (void)captchaActionForgetpwd
 {
     //判断手机号输入是否正确
     if (![self.telphoneTF.text isMobileNumber])
     {
-        [self addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
         return;
     }
     
     //判断验证码是否可用，第一次进入时调用
     if (!self.selectedBTN)
     {
-        [self getNumbers:self.telphoneTF.text];
+        [[AlertView sharedAlertView] getNumbers:self.telphoneTF.text];
     }
     
     __block int timeout=30; //倒计时时间
@@ -309,7 +285,7 @@
     dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
     dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
     dispatch_source_set_event_handler(_timer, ^{
-        if(timeout<=0)
+        if(timeout <= 0)
         { //倒计时结束，关闭
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^
@@ -343,18 +319,6 @@
 
 
 
--(void)addAlertMessage:(NSString *)message title:(NSString *)title
-{
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) { }]];
-    
-    [self presentViewController:alert animated:YES completion:^ {  }];
-}
-
-
-
 // 事件:提交按钮点击事件
 - (void)handAction
 {
@@ -369,21 +333,21 @@
         UITextField * field= self.fields[i];
         if (field.text.length ==0 || field.text ==nil)
         {
-            [self addAlertMessage:@"信息不全，请核对！" title:@"提示"];
+            [[AlertView sharedAlertView] addAlertMessage:@"信息不全，请核对！" title:@"提示"];
             return;
         }}
     
     //电话号
     if ( ![self.telphoneTF.text isMobileNumber])
     {
-        [self addAlertMessage:@"手机号输入有误，请核对!" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"手机号输入有误，请核对!" title:@"提示"];
         return;
     }
     //密码
     if (! (self.pwdTF.text.length >5 && self.pwdTF.text.length <33) )
     {
         
-        [self addAlertMessage:@"密码输入错误，请输入6-32位密码！" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"密码输入错误，请输入6-32位密码！" title:@"提示"];
         return;
     }
     
@@ -391,30 +355,36 @@
     if (! [self.okPwdTF.text isEqualToString:self.pwdTF.text] )
     {
         
-        [self addAlertMessage:@"密码输入不一致，请核对！" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"密码输入不一致，请核对！" title:@"提示"];
         return;
     }
     
     //验证码
     if (!(self.captchaTF.text.length == 6))
     {
-        [self addAlertMessage:@"验证码输入有误，请核对！" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"验证码输入有误，请核对！" title:@"提示"];
         return;
     }
     
     /*
      忘记密码
-     地    址:	http://192.168.10.114:8080/yysj/userservlet?movtion=5
-     需要参数:	String username 用户名 (必填)
+     地    址:	http://192.168.10.114:8080/carservice/updateuserpasswdservlet
+     需要参数:	
+     String username 用户名 (必填)
      String password 密码 (必填)
      String repassword 确认密码 (必填)
-     String checkCode 验证码
+     String checkcode 验证码
      请求方式	POST
      执行操作:	当前用户忘记密码时，通过这个接口进行更改密码。
      返回结果:	Int resultCode  1000表示成功
-     Int resultCode  1006 表示参数中有null
-     Int resultCode  1007表示没有登录
-     Int resultCode  1021  表示用户名不存在
+     Int resultCode  1000表示成功
+     Int resultCode  1001表示数据库没有数据
+     Int resultCode  1007用户没有登录
+     Int resultCode  1021 用户不存在
+     Int resultCode  1008 验证码错误
+     Int resultCode  1015 验证码不批配
+     Int resultCode  1020 修改操作没有成功
+     Int resultCode  1005 接口异常
      */
     
     UserInfo *userIn = [UserInfo sharedUserInfo];
@@ -424,21 +394,24 @@
     //拼接注册参数
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    
+    params[@"sessionid"] = sessionid;
     params[@"username"] = self.telphoneTF.text;
     params[@"value"] = password;
-    params[@"checkCode"] = self.captchaTF.text;
+    params[@"checkcode"] = self.captchaTF.text;
     
     YYLog(@"params----%@",params);
     
     //设置遮盖
     [SVProgressHUD show];
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=5",URL];
+    NSString *url = [NSString stringWithFormat:@"%@updateuserpasswdservlet",URL];
     
     [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
      {
      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
-         YYLog(@"%@找回密码返回==========",responseObject);
+         YYLog(@"找回密码解析成功========%@",responseObject);
          //1.移除遮盖
          [SVProgressHUD setMinimumDismissTimeInterval:3];
          
@@ -449,7 +422,7 @@
          
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
-         YYLog(@"找回密码失败失败----%@",error);
+         YYLog(@"找回密码解析失败----%@",error);
          // 显示失败信息
          [SVProgressHUD showErrorWithStatus:@"加载推荐信息失败!"];
      }];
