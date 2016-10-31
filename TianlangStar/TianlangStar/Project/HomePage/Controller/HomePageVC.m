@@ -13,6 +13,13 @@
 
 @interface HomePageVC ()
 
+/** 添加收藏 */
+@property (nonatomic,strong) UIButton *addCollectionButton;
+/** 取消收藏 */
+@property (nonatomic,strong) UIButton *cancleCollectionButton;
+/** 获取全部收藏物 */
+@property (nonatomic,strong) UIButton *allCollectionButton;
+
 @end
 
 @implementation HomePageVC
@@ -21,7 +28,41 @@
     [super viewDidLoad];
     
     
+    // 添加收藏
+    self.addCollectionButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.addCollectionButton.frame = CGRectMake(30, 100, 100, 44);
+    [self.addCollectionButton setTitle:@"添加收藏" forState:(UIControlStateNormal)];
+    [self.addCollectionButton addTarget:self action:@selector(collectionAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.addCollectionButton];
+    
 }
+/**
+ *  添加收藏的点击事件
+ */
+- (void)collectionAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@addtocollectionservlet",URL];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionid"] = sessionid;
+    parameters[@"id"] = @"1";
+    parameters[@"type"] = @"1";// 1:物品 2:服务
+    
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        YYLog(@"添加收藏成功-%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        YYLog(@"添加收藏失败-%@",error);
+        
+    }];
+}
+
+
+
 
 
 - (void)didReceiveMemoryWarning {
