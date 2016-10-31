@@ -22,7 +22,7 @@ singleton_implementation(AlertView);
 
 #pragma mark====懒加载=====
 
--(UIViewController *)rootVC
+- (UIViewController *)rootVC
 {
     if (!_rootVC)
     {
@@ -145,7 +145,7 @@ singleton_implementation(AlertView);
  *  @param message 提示信息
  *  @param title   标题
  */
--(void)addAlertMessage:(NSString *)message title:(NSString *)title
+- (void)addAlertMessage:(NSString *)message title:(NSString *)title
 {
 
     NSLog(@"%@",title);
@@ -159,6 +159,27 @@ singleton_implementation(AlertView);
 }
 
 
+//获取验证码
+- (void)getNumbers:(NSString *)iphoneNum
+{
+    //设置界面的按钮显示 根据自己需求设置
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"username"] = iphoneNum;
+    YYLog(@"接收验证码的手机--%@",iphoneNum);
+    
+    NSString *url = [NSString stringWithFormat:@"%@unlogin/sendcheckcodeservlet",URL];
+http://192.168.1.118:8080/carservice/unlogin/sendcheckcodeservlet?username=18789494202
+    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
+     {
+         //进度
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         YYLog(@"获取验证码成功----%@",responseObject);
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         YYLog(@"获取验证码失败----%@",error);
+     }];
+}
 
 
 

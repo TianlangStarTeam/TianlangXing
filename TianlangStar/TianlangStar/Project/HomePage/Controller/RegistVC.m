@@ -35,6 +35,8 @@
     self.selectedBTN = NO;// 初始状态
     
     [self leftItem];// 返回按钮
+    
+    [self getPubicKey];// 获取公钥
 }
 
 
@@ -58,12 +60,13 @@
  */
 - (NSString *)getPubicKey
 {
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=4",URL];
-    [[AFHTTPSessionManager manager]POST:url parameters:nil progress:^(NSProgress * _Nonnull uploadProgress)
+    NSString *url = [NSString stringWithFormat:@"%@unlogin/sendpubkeyservlet",URL];
+    [[AFHTTPSessionManager manager] POST:url parameters:nil progress:^(NSProgress * _Nonnull uploadProgress)
      {
      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
-         YYLog(@"注册公钥----%@",responseObject);
+         YYLog(@"获取公钥信息----%@",responseObject);
+         
          //若一开始从未从服务器获取到公钥，则从本地获取公钥
          if (_publicKey == nil )
          {
@@ -73,8 +76,10 @@
          }
          
          self.publicKey =responseObject[@"pubKey"];
+         
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         YYLog(@"注册失败---%@",error);
+         
+         YYLog(@"获取公钥信息失败---%@",error);
      }];
     
     return self.publicKey;
@@ -256,9 +261,6 @@
          */
         self.pwdTF.secureTextEntry = YES;
         self.okPwdTF.secureTextEntry = YES;
-        
-        
-        
     }
     
     return self;
@@ -285,44 +287,20 @@
 
 
 
-
-//获取验证码
--(void)getNumbers:(NSString *)iphoneNum
-{
-    //设置界面的按钮显示 根据自己需求设置
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"username"] = iphoneNum;
-    YYLog(@"接收验证码的手机--%@",iphoneNum);
-    
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=3",URL];
-    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
-     {
-         //进度
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         YYLog(@"验证码成功----%@",responseObject);
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
-         YYLog(@"验证码失败----%@",error);
-     }];
-}
-
-
-
-/** 事件:获取验证码 */
+/** 事件:获取验证码的点击事件 */
 - (void)captchaAction
 {
     //判断手机号输入是否正确
     if (![self.telphoneTF.text isMobileNumber])
     {
-        [self addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
         return;
     }
     
     //判断验证码是否可用，第一次进入时调用
     if (!self.selectedBTN)
     {
-        [self getNumbers:self.telphoneTF.text];
+        [[AlertView sharedAlertView] getNumbers:self.telphoneTF.text];
     }
     
     __block int timeout=60; //倒计时时间
@@ -364,14 +342,6 @@
 
 }
 
--(void)addAlertMessage:(NSString *)message title:(NSString *)title
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
 
 
 /** 事件:确定注册按钮的点击事件 */
@@ -384,40 +354,40 @@
             self.pwdTF.text == nil || self.pwdTF.text.length ==0           ||
             self.okPwdTF.text == nil || self.okPwdTF.text.length ==0)
         {
-            [self addAlertMessage:@"信息不全，请核对！" title:@"提示"];
+            [[AlertView sharedAlertView] addAlertMessage:@"信息不全，请核对！" title:@"提示"];
             return;
         }
         
         //电话号
         if ( ![self.telphoneTF.text isMobileNumber])
         {
-            [self addAlertMessage:@"手机号有误，请核对!" title:@"提示"];
+            [[AlertView sharedAlertView] addAlertMessage:@"手机号有误，请核对!" title:@"提示"];
             return;
         }
         else if (! (self.pwdTF.text.length >5 && self.pwdTF.text.length <18))
             //密码
         {
-            [self addAlertMessage:@"密码错误，请输入6-18位密码！" title:@"提示"];
+            [[AlertView sharedAlertView] addAlertMessage:@"密码错误，请输入6-18位密码！" title:@"提示"];
             return;
         }
         
         //确认密码
         else if (! [self.okPwdTF.text isEqualToString:self.pwdTF.text] )
         {
-            [self addAlertMessage:@"密码不一致，请核对！" title:@"提示"];
+            [[AlertView sharedAlertView] addAlertMessage:@"密码不一致，请核对！" title:@"提示"];
             return;
         }
         
         //验证码
         if (!(self.captchaTF.text.length == 6))
         {
-            [self addAlertMessage:@"验证码不能为空，请核对！" title:@"提示"];
+            [[AlertView sharedAlertView] addAlertMessage:@"验证码不能为空，请核对！" title:@"提示"];
             return;
         }
         
         if (![self.captchaTF.text isPureInt])
         {
-            [self addAlertMessage:@"验证码不能为空，请核对！" title:@"提示"];
+            [[AlertView sharedAlertView] addAlertMessage:@"验证码不能为空，请核对！" title:@"提示"];
             return;
         }
         
@@ -429,7 +399,7 @@
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
         params[@"username"] = self.telphoneTF.text;
         params[@"value"] = password;
-        params[@"checkCode"] = self.captchaTF.text;
+        params[@"checkcode"] = self.captchaTF.text;
         
         /*
          Int resultCode  1006 表示参数中有null
@@ -445,7 +415,7 @@
         // 显示指示器
         [SVProgressHUD setMinimumDismissTimeInterval:3];
         [SVProgressHUD showWithStatus:@"正在注册"];
-        NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=2",URL];
+        NSString *url = [NSString stringWithFormat:@"%@unlogin/registeruserservlet",URL];
         [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
          {
          } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)

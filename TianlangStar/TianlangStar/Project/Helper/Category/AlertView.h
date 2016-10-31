@@ -35,7 +35,8 @@ singleton_interface(AlertView);
 //-(BOOL)CheckResult:(NSInteger)resultCode;
 
 
-
+//获取验证码
+- (void)getNumbers:(NSString *)iphoneNum;
 
 
 @end

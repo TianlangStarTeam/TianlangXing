@@ -263,7 +263,7 @@
 
 
 
-//获取验证码
+// 获取验证码
 -(void)getNumbers:(NSString *)iphoneNum
 {
     //设置界面的按钮显示 根据自己需求设置
@@ -278,9 +278,11 @@
      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
          YYLog(@"验证码成功----%@",responseObject);
+         
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
          YYLog(@"验证码失败----%@",error);
+         
      }];
 }
 
