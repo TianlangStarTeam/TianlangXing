@@ -27,6 +27,16 @@
 @property (nonatomic,weak) UIButton *foundPwdButton;
 @property (nonatomic,weak) UIButton *okButton;
 
+
+/** 用户登录的容器 */
+@property (nonatomic,weak) UIView *userView;
+
+/** 用户登录的密码容器 */
+@property (nonatomic,weak) UIView *passWordView;
+
+/** 用户登录的验证码 */
+@property (nonatomic,weak) UIView *checkView;
+
 /** sessionId */
 @property (nonatomic,copy) NSString *sessionId;
 
@@ -81,6 +91,7 @@
         userView.x = KScreenWidth * 0.06;
         userView.width = KScreenWidth - 2 * userView.x;
         userView.height = KScreenHeight * 0.07;
+        self.userView = userView;
         
         [self.bgImageView addSubview:userView];
         
@@ -118,6 +129,7 @@
         passWordView.x = userView.x;
         passWordView.width = userView.width;
         passWordView.height = userView.height;
+        self.passWordView = passWordView;
         [self.bgImageView addSubview:passWordView];
         
         
@@ -157,6 +169,62 @@
         //        [passWordView addSubview:cutView];
         
         
+        
+        
+        //验证码的输入容器
+        UIView *checkView = [[UIView alloc] init];
+        checkView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.4];
+//        checkView.backgroundColor = [UIColor redColor];
+//        checkView.y = CGRectGetMaxY(passWordView.frame) + KScreenHeight * 0.02;
+        checkView.y = userView.y - userView.height - 16;
+        checkView.x = userView.x;
+        checkView.width = userView.width;
+        checkView.height = userView.height;
+        self.checkView = checkView;
+        [self.bgImageView addSubview:checkView];
+
+
+        //验证码
+        UIImageView * captchaPic = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yanzhengma"]];
+        captchaPic.x = marginX + 3;
+        captchaPic.centerY = checkView.height * 0.5;
+        self.captchaPic = captchaPic;
+        [checkView addSubview:captchaPic];
+        
+        
+        
+        UIButton *captchaButton = [[UIButton alloc] init];
+        captchaButton.width = 100;
+        captchaButton.height = 40;
+        captchaButton.x = checkView.width - 100;
+        captchaButton.centerY = captchaPic.centerY;
+        [captchaButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [captchaButton setTitleColor:[UIColor redColor] forState:UIControlStateDisabled];
+        [captchaButton addTarget:self action:@selector(captchaAction) forControlEvents:UIControlEventTouchUpInside];
+        [checkView addSubview:captchaButton];
+        
+        // 请输入验证码
+        UITextField *captchaTF = [[UITextField alloc] init];
+        
+        captchaTF.width = userNameTF.width - captchaButton.width;
+        captchaTF.height = userNameTF.height;
+        captchaTF.x = CGRectGetMaxX(pwdPic.frame) + marginX -2;
+        captchaTF.y = captchaButton.y;
+        captchaTF.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
+        
+        self.captchaTF = captchaTF;
+        self.captchaTF.borderStyle = TFborderStyle;
+        self.captchaTF.placeholder = @"请输入验证码";
+        self.captchaTF.font = Font18;
+        self.captchaTF.secureTextEntry= YES;
+        self.captchaTF.textColor = [UIColor whiteColor];
+        self.captchaTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [checkView addSubview:self.captchaTF];
+        
+        
+
+        
+
         //新用户的和忘记密码
         UIButton *registButton = [[UIButton alloc ] init];
         registButton.x = KScreenWidth * 0.07;
@@ -201,107 +269,62 @@
         [self.bgImageView addSubview:self.okButton];
         
         
-        
-        
-        //        // 验证码
-        //        CGFloat captchY = pwdLabelY + userNamePicHeight + Kver;
-        //        self.captchaPic = [[UIImageView alloc] initWithFrame:CGRectMake(userNamePicX, captchY, userNamePicWidth, userNamePicHeight)];
-        //        self.captchaPic.image = [UIImage imageNamed:@"yanzhengma"];
-        //        [self.view addSubview:self.captchaPic];
-        //        // 请输入验证码
-        //        CGFloat captchaTFWidth = (KScreenWidth - 2 * userNamePicX - userNamePicWidth - Khor) / 2;
-        //        self.captchaTF = [[UITextField alloc] initWithFrame:CGRectMake(userNameTFX, captchY, captchaTFWidth, userNamePicHeight)];
-        //        self.captchaTF.borderStyle = TFborderStyle;
-        //        self.captchaTF.placeholder = @"请输入验证码";
-        //        self.captchaTF.font = Font14;
-        //        self.captchaTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        //        [self.bgImageView addSubview:self.captchaTF];
-        //
-        //        // 点击确认验证码
-        //        self.captchaButton = [[UIButton alloc] init];
-        //        self.captchaButton.frame = CGRectMake(userNameTFX + captchaTFWidth, captchY, captchaTFWidth, userNamePicHeight);
-        //        [self.captchaButton setTitle:@"获取验证码" forState:(UIControlStateNormal)];
-        //        [self.captchaButton addTarget:self action:@selector(captchaAction) forControlEvents:(UIControlEventTouchUpInside)];
-        //        self.captchaButton.backgroundColor = buttonBG;
-        //        self.captchaButton.layer.cornerRadius = BtncornerRadius;
-        //        self.captchaButton.titleLabel.font = [UIFont systemFontOfSize:15];
-        //        [self.captchaButton setTitleColor:buttonTitleC forState:UIControlStateNormal];
-        //        [self.bgImageView addSubview:self.captchaButton];
-        //
-        //        self.captchaPic.hidden = YES;
-        //        self.captchaTF.hidden = YES;
-        //        self.captchaButton.hidden = YES;
-        //
-        //
-        //
-        //        // 注册Button
-        //        CGFloat registButtonWidth = 100;
-        //        CGFloat registButtonX = userNamePicX;
-        //        CGFloat registButtonY = captchY + userNamePicHeight + 40;
-        //        CGFloat registButtonHeight = 30;
-        //
-        //        CGFloat foundPwdX = registButtonX + registButtonWidth + KButtonHor;
-        //
-        //        //        CGFloat okButtonX = (KScreenWidth / 2) - 30;
-        //        //        CGFloat okButtonY = registButtonY + registButtonHeight + 30;
-        //        //        CGFloat okButtonWidth = 60;
-        //        //        CGFloat okButtonHeight = 30;
-        //
-        //        CGFloat okButtonX = userNamePicX;
-        //        CGFloat okButtonY = captchY + userNamePicHeight + 15;
-        //
-        //        self.okY = okButtonY;
-        //        CGFloat okButtonWidth = 100;
-        //        CGFloat okButtonHeight = 30;
-        //
-        //        self.registButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        //        self.foundPwdButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        //        self.okButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        //        self.registButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        //
-        //        if ((self.captchaPic.hidden == YES) && (self.captchaTF.hidden == YES) && self.captchaButton.hidden == YES)
-        //        {
-        //            CGFloat registY = pwdLabelY + userNamePicHeight + 15;
-        //            CGFloat okButtonY = pwdLabelY + registButtonHeight + 40;
-        //
-        //            self.registButton.frame = CGRectMake(registButtonX, registY, registButtonWidth, registButtonHeight);
-        //            self.foundPwdButton.frame = CGRectMake(foundPwdX, registY, registButtonWidth, registButtonHeight);
-        //            self.okButton.frame = CGRectMake(okButtonX, okButtonY, okButtonWidth, okButtonHeight);
-        //        }
-        //        else
-        //        {
-        //            self.registButton.frame = CGRectMake(registButtonX, registButtonY, registButtonWidth, registButtonHeight);
-        //            self.foundPwdButton.frame = CGRectMake(foundPwdX, registButtonY, registButtonWidth, registButtonHeight);
-        //            self.okButton.frame = CGRectMake(okButtonX, okButtonY, okButtonWidth, okButtonHeight);
-        //        }
-        //
-        //
-        //        // 找回密码Button
-        //        [self.foundPwdButton setTitle:@"忘记密码?" forState:(UIControlStateNormal)];
-        //        [self.foundPwdButton addTarget:self action:@selector(foundPwdAction) forControlEvents:(UIControlEventTouchUpInside)];
-        //        self.foundPwdButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        //        //        self.foundPwdButton.backgroundColor = buttonBG;
-        //        //        [self.foundPwdButton setTintColor:buttonTitleC];
-        //        [self.foundPwdButton setTintColor:[UIColor blackColor]];
-        //        self.foundPwdButton.layer.cornerRadius = BtncornerRadius;
-        //        [self.bgImageView addSubview:self.foundPwdButton];
-        //
-        //        UIButton *regist = [UIButton buttonWithType:UIButtonTypeSystem];
-        //        regist.x = self.userNamePic.x;
-        //        regist.y = self.foundPwdButton.y;
-        //        regist.width = self.foundPwdButton.width;
-        //        regist.height = self.foundPwdButton.height;
-        //        [regist setTitle:@"新用户" forState:UIControlStateNormal];
-        //        [regist addTarget:self action:@selector(registAction) forControlEvents:UIControlEventTouchUpInside];
-        //        //        regist.backgroundColor = buttonBG;
-        //        //        [regist setTintColor:buttonTitleC];
-        //        [regist setTintColor:[UIColor blackColor]];
-        //        regist.layer.cornerRadius = BtncornerRadius;
-        //        self.regist = regist;
-        //        [self.bgImageView addSubview:regist];
     }
     return self;
 }
+
+
+/** 发送验证码点击按钮 */
+-(void)captchaAction
+{
+    //判断手机号输入是否正确
+    if (![self.userNameTF.text isMobileNumber])
+    {
+        [[AlertView sharedAlertView] addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
+        return;
+    }
+
+    //判断验证码是否可用，第一次进入时调用
+//    if (self.captchaButton.enabled == NO) return;
+
+    __block int timeout=60; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+    if(timeout<=0)
+    { //倒计时结束，关闭
+    dispatch_source_cancel(_timer);
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+    //记录按钮的是否可以点击事件
+    self.captchaButton.enabled = NO;
+    [self.captchaButton setTitle:@"重发验证码" forState:UIControlStateNormal];
+    self.captchaButton.userInteractionEnabled = YES; });
+    }else
+    {
+    int seconds = timeout % 60;
+    self.captchaButton.enabled = YES;
+
+    NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
+    dispatch_async(dispatch_get_main_queue(), ^
+         {
+             //设置界面的按钮显示 根据自己需求设置
+                     YYLog(@"____%@",strTime);
+             self.captchaButton.enabled = NO;
+             [UIView beginAnimations:nil context:nil];
+             [UIView setAnimationDuration:1];
+             [self.captchaButton setTitle:[NSString stringWithFormat:@"%@秒后重发",strTime] forState:UIControlStateNormal];
+             [self layoutIfNeeded];
+             [UIView commitAnimations];
+             self.captchaButton.userInteractionEnabled = NO;
+         });
+    timeout--;
+    }
+    });
+    dispatch_resume(_timer);
+}
+
 
 
 //登录按钮的点击事件
