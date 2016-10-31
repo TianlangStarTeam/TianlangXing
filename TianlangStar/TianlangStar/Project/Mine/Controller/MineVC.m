@@ -62,6 +62,17 @@
 }
 
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    YYLog(@"86932");
+    
+    
+    UserInfo *userInfo = [UserInfo sharedUserInfo];
+    YYLog(@"userInfo--%@",userInfo.username);
+
+}
+
+
 
 
 

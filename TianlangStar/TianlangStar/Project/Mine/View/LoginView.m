@@ -290,44 +290,42 @@
     YYLog(@"self.captchaTF.text0---%@",self.userNameTF.text);
     [[AlertView sharedAlertView] getNumbers:self.userNameTF.text];
 
-    __block int timeout=60; //倒计时时间
+    __block int timeout=30; //倒计时时间
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
     dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
     dispatch_source_set_event_handler(_timer, ^{
-    if(timeout<=0)
-    { //倒计时结束，关闭
-    dispatch_source_cancel(_timer);
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-    //记录按钮的是否可以点击事件
-    self.captchaButton.enabled = NO;
-    [self.captchaButton setTitle:@"重发验证码" forState:UIControlStateNormal];
-    self.captchaButton.userInteractionEnabled = YES; });
-    }else
-    {
-    int seconds = timeout % 60;
-    self.captchaButton.enabled = YES;
-
-    NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
-    dispatch_async(dispatch_get_main_queue(), ^
-         {
-             //设置界面的按钮显示 根据自己需求设置
-                     YYLog(@"____%@",strTime);
-             self.captchaButton.enabled = NO;
-             [UIView beginAnimations:nil context:nil];
-             [UIView setAnimationDuration:1];
-             [self.captchaButton setTitle:[NSString stringWithFormat:@"%@秒后重发",strTime] forState:UIControlStateNormal];
-             [self layoutIfNeeded];
-             [UIView commitAnimations];
-             self.captchaButton.userInteractionEnabled = NO;
-         });
-    timeout--;
-    }
+        if(timeout <= 0)
+        { //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               //记录按钮的是否可以点击事件
+                               self.captchaButton.enabled = NO;
+                               [self.captchaButton setTitle:@"重发验证码" forState:UIControlStateNormal];
+                               self.captchaButton.userInteractionEnabled = YES; });
+        }else
+        {
+            int seconds = timeout % 30;
+            self.captchaButton.enabled = YES;
+            
+            NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               //设置界面的按钮显示 根据自己需求设置
+                               //        YYLog(@"____%@",strTime);
+                               self.captchaButton.enabled = YES;
+                               [UIView beginAnimations:nil context:nil];
+                               [UIView setAnimationDuration:1];
+                               [self.captchaButton setTitle:[NSString stringWithFormat:@"%@秒后重发",strTime] forState:UIControlStateNormal];
+                               [UIView commitAnimations];
+                               self.captchaButton.userInteractionEnabled = NO;
+                           });
+            timeout--;
+        }
     });
     dispatch_resume(_timer);
 }
-
 
 
 //登录按钮的点击事件
@@ -462,7 +460,9 @@
             userIn.userID = self.userM.ID;
             userIn.userType = [NSString stringWithFormat:@"%ld",(long)self.userM.type];
             userIn.headerpic = self.userM.headerpic;
-            userIn.employeeName = self.userM.employeeName;
+            userIn.membername = self.userM.membername;
+    
+            
             
             [userIn synchronizeToSandBox];
             //2.界面跳转——>登录界面
@@ -509,9 +509,7 @@
             self.foundPwdButton.y = self.okY;
             self.okButton.y = CGRectGetMaxY(self.regist.frame) + 20;
             
-            self.captchaPic.hidden = NO;
-            self.captchaTF.hidden = NO;
-            self.captchaButton.hidden = NO;
+
             YYLog(@"用户名在数据库中已经存在");
             return;
             break;

@@ -33,11 +33,15 @@
 @property (nonatomic,assign) BOOL isstop; //bu tong
 /** 邮箱地址 */
 @property (nonatomic,copy) NSString *email;
+
+/** 上次修改时间 */
+@property (nonatomic,copy) NSString *lasttime;
+
 /** 备注及公司简单介绍 */
 @property (nonatomic,copy) NSString *instruction;
 
 /** 员工姓名 */
-@property (nonatomic,copy) NSString *employeeName;
+@property (nonatomic,copy) NSString *membername;
 
 /** 员工工号 */
 @property (nonatomic,copy) NSString *employeeId;

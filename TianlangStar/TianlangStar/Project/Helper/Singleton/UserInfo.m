@@ -27,7 +27,7 @@ singleton_implementation(UserInfo);
     [defaults setObject:self.RSAsessionId forKey:RSASessionID];
     [defaults setObject:self.userID forKey:userId];
     [defaults setObject:self.userType forKey:userTYpe];
-    [defaults setObject:self.employeeName forKey:EmployeeName];
+    [defaults setObject:self.membername forKey:EmployeeName];
     [defaults setObject:self.headerpic forKey:Headerpic];
     [defaults setBool:self.isLogin forKey:@"isLogin"];
     [defaults setBool:self.isQuit forKey:@"isQuit"];
@@ -45,7 +45,7 @@ singleton_implementation(UserInfo);
     self.userID = [defaults objectForKey:userId];
     self.userType = [defaults objectForKey:userTYpe];
     self.headerpic = [defaults objectForKey:Headerpic];
-    self.employeeName = [defaults objectForKey:EmployeeName];
+    self.membername = [defaults objectForKey:EmployeeName];
     self.isLogin = [defaults boolForKey:@"isLogin"];
     self.isQuit = [defaults boolForKey:@"isQuit"];
 }

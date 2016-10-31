@@ -11,7 +11,7 @@ singleton_interface(UserInfo);
 /** 登录用户名 */
 @property(nonatomic,copy)NSString *username;
 /** 员工姓名 */
-@property(nonatomic,copy)NSString *employeeName;
+@property(nonatomic,copy)NSString *membername;
 /** 用户头像URL */
 @property(nonatomic,copy)NSString *headerpic;
 /** 密码 */

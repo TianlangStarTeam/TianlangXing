@@ -139,7 +139,7 @@
             userIn.userID = self.userM.ID;
             userIn.userType = [NSString stringWithFormat:@"%ld",(long)self.userM.type];
             userIn.headerpic = self.userM.headerpic;
-            userIn.employeeName = self.userM.employeeName;
+            userIn.membername = self.userM.membername;
             
             [userIn synchronizeToSandBox];
             //2.界面跳转——>登录界面
