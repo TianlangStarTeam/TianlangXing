@@ -402,7 +402,7 @@
     
     //设置遮盖
     [SVProgressHUD show];
-    NSString *url = [NSString stringWithFormat:@"%@updateuserpasswdservlet",URL];
+    NSString *url = [NSString stringWithFormat:@"%@unlogin/updateuserpasswdservlet",URL];
     [[AFHTTPSessionManager manager] POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
      {
      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
