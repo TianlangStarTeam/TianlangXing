@@ -138,7 +138,7 @@
             userIn.publicKey = self.publicKey;
             userIn.RSAsessionId = RSASessionID;
             userIn.userID = self.userM.ID;
-            userIn.userType = [NSString stringWithFormat:@"%ld",(long)self.userM.type];
+            userIn.userType = self.userM.type;
             userIn.headerpic = self.userM.headerpic;
             userIn.membername = self.userM.membername;
             
