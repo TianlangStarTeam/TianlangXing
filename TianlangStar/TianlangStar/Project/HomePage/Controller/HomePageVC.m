@@ -53,7 +53,7 @@
     NSString *url = [NSString stringWithFormat:@"%@addtocollectionservlet",URL];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
-    parameters[@"sessionid"] = sessionid;
+    parameters[@"sessionId"] = sessionid;
     parameters[@"id"] = @"1";
     parameters[@"type"] = @"1";// 1:物品 2:服务
     

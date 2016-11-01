@@ -26,4 +26,16 @@
 {
     return [NSString stringWithFormat:@"%@%@",picURL,_headerpic];
 }
+
+
+-(NSString *)lasttime
+{
+    NSString * timeStampString = _lasttime;
+    NSTimeInterval _interval=[timeStampString doubleValue] / 1000.0;
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
+    NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
+    [objDateformat setDateFormat:@"yyyy-MM-dd"];
+    
+    return [objDateformat stringFromDate: date];
+}
 @end
