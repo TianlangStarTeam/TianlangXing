@@ -13,7 +13,6 @@
 /** RSASessionID */
 @property (nonatomic,copy) NSString *RSASessionID;
 
-/** 公钥 */
-@property (nonatomic,copy) NSString *publicKey;
+
 
 @end

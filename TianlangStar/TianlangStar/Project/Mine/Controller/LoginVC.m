@@ -68,17 +68,16 @@
     [super viewDidLoad];
     self.title = @"登录";
 
-    //获取公钥
+    //获取公钥并弹出登录框
     [self getPubicKey];
-    
-    [self setUpLogin];
+
 }
 
 
 /**
  *  获取公钥
  */
--(NSString *) getPubicKey
+-(void) getPubicKey
 {
     NSString *url = [NSString stringWithFormat:@"%@unlogin/sendpubkeyservlet",URL];
     [[AFHTTPSessionManager manager]POST:url parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -86,19 +85,21 @@
      {
         YYLog(@"公钥----%@",responseObject);
         self.publicKey =responseObject[@"pubKey"];
+
+
         //若一开始从未从服务器获取到公钥，则从本地获取公钥
-        if (_publicKey == nil )
+        if (!_publicKey)
         {
             UserInfo *userIn = [UserInfo sharedUserInfo];
-            self.publicKey = userIn.publicKey;
-            YYLog(@"本地公钥%@",self.publicKey);
+            userIn.publicKey = self.publicKey;
+            [userIn synchronizeToSandBox];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+         //登录
+         [self setUpLogin];
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
-        YYLog(@"公钥获取失败---%@",error);
+         YYLog(@"公钥获取失败---%@",error);
     }];
-    
-    return self.publicKey;
 }
 
 

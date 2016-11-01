@@ -414,8 +414,6 @@
          //3记录sessionID,和用户模型数据
          if (result == 1000)//如果登陆成功才能取出sessionID，否则为空报错
          {
-             [UserInfo sharedUserInfo].isLogin = YES;
-             
              //获取sessionId
              NSNumber * mun = responseObject[@"obj"][@"sessionId"];
              self.sessionId = [NSString stringWithFormat:@"%@",mun];
@@ -461,18 +459,16 @@
             userIn.userType = [NSString stringWithFormat:@"%ld",(long)self.userM.type];
             userIn.headerpic = self.userM.headerpic;
             userIn.membername = self.userM.membername;
-    
-            
-            
+            userIn.isLogin = YES;
+
             [userIn synchronizeToSandBox];
-            //2.界面跳转——>登录界面
-            [self jupeToPage:self.userM];
+            [self removeFromSuperview];
+
             break;
         }
         case 1001://数据库中没有记录
         {
             YYLog(@"数据库中没有记录");
-            //            [self addAlertMessage:@"用户名或密码错误！" title:@"提示"];
             [[AlertView sharedAlertView]addAlertMessage:@"用户名或密码错误！" title:@"提示"];
             return;
             break;
@@ -480,7 +476,6 @@
         case 1003://密码错误
         {
             YYLog(@"用户密码错误");
-            //            [self addAlertMessage:@"用户名或密码错误！" title:@"提示"];
             [[AlertView sharedAlertView]addAlertMessage:@"用户名或密码错误！" title:@"提示"];
             return;
             break;
@@ -488,7 +483,6 @@
         case 1006://参数中有空
         {
             YYLog(@"参数中有空");
-            
             [[AlertView sharedAlertView]addAlertMessage:@"输入有误，请核对！" title:@"提示"];
             return;
             break;
@@ -503,8 +497,6 @@
         case 1013://用户名在数据库中已经存在，需要发验码进行验证
         {
             [[AlertView sharedAlertView]addAlertMessage:@"登录设备发生改变，请输入验证码验证！" title:@"提示"];
-            
-            //            self.captchaTF.y = self.capY;
             self.regist.y = self.okY;
             self.foundPwdButton.y = self.okY;
             self.okButton.y = CGRectGetMaxY(self.regist.frame) + 20;
@@ -540,24 +532,6 @@
 }
 
 
-/**
- *  跳转界面的判断并处理
- */
--(void)jupeToPage:(UserModel *)userM
-{
-    
-    if (!userM)
-    {
-        YYLog(@"用户类型为空");
-        return;
-    }
-
-    
-}
-
-
-
-
 
 /**
  *  注册
@@ -576,6 +550,16 @@
 {
     ForgetPwdVC *vc = [[ForgetPwdVC alloc] init];
     [self.nav pushViewController:vc animated:YES];
+}
+
+
+/**
+ *  控制器销毁
+ */
+-(void)dismisss
+{
+    [self removeFromSuperview];
+
 }
 
 

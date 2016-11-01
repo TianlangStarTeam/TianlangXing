@@ -26,7 +26,7 @@ singleton_interface(UserInfo);
 @property(nonatomic,copy)NSString *userID;
 
 /** 当前用户的类型 */
-@property (nonatomic,copy) NSString *userType;
+@property (nonatomic,assign) NSInteger userType;
 
 // 是否为登录状态
 @property (nonatomic,assign) BOOL isLogin;

@@ -24,8 +24,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //判断是否登录
+    if (![UserInfo sharedUserInfo].isLogin)
+    {
+          [self getPubicKey];
+    }
 
-    [self getPubicKey];
 
 }
 
@@ -69,6 +73,11 @@
     
     UserInfo *userInfo = [UserInfo sharedUserInfo];
     YYLog(@"userInfo--%@",userInfo.username);
+    YYLog(@"RSAsessionId-%@",userInfo.RSAsessionId);
+    YYLog(@"%ld",(long)userInfo.userType);
+    
+    LoginView *logView = [[LoginView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:logView];
 
 }
 
