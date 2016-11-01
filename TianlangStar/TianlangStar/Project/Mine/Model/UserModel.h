@@ -57,6 +57,10 @@
 /** 记录更改个人信息选中的第几组数据 */
 @property (nonatomic,assign) NSInteger number;
 
+/** 会员等级 */
+@property (nonatomic,assign) NSInteger viplevel;
+
+
 
 
 

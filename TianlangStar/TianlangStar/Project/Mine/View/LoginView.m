@@ -53,6 +53,8 @@
 
 /** 记录Y值 */
 @property (nonatomic,assign) CGFloat okY;
+/** 提示框 */
+@property (nonatomic,strong) AlertView *alertView;
 
 @end
 
@@ -68,6 +70,14 @@
         
     }
     return _nav;
+}
+
+-(AlertView *)alertView
+{
+    if (!_alertView) {
+        _alertView = [AlertView sharedAlertView];
+    }
+    return _alertView;
 }
 
 -(instancetype)initWithFrame:(CGRect)frame
@@ -328,17 +338,25 @@
 //登录按钮的点击事件
 - (void)okAction
 {
+    if (self.userNameTF.text == nil || self.userNameTF.text.length == 0) {
+        [[AlertView sharedAlertView] addAlertMessage:@"用户名不能为空" title:@"提示"];
+        return;
+    }
+    if (self.pwdTF.text == nil || self.pwdTF.text.length == 0) {
+        [[AlertView sharedAlertView] addAlertMessage:@"密码" title:@"提示"];
+        return;
+    }
 
     //判断用户输入数据的合法性
     if ( ![self.userNameTF.text isMobileNumber])
     {
-        [[AlertView sharedAlertView] addAlertMessage:@"用户名为手机号，请核对！" title:@"提示"];
+        [self.alertView addAlertMessage:@"用户名为手机号，请核对！" title:@"提示"];
         return;
     }
     
     if (! (self.pwdTF.text.length >5 && self.pwdTF.text.length <33) )
     {
-        [[AlertView sharedAlertView] addAlertMessage:@"密码错误，请输入6-32位密码！" title:@"提示"];
+        [self.alertView addAlertMessage:@"密码错误，请输入6-32位密码！" title:@"提示"];
         return;
     }
     
@@ -410,7 +428,7 @@
          if (result == 1000)//如果登陆成功才能取出sessionID，否则为空报错
          {
              //获取sessionId
-             NSNumber * mun = responseObject[@"obj"][@"sessionId"];
+             NSNumber *mun = responseObject[@"obj"][@"sessionId"];
              self.sessionId = [NSString stringWithFormat:@"%@",mun];
              //取出字典中的用户类型——转模型
              self.userM = [UserModel mj_objectWithKeyValues:responseObject[@"obj"][@"user"]];
@@ -454,6 +472,11 @@
             userIn.isLogin = YES;
 
             [userIn synchronizeToSandBox];
+            if ([self.delegate respondsToSelector:@selector(loginSuccess)])
+            {
+                [self.delegate loginSuccess];
+            }
+            
             [self removeFromSuperview];
 
             break;
@@ -544,15 +567,6 @@
     [self.nav pushViewController:vc animated:YES];
 }
 
-
-/**
- *  控制器销毁
- */
--(void)dismisss
-{
-    [self removeFromSuperview];
-
-}
 
 
 

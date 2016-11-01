@@ -8,6 +8,7 @@
 
 #import "AlertView.h"
 #import "LoginVC.h"
+#import "LoginView.h"
 
 @interface AlertView ()
 
@@ -42,10 +43,12 @@ singleton_implementation(AlertView);
     UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
        {
-           
            LoginVC *loginVC = [[LoginVC alloc] init];
-           loginVC.view.y = 64;
-           [self.rootVC.navigationController pushViewController:loginVC animated:YES];
+           
+           UITabBarController *tableBar = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+           UINavigationController *nav = (UINavigationController *)tableBar.selectedViewController;
+           [nav pushViewController:loginVC animated:YES];
+//           [self.rootVC presentViewController:loginVC animated:YES completion:nil];
        }];
     
     [alert addAction:cancleAction];
@@ -67,13 +70,14 @@ singleton_implementation(AlertView);
     //手机序列号的获取
     NSString *uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"userName"] = userInfo.username;
+    params[@"username"] = userInfo.username;
     params[@"value"] = password;
-    //    params[@"code"] = self.captchaTF.text;
+    params[@"terminal"] = @"421A6988-DA96-49FE-B99E-16820320F1BB";
+        params[@"code"] = @"88080";
     
-    params[@"terminal"] = uuid;
-    //    params[@"terminal"] = @"421A6988-DA96-49FE-B99E-16820320F1BB";
-    YYLog(@"自动登录---%@",params);
+//    params[@"terminal"] = uuid
+
+  YYLog(@"自动登录---%@",params);
     
     //    YYLog(@"序列号%@",uuid);
     /*
@@ -91,7 +95,7 @@ singleton_implementation(AlertView);
     
     [SVProgressHUD showWithStatus:@"正在自动登录中~"];
     
-    NSString *url = [NSString stringWithFormat:@"%@userservlet?movtion=1",URL];
+    NSString *url = [NSString stringWithFormat:@"%@unlogin/userlogin",URL];
     
     [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
      {         //进度
@@ -99,7 +103,6 @@ singleton_implementation(AlertView);
      {
          //1.移除遮盖
          [SVProgressHUD dismiss];
-         
          YYLog(@"更新登录返回--%@",responseObject);
          
          NSNumber *resultCode = responseObject[@"resultCode"];
@@ -109,17 +112,13 @@ singleton_implementation(AlertView);
          if (result == 1000)//如果登陆成功才能取出sessionID，否则为空报错
          {
              [UserInfo sharedUserInfo].isLogin = YES;
-             
              //获取sessionId,并更新至本地
              NSNumber * mun = responseObject[@"obj"][@"sessionId"];
              userInfo.sessionId = [NSString stringWithFormat:@"%@",mun];
              userInfo.RSAsessionId = [RSA encryptString:userInfo.sessionId publicKey:userInfo.publicKey];
-             
              [userInfo synchronizeToSandBox];
-             
          }else
          {
-             
              //用户名或者密码发生改变，提示用户重新登录
              [self loginAlertView];
          }
@@ -130,25 +129,6 @@ singleton_implementation(AlertView);
          [SVProgressHUD showErrorWithStatus:@"登录失败，请稍后再试！"];
          YYLog(@"登录失败----%@",error);
      }];
-
-}
-
-
-
-/**
- *  @param message 提示信息
- *  @param title   标题
- */
--(void)addAlertMessage:(NSString *)message title:(NSString *)title
-{
-
-    NSLog(@"%@",title);
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) { }]];
-    
-    [self.rootVC presentViewController:alert animated:YES completion:^ {  }];
 
 }
 
@@ -176,6 +156,19 @@ singleton_implementation(AlertView);
          
      }];
 }
+
+
+-(void)addAlertMessage:(NSString *)message title:(NSString *)title
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
+    
+    [self.rootVC presentViewController:alert animated:YES completion:^ {  }];
+}
+
+
+
 
 
 @end
