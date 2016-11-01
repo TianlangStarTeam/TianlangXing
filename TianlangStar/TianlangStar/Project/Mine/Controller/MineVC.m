@@ -10,6 +10,7 @@
 #import "LoginVC.h"
 #import "ForgetPwdVC.h"
 #import "LoginView.h"
+#import "UserInfoManagementTVC.h"
 
 
 @interface MineVC ()
@@ -76,6 +77,10 @@
     YYLog(@"userInfo--%@",userInfo.username);
     YYLog(@"RSAsessionId-%@",userInfo.RSAsessionId);
     YYLog(@"%ld",(long)userInfo.userType);
+    
+    UserInfoManagementTVC *vc = [[UserInfoManagementTVC alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+//    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://192.168.1.110:8088/yysj/sharing/fx.htm"]];
     
 
 }

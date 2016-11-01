@@ -43,6 +43,7 @@
 		D74454711DC0A93A008B5E27 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454701DC0A93A008B5E27 /* UserModel.m */; };
 		D74454741DC0B4EC008B5E27 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454731DC0B4EC008B5E27 /* AlertView.m */; };
 		D7CFB89B1DC6D1DD0063A1B5 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7CFB89A1DC6D1DD0063A1B5 /* LoginView.m */; };
+		D7DC69881DC8425A004C67F5 /* UserInfoManagementTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DC69871DC8425A004C67F5 /* UserInfoManagementTVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,8 @@
 		D74454731DC0B4EC008B5E27 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
 		D7CFB8991DC6D1DD0063A1B5 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		D7CFB89A1DC6D1DD0063A1B5 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
+		D7DC69861DC8425A004C67F5 /* UserInfoManagementTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoManagementTVC.h; sourceTree = "<group>"; };
+		D7DC69871DC8425A004C67F5 /* UserInfoManagementTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoManagementTVC.m; sourceTree = "<group>"; };
 		F582932A18134E7F8CF97E5C /* Pods-TianlangStar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TianlangStar.release.xcconfig"; path = "Pods/Target Support Files/Pods-TianlangStar/Pods-TianlangStar.release.xcconfig"; sourceTree = "<group>"; };
 		FF78FE4AF5ED1C62DC57B309 /* Pods-TianlangStar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TianlangStar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TianlangStar/Pods-TianlangStar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -381,6 +384,8 @@
 				D744546D1DC0A4E3008B5E27 /* LoginVC.m */,
 				D705CF051DC09C6400F65BE0 /* MineVC.h */,
 				D705CF061DC09C6400F65BE0 /* MineVC.m */,
+				D7DC69861DC8425A004C67F5 /* UserInfoManagementTVC.h */,
+				D7DC69871DC8425A004C67F5 /* UserInfoManagementTVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -677,6 +682,7 @@
 				D705CF231DC09C6400F65BE0 /* UIImage+Cut.m in Sources */,
 				D705CF221DC09C6400F65BE0 /* TestFildJudge.m in Sources */,
 				D705CF211DC09C6400F65BE0 /* RSA.m in Sources */,
+				D7DC69881DC8425A004C67F5 /* UserInfoManagementTVC.m in Sources */,
 				D705CF1D1DC09C6400F65BE0 /* AppDelegate.m in Sources */,
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
 				D705CF271DC09C6400F65BE0 /* UITextField+extension.m in Sources */,
