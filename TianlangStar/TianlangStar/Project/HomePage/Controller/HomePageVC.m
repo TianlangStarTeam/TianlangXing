@@ -41,6 +41,8 @@
  */
 - (void)collectionAction
 {
+//    NSString const *URL = @"http://192.168.1.118:8080/carservice/";
+
     NSString *url = [NSString stringWithFormat:@"%@addtocollectionservlet",URL];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
