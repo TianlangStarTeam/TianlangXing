@@ -199,13 +199,12 @@
         captchaButton.x = checkView.width - 100;
         captchaButton.centerY = captchaPic.centerY;
         [captchaButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-        [captchaButton setTitleColor:[UIColor redColor] forState:UIControlStateDisabled];
         [captchaButton addTarget:self action:@selector(captchaAction) forControlEvents:UIControlEventTouchUpInside];
+        self.captchaButton = captchaButton;
         [checkView addSubview:captchaButton];
         
         // 请输入验证码
         UITextField *captchaTF = [[UITextField alloc] init];
-        
         captchaTF.width = userNameTF.width - captchaButton.width;
         captchaTF.height = userNameTF.height;
         captchaTF.x = CGRectGetMaxX(pwdPic.frame) + marginX -2;
@@ -284,11 +283,10 @@
         return;
     }
 
-    //判断验证码是否可用，第一次进入时调用
-//    if (self.captchaButton.enabled == NO) return;
+    // 判断验证码是否可用，第一次进入时调用
+    if (self.captchaButton.enabled == NO) return;
     //获取验证码
-    YYLog(@"self.captchaTF.text0---%@",self.userNameTF.text);
-    [[AlertView sharedAlertView] getNumbers:self.userNameTF.text];
+//    [[AlertView sharedAlertView] getNumbers:self.userNameTF.text];
 
     __block int timeout=30; //倒计时时间
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -300,27 +298,26 @@
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^
                            {
-                               //记录按钮的是否可以点击事件
-                               self.captchaButton.enabled = NO;
-                               [self.captchaButton setTitle:@"重发验证码" forState:UIControlStateNormal];
-                               self.captchaButton.userInteractionEnabled = YES; });
+       //记录按钮的是否可以点击事件
+       self.captchaButton.enabled = YES;
+       [self.captchaButton setTitle:@"重发验证码" forState:UIControlStateNormal];
+       self.captchaButton.userInteractionEnabled = YES; });
         }else
         {
             int seconds = timeout % 30;
-            self.captchaButton.enabled = YES;
+            self.captchaButton.enabled = NO;
             
             NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
             dispatch_async(dispatch_get_main_queue(), ^
                            {
-                               //设置界面的按钮显示 根据自己需求设置
-                               //        YYLog(@"____%@",strTime);
-                               self.captchaButton.enabled = YES;
-                               [UIView beginAnimations:nil context:nil];
-                               [UIView setAnimationDuration:1];
-                               [self.captchaButton setTitle:[NSString stringWithFormat:@"%@秒后重发",strTime] forState:UIControlStateNormal];
-                               [UIView commitAnimations];
-                               self.captchaButton.userInteractionEnabled = NO;
-                           });
+       //设置界面的按钮显示 根据自己需求设置
+//               YYLog(@"____%@",strTime);
+       [UIView beginAnimations:nil context:nil];
+       [UIView setAnimationDuration:1];
+       [self.captchaButton setTitle:[NSString stringWithFormat:@"%@秒后重发",strTime] forState:UIControlStateNormal];
+       [UIView commitAnimations];
+       self.captchaButton.userInteractionEnabled = NO;
+           });
             timeout--;
         }
     });
@@ -405,9 +402,7 @@
      {
          //1.移除遮盖
          [SVProgressHUD dismiss];
-         
          YYLog(@"登录返回--%@",responseObject);
-         
          NSNumber *resultCode = responseObject[@"resultCode"];
          int result = [resultCode intValue];
          //2.判断并处理服务器的返回值
@@ -417,11 +412,8 @@
              //获取sessionId
              NSNumber * mun = responseObject[@"obj"][@"sessionId"];
              self.sessionId = [NSString stringWithFormat:@"%@",mun];
-             
-             //获取用户类型字典
-             //             NSDictionary * type1 = responseObject[@"obj"][@"user"];
              //取出字典中的用户类型——转模型
-             //             self.userM = [UserModel mj_objectWithKeyValues:type1];
+             self.userM = [UserModel mj_objectWithKeyValues:responseObject[@"obj"][@"user"]];
              [SVProgressHUD  showSuccessWithStatus:@"登录成功"];
          }
          
@@ -456,7 +448,7 @@
             userIn.sessionId = self.sessionId;
             userIn.RSAsessionId = RSASessionID;
             userIn.userID = self.userM.ID;
-            userIn.userType = [NSString stringWithFormat:@"%ld",(long)self.userM.type];
+            userIn.userType = self.userM.type;
             userIn.headerpic = self.userM.headerpic;
             userIn.membername = self.userM.membername;
             userIn.isLogin = YES;

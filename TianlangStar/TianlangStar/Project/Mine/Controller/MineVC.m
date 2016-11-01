@@ -29,6 +29,9 @@
     {
           [self getPubicKey];
     }
+    
+        LoginView *logView = [[LoginView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:logView];
 
 
 }
@@ -69,15 +72,11 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     YYLog(@"86932");
-    
-    
     UserInfo *userInfo = [UserInfo sharedUserInfo];
     YYLog(@"userInfo--%@",userInfo.username);
     YYLog(@"RSAsessionId-%@",userInfo.RSAsessionId);
     YYLog(@"%ld",(long)userInfo.userType);
     
-    LoginView *logView = [[LoginView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:logView];
 
 }
 
