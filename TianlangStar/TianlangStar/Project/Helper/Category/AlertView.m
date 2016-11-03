@@ -44,7 +44,6 @@ singleton_implementation(AlertView);
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
        {
            LoginVC *loginVC = [[LoginVC alloc] init];
-           
            UITabBarController *tableBar = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
            UINavigationController *nav = (UINavigationController *)tableBar.selectedViewController;
            [nav pushViewController:loginVC animated:YES];

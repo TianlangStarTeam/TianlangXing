@@ -39,6 +39,15 @@
 		D705CF311DC09C6400F65BE0 /* ShoppingCartVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CF141DC09C6400F65BE0 /* ShoppingCartVC.m */; };
 		D705CF321DC09C6400F65BE0 /* TLStarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CF1A1DC09C6400F65BE0 /* TLStarVC.m */; };
 		D705CF351DC09CBB00F65BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CF331DC09CBB00F65BE0 /* Main.storyboard */; };
+		D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D72866FB1DCB144800D77B38 /* ILBaseTableViewController.m */; };
+		D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D72866FE1DCB144800D77B38 /* ILSettingArrowItem.m */; };
+		D728670C1DCB144800D77B38 /* ILSettingGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867001DCB144800D77B38 /* ILSettingGroup.m */; };
+		D728670D1DCB144800D77B38 /* ILSettingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867021DCB144800D77B38 /* ILSettingItem.m */; };
+		D728670E1DCB144800D77B38 /* ILSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867051DCB144800D77B38 /* ILSettingCell.m */; };
+		D728670F1DCB144800D77B38 /* ILSettingLabelItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867071DCB144800D77B38 /* ILSettingLabelItem.m */; };
+		D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867091DCB144800D77B38 /* ILSettingSwitchItem.m */; };
+		D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867121DCB154C00D77B38 /* FeedbackVC.m */; };
+		D72867151DCB154C00D77B38 /* FeedbackVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D72867131DCB154C00D77B38 /* FeedbackVC.xib */; };
 		D744546E1DC0A4E3008B5E27 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D744546D1DC0A4E3008B5E27 /* LoginVC.m */; };
 		D74454711DC0A93A008B5E27 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454701DC0A93A008B5E27 /* UserModel.m */; };
 		D74454741DC0B4EC008B5E27 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454731DC0B4EC008B5E27 /* AlertView.m */; };
@@ -126,6 +135,23 @@
 		D705CF191DC09C6400F65BE0 /* TLStarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLStarVC.h; sourceTree = "<group>"; };
 		D705CF1A1DC09C6400F65BE0 /* TLStarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLStarVC.m; sourceTree = "<group>"; };
 		D705CF341DC09CBB00F65BE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D72866FA1DCB144800D77B38 /* ILBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILBaseTableViewController.h; sourceTree = "<group>"; };
+		D72866FB1DCB144800D77B38 /* ILBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILBaseTableViewController.m; sourceTree = "<group>"; };
+		D72866FD1DCB144800D77B38 /* ILSettingArrowItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingArrowItem.h; sourceTree = "<group>"; };
+		D72866FE1DCB144800D77B38 /* ILSettingArrowItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSettingArrowItem.m; sourceTree = "<group>"; };
+		D72866FF1DCB144800D77B38 /* ILSettingGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingGroup.h; sourceTree = "<group>"; };
+		D72867001DCB144800D77B38 /* ILSettingGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSettingGroup.m; sourceTree = "<group>"; };
+		D72867011DCB144800D77B38 /* ILSettingItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingItem.h; sourceTree = "<group>"; };
+		D72867021DCB144800D77B38 /* ILSettingItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSettingItem.m; sourceTree = "<group>"; };
+		D72867041DCB144800D77B38 /* ILSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingCell.h; sourceTree = "<group>"; };
+		D72867051DCB144800D77B38 /* ILSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSettingCell.m; sourceTree = "<group>"; };
+		D72867061DCB144800D77B38 /* ILSettingLabelItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingLabelItem.h; sourceTree = "<group>"; };
+		D72867071DCB144800D77B38 /* ILSettingLabelItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSettingLabelItem.m; sourceTree = "<group>"; };
+		D72867081DCB144800D77B38 /* ILSettingSwitchItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingSwitchItem.h; sourceTree = "<group>"; };
+		D72867091DCB144800D77B38 /* ILSettingSwitchItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSettingSwitchItem.m; sourceTree = "<group>"; };
+		D72867111DCB154C00D77B38 /* FeedbackVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackVC.h; sourceTree = "<group>"; };
+		D72867121DCB154C00D77B38 /* FeedbackVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackVC.m; sourceTree = "<group>"; };
+		D72867131DCB154C00D77B38 /* FeedbackVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackVC.xib; sourceTree = "<group>"; };
 		D744546C1DC0A4E3008B5E27 /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
 		D744546D1DC0A4E3008B5E27 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
 		D744546F1DC0A93A008B5E27 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
@@ -271,6 +297,7 @@
 		D705CEDE1DC09C6400F65BE0 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				D72866F81DCB144800D77B38 /* ILSetting */,
 				D705CEDF1DC09C6400F65BE0 /* Category */,
 				D705CEF71DC09C6400F65BE0 /* PCH */,
 				D705CEF91DC09C6400F65BE0 /* Singleton */,
@@ -386,6 +413,9 @@
 				D705CF061DC09C6400F65BE0 /* MineVC.m */,
 				D7DC69861DC8425A004C67F5 /* UserInfoManagementTVC.h */,
 				D7DC69871DC8425A004C67F5 /* UserInfoManagementTVC.m */,
+				D72867111DCB154C00D77B38 /* FeedbackVC.h */,
+				D72867121DCB154C00D77B38 /* FeedbackVC.m */,
+				D72867131DCB154C00D77B38 /* FeedbackVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -393,6 +423,7 @@
 		D705CF071DC09C6400F65BE0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D72866DF1DCAE33300D77B38 /* SettingItem */,
 				D744546F1DC0A93A008B5E27 /* UserModel.h */,
 				D74454701DC0A93A008B5E27 /* UserModel.m */,
 			);
@@ -492,6 +523,58 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D72866DF1DCAE33300D77B38 /* SettingItem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SettingItem;
+			sourceTree = "<group>";
+		};
+		D72866F81DCB144800D77B38 /* ILSetting */ = {
+			isa = PBXGroup;
+			children = (
+				D72866F91DCB144800D77B38 /* Controller */,
+				D72866FC1DCB144800D77B38 /* model */,
+				D72867031DCB144800D77B38 /* view */,
+			);
+			path = ILSetting;
+			sourceTree = "<group>";
+		};
+		D72866F91DCB144800D77B38 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D72866FA1DCB144800D77B38 /* ILBaseTableViewController.h */,
+				D72866FB1DCB144800D77B38 /* ILBaseTableViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D72866FC1DCB144800D77B38 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				D72866FD1DCB144800D77B38 /* ILSettingArrowItem.h */,
+				D72866FE1DCB144800D77B38 /* ILSettingArrowItem.m */,
+				D72866FF1DCB144800D77B38 /* ILSettingGroup.h */,
+				D72867001DCB144800D77B38 /* ILSettingGroup.m */,
+				D72867011DCB144800D77B38 /* ILSettingItem.h */,
+				D72867021DCB144800D77B38 /* ILSettingItem.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		D72867031DCB144800D77B38 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				D72867041DCB144800D77B38 /* ILSettingCell.h */,
+				D72867051DCB144800D77B38 /* ILSettingCell.m */,
+				D72867061DCB144800D77B38 /* ILSettingLabelItem.h */,
+				D72867071DCB144800D77B38 /* ILSettingLabelItem.m */,
+				D72867081DCB144800D77B38 /* ILSettingSwitchItem.h */,
+				D72867091DCB144800D77B38 /* ILSettingSwitchItem.m */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -605,6 +688,7 @@
 			files = (
 				D705CF2D1DC09C6400F65BE0 /* LICENCE.txt in Resources */,
 				D705CEB71DC09BBF00F65BE0 /* LaunchScreen.storyboard in Resources */,
+				D72867151DCB154C00D77B38 /* FeedbackVC.xib in Resources */,
 				D705CEB41DC09BBF00F65BE0 /* Assets.xcassets in Resources */,
 				D705CF351DC09CBB00F65BE0 /* Main.storyboard in Resources */,
 			);
@@ -680,21 +764,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				D705CF231DC09C6400F65BE0 /* UIImage+Cut.m in Sources */,
+				D728670F1DCB144800D77B38 /* ILSettingLabelItem.m in Sources */,
 				D705CF221DC09C6400F65BE0 /* TestFildJudge.m in Sources */,
 				D705CF211DC09C6400F65BE0 /* RSA.m in Sources */,
+				D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */,
+				D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */,
 				D7DC69881DC8425A004C67F5 /* UserInfoManagementTVC.m in Sources */,
 				D705CF1D1DC09C6400F65BE0 /* AppDelegate.m in Sources */,
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
 				D705CF271DC09C6400F65BE0 /* UITextField+extension.m in Sources */,
+				D728670E1DCB144800D77B38 /* ILSettingCell.m in Sources */,
 				D74454711DC0A93A008B5E27 /* UserModel.m in Sources */,
 				D705CF2B1DC09C6400F65BE0 /* HomePageVC.m in Sources */,
 				D705CF291DC09C6400F65BE0 /* XLXConst.m in Sources */,
 				71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */,
+				D728670D1DCB144800D77B38 /* ILSettingItem.m in Sources */,
 				D705CF301DC09C6400F65BE0 /* RootVC.m in Sources */,
 				D705CF251DC09C6400F65BE0 /* UILabel+LabelHeightAndWidth.m in Sources */,
 				D705CF2C1DC09C6400F65BE0 /* MineVC.m in Sources */,
 				D705CF1E1DC09C6400F65BE0 /* Foundation+Log.m in Sources */,
+				D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */,
 				71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */,
+				D728670C1DCB144800D77B38 /* ILSettingGroup.m in Sources */,
+				D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */,
 				D705CF281DC09C6400F65BE0 /* UIView+XMGExtension.m in Sources */,
 				D705CF261DC09C6400F65BE0 /* UITableViewCell+AdjustHeight.m in Sources */,
 				D705CF2F1DC09C6400F65BE0 /* README.md in Sources */,

@@ -15,13 +15,7 @@
 #import "LoginVC.h"
 #import "LoginView.h"
 
-
-
-
-
 @interface LoginVC ()<LoginViewDelegate>
-
-
 
 @end
 
@@ -35,8 +29,6 @@
     logView.delegate = self;
     [self.view addSubview:logView];
 }
-
-
 
 /**
  *  登录成功后调用的代理
