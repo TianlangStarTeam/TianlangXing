@@ -15,6 +15,7 @@
 #import "FeedbackVC.h"
 
 #import "ILSettingArrowItem.h"
+#import "CarInfoListVC.h"
 
 
 
@@ -51,15 +52,13 @@
 
 -(void)addGroup0
 {
-    
     // 0组
-    
     ILSettingArrowItem *collection = [ILSettingArrowItem itemWithIcon:nil title:@"收藏" destVcClass:[UserInfoManagementTVC class]];
     ILSettingArrowItem *pointsFor = [ILSettingArrowItem itemWithIcon:nil title:@"积分兑换" destVcClass:[UserInfoManagementTVC class]];
     ILSettingArrowItem *address = [ILSettingArrowItem itemWithIcon:nil title:@"地址管理" destVcClass:[UserInfoManagementTVC class]];
     ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"订单查询" destVcClass:[UserInfoManagementTVC class]];
     ILSettingArrowItem *account = [ILSettingArrowItem itemWithIcon:nil title:@"账户管理" destVcClass:[UserInfoManagementTVC class]];
-    ILSettingArrowItem *carInfochange = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息修改" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *carInfochange = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息修改" destVcClass:[CarInfoListVC class]];
     ILSettingArrowItem *carInfoRegist = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息登记" destVcClass:[UserInfoManagementTVC class]];
     ILSettingArrowItem *prepaidRecords = [ILSettingArrowItem itemWithIcon:nil title:@"充值记录查询" destVcClass:[UserInfoManagementTVC class]];
     ILSettingArrowItem *CustomerService = [ILSettingArrowItem itemWithIcon:nil title:@"客服热线" destVcClass:[UserInfoManagementTVC class]];

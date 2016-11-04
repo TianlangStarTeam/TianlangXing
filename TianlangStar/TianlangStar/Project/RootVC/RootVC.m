@@ -11,6 +11,7 @@
 #import "TLStarVC.h"
 #import "ShoppingCartVC.h"
 #import "MineVC.h"
+#import "CarsNav.h"
 
 @interface RootVC ()<UITabBarDelegate>
 
@@ -33,7 +34,7 @@
 {
     // 首页
     HomePageVC *homeVC = [[HomePageVC alloc] init];
-    UINavigationController *homeNC = [[UINavigationController alloc] initWithRootViewController:homeVC];
+    CarsNav *homeNC = [[CarsNav alloc] initWithRootViewController:homeVC];
     [homeNC.tabBarItem setImage:[UIImage imageNamed:@"homePage_normal"]];
     [homeNC.tabBarItem setSelectedImage:[UIImage imageNamed:@"homePage_selected"]];
     [homeNC.tabBarItem setTitle:@"首页"];
@@ -43,7 +44,7 @@
 
     // 天狼星
     TLStarVC *tlStarVC = [[TLStarVC alloc] init];
-    UINavigationController *tlStarNC = [[UINavigationController alloc] initWithRootViewController:tlStarVC];
+    CarsNav *tlStarNC = [[CarsNav alloc] initWithRootViewController:tlStarVC];
     [tlStarNC.tabBarItem setImage:[UIImage imageNamed:@"shengli_normal"]];
     [tlStarNC.tabBarItem setSelectedImage:[UIImage imageNamed:@"shengli_selected"]];
     [tlStarNC.tabBarItem setTitle:@"天狼星"];
@@ -53,7 +54,7 @@
     
     // 购物车
     ShoppingCartVC *shoppingCartVC = [[ShoppingCartVC alloc] init];
-    UINavigationController *shoppingCartNC = [[UINavigationController alloc] initWithRootViewController:shoppingCartVC];
+    CarsNav *shoppingCartNC = [[CarsNav alloc] initWithRootViewController:shoppingCartVC];
     [shoppingCartNC.tabBarItem setImage:[UIImage imageNamed:@"supplier_normal"]];
     [shoppingCartNC.tabBarItem setSelectedImage:[UIImage imageNamed:@"supplier_selected"]];
     [shoppingCartNC.tabBarItem setTitle:@"购物车"];
@@ -63,7 +64,7 @@
     
     // 首页
     MineVC *mineVC = [[MineVC alloc] init];
-    UINavigationController *mineNC = [[UINavigationController alloc] initWithRootViewController:mineVC];
+    CarsNav *mineNC = [[CarsNav alloc] initWithRootViewController:mineVC];
     [mineNC.tabBarItem setImage:[UIImage imageNamed:@"homePage_normal"]];
     [mineNC.tabBarItem setSelectedImage:[UIImage imageNamed:@"homePage_selected"]];
     [mineNC.tabBarItem setTitle:@"我的"];
