@@ -164,6 +164,14 @@
     
 }
 
+
+-(NSString *)getCurrentTime
+{
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[currentDate timeIntervalSince1970]];
+    return [NSString stringWithFormat:@"%@000",timeSp];
+}
+
 /**
  *  判断字符串是否为浮点数
  */

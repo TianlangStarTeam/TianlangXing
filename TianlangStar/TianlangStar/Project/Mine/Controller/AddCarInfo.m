@@ -1,17 +1,16 @@
 //
-//  CarInfoChangeVC.m
+//  AddCarInfo.m
 //  TianlangStar
 //
-//  Created by youyousiji on 16/11/3.
+//  Created by youyousiji on 16/11/4.
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
-#import "CarInfoChangeVC.h"
+#import "AddCarInfo.h"
 #import "CarInputCell.h"
 #import "CarModel.h"
 
-
-@interface CarInfoChangeVC ()<UITextFieldDelegate>
+@interface AddCarInfo ()<UITextFieldDelegate>
 
 /** 单元格左侧的描述 */
 @property (nonatomic,strong) NSArray *rightArr;
@@ -40,14 +39,17 @@
 /** 记录输入框的内容 */
 @property (nonatomic,strong) NSMutableArray *textArr;
 
+
 @end
 
-@implementation CarInfoChangeVC
+@implementation AddCarInfo
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 
+    
     [self addFooter];
     [self addDatePIcker];
 }
@@ -99,12 +101,12 @@
 {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
-    
+
     self.insuranceid=[outputFormatter stringFromDate:self.insuranceidData.date];
     [self.tableView reloadData];
-    
+
     self.carInfo.insurancetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
-    
+
 }
 
 /** 时间选择器的点击事件--商业险提醒日期 */
@@ -114,7 +116,7 @@
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
     self.commercialtime=[outputFormatter stringFromDate:self.commercialtimeData.date];
     [self.tableView reloadData];
-    
+
     self.carInfo.commercialtime = [NSString stringWithFormat:@"%ld", (long)[self.commercialtimeData.date timeIntervalSince1970]];
 }
 
@@ -127,7 +129,7 @@
         _carInfo = [[CarModel alloc] init];
     }
     return _carInfo;
-    
+
 }
 
 
@@ -179,7 +181,7 @@
 
 - (void)handAction:(UIButton *)button
 {
-    
+
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
     params[@"userid"] = [UserInfo sharedUserInfo].userID;
@@ -194,7 +196,7 @@
     params[@"insuranceid"] = self.carInfo.insuranceid;
     params[@"insurancetime"] = self.carInfo.insurancetime;
     params[@"commercialtime"] = self.carInfo.commercialtime;
-    
+
     NSString *url = [NSString stringWithFormat:@"%@carinforegistservlet",URL];
     YYLog(@"params----%@",params);
     [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
@@ -214,7 +216,7 @@
          {
              [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试"];
          }
-         
+
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
          YYLog(@"error----%@",error);
@@ -227,12 +229,12 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
+
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+
     return self.rightArr.count;
 }
 
@@ -243,7 +245,7 @@
     NSString *name = self.rightArr[indexPath.row];
     NSString *nameInput = [NSString stringWithFormat:@"请输入%@",name];
     cell.textField.placeholder = nameInput;
-    
+
     cell.textLabel.text = name;
     cell.textField.tag = indexPath.row;
     cell.textField.delegate = self;
@@ -269,10 +271,10 @@
         default:
             break;
     }
-    
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
-    
+
     return cell;
 }
 
@@ -282,7 +284,7 @@
 //保存用户输入的信息
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    //    self.textArr[textField.tag] = textField.text;
+//    self.textArr[textField.tag] = textField.text;
     
     switch (textField.tag) {
         case 0:

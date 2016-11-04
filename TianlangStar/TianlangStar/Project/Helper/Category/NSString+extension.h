@@ -33,9 +33,10 @@
 /** 将时间戳转时间 */
 -(NSString *)getTime;
 
-/**
- *  判断字符串是否为URL
- */
+/** 获取当前时间 */
+-(NSString *)getCurrentTime;
+
+/** 判断字符串是否为URL */
 - (BOOL)isURL;
 
 @end

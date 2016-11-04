@@ -18,12 +18,42 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.title = @"车辆信息";
     
+    [self setUpCarData];
+    
 }
+
+/**
+ *  获取指定用户的名下所有车辆信息
+ */
+-(void)setUpCarData
+{
+    
+    NSString *url = [NSString stringWithFormat:@"%@getallcarinfoservlet",URL];
+    
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    
+    [[AFHTTPSessionManager manager]POST:url parameters:parmas progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    {
+        
+        YYLog(@"responseObject---%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    {
+        YYLog(@"error---%@",error);
+        
+    }];
+
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

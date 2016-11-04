@@ -40,6 +40,9 @@
 		D705CF321DC09C6400F65BE0 /* TLStarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CF1A1DC09C6400F65BE0 /* TLStarVC.m */; };
 		D705CF351DC09CBB00F65BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CF331DC09CBB00F65BE0 /* Main.storyboard */; };
 		D71F66B41DCC289E000A6861 /* CarInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66B31DCC289E000A6861 /* CarInputCell.m */; };
+		D71F66B71DCC3773000A6861 /* ILSettingTextFieldItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66B61DCC3773000A6861 /* ILSettingTextFieldItem.m */; };
+		D71F66C01DCC5E0D000A6861 /* CarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66BF1DCC5E0D000A6861 /* CarModel.m */; };
+		D71F66C31DCC61C5000A6861 /* AddCarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66C21DCC61C5000A6861 /* AddCarInfo.m */; };
 		D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D72866FB1DCB144800D77B38 /* ILBaseTableViewController.m */; };
 		D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D72866FE1DCB144800D77B38 /* ILSettingArrowItem.m */; };
 		D728670C1DCB144800D77B38 /* ILSettingGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867001DCB144800D77B38 /* ILSettingGroup.m */; };
@@ -141,6 +144,12 @@
 		D705CF341DC09CBB00F65BE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D71F66B21DCC289E000A6861 /* CarInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarInputCell.h; sourceTree = "<group>"; };
 		D71F66B31DCC289E000A6861 /* CarInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarInputCell.m; sourceTree = "<group>"; };
+		D71F66B51DCC3773000A6861 /* ILSettingTextFieldItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingTextFieldItem.h; sourceTree = "<group>"; };
+		D71F66B61DCC3773000A6861 /* ILSettingTextFieldItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSettingTextFieldItem.m; sourceTree = "<group>"; };
+		D71F66BE1DCC5E0D000A6861 /* CarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarModel.h; sourceTree = "<group>"; };
+		D71F66BF1DCC5E0D000A6861 /* CarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarModel.m; sourceTree = "<group>"; };
+		D71F66C11DCC61C5000A6861 /* AddCarInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCarInfo.h; sourceTree = "<group>"; };
+		D71F66C21DCC61C5000A6861 /* AddCarInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCarInfo.m; sourceTree = "<group>"; };
 		D72866FA1DCB144800D77B38 /* ILBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILBaseTableViewController.h; sourceTree = "<group>"; };
 		D72866FB1DCB144800D77B38 /* ILBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILBaseTableViewController.m; sourceTree = "<group>"; };
 		D72866FD1DCB144800D77B38 /* ILSettingArrowItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingArrowItem.h; sourceTree = "<group>"; };
@@ -432,6 +441,8 @@
 				D72867171DCB318E00D77B38 /* CarInfoListVC.m */,
 				D728671C1DCB3B3E00D77B38 /* CarInfoChangeVC.h */,
 				D728671D1DCB3B3E00D77B38 /* CarInfoChangeVC.m */,
+				D71F66C11DCC61C5000A6861 /* AddCarInfo.h */,
+				D71F66C21DCC61C5000A6861 /* AddCarInfo.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -442,6 +453,8 @@
 				D72866DF1DCAE33300D77B38 /* SettingItem */,
 				D744546F1DC0A93A008B5E27 /* UserModel.h */,
 				D74454701DC0A93A008B5E27 /* UserModel.m */,
+				D71F66BE1DCC5E0D000A6861 /* CarModel.h */,
+				D71F66BF1DCC5E0D000A6861 /* CarModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -593,6 +606,8 @@
 				D72867071DCB144800D77B38 /* ILSettingLabelItem.m */,
 				D72867081DCB144800D77B38 /* ILSettingSwitchItem.h */,
 				D72867091DCB144800D77B38 /* ILSettingSwitchItem.m */,
+				D71F66B51DCC3773000A6861 /* ILSettingTextFieldItem.h */,
+				D71F66B61DCC3773000A6861 /* ILSettingTextFieldItem.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -791,6 +806,7 @@
 				D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */,
 				D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */,
 				D71F66B41DCC289E000A6861 /* CarInputCell.m in Sources */,
+				D71F66C01DCC5E0D000A6861 /* CarModel.m in Sources */,
 				D7DC69881DC8425A004C67F5 /* UserInfoManagementTVC.m in Sources */,
 				D705CF1D1DC09C6400F65BE0 /* AppDelegate.m in Sources */,
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
@@ -800,6 +816,7 @@
 				D705CF2B1DC09C6400F65BE0 /* HomePageVC.m in Sources */,
 				D705CF291DC09C6400F65BE0 /* XLXConst.m in Sources */,
 				71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */,
+				D71F66B71DCC3773000A6861 /* ILSettingTextFieldItem.m in Sources */,
 				D728670D1DCB144800D77B38 /* ILSettingItem.m in Sources */,
 				D705CF301DC09C6400F65BE0 /* RootVC.m in Sources */,
 				D705CF251DC09C6400F65BE0 /* UILabel+LabelHeightAndWidth.m in Sources */,
@@ -812,6 +829,7 @@
 				D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */,
 				D705CF281DC09C6400F65BE0 /* UIView+XMGExtension.m in Sources */,
 				D705CF261DC09C6400F65BE0 /* UITableViewCell+AdjustHeight.m in Sources */,
+				D71F66C31DCC61C5000A6861 /* AddCarInfo.m in Sources */,
 				D705CF2F1DC09C6400F65BE0 /* README.md in Sources */,
 				D705CF311DC09C6400F65BE0 /* ShoppingCartVC.m in Sources */,
 				D705CF321DC09C6400F65BE0 /* TLStarVC.m in Sources */,
