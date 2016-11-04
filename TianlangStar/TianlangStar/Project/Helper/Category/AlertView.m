@@ -15,6 +15,8 @@
 /** 当前界面的控制器 */
 @property (nonatomic,strong) UIViewController *rootVC;
 
+@property (nonatomic,strong) UIAlertController *alert;
+
 @end
 
 @implementation AlertView
@@ -34,26 +36,59 @@ singleton_implementation(AlertView);
 
 
 
-/** 提示先登录 */
+/**
+ *  跳转至登录界面
+ */
+- (void)jumpToLoginView
+{
+    LoginVC *loginVC = [[LoginVC alloc] init];
+    UITabBarController *tableBar = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    UINavigationController *nav = (UINavigationController *)tableBar.selectedViewController;
+    [nav pushViewController:loginVC animated:YES];
+}
+
+
+
+/** 登录已过期提示先登录 */
 - (void)loginAlertView
 {
 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录已过期，请重新登录！" preferredStyle:(UIAlertControllerStyleAlert)];
+    self.alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录已过期，请重新登录！" preferredStyle:(UIAlertControllerStyleAlert)];
     
     UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
        {
-           LoginVC *loginVC = [[LoginVC alloc] init];
-           UITabBarController *tableBar = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-           UINavigationController *nav = (UINavigationController *)tableBar.selectedViewController;
-           [nav pushViewController:loginVC animated:YES];
-//           [self.rootVC presentViewController:loginVC animated:YES completion:nil];
+           [self jumpToLoginView];
        }];
     
-    [alert addAction:cancleAction];
-    [alert addAction:okAction];
+    [self.alert addAction:cancleAction];
+    [self.alert addAction:okAction];
     
-    [self.rootVC presentViewController:alert animated:YES completion:nil];
+    [self.rootVC presentViewController:self.alert animated:YES completion:nil];
+}
+
+
+
+/**
+ *  用户未登录提示用户登录
+ */
+- (void)loginAction
+{
+    self.alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请先登录" preferredStyle:(UIAlertControllerStyleAlert)];
+    
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
+    {
+        
+        [self jumpToLoginView];
+        
+    }];
+    
+    [self.alert addAction:cancleAction];
+    [self.alert addAction:okAction];
+    
+    [self.rootVC presentViewController:self.alert animated:YES completion:nil];
 }
 
 
@@ -159,15 +194,84 @@ singleton_implementation(AlertView);
 
 -(void)addAlertMessage:(NSString *)message title:(NSString *)title
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    self.alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { }]];
     
-    [self.rootVC presentViewController:alert animated:YES completion:^ {  }];
+    [self.rootVC presentViewController:self.alert animated:YES completion:^ {  }];
+}
+
+
+
+/**
+ *  提示框延迟几秒消失
+ *
+ *  @param message 提示内容
+ *  @param title   标题
+ */
+- (void)addAfterAlertMessage:(NSString *)message title:(NSString *)title
+{
+    
+    self.alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:(UIAlertControllerStyleAlert)];
+    
+    [self.rootVC presentViewController:self.alert animated:YES completion:^{
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [self.alert dismissViewControllerAnimated:YES completion:nil];
+        });
+    }];
+}
+
+
+/**
+ *  取消和确定的两个提示框
+ *
+ *  @param message      提示的内容
+ *  @param title        标题
+ *  @param okAction     确定事件(事件在外部自定义)
+ */
+- (void)addAlertMessage:(NSString *)message title:(NSString *)title okAction:(UIAlertAction *)okAction
+{
+    self.alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    [self.alert addAction:cancleAction];
+    [self.alert addAction:okAction];
+    [self.rootVC presentViewController:self.alert animated:YES completion:nil];
 }
 
 
 
 
 
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

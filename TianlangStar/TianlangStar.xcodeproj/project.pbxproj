@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2EA5BADAA63B9509A3B0A5A3 /* libPods-TianlangStar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */; };
+		714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 714BFDE51DCC80D1002F2042 /* CollectionModel.m */; };
 		717D0D831DC0B5620036D5F4 /* RegistVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 717D0D821DC0B5620036D5F4 /* RegistVC.m */; };
 		71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71BE7FC71DC324B4000E0BFB /* RegistProtocolVC.m */; };
 		71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71BE7FD01DC336E6000E0BFB /* ForgetPwdVC.m */; };
@@ -74,6 +75,8 @@
 
 /* Begin PBXFileReference section */
 		2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TianlangStar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		714BFDE41DCC80D1002F2042 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
+		714BFDE51DCC80D1002F2042 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		717D0D811DC0B5620036D5F4 /* RegistVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistVC.h; sourceTree = "<group>"; };
 		717D0D821DC0B5620036D5F4 /* RegistVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistVC.m; sourceTree = "<group>"; };
 		71BE7FC61DC324B4000E0BFB /* RegistProtocolVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistProtocolVC.h; sourceTree = "<group>"; };
@@ -376,6 +379,8 @@
 				71BE7FD01DC336E6000E0BFB /* ForgetPwdVC.m */,
 				71BE7FC61DC324B4000E0BFB /* RegistProtocolVC.h */,
 				71BE7FC71DC324B4000E0BFB /* RegistProtocolVC.m */,
+				714BFDE41DCC80D1002F2042 /* CollectionModel.h */,
+				714BFDE51DCC80D1002F2042 /* CollectionModel.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -791,6 +796,7 @@
 				D705CF261DC09C6400F65BE0 /* UITableViewCell+AdjustHeight.m in Sources */,
 				D705CF2F1DC09C6400F65BE0 /* README.md in Sources */,
 				D705CF311DC09C6400F65BE0 /* ShoppingCartVC.m in Sources */,
+				714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */,
 				D705CF321DC09C6400F65BE0 /* TLStarVC.m in Sources */,
 				D7CFB89B1DC6D1DD0063A1B5 /* LoginView.m in Sources */,
 				D705CF241DC09C6400F65BE0 /* UIImage+Tool.m in Sources */,

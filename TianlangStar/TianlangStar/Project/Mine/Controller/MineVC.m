@@ -112,9 +112,6 @@
     group0.items = @[collection,tel,updata];
     [self.dataList addObject:group0];
 }
-    
-
-
 
 
 
