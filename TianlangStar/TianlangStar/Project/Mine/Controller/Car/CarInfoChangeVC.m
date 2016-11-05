@@ -16,10 +16,6 @@
 /** 单元格左侧的描述 */
 @property (nonatomic,strong) NSArray *rightArr;
 
-
-/** 汽车模型 */
-@property (nonatomic,strong) CarModel *carInfo;
-
 /** 提交按钮 */
 @property (nonatomic,strong) UIButton *handButton;
 
@@ -30,6 +26,8 @@
 /** 商业险提醒日期 --时间戳*/
 @property (nonatomic,strong) UIDatePicker *commercialtimeData;
 
+/** 车辆的购买日期日期 */
+@property (nonatomic,copy) NSString *buytime;
 
 /** 较强险的提醒日期 */
 @property (nonatomic,copy) NSString *insuranceid;
@@ -40,6 +38,10 @@
 /** 记录输入框的内容 */
 @property (nonatomic,strong) NSMutableArray *textArr;
 
+
+/** 记录用户年月入日期选择器 */
+@property (nonatomic,assign) NSInteger selectData;
+
 @end
 
 @implementation CarInfoChangeVC
@@ -47,6 +49,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    self.title = @"车辆信息修改";
 
     [self addFooter];
     [self addDatePIcker];
@@ -58,77 +63,62 @@
  */
 -(void)addDatePIcker
 {
-    //开盘时间
+    //日期选择器
     //iphone6/6s
     UIDatePicker *startDatePicker=[[UIDatePicker alloc]initWithFrame:CGRectMake(0,KScreenHeight ,KScreenWidth, 162)];
     
-    //    if (kHeight > 500 && kHeight <580)//5 /5S
-    //    {
-    //        startDatePicker=[[UIDatePicker alloc]initWithFrame:CGRectMake(kWidth *0.15 , 180, kWidth *0.1, 42)];
-    //    }
-    //    startDatePicker.backgroundColor = [UIColor orangeColor];
     startDatePicker.datePickerMode=UIDatePickerModeDate;
     startDatePicker.date=[NSDate date];
     self.insuranceidData.hidden = NO;
-    //    [self.tableView addSubview: startDatePicker];
     self.insuranceidData = startDatePicker;
     
     //计算当前时间
     NSDate *nowdate = [NSDate date];
     //限制起始时间为当前时间
-    self.insuranceidData.minimumDate = nowdate;
-    [self.insuranceidData addTarget:self action:@selector(selecStarttDate:) forControlEvents:      UIControlEventValueChanged];
-    
-    //交房时间
-    UIDatePicker *endDatePicker=[[UIDatePicker alloc]initWithFrame:CGRectMake(0,KScreenHeight ,KScreenWidth, 162)];
-    endDatePicker.datePickerMode=UIDatePickerModeDate;
-    endDatePicker.date=[NSDate date];
-    
-    //    [self.tableView addSubview: endDatePicker];
-    self.commercialtimeData = endDatePicker;
-    
-    
-    //限制起始时间为当前时间
-    self.commercialtimeData.minimumDate = nowdate;
-    [self.commercialtimeData addTarget:self action:@selector(selectEndDate:) forControlEvents:      UIControlEventValueChanged];
-    
+//    self.insuranceidData.minimumDate = nowdate;
+    [self.insuranceidData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
 
 /** 时间选择器的点击事件--较强险提醒日期 */
--(void)selecStarttDate:(id)sender
+-(void)selecStarttDate
 {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
     
-    self.insuranceid=[outputFormatter stringFromDate:self.insuranceidData.date];
-    [self.tableView reloadData];
-    
-    self.carInfo.insurancetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
-    
-}
-
-/** 时间选择器的点击事件--商业险提醒日期 */
--(void)selectEndDate:(id)sender
-{
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"yyyy-MM-dd"];
-    self.commercialtime=[outputFormatter stringFromDate:self.commercialtimeData.date];
-    [self.tableView reloadData];
-    
-    self.carInfo.commercialtime = [NSString stringWithFormat:@"%ld", (long)[self.commercialtimeData.date timeIntervalSince1970]];
-}
-
-
-
--(CarModel *)carInfo
-{
-    if (_carInfo == nil)
+    switch (self.selectData)
     {
-        _carInfo = [[CarModel alloc] init];
+        case 6://购买日期
+        {
+            self.buytime=[outputFormatter stringFromDate:self.insuranceidData.date];
+            self.carInfo.buytime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
+            break;
+        }
+        case 8://较强险
+        {
+            self.insuranceid=[outputFormatter stringFromDate:self.insuranceidData.date];
+            self.carInfo.insurancetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
+            break;
+        }
+        case 9://商业险
+        {
+            self.commercialtime=[outputFormatter stringFromDate:self.insuranceidData.date];
+            self.carInfo.commercialtime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
+            break;
+        }
+            
+        default:
+            break;
     }
-    return _carInfo;
+
+    //回到主线程刷新数据
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.tableView reloadData];
+    });
     
 }
+
+
 
 
 -(NSMutableArray *)textArr
@@ -136,6 +126,16 @@
     if (_textArr == nil)
     {
         _textArr = [NSMutableArray array];
+        
+        //购买时间
+        NSString *buytime = [self.carInfo.insurancetime getTime];
+        //较强险
+        NSString *insurancetime = [self.carInfo.insurancetime getTime];
+        //商业险
+        NSString *commercialtime = [self.carInfo.commercialtime getTime];
+        
+        NSArray *arr = @[self.carInfo.carid,self.carInfo.brand,self.carInfo.model,self.carInfo.cartype,self.carInfo.frameid,self.carInfo.engineid,buytime,self.carInfo.insuranceid,insurancetime,commercialtime];
+        _textArr = (NSMutableArray *)arr;
     }
     return _textArr;
 }
@@ -179,23 +179,40 @@
 
 - (void)handAction:(UIButton *)button
 {
+    [self.view endEditing:YES];
+    
+    if (self.carInfo.carid == nil        || self.carInfo.carid.length == 0   ||
+        self.carInfo.brand == nil        || self.carInfo.brand.length == 0   ||
+        self.carInfo.model == nil        || self.carInfo.model.length == 0   ||
+        self.carInfo.cartype == nil      || self.carInfo.cartype.length == 0 ||
+        self.carInfo.frameid == nil      || self.carInfo.frameid.length == 0 ||
+        self.carInfo.engineid == nil     || self.carInfo.engineid.length == 0   ||
+        self.carInfo.buytime == nil      || self.carInfo.buytime.length == 0   ||
+        self.carInfo.insuranceid == nil  || self.carInfo.insuranceid.length == 0 ||
+        self.carInfo.insurancetime == nil || self.carInfo.insurancetime.length == 0||
+        self.carInfo.commercialtime == nil || self.carInfo.commercialtime.length == 0
+        )
+    {
+        [[AlertView sharedAlertView] addAlertMessage:@"输入框有空，请核对" title:@"提示"];
+        return;
+    }
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    params[@"id"] = self.carInfo.ID;
     params[@"userid"] = [UserInfo sharedUserInfo].userID;
     params[@"carid"] = self.carInfo.carid;
     params[@"brand"] = self.carInfo.brand;
     params[@"model"] = self.carInfo.model;
     params[@"cartype"] = self.carInfo.cartype;
     params[@"frameid"] = self.carInfo.frameid;
-    params[@"engineid"] = self.carInfo.engienid;
-    params[@"cartype"] = self.carInfo.cartype;
+    params[@"engineid"] = self.carInfo.engineid;
     params[@"buytime"] = self.carInfo.buytime;
     params[@"insuranceid"] = self.carInfo.insuranceid;
     params[@"insurancetime"] = self.carInfo.insurancetime;
     params[@"commercialtime"] = self.carInfo.commercialtime;
     
-    NSString *url = [NSString stringWithFormat:@"%@carinforegistservlet",URL];
+    NSString *url = [NSString stringWithFormat:@"%@updatecarinfoservlet",URL];
     YYLog(@"params----%@",params);
     [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
      {
@@ -241,30 +258,38 @@
     CarInputCell *cell = [CarInputCell cellWithTableView:tableView];
     
     NSString *name = self.rightArr[indexPath.row];
-    NSString *nameInput = [NSString stringWithFormat:@"请输入%@",name];
-    cell.textField.placeholder = nameInput;
+    NSString *nameInput = self.textArr[indexPath.row];
+    cell.textField.text = nameInput;
     
     cell.textLabel.text = name;
     cell.textField.tag = indexPath.row;
     cell.textField.delegate = self;
     
     switch (indexPath.row) {
+        case 6:
+        {
+            if (self.buytime)
+            {
+                cell.textField.text = self.buytime;
+            }
+            break;
+        }
         case 8:
         {
             if (self.insuranceid)
             {
                 cell.textField.text = self.insuranceid;
             }
-        }
             break;
+        }
         case 9:
         {
             if (self.commercialtime)
             {
                 cell.textField.text = self.commercialtime;
             }
-        }
             break;
+        }
             
         default:
             break;
@@ -301,11 +326,11 @@
             self.carInfo.frameid = textField.text;
             break;
         case 5:
-            self.carInfo.engienid = textField.text;
+            self.carInfo.engineid = textField.text;
             break;
-        case 6:
-            self.carInfo.buytime = textField.text;
-            break;
+//        case 6:
+//            self.carInfo.buytime = textField.text;
+//            break;
         case 7:
             self.carInfo.insuranceid = textField.text;
             break;
@@ -319,20 +344,15 @@
  */
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == 8)
+    if (textField.tag == 8 || textField.tag == 9 || textField.tag == 6)
     {
         textField.inputView=self.insuranceidData;
-        textField.text = @"请选择日期";
-    }if (textField.tag == 9)
-    {
-        textField.inputView=self.commercialtimeData;
-        textField.text = @"请选择日期";
+        self.selectData = textField.tag;
+        textField.placeholder = @"请选择日期";
     }else
     {
         [self.insuranceidData removeFromSuperview];
-        [self.commercialtimeData removeFromSuperview];
     }
-    
     return YES;
 }
 

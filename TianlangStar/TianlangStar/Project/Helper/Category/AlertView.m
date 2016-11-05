@@ -170,4 +170,101 @@ singleton_implementation(AlertView);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//判断输入框数据是否有空
+
+-(BOOL)checkTextFieldHasNil :(UIViewController *)vc
+{
+    BOOL flag = NO;
+    
+    //判断输入框的内容是否为空
+    NSArray *views = vc.view.subviews;
+    
+    //获取所有的输入框
+    NSMutableArray *fieldM = [NSMutableArray array];
+    
+    for (UIView *child in views)
+    {
+        if ([child isKindOfClass:[UITextField class]])
+        {
+            [fieldM addObject:child];
+        }
+    }
+    
+    //判断输入框
+    for (UITextField *textField in fieldM)
+    {
+        //判断输入框文字是否是空
+        if (textField.text.length == 0 || textField.text == nil)
+        {
+            flag = NO;
+            break;
+        }else if (textField.text.length > 0 || textField.text != nil)
+        {
+            flag = YES;
+        }
+    }
+    return flag;
+}
+
+
 @end

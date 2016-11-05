@@ -8,8 +8,13 @@
 
 #import "CarInfoListVC.h"
 #import "CarInfoChangeVC.h"
+#import "CarModel.h"
 
 @interface CarInfoListVC ()
+
+
+/** 接收服务器返回的车辆信息数据 */
+@property (nonatomic,strong) NSArray *carInfoArr;
 
 @end
 
@@ -37,6 +42,7 @@
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+            YYLog(@"parmas----%@",parmas);
     
     [[AFHTTPSessionManager manager]POST:url parameters:parmas progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -45,6 +51,22 @@
         
         YYLog(@"responseObject---%@",responseObject);
         
+        NSNumber *num = responseObject[@"resultCode"];
+        NSInteger result = [num integerValue];
+        if (result == 1000)
+        {
+            self.carInfoArr = [CarModel mj_objectArrayWithKeyValuesArray:responseObject[@"obj"]];
+            [self.tableView reloadData];
+            
+        }else if (result == 1007)
+        {
+            [[AlertView sharedAlertView] loginUpdataSession];
+        }else
+        {
+            [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试"];
+        }
+        
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
         YYLog(@"error---%@",error);
@@ -71,7 +93,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return 2;
+    return self.carInfoArr.count;;
 }
 
 
@@ -83,7 +105,9 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    cell.textLabel.text = @"      陕A  82828  宝马 320";
+    CarModel *model = self.carInfoArr[indexPath.row];
+    NSString *str = [NSString stringWithFormat:@"%@       %@",model.carid,model.cartype];
+    cell.textLabel.text = str;
 
     return cell;
 }
@@ -95,9 +119,18 @@
     return @"名下车辆信息为:";
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+
+    return 90;
+}
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CarModel *model = self.carInfoArr[indexPath.row];
     CarInfoChangeVC *vc = [[CarInfoChangeVC alloc] init];
+    vc.carInfo = model;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

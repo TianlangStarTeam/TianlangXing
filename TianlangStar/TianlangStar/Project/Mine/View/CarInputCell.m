@@ -33,7 +33,7 @@
         _textField.backgroundColor = [UIColor clearColor];
         _textField.backgroundColor =[UIColor colorWithWhite:1 alpha:0];
         self.textField.borderStyle = TFborderStyle;
-        self.textField.placeholder = @"请输入验证码";
+//        self.textField.placeholder = @"请输入验证码";
         self.textField.font = Font14;
         
 //        self.textField.secureTextEntry= YES;

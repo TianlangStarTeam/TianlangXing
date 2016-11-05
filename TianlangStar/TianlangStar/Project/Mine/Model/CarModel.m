@@ -11,30 +11,35 @@
 @implementation CarModel
 
 
--(NSString *)insurancetime
-{
-    NSString * timeStampString = _insurancetime;
-    NSTimeInterval _interval=[timeStampString doubleValue];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
-    NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
-    [objDateformat setDateFormat:@"YYYY-MM-dd"];
 
-    return [objDateformat stringFromDate: date];
++(NSDictionary *)mj_replacedKeyFromPropertyName
+{
+    return @{@"ID" : @"id"};
 
 }
 
--(NSString *)commercialtime
-{
-    NSString * timeStampString = _commercialtime;
-    NSTimeInterval _interval=[timeStampString doubleValue];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
-    NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
-    [objDateformat setDateFormat:@"YYYY-MM-dd"];
-  
-    return [objDateformat stringFromDate: date];
-    
-    
-}
+//-(NSString *)insurancetime
+//{
+//    NSString * timeStampString = _insurancetime;
+//    NSTimeInterval _interval=[timeStampString doubleValue];
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
+//    NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
+//    [objDateformat setDateFormat:@"YYYY-MM-dd"];
+//
+//    return [objDateformat stringFromDate: date];
+//
+//}
+//
+//-(NSString *)commercialtime
+//{
+//    NSString * timeStampString = _commercialtime;
+//    NSTimeInterval _interval=[timeStampString doubleValue];
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
+//    NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
+//    [objDateformat setDateFormat:@"YYYY-MM-dd"];
+//  
+//    return [objDateformat stringFromDate: date];
+//}
 
 
 @end

@@ -7,7 +7,12 @@
 //  车辆信息修改
 
 #import <UIKit/UIKit.h>
+#import "CarModel.h"
 
 @interface CarInfoChangeVC : UITableViewController
+
+
+/** 传入的Cars模型 */
+@property (nonatomic,strong) CarModel *carInfo;
 
 @end

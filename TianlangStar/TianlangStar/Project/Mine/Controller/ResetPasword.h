@@ -1,13 +1,13 @@
 //
-//  AddCarInfo.h
+//  ResetPasword.h
 //  TianlangStar
 //
-//  Created by youyousiji on 16/11/4.
+//  Created by youyousiji on 16/11/5.
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface AddCarInfo : UITableViewController
+@interface ResetPasword : UIViewController
 
 @end

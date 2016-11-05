@@ -27,7 +27,7 @@
 /** 车架号 */
 @property (nonatomic,copy) NSString *frameid;
 /** 发动机号*/
-@property (nonatomic,copy) NSString *engienid;
+@property (nonatomic,copy) NSString *engineid;
 /** 购买时间 */
 @property (nonatomic,copy) NSString *buytime;
 /** 图片 */
