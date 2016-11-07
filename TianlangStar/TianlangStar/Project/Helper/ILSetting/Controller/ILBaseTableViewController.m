@@ -77,6 +77,7 @@
     ILSettingCell *cell = [[ILSettingCell class] cellWithTableView:tableView];
     
     // 取出模型
+//    cell.textField.text = 
     ILSettingGroup *group = self.dataList[indexPath.section];
     ILSettingItem *item = group.items[indexPath.row];
     

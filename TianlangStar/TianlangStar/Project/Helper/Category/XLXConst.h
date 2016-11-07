@@ -48,3 +48,21 @@ UIKIT_EXTERN NSString const *picURL;
 
 
 
+
+
+
+
+typedef enum : NSUInteger {
+    carid = 0,
+    brand =1,
+    model = 2,
+    cartype = 4,
+    frameid  =5,
+    engineid  = 6,
+    buytime  = 7,
+    insuranceid =8,
+    commercialtime = 9,
+} carInfoType;
+
+
+

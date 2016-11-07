@@ -156,12 +156,21 @@
 -(NSString *)getTime
 {
     NSString * timeStampString = self;
-    NSTimeInterval _interval=[timeStampString doubleValue] / 1000.0;
+//    NSTimeInterval _interval=[timeStampString doubleValue] / 1000.0;
+    NSTimeInterval _interval=[timeStampString doubleValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
     NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
     [objDateformat setDateFormat:@"YYYY-MM-dd"];
     return [objDateformat stringFromDate: date];
     
+}
+
+
+-(NSString *)getCurrentTime
+{
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[currentDate timeIntervalSince1970]];
+    return [NSString stringWithFormat:@"%@000",timeSp];
 }
 
 /**

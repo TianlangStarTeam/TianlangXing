@@ -59,4 +59,25 @@ singleton_interface(AlertView);
 -(void)getNumbers:(NSString *)iphoneNum;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-(BOOL)checkTextFieldHasNil :(UIViewController *)vc;
+
+
 @end
