@@ -53,6 +53,9 @@
     
     self.userInfo = [UserInfo sharedUserInfo];
     self.collectionModel = [[CollectionModel alloc] init];
+    self.collectionIdArray = [NSMutableArray array];
+    
+    [self allCollectionAction];
     
     // 登录
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"登录" style:(UIBarButtonItemStylePlain) target:self action:@selector(loginAction)];
@@ -133,22 +136,61 @@
 {
     if (self.userInfo.isLogin)
     {
-        [self allCollectionAction];
         
-        // 收藏过的数据里包含这个id则取消收藏
-        if ([self.collectionArray containsObject:self.collectionModel.ID])
-        {
-            // 取消收藏
-            [self cancleCollectionAction];
+        NSString *url = [NSString stringWithFormat:@"%@getallcollectionservlet",URL];
+        
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        
+        NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+        parameters[@"sessionId"] = sessionid;
+        
+        [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
             
-        }
-        // 否则添加收藏
-        else
-        {
-            // 添加收藏
-            [self addCollectionAction];
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-        }
+            NSNumber *num = responseObject[@"resultCode"];
+            NSInteger result = [num integerValue];
+            
+            NSArray *array = responseObject[@"obj"];
+            
+            CollectionModel *collectionModel = [[CollectionModel alloc] init];
+
+            if (result == 1000)
+            {
+                
+                for (NSDictionary *dic in array) {
+                    
+                    [collectionModel setValuesForKeysWithDictionary:dic];
+                    [self.collectionArray addObject:collectionModel];
+                    [self.collectionIdArray addObject:collectionModel.productid];
+                }
+                
+                YYLog(@"self.collectionModel.productid:%@",collectionModel.productid);
+                
+                // 收藏过的数据里包含这个id则取消收藏  collectionModel.productid
+                if ([self.collectionIdArray containsObject:collectionModel.productid])
+                {
+                    // 取消收藏
+                    [self cancleCollectionAction];
+                    
+                }
+                // 否则添加收藏
+                else
+                {
+                    // 添加收藏
+                    [self addCollectionAction];
+                    
+                }
+                
+            }
+            
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            YYLog(@"获取指定用户的全部收藏物请求失败-%@",error);
+            
+        }];
+        
     }
     else
     {
@@ -176,12 +218,29 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         YYLog(@"添加收藏请求成功-%@",responseObject);
+        
+        NSNumber *num = responseObject[@"resultCode"];
+        NSInteger result = [num integerValue];
 
-        [[AlertView sharedAlertView] addAfterAlertMessage:@"收藏成功" title:@"提示"];
-        
-        [self.collectionButton setTitle:@"取消收藏" forState:(UIControlStateNormal)];
-        
-        self.isCollection = YES;
+        if (result) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[AlertView sharedAlertView] addAfterAlertMessage:@"收藏成功" title:@"提示"];
+                
+                [self.collectionButton setTitle:@"取消收藏" forState:(UIControlStateNormal)];
+                
+                self.isCollection = YES;
+
+            });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[AlertView sharedAlertView] addAlertMessage:@"收藏失败" title:@"提示"];
+            });
+        }
 
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -202,7 +261,7 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
-    parameters[@"id"] = @"1";
+    parameters[@"productid"] = @"1";
     parameters[@"type"] = @"1";// 1:物品 2:服务
     
     [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -211,12 +270,28 @@
         
         YYLog(@"取消收藏请求成功-%@",responseObject);
         
-        [[AlertView sharedAlertView] addAfterAlertMessage:@"取消收藏成功" title:@"提示"];
-        
-        [self.collectionButton setTitle:@"收藏" forState:(UIControlStateNormal)];
-        
-        self.isCollection = NO;
+        NSNumber *num = responseObject[@"resultCode"];
+        NSInteger result = [num integerValue];
 
+        if (result == 1000) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[AlertView sharedAlertView] addAfterAlertMessage:@"取消收藏成功" title:@"提示"];
+                
+                [self.collectionButton setTitle:@"收藏" forState:(UIControlStateNormal)];
+                
+                self.isCollection = NO;
+
+            });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[AlertView sharedAlertView] addAfterAlertMessage:@"取消收藏失败" title:@"提示"];
+            });
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -239,7 +314,8 @@
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
     
-    YYLog(@"parameters===%@",parameters);
+    YYLog(@"sessionid===%@",sessionid);
+    YYLog(@"获取指定用户的全部收藏物的parameters===%@",parameters);
     
     [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -250,14 +326,38 @@
         NSNumber *num = responseObject[@"resultCode"];
         NSInteger result = [num integerValue];
         
+        NSArray *array = responseObject[@"obj"];
+        
+        CollectionModel *collectionModel = [[CollectionModel alloc] init];
+
         if (result == 1000)
         {
-            //保存模型数组，覆盖原有数组
-            self.collectionArray = [CollectionModel mj_objectArrayWithKeyValuesArray:responseObject[@"obj"]];
+            for (NSDictionary *dic in array) {
+                
+                [collectionModel setValuesForKeysWithDictionary:dic];
+                [self.collectionIdArray addObject:collectionModel.productid];
+            }
             
-            [self.collectionIdArray addObject:self.collectionModel.ID];
+            // 收藏过的数据里包含这个id则显示取消收藏 self.collectionModel.ID
+            if ([self.collectionIdArray containsObject:collectionModel.productid])
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    // 取消收藏
+                    [self.collectionButton setTitle:@"取消收藏" forState:(UIControlStateNormal)];
+                });
+            }
+            // 否则显示添加收藏
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                   
+                    // 添加收藏
+                    [self.collectionButton setTitle:@"收藏" forState:(UIControlStateNormal)];
+
+                });
+            }
         }
-        
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
