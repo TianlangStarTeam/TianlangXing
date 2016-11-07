@@ -113,7 +113,10 @@
     //回到主线程刷新数据
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
+        //单个单元格刷新
+        NSIndexPath *index = [NSIndexPath indexPathForRow:self.selectData inSection:0];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index, nil] withRowAnimation:(UITableViewRowAnimationNone)];
     });
     
 }
@@ -172,7 +175,7 @@
     self.handButton.layer.cornerRadius = 6;
     [self.handButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    //    handView.backgroundColor = [UIColor grayColor];
+        handView.backgroundColor = [UIColor grayColor];
     [handView addSubview:self.handButton];
     self.tableView.tableFooterView = handView;
 }
@@ -235,6 +238,7 @@
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
          YYLog(@"error----%@",error);
+         
      }];
     
     
@@ -307,7 +311,8 @@
 //保存用户输入的信息
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    //    self.textArr[textField.tag] = textField.text;
+//    if (textField.tag == 6 || textField.tag == 8 || textField.tag == 9) return;
+//        self.textArr[textField.tag] = textField.text;
     
     switch (textField.tag) {
         case 0:

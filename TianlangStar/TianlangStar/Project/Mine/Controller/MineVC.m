@@ -19,6 +19,7 @@
 #import "ILSettingArrowItem.h"
 #import "CarInfoListVC.h"
 #import "ResetPasword.h"
+#import "AddProductVC.h"
 
 
 
@@ -36,6 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     //1.判断是否登录
     if (![UserInfo sharedUserInfo].isLogin)
@@ -102,7 +104,7 @@
     
     ILSettingArrowItem *SalesStatistics = [ILSettingArrowItem itemWithIcon:nil title:@"销售统计" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"商品发布" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"商品发布" destVcClass:[AddProductVC class]];
     
     ILSettingArrowItem *informationRelease = [ILSettingArrowItem itemWithIcon:nil title:@"信息发布" destVcClass:[UserInfoManagementTVC class]];
     
