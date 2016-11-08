@@ -14,6 +14,7 @@
 #import "UserInfo.h"
 #import "LoginVC.h"
 #import "CollectionModel.h"
+#import "UserModel.h"
 
 @interface HomePageVC ()
 
@@ -30,6 +31,10 @@
 /** 保存已收藏所有商品id */
 @property (nonatomic,strong) NSMutableArray *collectionIdArray;
 
+/** 保存所有用户的数组 */
+@property (nonatomic,strong) NSArray *allPeopleArray;
+/** 所有用户的数组 */
+@property (nonatomic,strong) NSMutableArray *mAllPeopleUsernameArray;
 
 /** 添加收藏 */
 @property (nonatomic,strong) UIButton *addCollectionButton;
@@ -41,8 +46,12 @@
 @property (nonatomic,strong) UIButton *collectionDetailButton;
 /** 修改个人信息 */
 @property (nonatomic,strong) UIButton *changePersonalInfoButton;
-
-
+/** 管理员创建新用户 */
+@property (nonatomic,strong) UIButton *creatNewPersonButton;
+/** 管理员查询所有用户 */
+@property (nonatomic,strong) UIButton *allPeopleButton;
+/** 管理员删除用户 */
+@property (nonatomic,strong) UIButton *deletePersonButton;
 
 @end
 
@@ -54,6 +63,7 @@
     self.userInfo = [UserInfo sharedUserInfo];
     self.collectionModel = [[CollectionModel alloc] init];
     self.collectionIdArray = [NSMutableArray array];
+    self.mAllPeopleUsernameArray = [NSMutableArray array];
     
     [self allCollectionAction];
     
@@ -113,6 +123,34 @@
     [self.changePersonalInfoButton setTitle:@"修改个人信息" forState:(UIControlStateNormal)];
     [self.changePersonalInfoButton addTarget:self action:@selector(changePersonalInfoAction) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:self.changePersonalInfoButton];
+
+    
+    
+    // 管理员创建新用户
+    self.creatNewPersonButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.creatNewPersonButton.frame = CGRectMake(50, 380, 100, 44);
+    [self.creatNewPersonButton setTitle:@"创建新用户" forState:(UIControlStateNormal)];
+    [self.creatNewPersonButton addTarget:self action:@selector(creatNewPersonAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.creatNewPersonButton];
+
+    
+    
+    // 管理员查询所有用户
+    self.allPeopleButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.allPeopleButton.frame = CGRectMake(50, 430, 100, 44);
+    [self.allPeopleButton setTitle:@"所有用户" forState:(UIControlStateNormal)];
+    [self.allPeopleButton addTarget:self action:@selector(allPeopleAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.allPeopleButton];
+
+
+    
+    
+    // 管理员删除用户
+    self.deletePersonButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.deletePersonButton.frame = CGRectMake(50, 480, 100, 44);
+    [self.deletePersonButton setTitle:@"删除用户" forState:(UIControlStateNormal)];
+    [self.deletePersonButton addTarget:self action:@selector(deletePersonAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.deletePersonButton];
     
 }
 
@@ -129,6 +167,148 @@
 
 
 
+#pragma mark - 管理员创建新用户
+- (void)creatNewPersonAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@getallcustomerservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+        
+        self.allPeopleArray = responseObject[@"obj"];
+        
+        UserModel *userModel = [[UserModel alloc] init];
+        
+        if (resultCode == 1000) {
+            
+            YYLog(@"成功");
+            
+            for (NSDictionary *dic in self.allPeopleArray)
+            {
+                [userModel setValuesForKeysWithDictionary:dic];
+                [self.mAllPeopleUsernameArray addObject:userModel.username];
+            }
+            
+            if (![self.mAllPeopleUsernameArray containsObject:@"蓓蓓"])
+            {
+                NSString *url = [NSString stringWithFormat:@"%@creatuserservlet",URL];
+                
+                NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+                
+                NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+                parameters[@"sessionId"] = sessionid;
+                parameters[@"username"] = @"蓓蓓";
+                NSString *password = [RSA encryptString:@"123qwe" publicKey:[UserInfo sharedUserInfo].publicKey];
+                parameters[@"value"] = password;
+                
+                [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+                    
+                } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    
+                    YYLog(@"创建新用户返回：%@",responseObject);
+                    
+                    NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+                    
+                    if (resultCode == 1000)
+                    {
+                        [[AlertView sharedAlertView] addAfterAlertMessage:@"创建成功" title:@"提示"];
+                    }
+                    
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                    YYLog(@"创建新用户返回失败：%@",error);
+                }];
+            }
+            else
+            {
+                [[AlertView sharedAlertView] addAfterAlertMessage:@"用户已存在" title:@"提示"];
+            }
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        YYLog(@"所有用户请求失败：%@",error);
+    }];
+}
+
+
+
+#pragma mark - 管理员查询所有用户
+- (void)allPeopleAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@getallcustomerservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+        
+        self.allPeopleArray = responseObject[@"obj"];
+        
+        UserModel *userModel = [[UserModel alloc] init];
+        
+        if (resultCode == 1000) {
+            
+            YYLog(@"成功");
+            
+            for (NSDictionary *dic in self.allPeopleArray)
+            {
+                [userModel setValuesForKeysWithDictionary:dic];
+                [self.mAllPeopleUsernameArray addObject:userModel];
+            }
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        YYLog(@"所有用户请求失败：%@",error);
+    }];
+}
+
+
+
+#pragma mark - 管理员删除用户
+- (void)deletePersonAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@deleteusersevlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"id"] = @"1";
+
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        YYLog(@"管理员删除用户返回：%@",responseObject);
+        
+//        NSInteger resultCode = responseObject[@""];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        YYLog(@"管理员删除用户请求失败：%@",error);
+        
+    }];
+}
+
+
+
+#pragma mark - 收藏的点击事件
 /**
  *  收藏的点击事件
  */
@@ -201,8 +381,9 @@
 
 
 
+#pragma mark - 添加收藏
 /**
- *  添加收藏的点击事件
+ *  添加收藏
  */
 - (void)addCollectionAction
 {
@@ -252,8 +433,9 @@
 
 
 
+#pragma mark - 取消收藏
 /**
- *  取消收藏的点击事件
+ *  取消收藏
  */
 - (void)cancleCollectionAction
 {
@@ -302,6 +484,7 @@
 
 
 
+#pragma mark - 获取指定用户的全部收藏物
 /**
  *  获取指定用户的全部收藏物的点击事件
  */
@@ -368,6 +551,7 @@
 
 
 
+#pragma mark - 查看收藏物详情
 /**
  *  查看收藏物详情的点击事件
  */

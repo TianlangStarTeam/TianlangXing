@@ -38,4 +38,23 @@
     
     return [objDateformat stringFromDate: date];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+}
 @end
