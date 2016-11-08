@@ -9,11 +9,12 @@
 #import "AddProductVC.h"
 #import "HttpTool.h"
 #import "ProductModel.h"
+#import "AdressModel.h"
+#import "VirtualcenterModel.h"
+
+
 @interface AddProductVC ()
 
-
-/** 上传商品的名称 */
-@property (nonatomic,strong) NSArray *fileArr;
 
 @end
 
@@ -40,28 +41,41 @@
     
     
     //修改用户信息
+//    [self updataUserInfo];
     
-    [self updataUserInfo];
+    
+    //添加地址
+//    [self addAdres];
+    
+    
+    //地址管理：删除
+//    [self deletaAddress];
+    
+    //获取用户地址
+//    [self getAllAddress];
+    
+    //更新用户地址
+//    [self updataAddress];
+    
+    //更新默认的用户地址
+//    [self updataDefaultAddress];
+    
+    
 
+    //地址管理：获取用户账户余额
+//    [self getAccountBalance];
+    
+    
+    //地址管理：充值
+    [self recharge];
+    
+    //地址管理：获取充值记录
+//    [self getRechargeRecord];
+    
 }
 
 
-
-
-
--(NSArray *)fileArr
-{
-    if (!_fileArr)
-    {
-        _fileArr = @[@"shappic",@"picstyle",@"locationpic"];
-    }
-    return _fileArr;
-}
-
-
-
-
-
+#pragma mark====商品和服务--宇鹏========
 /** 添加商品接口测试 */
 -(void)addProduct
 {
@@ -326,10 +340,6 @@
      }];
 
     
-    
-    
-    
-    
     return;
     [HttpTool post:url parmas:parmas success:^(id json)
     {
@@ -341,8 +351,10 @@
     
 }
 
+#pragma mark=====修改账户信息--宇鹏======
+
 /**
- *  修改账户休息
+ *  修改账户信息
  */
 -(void)updataUserInfo
 {
@@ -366,7 +378,7 @@
     }];
 }
 
-
+#pragma mark=====地址管理----韩龙======
 /**
  *  地址管理：添加
  */
@@ -383,16 +395,223 @@
      给tbl_address 中插入一条数据
      1000表示成功
 */
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"phone"] = @"18092456641";
+    parmas[@"username"] = @"韩龙hanlong";
+    parmas[@"address"] = @"陕西省西安市雁塔区";
+    //     parmas[@"userid "] = @"18092456641";
+    parmas[@"type"] = @"0";//默认为0
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas---%@",parmas);
     
     
-    
-    
-    
-    
-    
-
-
+    NSString *url = [NSString stringWithFormat:@"%@ddddrsssrvlt",URL];
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"json-添加地址%@",json);
+         
+    } failure:^(NSError *error)
+    {
+        YYLog(@"json-添加地址%@",error);
+    }];
 }
+
+
+
+/**
+ *  地址管理：删除
+ */
+-(void)deletaAddress
+{
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"id"] = @"3";
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas---%@",parmas);
+
+    NSString *url = [NSString stringWithFormat:@"%@dltddrsssrvlt",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"json-删除地址%@",json);
+        
+    } failure:^(NSError *error)
+     {
+        YYLog(@"json-删除地址%@",error);
+    }];
+}
+
+
+/**
+ *  地址管理：获取用户配货地址
+ */
+-(void)getAllAddress
+{
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"userid"] = @"14";
+    parmas[@"type"] = @"1";
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas---%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@gtsrddrsssrvlt",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"json-获取地址%@",json);
+         NSArray *arr = [AdressModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         YYLog(@"获取地址arr---%@",arr);
+         
+     } failure:^(NSError *error)
+     {
+         YYLog(@"json-获取地址%@",error);
+     }];
+}
+
+
+/**
+ *  地址管理：更新用户配货地址
+ */
+-(void)updataAddress
+{
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"phone"] = @"18092456600";
+    parmas[@"username"] = @"杀人狂魔---韩龙";
+    parmas[@"address"] = @"陕西省西安市莲湖区1906";
+    parmas[@"userid"] = @"14";
+    parmas[@"id"] = @"5";
+    parmas[@"type"] = @"1";
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas---%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@pdtddrsssrvlt",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"json-更新地址%@",json);
+//         NSArray *arr = [AdressModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+//         YYLog(@"更新地址arr---%@",arr);
+         
+     } failure:^(NSError *error)
+     {
+         YYLog(@"json-更新地址%@",error);
+     }];
+}
+
+
+
+/**
+ *  更新用户默认配货地址
+ */
+-(void)updataDefaultAddress
+{
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"oldid"] = @"2";
+    parmas[@"newid"] = @"4";
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas---%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@pdtdfltddrsssrvlt",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"json-更改默认地址%@",json);
+     } failure:^(NSError *error)
+     {
+         YYLog(@"json-更改默认地址%@",error);
+     }];
+}
+
+
+#pragma mark=====充值----韩龙=====
+/**
+ *  地址管理：获取用户账户余额
+ */
+-(void)getAccountBalance
+{
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"userid"] = @"13";
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas---%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@gtsrcurrncysrvlt",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"json-获取账户余额%@",json);
+
+         
+     } failure:^(NSError *error)
+     {
+         YYLog(@"json-获取账户余额%@",error);
+     }];
+}
+
+
+
+/**
+ *  地址管理：充值
+ */
+-(void)recharge
+{
+    /*
+     username 用户名
+     amount 金额
+     sessionId 会话id
+     */
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"username"] = [UserInfo sharedUserInfo].username;
+    parmas[@"amount"] = @"100";
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas---%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@rchrgsrvlt",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"json-充值%@",json);
+
+     } failure:^(NSError *error)
+     {
+         YYLog(@"json-充值%@",error);
+     }];
+}
+
+
+
+/**
+ * 地址管理：获取用户充值记录
+ */
+-(void)getRechargeRecord
+{
+    /*
+     username 用户名
+     amount 金额
+     sessionId 会话id
+     */
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"userid"] = [UserInfo sharedUserInfo].userID;
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas---%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@gtsrrchrgrcordsrvlt",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"json-获取充值记录%@",json);
+         NSArray *Arr = [NSArray array];
+         Arr = [VirtualcenterModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         
+         YYLog(@"Arr---%@",Arr);
+         
+         
+     } failure:^(NSError *error)
+     {
+         YYLog(@"json-获取充值记录%@",error);
+     }];
+}
+
+
+
+
 
 
 
