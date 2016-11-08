@@ -29,11 +29,19 @@
 //    [self addProduct];
     
     //添加服务
-    [self addServices];
+//    [self addServices];
     
     //获取所有商品及服务---过  记得更改type
 //    [self getAllProduct];
     
+    
+    //更新商品信息
+//    [self updataProduct];
+    
+    
+    //修改用户信息
+    
+    [self updataUserInfo];
 
 }
 
@@ -244,6 +252,9 @@
 }
 
 
+/**
+  *  x修改商品不含图片
+  */
 -(void)updataProduct
 {
     /*
@@ -264,13 +275,127 @@
      Long scoreprice 积分价格
      String images 图片
      */
+    NSMutableDictionary  *parmas = [NSMutableDictionary dictionary];
+    
+    parmas[@"type"] = @"83205";
+    parmas[@"id"] = @"10";
+    parmas[@"productname"] = @"83205";
+    parmas[@"price"] = @"83205";
+    parmas[@"scoreprice"] = @"83205";
+    parmas[@"inventory"] = @"83205";
+    parmas[@"images"] = @"";
     
     
+    YYLog(@"%@",parmas);
+    NSString * url = [NSString stringWithFormat:@"%@upload/updatecommondityservlet",URL];
 
+    [[AFHTTPSessionManager manager]POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+     {
+         UIImage *image1 = [UIImage imageNamed:@""];
+         UIImage *image2 = [UIImage imageNamed:@""];
+         UIImage *image3 = [UIImage imageNamed:@""];
+         
+         NSArray *imagesArr = [NSArray arrayWithObjects:image1,image2,image3, nil];
+         
+         NSUInteger i = 0 ;
+         
+         YYLog(@"imagesArr.count---%lu",(unsigned long)imagesArr.count);
+         
+         /**出于性能考虑,将上传图片进行压缩*/
+         for (UIImage * image in imagesArr)
+         {
+             NSData *data = UIImageJPEGRepresentation(image, 1.0);
+             //拼接data
+             [formData appendPartWithFileData:data name:@"images" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+             i++;
+         }
+     } progress:^(NSProgress * _Nonnull uploadProgress)
+     {
+         
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         YYLog(@"更新商品responseObject--%@",responseObject);
+         NSNumber *num = responseObject[@"resultCode"];
+         
+         
+         
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         YYLog(@"更新商品error--%@",error);
+     }];
+
+    
+    
+    
+    
+    
+    return;
+    [HttpTool post:url parmas:parmas success:^(id json)
+    {
+        YYLog(@"json--%@",json);
+        
+    } failure:^(NSError *error) {
+        YYLog(@"error---%@",error);
+    }];
+    
+}
+
+/**
+ *  修改账户休息
+ */
+-(void)updataUserInfo
+{
+    
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    
+    parmas[@"id"] = @"14";
+    parmas[@"username"] = @"FWPPP";
+    parmas[@"viplevel"] = @"9";
+    YYLog(@"parmas---%@",parmas);
+    
+    NSString * url = [NSString stringWithFormat:@"%@updateaccountinfoservlet",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+    {
+        YYLog(@"修改用户信息json--%@",json);
+    } failure:^(NSError *error)
+    {
+        YYLog(@"修改用户信息error--%@",error);
+    }];
+}
+
+
+/**
+ *  地址管理：添加
+ */
+-(void)addAdres
+{
+    /*
+      url  ddddrsssrvlt
+     Phone 收货人电话
+     username 收货人
+     address 配送地址
+     userid 关联的用户
+     type 是否为默认（0 不是，1是）第一条数据填1，其他填0；
+     sessionId 会话id
+     给tbl_address 中插入一条数据
+     1000表示成功
+*/
+    
+    
+    
+    
+    
+    
     
 
 
 }
+
+
+
 
 
 @end

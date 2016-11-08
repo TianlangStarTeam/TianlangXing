@@ -20,6 +20,8 @@
     
     UserInfo *userIn = [UserInfo sharedUserInfo];
     [userIn loadDataFromSandBox];
+//    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"selected"]];
+    [SVProgressHUD setMinimumDismissTimeInterval:2];
     return YES;
 }
 

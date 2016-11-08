@@ -11,7 +11,10 @@
 @interface HttpTool : NSObject
 
 
-/** 发送简单的不含图片的请求 */
+/** 发送简单的不含图片的POST请求 */
 + (void)post:(NSString *)url parmas:(NSDictionary *)parmas success:(void (^)(id json))success failure:(void(^) (NSError *error))failure;
+
+/** 发送简单的不含图片的GET请求 */
++ (void)get:(NSString *)url parmas:(NSDictionary *)parmas success:(void (^)(id json))success failure:(void(^) (NSError *error))failure;
 
 @end
