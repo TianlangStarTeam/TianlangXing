@@ -439,7 +439,7 @@
          [self checkResultCode:result];
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
-         [SVProgressHUD dismiss];
+         
          [SVProgressHUD showErrorWithStatus:@"登录失败，请稍后再试！"];
          YYLog(@"登录失败----%@",error);
      }];
@@ -451,6 +451,8 @@
  */
 -(void)checkResultCode:(int)result
 {
+    
+    
     switch (result)
     {
         case 1000://登录成功

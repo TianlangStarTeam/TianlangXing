@@ -107,7 +107,8 @@ singleton_implementation(AlertView);
     params[@"username"] = userInfo.username;
     params[@"value"] = password;
     params[@"terminal"] = @"421A6988-DA96-49FE-B99E-16820320F1BB";
-        params[@"code"] = @"88080";
+    
+//        params[@"code"] = @"88080";
     
 //    params[@"terminal"] = uuid
 
