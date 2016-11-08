@@ -21,4 +21,9 @@
 /** 用户id */
 @property (nonatomic,assign) NSInteger userid;
 
+/**
+ *  客户提交意见内容
+ */
+@property (nonatomic,copy) NSString *content;
+
 @end

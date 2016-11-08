@@ -56,7 +56,22 @@
 @property (nonatomic,strong) UIButton *allFeedbackButton;
 /** 客户提交意见 */
 @property (nonatomic,strong) UIButton *handFeedbackButton;
-
+/** 根据id查询客户提交的意见详情 */
+@property (nonatomic,strong) UIButton *detailFeedbackButton;
+/** 管理员回复客户意见 */
+@property (nonatomic,strong) UIButton *replyFeedbackButton;
+/** 添加精彩活动 */
+@property (nonatomic,strong) UIButton *addColorfulActivityButton;
+/** 删除精彩活动 */
+@property (nonatomic,strong) UIButton *deleteColorfulActivityButton;
+/** 精彩活动列表 */
+@property (nonatomic,strong) UIButton *allColorfulActivityButton;
+/** 根据id查询精彩活动信息 */
+@property (nonatomic,strong) UIButton *colorfulActivityInfoButton;
+/** 添加进购物车 */
+@property (nonatomic,strong) UIButton *addCartButton;
+/** 获取购物车列表 */
+@property (nonatomic,strong) UIButton *cartListButton;
 
 @end
 
@@ -176,6 +191,76 @@
     [self.view addSubview:self.handFeedbackButton];
 
     
+    
+    // 根据id查询客户提交的意见详情
+    self.detailFeedbackButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.detailFeedbackButton.frame = CGRectMake(180, 580, 100, 44);
+    [self.detailFeedbackButton setTitle:@"客户意见详情" forState:(UIControlStateNormal)];
+    [self.detailFeedbackButton addTarget:self action:@selector(detailFeedbackAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.detailFeedbackButton];
+
+    
+    
+    // 管理员回复客户意见
+    self.replyFeedbackButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.replyFeedbackButton.frame = CGRectMake(180, 530, 100, 44);
+    [self.replyFeedbackButton setTitle:@"回复客户意见" forState:(UIControlStateNormal)];
+    [self.replyFeedbackButton addTarget:self action:@selector(replyFeedbackAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.replyFeedbackButton];
+
+    
+    
+    // 添加精彩活动
+    self.addColorfulActivityButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.addColorfulActivityButton.frame = CGRectMake(180, 480, 100, 44);
+    [self.addColorfulActivityButton setTitle:@"添加精彩活动" forState:(UIControlStateNormal)];
+    [self.addColorfulActivityButton addTarget:self action:@selector(addColorfulActivityAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.addColorfulActivityButton];
+
+    
+    
+    // 删除精彩活动
+    self.deleteColorfulActivityButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.deleteColorfulActivityButton.frame = CGRectMake(180, 430, 100, 44);
+    [self.deleteColorfulActivityButton setTitle:@"删除精彩活动" forState:(UIControlStateNormal)];
+    [self.deleteColorfulActivityButton addTarget:self action:@selector(deleteColorfulActivityAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.deleteColorfulActivityButton];
+    
+    
+    
+    // 精彩活动列表
+    self.allColorfulActivityButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.allColorfulActivityButton.frame = CGRectMake(180, 380, 100, 44);
+    [self.allColorfulActivityButton setTitle:@"精彩活动列表" forState:(UIControlStateNormal)];
+    [self.allColorfulActivityButton addTarget:self action:@selector(allColorfulActivityAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.allColorfulActivityButton];
+
+    
+    
+    // 根据id查询精彩活动信息
+    self.colorfulActivityInfoButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.colorfulActivityInfoButton.frame = CGRectMake(180, 330, 100, 44);
+    [self.colorfulActivityInfoButton setTitle:@"精彩活动信息" forState:(UIControlStateNormal)];
+    [self.colorfulActivityInfoButton addTarget:self action:@selector(colorfulActivityInfoAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.colorfulActivityInfoButton];
+
+    
+    
+    // 获取购物车列表
+    self.cartListButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.cartListButton.frame = CGRectMake(180, 280, 100, 44);
+    [self.cartListButton setTitle:@"购物车列表" forState:(UIControlStateNormal)];
+    [self.cartListButton addTarget:self action:@selector(cartListAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.cartListButton];
+    
+    
+    
+    // 添加进购物车
+    self.addCartButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.addCartButton.frame = CGRectMake(180, 230, 100, 44);
+    [self.addCartButton setTitle:@"添加进购物车" forState:(UIControlStateNormal)];
+    [self.addCartButton addTarget:self action:@selector(addToCartAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.addCartButton];
 }
 
 
@@ -189,6 +274,150 @@
     [self.navigationController pushViewController:loginVC animated:YES];
 }
 
+
+
+#pragma mark - 添加进购物车 
+- (void)addToCartAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@addshoppingcarservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"buytype"] = @"1";// 购买类型，1表示商品  2表示服务
+    parameters[@"count"] = @"2";
+    parameters[@"productid"] = @"1";// 商品id
+
+    [HttpTool post:url parmas:parameters success:^(id json) {
+        
+        YYLog(@"添加进购物车返回：%@",json);
+        
+    } failure:^(NSError *error) {
+       
+        YYLog(@"添加进购物车返回失败：%@",error);
+    }];
+}
+
+
+#pragma mark - 获取购物车列表 
+- (void)cartListAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@findshopcarlistservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        YYLog(@"获取购物车列表返回：%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        YYLog(@"获取购物车列表返回错误：%@",error);
+    
+    }];
+}
+
+
+
+#pragma mark - 添加精彩活动 
+- (void)addColorfulActivityAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@addactivitiesservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"title"] = @"双11打折优惠";
+    parameters[@"content"] = @"打折了甩货了打折了甩货了打折了甩货了打折了甩货了打折了甩货了打折了甩货了打折了甩货了打折了甩货了打折了甩货了打折了甩货了";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img3.douban.com/view/event_poster/median/public/10f53a2ad8b38c5.jpg"]];
+    parameters[@"images"] = data;
+
+    [HttpTool post:url parmas:parameters success:^(id json) {
+        
+        YYLog(@"添加精彩活动返回:%@",json);
+        
+    } failure:^(NSError *error) {
+        
+        YYLog(@"添加精彩活动返回失败:%@",error);
+        
+    }];
+}
+
+
+
+#pragma mark - 删除精彩活动 
+- (void)deleteColorfulActivityAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@delactivitiesservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"activitiesId"] = @"1";
+
+    [HttpTool post:url parmas:parameters success:^(id json) {
+        
+        YYLog(@"删除精彩活动返回：%@",json);
+        
+    } failure:^(NSError *error) {
+        
+        YYLog(@"删除精彩活动返回失败：%@",error);
+    }];
+}
+
+
+
+#pragma mark - 精彩活动列表 
+- (void)allColorfulActivityAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@findactivitiesservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"currentPage"] = @"1";
+
+    [HttpTool post:url parmas:parameters success:^(id json) {
+        
+        YYLog(@"精彩活动列表返回：%@",json);
+        
+    } failure:^(NSError *error) {
+        
+        YYLog(@"精彩活动列表返回失败：%@",error);
+    }];
+}
+
+
+
+#pragma mark - 根据id查询精彩活动信息 
+- (void)colorfulActivityInfoAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@findactivitiesbyidservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"actionid"] = @"1";
+
+    [HttpTool post:url parmas:parameters success:^(id json) {
+        
+        YYLog(@"根据id查询精彩活动信息返回：%@",json);
+        
+    } failure:^(NSError *error) {
+       
+        YYLog(@"根据id查询精彩活动信息返回失败：%@",error);
+    }];
+}
 
 
 #pragma mark - 管理员创建新用户
@@ -315,15 +544,13 @@
     
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
-    parameters[@"id"] = @"23";
+    parameters[@"id"] = @"24";
 
     [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         YYLog(@"管理员删除用户返回：%@",responseObject);
-        
-//        NSInteger resultCode = responseObject[@""];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -359,6 +586,7 @@
 }
 
 
+
 #pragma mark - 查询客户提交的意见列表
 
 - (void)allFeedbackAction
@@ -382,6 +610,59 @@
         YYLog(@"查询客户提交的意见列表请求错误：%@",error);
     }];
 }
+
+
+
+#pragma mark - 根据id查询客户提交的意见详情 
+- (void)detailFeedbackAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@findsuggestionbyidservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"suggestid"] = @"4";
+
+    [HttpTool post:url parmas:parameters success:^(id json) {
+        
+        YYLog(@"根据id查询客户提交的意见详情返回：%@",json);
+        
+        
+    } failure:^(NSError *error) {
+        
+        YYLog(@"根据id查询客户提交的意见详情请求错误：%@",error);
+    }];
+}
+
+
+
+#pragma mark - 管理员回复客户意见 
+- (void)replyFeedbackAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@getallcollectionservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"userid"] = @"23";
+    parameters[@"content"] = @"你好，请问有什么意见吗？";
+    parameters[@"suggestid"] = @"6";
+
+    [HttpTool post:url parmas:parameters success:^(id json) {
+        
+        YYLog(@"管理员回复客户意见返回：%@",json);
+        
+        [[AlertView sharedAlertView] addAfterAlertMessage:@"回复客户意见成功" title:@"提示"];
+        
+    } failure:^(NSError *error) {
+        
+        YYLog(@"管理员回复客户意见返回错误：%@",error);
+        
+    }];
+}
+
 
 
 #pragma mark - 收藏的点击事件
@@ -655,16 +936,15 @@
 
 
 
-/**
- *  修改个人信息的点击事件
- */
+#pragma mark - 修改个人信息的点击事件
 - (void)changePersonalInfoAction
 {
     NSString *url = [NSString stringWithFormat:@"%@updateuserinfoservlet",URL];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
-    parameters[@"oldheaderpic"] = @"picture/first/siju01.jpg";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img3.douban.com/view/event_poster/median/public/10f53a2ad8b38c5.jpg"]];
+    parameters[@"oldheaderpic"] = data;
     
     [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
