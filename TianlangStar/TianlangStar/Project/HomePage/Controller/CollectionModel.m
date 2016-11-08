@@ -10,13 +10,7 @@
 
 @implementation CollectionModel
 
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-    if ([key isEqualToString:@"id"]) {
-        
-        self.ID = value;
-    }
-}
+
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName
 {

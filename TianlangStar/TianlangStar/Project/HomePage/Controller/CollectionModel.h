@@ -13,7 +13,7 @@
 /** 收藏id */
 @property (nonatomic,copy) NSString *ID;
 /** 收藏商品/服务id */
-@property (nonatomic,copy) NSString *productid;
+@property (nonatomic,assign) NSInteger productid;
 /** 创建时间 */
 @property (nonatomic,copy) NSString *createtime;
 /** 收藏类型(商品/服务) */
