@@ -19,7 +19,6 @@
 /** 提交按钮 */
 @property (nonatomic,strong) UIButton *handButton;
 
-
 /** 较强险提醒日期 --时间戳 */
 @property (nonatomic,strong) UIDatePicker *insuranceidData;
 
@@ -118,8 +117,10 @@
         NSIndexPath *index = [NSIndexPath indexPathForRow:self.selectData inSection:0];
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index, nil] withRowAnimation:(UITableViewRowAnimationNone)];
     });
-    
 }
+
+
+
 
 
 
@@ -244,6 +245,9 @@
     
     
 }
+
+
+
 
 #pragma mark - Table view data source
 
