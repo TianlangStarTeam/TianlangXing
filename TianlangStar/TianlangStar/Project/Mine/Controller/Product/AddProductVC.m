@@ -29,11 +29,15 @@
 //    [self addProduct];
     
     //添加服务
-    [self addServices];
+//    [self addServices];
     
     //获取所有商品及服务---过  记得更改type
 //    [self getAllProduct];
     
+    
+    //更新商品信息
+    
+    [self updataProduct];
 
 }
 
@@ -244,6 +248,9 @@
 }
 
 
+/**
+  *  x修改商品不含图片
+  */
 -(void)updataProduct
 {
     /*
@@ -264,12 +271,26 @@
      Long scoreprice 积分价格
      String images 图片
      */
+    NSMutableDictionary  *parmas = [NSMutableDictionary dictionary];
+    
+    parmas[@"type"] = @"83205";
+    parmas[@"id"] = @"83205";
+    parmas[@"productname"] = @"83205";
+    parmas[@"price"] = @"83205";
+    parmas[@"scoreprice"] = @"83205";
+    parmas[@"inventory"] = @"83205";
     
     
-
+    NSString * url = [NSString stringWithFormat:@"%@",URL];
     
-
-
+    [HttpTool post:url parmas:parmas success:^(id json)
+    {
+        YYLog(@"json--%@",json);
+        
+    } failure:^(NSError *error) {
+        YYLog(@"error---%@",error);
+    }];
+    
 }
 
 
