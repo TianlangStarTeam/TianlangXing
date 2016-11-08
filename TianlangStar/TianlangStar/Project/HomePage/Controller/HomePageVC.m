@@ -52,6 +52,11 @@
 @property (nonatomic,strong) UIButton *allPeopleButton;
 /** 管理员删除用户 */
 @property (nonatomic,strong) UIButton *deletePersonButton;
+/** 查询客户提交的意见列表 */
+@property (nonatomic,strong) UIButton *allFeedbackButton;
+/** 客户提交意见 */
+@property (nonatomic,strong) UIButton *handFeedbackButton;
+
 
 @end
 
@@ -151,6 +156,25 @@
     [self.deletePersonButton setTitle:@"删除用户" forState:(UIControlStateNormal)];
     [self.deletePersonButton addTarget:self action:@selector(deletePersonAction) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:self.deletePersonButton];
+    
+    
+    
+    // 查询客户提交的意见列表
+    self.allFeedbackButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.allFeedbackButton.frame = CGRectMake(50, 530, 100, 44);
+    [self.allFeedbackButton setTitle:@"客户意见列表" forState:(UIControlStateNormal)];
+    [self.allFeedbackButton addTarget:self action:@selector(allFeedbackAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.allFeedbackButton];
+
+    
+    
+    // 客户提交意见
+    self.handFeedbackButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.handFeedbackButton.frame = CGRectMake(50, 580, 100, 44);
+    [self.handFeedbackButton setTitle:@"客户提交意见" forState:(UIControlStateNormal)];
+    [self.handFeedbackButton addTarget:self action:@selector(handFeedbackAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.handFeedbackButton];
+
     
 }
 
@@ -255,6 +279,8 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        YYLog(@"所有用户：%@",responseObject);
+        
         NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
         
         self.allPeopleArray = responseObject[@"obj"];
@@ -289,7 +315,7 @@
     
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
-    parameters[@"id"] = @"1";
+    parameters[@"id"] = @"23";
 
     [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -306,6 +332,56 @@
     }];
 }
 
+
+
+#pragma mark - 客户提交意见
+- (void)handFeedbackAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@addsuggestionservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"userid"] = @"23";
+    parameters[@"content"] = @"可以的厉害了我的哥棒棒哒好好好好好非常好不错可以厉害了我的哥棒棒哒好好好好好非常好";
+
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        YYLog(@"客户提交意见返回：%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       
+        YYLog(@"客户提交意见返回错误：%@",error);
+    }];
+}
+
+
+#pragma mark - 查询客户提交的意见列表
+
+- (void)allFeedbackAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@findsuggestionlistservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"currentPage"] = @"1";
+
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        YYLog(@"查询客户提交的意见列表返回：%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        YYLog(@"查询客户提交的意见列表请求错误：%@",error);
+    }];
+}
 
 
 #pragma mark - 收藏的点击事件
