@@ -135,7 +135,7 @@
                  break;
              case 1007:
                  YYLog(@"没有登录");
-                 [[AlertView sharedAlertView] loginUpdataSession];
+                 [HttpTool loginUpdataSession];
                  break;
              case 1014:
                  YYLog(@"数据库中已经存在");
@@ -194,7 +194,7 @@
                  break;
              case 1007:
                  YYLog(@"没登录");
-                 [[AlertView sharedAlertView] loginUpdataSession];
+                 [HttpTool loginUpdataSession];
                  break;
              case 1016:
                  YYLog(@"用户没有权限");

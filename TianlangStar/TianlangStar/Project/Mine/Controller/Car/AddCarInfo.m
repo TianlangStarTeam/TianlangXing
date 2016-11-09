@@ -226,7 +226,7 @@
              [SVProgressHUD showSuccessWithStatus:@"提交成功"];
          }else if (result == 1007)
          {
-             [[AlertView sharedAlertView] loginUpdataSession];
+             [HttpTool loginUpdataSession];
          }else
          {
              [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试"];

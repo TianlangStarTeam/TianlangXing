@@ -25,9 +25,6 @@ singleton_interface(AlertView);
 - (void)loginAction;
 
 
-/** 自动登录 */
-- (void)loginUpdataSession;
-
 
 
 /**
@@ -49,14 +46,10 @@ singleton_interface(AlertView);
 
 - (void)addAlertMessage:(NSString *)message title:(NSString *)title okAction:(UIAlertAction *)okAction;
 
-///**
-// * 判断服务器返回的数据，并进行数据处理
-// */
-//-(BOOL)CheckResult:(NSInteger)resultCode;
 
 
-// 获取验证码
--(void)getNumbers:(NSString *)iphoneNum;
+
+
 
 
 

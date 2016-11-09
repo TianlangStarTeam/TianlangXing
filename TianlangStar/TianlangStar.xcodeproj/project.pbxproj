@@ -42,6 +42,7 @@
 		D705CF351DC09CBB00F65BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CF331DC09CBB00F65BE0 /* Main.storyboard */; };
 		D71475601DD1B22400F48FC4 /* AdressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D714755F1DD1B22400F48FC4 /* AdressModel.m */; };
 		D71475631DD1BCB400F48FC4 /* VirtualcenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D71475621DD1BCB400F48FC4 /* VirtualcenterModel.m */; };
+		D71D845D1DD30C3600E75A8B /* AboutSettingTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D71D845C1DD30C3600E75A8B /* AboutSettingTVC.m */; };
 		D71F66B41DCC289E000A6861 /* CarInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66B31DCC289E000A6861 /* CarInputCell.m */; };
 		D71F66B71DCC3773000A6861 /* ILSettingTextFieldItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66B61DCC3773000A6861 /* ILSettingTextFieldItem.m */; };
 		D71F66C01DCC5E0D000A6861 /* CarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66BF1DCC5E0D000A6861 /* CarModel.m */; };
@@ -155,6 +156,8 @@
 		D714755F1DD1B22400F48FC4 /* AdressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdressModel.m; sourceTree = "<group>"; };
 		D71475611DD1BCB400F48FC4 /* VirtualcenterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualcenterModel.h; sourceTree = "<group>"; };
 		D71475621DD1BCB400F48FC4 /* VirtualcenterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualcenterModel.m; sourceTree = "<group>"; };
+		D71D845B1DD30C3600E75A8B /* AboutSettingTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutSettingTVC.h; sourceTree = "<group>"; };
+		D71D845C1DD30C3600E75A8B /* AboutSettingTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutSettingTVC.m; sourceTree = "<group>"; };
 		D71F66B21DCC289E000A6861 /* CarInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarInputCell.h; sourceTree = "<group>"; };
 		D71F66B31DCC289E000A6861 /* CarInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarInputCell.m; sourceTree = "<group>"; };
 		D71F66B51DCC3773000A6861 /* ILSettingTextFieldItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingTextFieldItem.h; sourceTree = "<group>"; };
@@ -468,6 +471,8 @@
 				D72867131DCB154C00D77B38 /* FeedbackVC.xib */,
 				D77134391DCDE29100B3B9C6 /* ResetPasword.h */,
 				D771343A1DCDE29100B3B9C6 /* ResetPasword.m */,
+				D71D845B1DD30C3600E75A8B /* AboutSettingTVC.h */,
+				D71D845C1DD30C3600E75A8B /* AboutSettingTVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -730,7 +735,7 @@
 		D705CE9C1DC09BBE00F65BE0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = yysj;
 				TargetAttributes = {
 					D705CEA31DC09BBF00F65BE0 = {
@@ -866,6 +871,7 @@
 				D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */,
 				D71F66B41DCC289E000A6861 /* CarInputCell.m in Sources */,
 				D71F66C01DCC5E0D000A6861 /* CarModel.m in Sources */,
+				D71D845D1DD30C3600E75A8B /* AboutSettingTVC.m in Sources */,
 				D7DC69881DC8425A004C67F5 /* UserInfoManagementTVC.m in Sources */,
 				D705CF1D1DC09C6400F65BE0 /* AppDelegate.m in Sources */,
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
@@ -976,8 +982,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1022,8 +1030,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1136,7 +1146,7 @@
 				D705CED01DC09BBF00F65BE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D705CED11DC09BBF00F65BE0 /* Build configuration list for PBXNativeTarget "TianlangStar" */ = {
 			isa = XCConfigurationList;
@@ -1145,7 +1155,7 @@
 				D705CED31DC09BBF00F65BE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D705CED41DC09BBF00F65BE0 /* Build configuration list for PBXNativeTarget "TianlangStarTests" */ = {
 			isa = XCConfigurationList;
@@ -1154,7 +1164,7 @@
 				D705CED61DC09BBF00F65BE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D705CED71DC09BBF00F65BE0 /* Build configuration list for PBXNativeTarget "TianlangStarUITests" */ = {
 			isa = XCConfigurationList;
@@ -1163,7 +1173,7 @@
 				D705CED91DC09BBF00F65BE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
