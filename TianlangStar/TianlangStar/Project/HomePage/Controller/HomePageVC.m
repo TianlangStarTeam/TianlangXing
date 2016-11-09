@@ -108,7 +108,7 @@
     [self.addCollectionButton addTarget:self action:@selector(addCollectionAction) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:self.addCollectionButton];
     
-    
+          
     
     // 取消收藏
     self.cancleCollectionButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
@@ -420,6 +420,7 @@
 }
 
 
+
 #pragma mark - 管理员创建新用户
 - (void)creatNewPersonAction
 {
@@ -442,7 +443,7 @@
         
         if (resultCode == 1000) {
             
-            YYLog(@"成功");
+            YYLog(@"管理员创建新用户成功");
             
             for (NSDictionary *dic in self.allPeopleArray)
             {
@@ -518,7 +519,7 @@
         
         if (resultCode == 1000) {
             
-            YYLog(@"成功");
+            YYLog(@"管理员查询所有用户成功");
             
             for (NSDictionary *dic in self.allPeopleArray)
             {
