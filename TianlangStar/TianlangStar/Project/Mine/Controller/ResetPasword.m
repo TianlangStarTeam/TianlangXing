@@ -39,18 +39,17 @@
     
     
     NSString * url = [NSString stringWithFormat:@"%@resetvalueservlet",URL];
-    [[AFHTTPSessionManager manager]POST:url parameters:parmas progress:^(NSProgress * _Nonnull uploadProgress)
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
      {
+         YYLog(@"重置密码--json---%@",json);
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-        YYLog(@"responseObject--%@",responseObject);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    } failure:^(NSError *error)
     {
-        YYLog(@"error---%@",error);
+         YYLog(@"重置密码--error---%@",error);
+        
     }];
-
-
+    
 
 }
 

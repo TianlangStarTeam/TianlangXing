@@ -216,34 +216,21 @@
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
     NSString * url = [NSString stringWithFormat:@"%@logoutservlet",URL];
-
-  [[AFHTTPSessionManager manager]POST:url parameters:parmas progress:^(NSProgress * _Nonnull uploadProgress)
+    
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
     {
-      
-  } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-   {
-       YYLog(@"退出登录--%@",responseObject);
-       
-       NSNumber *num = responseObject[@"resultCode"];
-       NSInteger result = [num integerValue];
-       if (result == 1000)
-       {
-           [UserInfo sharedUserInfo].isLogin = NO;
-           [[UserInfo sharedUserInfo] synchronizeToSandBox];
-
-           //获取公钥并且弹出登录窗口
-           [self getPubicKey];
-       }else
-       {
-           [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试"];
-       }
-
-  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+         YYLog(@"退出登录--%@",json);
+        [UserInfo sharedUserInfo].isLogin = NO;
+        [[UserInfo sharedUserInfo] synchronizeToSandBox];
+        //获取公钥并且弹出登录窗口
+        [self getPubicKey];
+    } failure:^(NSError *error)
     {
         YYLog(@"退出登录--%@",error);
-      
-  }];
+    }];
 
+ 
 }
 
 

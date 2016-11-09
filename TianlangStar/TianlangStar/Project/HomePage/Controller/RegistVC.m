@@ -300,7 +300,7 @@
     //判断验证码是否可用，第一次进入时调用
     if (!self.selectedBTN)
     {
-        [[AlertView sharedAlertView] getNumbers:self.telphoneTF.text];
+        [HttpTool getNumbers:self.telphoneTF.text];
     }
     
     __block int timeout=60; //倒计时时间

@@ -42,36 +42,22 @@
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
-            YYLog(@"parmas----%@",parmas);
+    YYLog(@"parmas----%@",parmas);
     
-    [[AFHTTPSessionManager manager]POST:url parameters:parmas progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-    {
-        
-        YYLog(@"responseObject---%@",responseObject);
-        
-        NSNumber *num = responseObject[@"resultCode"];
-        NSInteger result = [num integerValue];
-        if (result == 1000)
-        {
-            self.carInfoArr = [CarModel mj_objectArrayWithKeyValuesArray:responseObject[@"obj"]];
-            [self.tableView reloadData];
-            
-        }else if (result == 1007)
-        {
-            [[AlertView sharedAlertView] loginUpdataSession];
-        }else
-        {
-            [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试"];
-        }
-        
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         self.carInfoArr = [CarModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         [self.tableView reloadData];
+         
+     } failure:^(NSError *error)
+     {
+         YYLog(@"error---%@",error);
+         
+     }];
+    
+    
 
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-    {
-        YYLog(@"error---%@",error);
-        
-    }];
 
 
 }

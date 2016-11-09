@@ -37,9 +37,6 @@
 /** 用户登录的验证码 */
 @property (nonatomic,weak) UIView *checkView;
 
-/** sessionId */
-@property (nonatomic,copy) NSString *sessionId;
-
 
 /** 登录界面的背景的图片 */
 @property (nonatomic,weak) UIImageView *bgImageView;
@@ -414,142 +411,68 @@
     NSString *url = [NSString stringWithFormat:@"%@unlogin/userlogin",URL];
     YYLog(@"url---%@",url);
     
-    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
-     {         //进度
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    [HttpTool post:url parmas:params success:^(id json)
      {
          //1.移除遮盖
          [SVProgressHUD dismiss];
-         YYLog(@"登录返回--%@",responseObject);
-         NSNumber *resultCode = responseObject[@"resultCode"];
+         YYLog(@"登录返回--%@",json);
+         NSNumber *resultCode = json[@"resultCode"];
          int result = [resultCode intValue];
          //2.判断并处理服务器的返回值
          //3记录sessionID,和用户模型数据
          if (result == 1000)//如果登陆成功才能取出sessionID，否则为空报错
          {
              //获取sessionId
-             NSNumber *mun = responseObject[@"obj"][@"sessionId"];
-             self.sessionId = [NSString stringWithFormat:@"%@",mun];
              //取出字典中的用户类型——转模型
-             self.userM = [UserModel mj_objectWithKeyValues:responseObject[@"obj"][@"user"]];
-             [SVProgressHUD  showSuccessWithStatus:@"登录成功"];
+             self.userM = [UserModel mj_objectWithKeyValues:json[@"obj"][@"user"]];
+             
+             NSNumber *mun = json[@"obj"][@"sessionId"];
+             NSString *sessionId = [NSString stringWithFormat:@"%@",mun];
+             
+             //0.设置用户提示
+             [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+             //1.保存用户名和密码到沙河
+           
+             //加密过的sessionID
+             NSString *RSASessionID  = [RSA encryptString:sessionId publicKey:userInfo.publicKey];
+             userInfo.username = self.userNameTF.text;
+             userInfo.sessionId = sessionId;
+             userInfo.passWord = self.pwdTF.text;
+             userInfo.RSAsessionId = RSASessionID;
+             userInfo.userID = self.userM.ID;
+             userInfo.userType = self.userM.type;
+             userInfo.headerpic = self.userM.headerpic;
+             userInfo.membername = self.userM.membername;
+             userInfo.isLogin = YES;
+             
+             [userInfo synchronizeToSandBox];
+             if ([self.delegate respondsToSelector:@selector(loginSuccess)])
+             {
+                 [self.delegate loginSuccess];
+             }
+             
+             [self removeFromSuperview];
+
+         }else if (result == 1013)//序列号发生改变
+         {
+             [[AlertView sharedAlertView]addAlertMessage:@"登录设备发生改变，请输入验证码验证！" title:@"提示"];
+             self.regist.y = self.okY;
+             self.foundPwdButton.y = self.okY;
+             self.okButton.y = CGRectGetMaxY(self.regist.frame) + 20;
+             
+             YYLog(@"用户名在数据库中已经存在");
+             return;
          }
          
-         //4.处理返回结果。跳对应的界面
-         [self checkResultCode:result];
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    } failure:^(NSError *error)
      {
-         
-         [SVProgressHUD showErrorWithStatus:@"登录失败，请稍后再试！"];
-         YYLog(@"登录失败----%@",error);
-     }];
+         YYLog(@"登录error----%@",error);
+        
+    }];
+    
 }
 
-
-/**
- *  核对并判断返回值
- */
--(void)checkResultCode:(int)result
-{
-    
-    
-    switch (result)
-    {
-        case 1000://登录成功
-        {
-            //0.设置用户提示
-            [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-            //1.保存用户名和密码到沙河
-            UserInfo *userIn = [UserInfo sharedUserInfo];
-            //加密过的sessionID
-            NSString *RSASessionID  = [RSA encryptString:self.sessionId publicKey:userIn.publicKey];
-            userIn.username = self.userNameTF.text;
-            userIn.passWord = self.pwdTF.text;
-            userIn.sessionId = self.sessionId;
-            userIn.RSAsessionId = RSASessionID;
-            userIn.userID = self.userM.ID;
-            userIn.userType = self.userM.type;
-            userIn.headerpic = self.userM.headerpic;
-            userIn.membername = self.userM.membername;
-            userIn.isLogin = YES;
-
-            [userIn synchronizeToSandBox];
-            if ([self.delegate respondsToSelector:@selector(loginSuccess)])
-            {
-                [self.delegate loginSuccess];
-            }
-            
-            [self removeFromSuperview];
-
-            break;
-        }
-        case 1001://数据库中没有记录
-        {
-            YYLog(@"数据库中没有记录");
-            [[AlertView sharedAlertView]addAlertMessage:@"用户名或密码错误！" title:@"提示"];
-            return;
-            break;
-        }
-        case 1003://密码错误
-        {
-            YYLog(@"用户密码错误");
-            [[AlertView sharedAlertView]addAlertMessage:@"用户名或密码错误！" title:@"提示"];
-            return;
-            break;
-        }
-        case 1006://参数中有空
-        {
-            YYLog(@"参数中有空");
-            [[AlertView sharedAlertView]addAlertMessage:@"输入有误，请核对！" title:@"提示"];
-            return;
-            break;
-        }
-        case 1010://表示用户密码与用户确认密码不同
-        {
-            YYLog(@"用户密码与用户确认密码不同");
-            [[AlertView sharedAlertView]addAlertMessage:@"用户名或密码错误！" title:@"提示"];
-            return;
-        }
-            
-        case 1013://用户名在数据库中已经存在，需要发验码进行验证
-        {
-            [[AlertView sharedAlertView]addAlertMessage:@"登录设备发生改变，请输入验证码验证！" title:@"提示"];
-            self.regist.y = self.okY;
-            self.foundPwdButton.y = self.okY;
-            self.okButton.y = CGRectGetMaxY(self.regist.frame) + 20;
-            
-
-            YYLog(@"用户名在数据库中已经存在");
-            return;
-            break;
-        }
-        case 1015://表示用户验证码不匹配
-        {
-            [[AlertView sharedAlertView]addAlertMessage:@"验证码错误！" title:@"提示"];
-            return;
-            break;
-        }
-        case 1014://表示用户验证码不匹配
-        {
-            [[AlertView sharedAlertView]addAlertMessage:@"此用户已存在！" title:@"提示"];
-            return;
-            break;
-        }
-        case 1016://用户没有权限
-        {
-            YYLog(@"表示用户验证码不匹配");
-            [SVProgressHUD showErrorWithStatus:@"用户没有权限"];
-            return;
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-
-
+ 
 /**
  *  注册
  */

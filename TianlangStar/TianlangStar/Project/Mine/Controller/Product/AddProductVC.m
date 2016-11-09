@@ -206,7 +206,7 @@
          NSInteger result = [num integerValue];
          if (result == 1007)
          {
-             [[AlertView sharedAlertView] loginUpdataSession];
+             [HttpTool loginUpdataSession];
          }
          
          
@@ -597,8 +597,7 @@
     [HttpTool post:url parmas:parmas success:^(id json)
      {
          YYLog(@"json-获取充值记录%@",json);
-         NSArray *Arr = [NSArray array];
-         Arr = [VirtualcenterModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         NSArray *Arr = [VirtualcenterModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
          
          YYLog(@"Arr---%@",Arr);
          
