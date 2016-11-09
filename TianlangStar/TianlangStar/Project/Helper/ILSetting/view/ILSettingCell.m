@@ -84,7 +84,8 @@
 - (void)setUpAccessoryView
 {
     if ([_item isKindOfClass:[ILSettingArrowItem class]]) { // 箭头
-        self.accessoryView = self.imgView;
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        self.accessoryView = self.imgView;
         self.selectionStyle = UITableViewCellSelectionStyleDefault;
     }else if ([_item isKindOfClass:[ILSettingSwitchItem class]]){ // Switch
         self.accessoryView = self.switchView;
@@ -152,8 +153,8 @@
 
 - (void)setFrame:(CGRect)frame
 {
-    frame.size.width += 20;
-    frame.origin.x -= 10;
+//    frame.size.width += 20;
+//    frame.origin.x -= 10;
     
     [super setFrame:frame];
 }

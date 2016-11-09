@@ -20,6 +20,7 @@
 #import "CarInfoListVC.h"
 #import "ResetPasword.h"
 #import "AddProductVC.h"
+#import "AboutSettingTVC.h"
 
 
 
@@ -35,21 +36,25 @@
 
 @implementation MineVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    
-    
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     //1.判断是否登录
     if (![UserInfo sharedUserInfo].isLogin)
     {
-          [self getPubicKey];
+        [self getPubicKey];
     }
     
     //2.根据用户的类型选择对应的单元格列表
     if ([UserInfo sharedUserInfo].userType == 1)//管理员
     {
         [self addGroupAdmin];
-        
     }else//普通用户
     {
         [self addGroupCustomer];
@@ -72,23 +77,12 @@
     ILSettingArrowItem *carInfochange = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息修改" destVcClass:[CarInfoListVC class]];
     ILSettingArrowItem *carInfoRegist = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息登记" destVcClass:[AddCarInfo class]];
     ILSettingArrowItem *prepaidRecords = [ILSettingArrowItem itemWithIcon:nil title:@"充值记录查询" destVcClass:[UserInfoManagementTVC class]];
-    ILSettingArrowItem *CustomerService = [ILSettingArrowItem itemWithIcon:nil title:@"客服热线" destVcClass:[ResetPasword class]];
-    ILSettingArrowItem *feedback = [ILSettingArrowItem itemWithIcon:nil title:@"意见反馈" destVcClass:[FeedbackVC class]];
-    ILSettingArrowItem *quit = [ILSettingArrowItem itemWithIcon:nil title:@"退出" destVcClass:nil];
-    //设置退出登录
-    quit.option = ^{
-        
-        [self addQuitAlert];
-    };
-    
-    
-    ILSettingItem *tel = [ILSettingArrowItem itemWithIcon:nil title:@"客服电话"];
-    tel.subTitle = @"020-83568090";
-    
+
+
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
     group0.header = @"第1组数据";
     group0.footer = @"第1组结尾";
-    group0.items = @[collection,pointsFor,address,orderquery,account,carInfochange,carInfoRegist,prepaidRecords,CustomerService,feedback,tel,quit];
+    group0.items = @[collection,pointsFor,address,orderquery,account,carInfochange,carInfoRegist,prepaidRecords];
     
     [self.dataList addObject:group0];
 }
@@ -127,25 +121,19 @@
     ILSettingArrowItem *pointsFor = [ILSettingArrowItem itemWithIcon:nil title:@"积分兑换" destVcClass:[UserInfoManagementTVC class]];
     
     ILSettingArrowItem *address = [ILSettingArrowItem itemWithIcon:nil title:@"地址管理" destVcClass:[UserInfoManagementTVC class]];
-
-
+    
+    
     ILSettingArrowItem *levelDiscount = [ILSettingArrowItem itemWithIcon:nil title:@"等级打折定制" destVcClass:[AddCarInfo class]];
+    
+    ILSettingArrowItem *setting = [ILSettingArrowItem itemWithIcon:nil title:@"设置" destVcClass:[AboutSettingTVC class]];
+    
 
-    ILSettingArrowItem *quit = [ILSettingArrowItem itemWithIcon:nil title:@"退出" destVcClass:nil];
-    //设置退出登录
-    quit.option = ^{
-        //设置提示并判断用户是否确认退出
-        [self addQuitAlert];
-    };
-    
-    
-    ILSettingItem *tel = [ILSettingArrowItem itemWithIcon:nil title:@"客服电话"];
-    tel.subTitle = @"020-83568090";
+
     
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
-    group0.header = @"第1组数据";
-    group0.footer = @"第1组结尾";
-    group0.items = @[PendingOrders,SalesStatistics,GoodsReleased,informationRelease,orderquery,carInfochange,InfoRegister,topup,TopupQuery,account,opinionQuery,collection,pointsFor,address,levelDiscount,quit];
+//    group0.header = @"第1组数据";
+//    group0.footer = @"第1组结尾";
+    group0.items = @[PendingOrders,SalesStatistics,GoodsReleased,informationRelease,orderquery,carInfochange,InfoRegister,topup,TopupQuery,account,opinionQuery,collection,pointsFor,address,levelDiscount,setting];
     
     [self.dataList addObject:group0];
 }
@@ -188,50 +176,9 @@
 
 #pragma mark=======退出登录的操作======
 
-/**
- *  退出登录提示
- */
--(void)addQuitAlert
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您是否确定退出登录？" preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                         {
-                             //退出登录
-                             [self quitLogin];
-                         }];
-    
-    [alert addAction:cancel];
-    [alert addAction:ok];
-    [self presentViewController:alert animated:YES completion:nil];
 
 
-}
 
-/**
- *  退出登录的操作
- */
--(void)quitLogin
-{
-    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
-    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
-    NSString * url = [NSString stringWithFormat:@"%@logoutservlet",URL];
-    
-    
-    [HttpTool post:url parmas:parmas success:^(id json)
-    {
-         YYLog(@"退出登录--%@",json);
-        [UserInfo sharedUserInfo].isLogin = NO;
-        [[UserInfo sharedUserInfo] synchronizeToSandBox];
-        //获取公钥并且弹出登录窗口
-        [self getPubicKey];
-    } failure:^(NSError *error)
-    {
-        YYLog(@"退出登录--%@",error);
-    }];
-
- 
-}
 
 
 #pragma mark=======登录成功后调用代理，设置tableView上下滑动可用======

@@ -176,7 +176,7 @@
     self.handButton.layer.cornerRadius = 6;
     [self.handButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-        handView.backgroundColor = [UIColor grayColor];
+//        handView.backgroundColor = [UIColor grayColor];
     [handView addSubview:self.handButton];
     self.tableView.tableFooterView = handView;
 }
@@ -218,32 +218,15 @@
     
     NSString *url = [NSString stringWithFormat:@"%@updatecarinfoservlet",URL];
     YYLog(@"params----%@",params);
-    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
+    
+    [HttpTool post:url parmas:params success:^(id json)
      {
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         YYLog(@"responseObject---%@",responseObject);
-         NSNumber *num = responseObject[@"resultCode"];
-         NSInteger result = [num integerValue];
-         if (result == 1000)
-         {
-             [SVProgressHUD showSuccessWithStatus:@"提交成功"];
-         }else if (result == 1007)
-         {
-             [HttpTool loginUpdataSession];
-         }else
-         {
-             [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试"];
-         }
+         [SVProgressHUD showSuccessWithStatus:@"提交成功"];
          
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     } failure:^(NSError *error)
      {
          YYLog(@"error----%@",error);
-         
      }];
-    
-    
-    
 }
 
 
@@ -307,6 +290,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
     
     return cell;
+}
+
+
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
 }
 
 
