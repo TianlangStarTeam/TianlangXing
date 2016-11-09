@@ -300,6 +300,7 @@
 }
 
 
+
 #pragma mark - 获取购物车列表 
 - (void)cartListAction
 {
@@ -420,6 +421,7 @@
 }
 
 
+
 #pragma mark - 管理员创建新用户
 - (void)creatNewPersonAction
 {
@@ -442,7 +444,7 @@
         
         if (resultCode == 1000) {
             
-            YYLog(@"成功");
+            YYLog(@"管理员创建新用户成功");
             
             for (NSDictionary *dic in self.allPeopleArray)
             {
@@ -508,7 +510,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        YYLog(@"所有用户：%@",responseObject);
+        YYLog(@"所有用户返回：%@",responseObject);
         
         NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
         
@@ -518,7 +520,7 @@
         
         if (resultCode == 1000) {
             
-            YYLog(@"成功");
+            YYLog(@"管理员查询所有用户成功");
             
             for (NSDictionary *dic in self.allPeopleArray)
             {
@@ -755,7 +757,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        YYLog(@"添加收藏请求成功-%@",responseObject);
+        YYLog(@"添加收藏请求返回-%@",responseObject);
         
         NSNumber *num = responseObject[@"resultCode"];
         NSInteger result = [num integerValue];
@@ -807,7 +809,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        YYLog(@"取消收藏请求成功-%@",responseObject);
+        YYLog(@"取消收藏请求返回-%@",responseObject);
         
         NSNumber *num = responseObject[@"resultCode"];
         NSInteger result = [num integerValue];
@@ -861,7 +863,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        YYLog(@"获取指定用户的全部收藏物请求成功-%@",responseObject);
+        YYLog(@"获取指定用户的全部收藏物请求返回-%@",responseObject);
         
         NSNumber *num = responseObject[@"resultCode"];
         NSInteger result = [num integerValue];
@@ -925,7 +927,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        YYLog(@"查看收藏物详情数据请求成功-%@",responseObject);
+        YYLog(@"查看收藏物详情数据请求返回-%@",responseObject);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -950,7 +952,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        YYLog(@"修改个人信息数据请求成功-%@",responseObject);
+        YYLog(@"修改个人信息数据请求返回-%@",responseObject);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
