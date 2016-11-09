@@ -341,7 +341,6 @@
 		D705CEDE1DC09C6400F65BE0 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				D705CEFE1DC09C6400F65BE0 /* Controller */,
 				D72866F81DCB144800D77B38 /* ILSetting */,
 				D705CEDF1DC09C6400F65BE0 /* Category */,
 				D705CEF71DC09C6400F65BE0 /* PCH */,
@@ -405,6 +404,7 @@
 		D705CEFD1DC09C6400F65BE0 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				D705CEFE1DC09C6400F65BE0 /* Controller */,
 				D705CF011DC09C6400F65BE0 /* Model */,
 				D705CF021DC09C6400F65BE0 /* View */,
 			);
@@ -425,8 +425,7 @@
 				714BFDE41DCC80D1002F2042 /* CollectionModel.h */,
 				714BFDE51DCC80D1002F2042 /* CollectionModel.m */,
 			);
-			name = Controller;
-			path = ../HomePage/Controller;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		D705CF011DC09C6400F65BE0 /* Model */ = {
