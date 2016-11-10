@@ -11,7 +11,10 @@
 #import "CarModel.h"
 
 
+
+
 @interface CarInfoChangeVC ()<UITextFieldDelegate>
+
 
 /** 单元格左侧的描述 */
 @property (nonatomic,strong) NSArray *rightArr;
@@ -25,13 +28,13 @@
 /** 商业险提醒日期 --时间戳*/
 @property (nonatomic,strong) UIDatePicker *commercialtimeData;
 
-/** 车辆的购买日期日期 */
-@property (nonatomic,copy) NSString *buytime;
-
-/** 较强险的提醒日期 */
-@property (nonatomic,copy) NSString *insuranceid;
-/** 较强险的提醒日期 */
-@property (nonatomic,copy) NSString *commercialtime;
+///** 车辆的购买日期日期 */
+//@property (nonatomic,copy) NSString *buytime;
+//
+///** 较强险的提醒日期 */
+//@property (nonatomic,copy) NSString *insuranceid;
+///** 较强险的提醒日期 */
+//@property (nonatomic,copy) NSString *commercialtime;
 
 
 /** 记录输入框的内容 */
@@ -39,7 +42,10 @@
 
 
 /** 记录用户年月入日期选择器 */
-@property (nonatomic,assign) NSInteger selectData;
+@property (nonatomic,assign) CarInfoType selectData;
+
+
+
 
 @end
 
@@ -83,24 +89,26 @@
 {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString * time=[outputFormatter stringFromDate:self.insuranceidData.date];
+    //更改输入框的数据
+//    self.textArr[_selectData] = time;
+    [self.textArr replaceObjectAtIndex:_selectData withObject:time];
     
+    //记录数据
     switch (self.selectData)
     {
-        case 6://购买日期
+        case buytime://购买日期
         {
-            self.buytime=[outputFormatter stringFromDate:self.insuranceidData.date];
             self.carInfo.buytime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
-        case 8://较强险
+        case insurancetime://较强险
         {
-            self.insuranceid=[outputFormatter stringFromDate:self.insuranceidData.date];
             self.carInfo.insurancetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
-        case 9://商业险
+        case commercialtime://商业险
         {
-            self.commercialtime=[outputFormatter stringFromDate:self.insuranceidData.date];
             self.carInfo.commercialtime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
@@ -109,7 +117,7 @@
             break;
     }
 
-    //回到主线程刷新数据
+    //回到主线程刷新数据，刷新对应的单元格
     dispatch_async(dispatch_get_main_queue(), ^{
         
 //        [self.tableView reloadData];
@@ -129,7 +137,6 @@
 {
     if (_textArr == nil)
     {
-        _textArr = [NSMutableArray array];
         
         //购买时间
         NSString *buytime = [self.carInfo.insurancetime getTime];
@@ -139,7 +146,7 @@
         NSString *commercialtime = [self.carInfo.commercialtime getTime];
         
         NSArray *arr = @[self.carInfo.carid,self.carInfo.brand,self.carInfo.model,self.carInfo.cartype,self.carInfo.frameid,self.carInfo.engineid,buytime,self.carInfo.insuranceid,insurancetime,commercialtime];
-        _textArr = (NSMutableArray *)arr;
+        _textArr = [NSMutableArray arrayWithArray:arr];
     }
     return _textArr;
 }
@@ -253,38 +260,10 @@
     cell.textField.text = nameInput;
     
     cell.textLabel.text = name;
-    cell.textField.tag = indexPath.row;
-    cell.textField.delegate = self;
     
-    switch (indexPath.row) {
-        case 6:
-        {
-            if (self.buytime)
-            {
-                cell.textField.text = self.buytime;
-            }
-            break;
-        }
-        case 8:
-        {
-            if (self.insuranceid)
-            {
-                cell.textField.text = self.insuranceid;
-            }
-            break;
-        }
-        case 9:
-        {
-            if (self.commercialtime)
-            {
-                cell.textField.text = self.commercialtime;
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
+    self.selectData = indexPath.row;
+    cell.textField.tag = self.selectData;
+    cell.textField.delegate = self;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
@@ -304,32 +283,29 @@
 //保存用户输入的信息
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-//    if (textField.tag == 6 || textField.tag == 8 || textField.tag == 9) return;
-//        self.textArr[textField.tag] = textField.text;
+    if (textField.tag == buytime || textField.tag == insurancetime || textField.tag == commercialtime) return;
+        self.textArr[textField.tag] = textField.text;
     
     switch (textField.tag) {
-        case 0:
+        case carid:
             self.carInfo.carid = textField.text;
             break;
-        case 1:
+        case brand:
             self.carInfo.brand = textField.text;
             break;
-        case 2:
+        case model:
             self.carInfo.model = textField.text;
             break;
-        case 3:
+        case cartype:
             self.carInfo.cartype = textField.text;
             break;
-        case 4:
+        case frameid:
             self.carInfo.frameid = textField.text;
             break;
-        case 5:
+        case engineid:
             self.carInfo.engineid = textField.text;
             break;
-//        case 6:
-//            self.carInfo.buytime = textField.text;
-//            break;
-        case 7:
+        case insuranceid:
             self.carInfo.insuranceid = textField.text;
             break;
             
@@ -342,7 +318,7 @@
  */
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == 8 || textField.tag == 9 || textField.tag == 6)
+    if (textField.tag == buytime || textField.tag ==insurancetime  || textField.tag == commercialtime)
     {
         textField.inputView=self.insuranceidData;
         self.selectData = textField.tag;

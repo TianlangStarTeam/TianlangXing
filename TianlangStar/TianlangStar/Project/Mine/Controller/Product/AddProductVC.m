@@ -80,7 +80,6 @@
 -(void)addProduct
 {
     
-    
     /*地    址:	http://192.168.10.114:8080/carservice/releasecommodityservlet
      需要参数:	String sessionId用户登录标记
      商品：
