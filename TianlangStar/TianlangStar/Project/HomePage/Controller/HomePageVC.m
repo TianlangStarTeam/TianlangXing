@@ -287,7 +287,7 @@
     parameters[@"sessionId"] = sessionid;
     parameters[@"buytype"] = @"1";// 购买类型，1表示商品  2表示服务
     parameters[@"count"] = @"2";
-    parameters[@"productid"] = @"1";// 商品id
+    parameters[@"productid"] = @"2";// 商品id
 
     [HttpTool post:url parmas:parameters success:^(id json) {
         
@@ -546,7 +546,7 @@
     
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
-    parameters[@"id"] = @"24";
+    parameters[@"id"] = @"28";
 
     [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -642,7 +642,7 @@
 #pragma mark - 管理员回复客户意见 
 - (void)replyFeedbackAction
 {
-    NSString *url = [NSString stringWithFormat:@"%@getallcollectionservlet",URL];
+    NSString *url = [NSString stringWithFormat:@"%@feedbacksuggestionservlet",URL];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
@@ -650,7 +650,7 @@
     parameters[@"sessionId"] = sessionid;
     parameters[@"userid"] = @"23";
     parameters[@"content"] = @"你好，请问有什么意见吗？";
-    parameters[@"suggestid"] = @"6";
+    parameters[@"suggestid"] = @"1";
 
     [HttpTool post:url parmas:parameters success:^(id json) {
         
