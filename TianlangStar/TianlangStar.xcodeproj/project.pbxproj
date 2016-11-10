@@ -65,6 +65,7 @@
 		D77134351DCDBA5300B3B9C6 /* CarInfoListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134331DCDBA5300B3B9C6 /* CarInfoListVC.m */; };
 		D77134381DCDBD2300B3B9C6 /* AddCarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134371DCDBD2300B3B9C6 /* AddCarInfo.m */; };
 		D771343B1DCDE29100B3B9C6 /* ResetPasword.m in Sources */ = {isa = PBXBuildFile; fileRef = D771343A1DCDE29100B3B9C6 /* ResetPasword.m */; };
+		D7AB81A11DD47E1B0055E5D6 /* RechargeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D7AB81A01DD47E1B0055E5D6 /* RechargeVC.m */; };
 		D7AC9F121DD01FA900EFD59B /* AddProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D7AC9F111DD01FA900EFD59B /* AddProductVC.m */; };
 		D7CFB89B1DC6D1DD0063A1B5 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7CFB89A1DC6D1DD0063A1B5 /* LoginView.m */; };
 		D7DC69881DC8425A004C67F5 /* UserInfoManagementTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DC69871DC8425A004C67F5 /* UserInfoManagementTVC.m */; };
@@ -202,6 +203,8 @@
 		D77134371DCDBD2300B3B9C6 /* AddCarInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCarInfo.m; sourceTree = "<group>"; };
 		D77134391DCDE29100B3B9C6 /* ResetPasword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasword.h; sourceTree = "<group>"; };
 		D771343A1DCDE29100B3B9C6 /* ResetPasword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasword.m; sourceTree = "<group>"; };
+		D7AB819F1DD47E1B0055E5D6 /* RechargeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeVC.h; sourceTree = "<group>"; };
+		D7AB81A01DD47E1B0055E5D6 /* RechargeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeVC.m; sourceTree = "<group>"; };
 		D7AC9F101DD01FA900EFD59B /* AddProductVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductVC.h; sourceTree = "<group>"; };
 		D7AC9F111DD01FA900EFD59B /* AddProductVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductVC.m; sourceTree = "<group>"; };
 		D7CFB8991DC6D1DD0063A1B5 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
@@ -473,6 +476,8 @@
 				D771343A1DCDE29100B3B9C6 /* ResetPasword.m */,
 				D71D845B1DD30C3600E75A8B /* AboutSettingTVC.h */,
 				D71D845C1DD30C3600E75A8B /* AboutSettingTVC.m */,
+				D7AB819F1DD47E1B0055E5D6 /* RechargeVC.h */,
+				D7AB81A01DD47E1B0055E5D6 /* RechargeVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -890,6 +895,7 @@
 				D71475601DD1B22400F48FC4 /* AdressModel.m in Sources */,
 				D705CF2C1DC09C6400F65BE0 /* MineVC.m in Sources */,
 				D705CF1E1DC09C6400F65BE0 /* Foundation+Log.m in Sources */,
+				D7AB81A11DD47E1B0055E5D6 /* RechargeVC.m in Sources */,
 				D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */,
 				71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */,
 				D728670C1DCB144800D77B38 /* ILSettingGroup.m in Sources */,

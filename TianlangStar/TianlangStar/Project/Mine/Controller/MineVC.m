@@ -21,6 +21,7 @@
 #import "ResetPasword.h"
 #import "AddProductVC.h"
 #import "AboutSettingTVC.h"
+#import "RechargeVC.h"
 
 
 
@@ -42,6 +43,21 @@
 }
 
 
+-(void)addAdminHeader
+{
+
+    
+}
+
+
+
+-(void)addCustomerHeader
+{
+    
+
+}
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -51,14 +67,22 @@
         [self getPubicKey];
     }
     
+    YYLog(@"userType===%ld",(long)[UserInfo sharedUserInfo].userType);
+    
     //2.根据用户的类型选择对应的单元格列表
-    if ([UserInfo sharedUserInfo].userType == 1)//管理员
+    
+    UserInfo *userInfo = [UserInfo sharedUserInfo];
+    
+    self.dataList = nil;
+    
+    if (userInfo.userType == 1)//管理员
     {
         [self addGroupAdmin];
-    }else//普通用户
+    }else if (userInfo.userType == 2)//普通用户
     {
         [self addGroupCustomer];
     }
+    [self.tableView reloadData];
 }
 
 
@@ -70,11 +94,17 @@
 {
     // 0组
     ILSettingArrowItem *collection = [ILSettingArrowItem itemWithIcon:nil title:@"收藏" destVcClass:[UserInfoManagementTVC class]];
-    ILSettingArrowItem *pointsFor = [ILSettingArrowItem itemWithIcon:nil title:@"积分兑换" destVcClass:[UserInfoManagementTVC class]];
-    ILSettingArrowItem *address = [ILSettingArrowItem itemWithIcon:nil title:@"地址管理" destVcClass:[UserInfoManagementTVC class]];
+    
     ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"订单查询" destVcClass:[UserInfoManagementTVC class]];
+    
+    ILSettingArrowItem *pointsFor = [ILSettingArrowItem itemWithIcon:nil title:@"积分兑换" destVcClass:[UserInfoManagementTVC class]];
+    
+    
     ILSettingArrowItem *account = [ILSettingArrowItem itemWithIcon:nil title:@"账户管理" destVcClass:[UserInfoManagementTVC class]];
-    ILSettingArrowItem *carInfochange = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息修改" destVcClass:[CarInfoListVC class]];
+    
+    ILSettingArrowItem *Insurance = [ILSettingArrowItem itemWithIcon:nil title:@"保单" destVcClass:[UserInfoManagementTVC class]];
+    
+    
     ILSettingArrowItem *carInfoRegist = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息登记" destVcClass:[AddCarInfo class]];
     ILSettingArrowItem *prepaidRecords = [ILSettingArrowItem itemWithIcon:nil title:@"充值记录查询" destVcClass:[UserInfoManagementTVC class]];
     
@@ -84,7 +114,7 @@
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
     group0.header = @"第1组数据";
     group0.footer = @"第1组结尾";
-    group0.items = @[collection,pointsFor,address,orderquery,account,carInfochange,carInfoRegist,prepaidRecords,setting];
+    group0.items = @[collection,orderquery,pointsFor,prepaidRecords,account,Insurance,carInfoRegist,setting];
     
     [self.dataList addObject:group0];
 }
@@ -96,46 +126,37 @@
 -(void)addGroupAdmin
 {
     //管理员
-    ILSettingArrowItem *PendingOrders = [ILSettingArrowItem itemWithIcon:nil title:@"待处理订单" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *order= [ILSettingArrowItem itemWithIcon:nil title:@"订单查询" destVcClass:[CarInfoListVC class]];
     
-    ILSettingArrowItem *SalesStatistics = [ILSettingArrowItem itemWithIcon:nil title:@"销售统计" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *topup= [ILSettingArrowItem itemWithIcon:nil title:@"充值" destVcClass:[RechargeVC class]];
     
-    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"商品发布" destVcClass:[AddProductVC class]];
+    ILSettingArrowItem *CFOOrders = [ILSettingArrowItem itemWithIcon:nil title:@"财务统计" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *informationRelease = [ILSettingArrowItem itemWithIcon:nil title:@"信息发布" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *Warehouse = [ILSettingArrowItem itemWithIcon:nil title:@"仓库管理" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"订单查询" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *SalesStatistics = [ILSettingArrowItem itemWithIcon:nil title:@"入库登记" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *carInfochange = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息修改" destVcClass:[CarInfoListVC class]];
+    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"会员管理" destVcClass:[AddProductVC class]];
     
-    ILSettingArrowItem *InfoRegister = [ILSettingArrowItem itemWithIcon:nil title:@"信息登记" destVcClass:[CarInfoListVC class]];
+    ILSettingArrowItem *informationRelease = [ILSettingArrowItem itemWithIcon:nil title:@"车辆管理" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *topup= [ILSettingArrowItem itemWithIcon:nil title:@"充值" destVcClass:[CarInfoListVC class]];
+    ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"保单管理" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *TopupQuery= [ILSettingArrowItem itemWithIcon:nil title:@"充值查询" destVcClass:[CarInfoListVC class]];
+    ILSettingArrowItem *carInfochange = [ILSettingArrowItem itemWithIcon:nil title:@"轮播图" destVcClass:[CarInfoListVC class]];
     
-    ILSettingArrowItem *account = [ILSettingArrowItem itemWithIcon:nil title:@"账户管理" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *InfoRegister = [ILSettingArrowItem itemWithIcon:nil title:@"最新活动" destVcClass:[CarInfoListVC class]];
     
-    ILSettingArrowItem *opinionQuery= [ILSettingArrowItem itemWithIcon:nil title:@"意见查询" destVcClass:[CarInfoListVC class]];
-    
-    ILSettingArrowItem *collection = [ILSettingArrowItem itemWithIcon:nil title:@"收藏" destVcClass:[UserInfoManagementTVC class]];
-    
-    ILSettingArrowItem *pointsFor = [ILSettingArrowItem itemWithIcon:nil title:@"积分兑换" destVcClass:[UserInfoManagementTVC class]];
-    
-    ILSettingArrowItem *address = [ILSettingArrowItem itemWithIcon:nil title:@"地址管理" destVcClass:[UserInfoManagementTVC class]];
-    
-    
-    ILSettingArrowItem *levelDiscount = [ILSettingArrowItem itemWithIcon:nil title:@"等级打折定制" destVcClass:[AddCarInfo class]];
+    ILSettingArrowItem *TopupQuery= [ILSettingArrowItem itemWithIcon:nil title:@"优惠信息" destVcClass:[CarInfoListVC class]];
     
     ILSettingArrowItem *setting = [ILSettingArrowItem itemWithIcon:nil title:@"设置" destVcClass:[AboutSettingTVC class]];
     
-
-
+    
+    
     
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
-//    group0.header = @"第1组数据";
-//    group0.footer = @"第1组结尾";
-    group0.items = @[PendingOrders,SalesStatistics,GoodsReleased,informationRelease,orderquery,carInfochange,InfoRegister,topup,TopupQuery,account,opinionQuery,collection,pointsFor,address,levelDiscount,setting];
+    //    group0.header = @"第1组数据";
+    //    group0.footer = @"第1组结尾";
+    group0.items = @[order,topup,CFOOrders,Warehouse,SalesStatistics,GoodsReleased,informationRelease,orderquery,carInfochange,InfoRegister,TopupQuery,setting];
     
     [self.dataList addObject:group0];
 }
@@ -176,8 +197,6 @@
 }
 
 
-#pragma mark=======退出登录的操作======
-
 
 
 
@@ -187,6 +206,18 @@
 -(void)loginSuccess
 {
     self.tableView.scrollEnabled = YES;
+    UserInfo *userInfo = [UserInfo sharedUserInfo];
+    
+    //清空原有数组
+    self.dataList = nil;
+    if (userInfo.userType == 1)//管理员
+    {
+        [self addGroupAdmin];
+    }else if (userInfo.userType == 2)//普通用户
+    {
+        [self addGroupCustomer];
+    }
+    [self.tableView reloadData];
 }
 
 

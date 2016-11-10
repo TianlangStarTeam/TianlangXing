@@ -430,9 +430,9 @@
              NSString *sessionId = [NSString stringWithFormat:@"%@",mun];
              
              //0.设置用户提示
-             [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+//             [SVProgressHUD showSuccessWithStatus:@"登录成功"];
              //1.保存用户名和密码到沙河
-           
+             
              //加密过的sessionID
              NSString *RSASessionID  = [RSA encryptString:sessionId publicKey:userInfo.publicKey];
              userInfo.username = self.userNameTF.text;
@@ -452,7 +452,7 @@
              }
              
              [self removeFromSuperview];
-
+             
          }else if (result == 1013)//序列号发生改变
          {
              [[AlertView sharedAlertView]addAlertMessage:@"登录设备发生改变，请输入验证码验证！" title:@"提示"];
@@ -464,11 +464,12 @@
              return;
          }
          
-    } failure:^(NSError *error)
+
+     } failure:^(NSError *error)
      {
          YYLog(@"登录error----%@",error);
-        
-    }];
+         
+     }];
     
 }
 
