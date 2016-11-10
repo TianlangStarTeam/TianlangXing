@@ -53,9 +53,10 @@
 #import <Masonry/Masonry.h>
 #import <SVProgressHUD.h>
 #import <MJExtension.h>
+#import <SDCycleScrollView.h>
 
 
-#pragma mark - 分类
+
 
 
 #pragma mark - 分类
@@ -69,6 +70,7 @@
 #import "UserInfo.h"
 #import "RSA.h"
 #import "AlertView.h"
+#import "HttpTool.h"
 
 
 
