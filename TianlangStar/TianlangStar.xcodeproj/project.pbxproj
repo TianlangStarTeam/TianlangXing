@@ -10,6 +10,7 @@
 		2EA5BADAA63B9509A3B0A5A3 /* libPods-TianlangStar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */; };
 		714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 714BFDE51DCC80D1002F2042 /* CollectionModel.m */; };
 		717D0D831DC0B5620036D5F4 /* RegistVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 717D0D821DC0B5620036D5F4 /* RegistVC.m */; };
+		71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A40D801DD47EFA00335660 /* TestInterfaceVC.m */; };
 		71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71BE7FC71DC324B4000E0BFB /* RegistProtocolVC.m */; };
 		71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71BE7FD01DC336E6000E0BFB /* ForgetPwdVC.m */; };
 		D705CEA91DC09BBF00F65BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CEA81DC09BBF00F65BE0 /* main.m */; };
@@ -93,6 +94,8 @@
 		714BFDE51DCC80D1002F2042 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		717D0D811DC0B5620036D5F4 /* RegistVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistVC.h; sourceTree = "<group>"; };
 		717D0D821DC0B5620036D5F4 /* RegistVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistVC.m; sourceTree = "<group>"; };
+		71A40D7F1DD47EFA00335660 /* TestInterfaceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestInterfaceVC.h; sourceTree = "<group>"; };
+		71A40D801DD47EFA00335660 /* TestInterfaceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestInterfaceVC.m; sourceTree = "<group>"; };
 		71BE7FC61DC324B4000E0BFB /* RegistProtocolVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistProtocolVC.h; sourceTree = "<group>"; };
 		71BE7FC71DC324B4000E0BFB /* RegistProtocolVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistProtocolVC.m; sourceTree = "<group>"; };
 		71BE7FCF1DC336E6000E0BFB /* ForgetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdVC.h; sourceTree = "<group>"; };
@@ -419,6 +422,8 @@
 			children = (
 				D705CEFF1DC09C6400F65BE0 /* HomePageVC.h */,
 				D705CF001DC09C6400F65BE0 /* HomePageVC.m */,
+				71A40D7F1DD47EFA00335660 /* TestInterfaceVC.h */,
+				71A40D801DD47EFA00335660 /* TestInterfaceVC.m */,
 				717D0D811DC0B5620036D5F4 /* RegistVC.h */,
 				717D0D821DC0B5620036D5F4 /* RegistVC.m */,
 				71BE7FCF1DC336E6000E0BFB /* ForgetPwdVC.h */,
@@ -889,6 +894,7 @@
 				D705CF251DC09C6400F65BE0 /* UILabel+LabelHeightAndWidth.m in Sources */,
 				D71475601DD1B22400F48FC4 /* AdressModel.m in Sources */,
 				D705CF2C1DC09C6400F65BE0 /* MineVC.m in Sources */,
+				71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */,
 				D705CF1E1DC09C6400F65BE0 /* Foundation+Log.m in Sources */,
 				D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */,
 				71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */,

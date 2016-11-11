@@ -22,7 +22,7 @@
 #import "AddProductVC.h"
 #import "AboutSettingTVC.h"
 
-
+#import "LoginVC.h"
 
 @interface MineVC ()<LoginViewDelegate>
 
@@ -52,10 +52,13 @@
     }
     
     //2.根据用户的类型选择对应的单元格列表
-    if ([UserInfo sharedUserInfo].userType == 1)//管理员
+    //管理员
+    if ([UserInfo sharedUserInfo].userType == 1)
     {
         [self addGroupAdmin];
-    }else//普通用户
+    }
+    //普通用户
+    if ([UserInfo sharedUserInfo].userType == 2)
     {
         [self addGroupCustomer];
     }
@@ -164,10 +167,13 @@
              userIn.publicKey = self.publicKey;
              [userIn synchronizeToSandBox];
          }
-         LoginView *logView = [[LoginView alloc] initWithFrame:self.view.bounds];
-         logView.delegate = self;
-         self.tableView.scrollEnabled = NO;
-         [self.view addSubview:logView];
+//         LoginView *logView = [[LoginView alloc] initWithFrame:self.view.bounds];
+//         logView.delegate = self;
+//         self.tableView.scrollEnabled = NO;
+//         [self.view addSubview:logView];
+         
+         LoginVC *loginVC = [[LoginVC alloc] init];
+         [self presentViewController:loginVC animated:YES completion:nil];
          
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {

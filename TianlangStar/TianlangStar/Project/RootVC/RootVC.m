@@ -62,7 +62,7 @@
     
     
     
-    // 首页
+    // 我的
     MineVC *mineVC = [[MineVC alloc] init];
     CarsNav *mineNC = [[CarsNav alloc] initWithRootViewController:mineVC];
     [mineNC.tabBarItem setImage:[UIImage imageNamed:@"homePage_normal"]];
