@@ -11,7 +11,7 @@
 #import "ILSettingArrowItem.h"
 #import "ILSettingGroup.h"
 #import "FeedbackVC.h"
-
+#import "AdminFeedbackTVC.h"
 
 
 @interface AboutSettingTVC ()
@@ -53,7 +53,18 @@
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://029-87563668"]];
     };
     
-    ILSettingItem *opinion = [ILSettingArrowItem itemWithIcon:nil title:@"用户意见" destVcClass:[FeedbackVC class]];
+    UserInfo *userInfo = [UserInfo sharedUserInfo];
+    
+    ILSettingItem *opinion = nil;
+    if (userInfo.userType == 1 || userInfo.userType == 0)
+    {
+        opinion = [ILSettingArrowItem itemWithIcon:nil title:@"用户意见" destVcClass:[AdminFeedbackTVC class]];
+    }else
+    {
+        opinion = [ILSettingArrowItem itemWithIcon:nil title:@"用户意见" destVcClass:[FeedbackVC class]];
+    }
+    
+
     
     
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
@@ -94,7 +105,7 @@
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您是否确定退出登录？" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action)
                          {
                              //退出登录
                              [self quitLogin];
