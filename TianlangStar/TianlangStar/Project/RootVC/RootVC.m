@@ -62,7 +62,7 @@
     
     
     
-    // 首页
+    // 我的
     MineVC *mineVC = [[MineVC alloc] init];
     CarsNav *mineNC = [[CarsNav alloc] initWithRootViewController:mineVC];
     [mineNC.tabBarItem setImage:[UIImage imageNamed:@"homePage_normal"]];
@@ -78,7 +78,7 @@
     homeVC.view.backgroundColor = [UIColor orangeColor];
     tlStarVC.view.backgroundColor = [UIColor orangeColor];
     shoppingCartVC.view.backgroundColor = [UIColor orangeColor];
-    mineVC.view.backgroundColor = [UIColor orangeColor];
+//    mineVC.view.backgroundColor = [UIColor orangeColor];
 }
 
 

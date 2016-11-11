@@ -23,7 +23,8 @@
 #import "AboutSettingTVC.h"
 #import "RechargeVC.h"
 
-
+#import "UserCommonView.h"
+#import "MyCollectionTableVC.h"
 
 @interface MineVC ()<LoginViewDelegate>
 
@@ -40,22 +41,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-}
-
-
--(void)addAdminHeader
-{
-
+    
     
 }
 
 
 
--(void)addCustomerHeader
+- (void)creatHeaderView
 {
-    
-
+    if ([UserInfo sharedUserInfo].isLogin)
+    {
+        CGFloat userCommonViewHeight = 0.0;
+        if ([UserInfo sharedUserInfo].userType == 1)
+        {
+            userCommonViewHeight = Klength20 + 0.23 * KScreenWidth + Klength10 + Klength30 + Klength10 + Klength30 + Klength5 + Klength30 + Klength30 + 0.5;
+        }
+        if ([UserInfo sharedUserInfo].userType == 2)
+        {
+            userCommonViewHeight = Klength20 + 0.23 * KScreenWidth + Klength10 + Klength30 + Klength10 + Klength30 + Klength30;
+        }
+        
+        UserCommonView *userCommonView = [[UserCommonView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, userCommonViewHeight)];
+        self.tableView.tableHeaderView = userCommonView;
+    }
 }
+
 
 
 -(void)viewWillAppear:(BOOL)animated
@@ -66,6 +76,10 @@
     {
         [self getPubicKey];
     }
+    else
+    {
+        [self creatHeaderView];
+    }
     
     YYLog(@"userType===%ld",(long)[UserInfo sharedUserInfo].userType);
     
@@ -75,25 +89,30 @@
     
     self.dataList = nil;
     
-    if (userInfo.userType == 1)//管理员
+    if (userInfo.isLogin)
     {
-        [self addGroupAdmin];
-    }else if (userInfo.userType == 2)//普通用户
-    {
-        [self addGroupCustomer];
+        if (userInfo.userType == 1)//管理员
+        {
+            [self addGroupAdmin];
+        }else if (userInfo.userType == 2)//普通用户
+        {
+            [self addGroupCustomer];
+        }
+        [self.tableView reloadData];
+
     }
-    [self.tableView reloadData];
 }
 
 
-#pragma mark======添加客户和管理员的数组的单元格数组======
+
+#pragma mark - 添加客户和管理员的数组的单元格数组
 /**
  *  普通客户
  */
 -(void)addGroupCustomer
 {
     // 0组
-    ILSettingArrowItem *collection = [ILSettingArrowItem itemWithIcon:nil title:@"收藏" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *collection = [ILSettingArrowItem itemWithIcon:nil title:@"收藏" destVcClass:[MyCollectionTableVC class]];
     
     ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"订单查询" destVcClass:[UserInfoManagementTVC class]];
     
@@ -112,12 +131,11 @@
     
 
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
-    group0.header = @"第1组数据";
-    group0.footer = @"第1组结尾";
     group0.items = @[collection,orderquery,pointsFor,prepaidRecords,account,Insurance,carInfoRegist,setting];
     
     [self.dataList addObject:group0];
 }
+
 
 
 /**
@@ -126,9 +144,9 @@
 -(void)addGroupAdmin
 {
     //管理员
-    ILSettingArrowItem *order= [ILSettingArrowItem itemWithIcon:nil title:@"订单查询" destVcClass:[CarInfoListVC class]];
+    ILSettingArrowItem *order= [ILSettingArrowItem itemWithIcon:nil title:@"充值" destVcClass:[RechargeVC class]];
     
-    ILSettingArrowItem *topup= [ILSettingArrowItem itemWithIcon:nil title:@"充值" destVcClass:[RechargeVC class]];
+    ILSettingArrowItem *topup= [ILSettingArrowItem itemWithIcon:nil title:@"待处理订单" destVcClass:[CarInfoListVC class]];
     
     ILSettingArrowItem *CFOOrders = [ILSettingArrowItem itemWithIcon:nil title:@"财务统计" destVcClass:[UserInfoManagementTVC class]];
     
@@ -154,14 +172,14 @@
     
     
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
-    //    group0.header = @"第1组数据";
-    //    group0.footer = @"第1组结尾";
     group0.items = @[order,topup,CFOOrders,Warehouse,SalesStatistics,GoodsReleased,informationRelease,orderquery,carInfochange,InfoRegister,TopupQuery,setting];
     
     [self.dataList addObject:group0];
 }
 
-#pragma mark=======获取公钥并登录======
+
+
+#pragma mark - 获取公钥并登录
 /**
  *  获取公钥并提示登录
  */
@@ -198,11 +216,7 @@
 
 
 
-
-
-
-
-#pragma mark=======登录成功后调用代理，设置tableView上下滑动可用======
+#pragma mark - 登录成功后调用代理，设置tableView上下滑动可用
 -(void)loginSuccess
 {
     self.tableView.scrollEnabled = YES;
@@ -218,6 +232,32 @@
         [self addGroupCustomer];
     }
     [self.tableView reloadData];
+}
+
+
+
+-(void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)])
+    {
+        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
+    }
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)])
+    {
+        [cell setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        [cell setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
+    }
 }
 
 

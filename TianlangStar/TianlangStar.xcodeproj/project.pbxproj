@@ -10,6 +10,10 @@
 		2EA5BADAA63B9509A3B0A5A3 /* libPods-TianlangStar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */; };
 		714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 714BFDE51DCC80D1002F2042 /* CollectionModel.m */; };
 		717D0D831DC0B5620036D5F4 /* RegistVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 717D0D821DC0B5620036D5F4 /* RegistVC.m */; };
+		71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A40D801DD47EFA00335660 /* TestInterfaceVC.m */; };
+		71A40D841DD55C6700335660 /* UserCommonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A40D831DD55C6700335660 /* UserCommonView.m */; };
+		71A40D8A1DD5AC2500335660 /* MyCollectionTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A40D891DD5AC2500335660 /* MyCollectionTableVC.m */; };
+		71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A40D8E1DD5AC6B00335660 /* CollectionCell.m */; };
 		71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71BE7FC71DC324B4000E0BFB /* RegistProtocolVC.m */; };
 		71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71BE7FD01DC336E6000E0BFB /* ForgetPwdVC.m */; };
 		D705CEA91DC09BBF00F65BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CEA81DC09BBF00F65BE0 /* main.m */; };
@@ -99,6 +103,14 @@
 		714BFDE51DCC80D1002F2042 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		717D0D811DC0B5620036D5F4 /* RegistVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistVC.h; sourceTree = "<group>"; };
 		717D0D821DC0B5620036D5F4 /* RegistVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistVC.m; sourceTree = "<group>"; };
+		71A40D7F1DD47EFA00335660 /* TestInterfaceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestInterfaceVC.h; sourceTree = "<group>"; };
+		71A40D801DD47EFA00335660 /* TestInterfaceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestInterfaceVC.m; sourceTree = "<group>"; };
+		71A40D821DD55C6700335660 /* UserCommonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCommonView.h; sourceTree = "<group>"; };
+		71A40D831DD55C6700335660 /* UserCommonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCommonView.m; sourceTree = "<group>"; };
+		71A40D881DD5AC2500335660 /* MyCollectionTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionTableVC.h; sourceTree = "<group>"; };
+		71A40D891DD5AC2500335660 /* MyCollectionTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionTableVC.m; sourceTree = "<group>"; };
+		71A40D8D1DD5AC6B00335660 /* CollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionCell.h; sourceTree = "<group>"; };
+		71A40D8E1DD5AC6B00335660 /* CollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionCell.m; sourceTree = "<group>"; };
 		71BE7FC61DC324B4000E0BFB /* RegistProtocolVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistProtocolVC.h; sourceTree = "<group>"; };
 		71BE7FC71DC324B4000E0BFB /* RegistProtocolVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistProtocolVC.m; sourceTree = "<group>"; };
 		71BE7FCF1DC336E6000E0BFB /* ForgetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdVC.h; sourceTree = "<group>"; };
@@ -274,6 +286,45 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		71A40D851DD5ABB300335660 /* BossVC */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BossVC;
+			sourceTree = "<group>";
+		};
+		71A40D861DD5ABB300335660 /* UserVC */ = {
+			isa = PBXGroup;
+			children = (
+				71A40D881DD5AC2500335660 /* MyCollectionTableVC.h */,
+				71A40D891DD5AC2500335660 /* MyCollectionTableVC.m */,
+			);
+			path = UserVC;
+			sourceTree = "<group>";
+		};
+		71A40D871DD5ABEE00335660 /* CommonVC */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CommonVC;
+			sourceTree = "<group>";
+		};
+		71A40D8B1DD5AC4700335660 /* BossView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BossView;
+			sourceTree = "<group>";
+		};
+		71A40D8C1DD5AC4700335660 /* UserView */ = {
+			isa = PBXGroup;
+			children = (
+				71A40D8D1DD5AC6B00335660 /* CollectionCell.h */,
+				71A40D8E1DD5AC6B00335660 /* CollectionCell.m */,
+			);
+			path = UserView;
+			sourceTree = "<group>";
+		};
 		D705CE9B1DC09BBE00F65BE0 = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +489,8 @@
 			children = (
 				D705CEFF1DC09C6400F65BE0 /* HomePageVC.h */,
 				D705CF001DC09C6400F65BE0 /* HomePageVC.m */,
+				71A40D7F1DD47EFA00335660 /* TestInterfaceVC.h */,
+				71A40D801DD47EFA00335660 /* TestInterfaceVC.m */,
 				717D0D811DC0B5620036D5F4 /* RegistVC.h */,
 				717D0D821DC0B5620036D5F4 /* RegistVC.m */,
 				71BE7FCF1DC336E6000E0BFB /* ForgetPwdVC.h */,
@@ -477,6 +530,9 @@
 		D705CF041DC09C6400F65BE0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				71A40D871DD5ABEE00335660 /* CommonVC */,
+				71A40D851DD5ABB300335660 /* BossVC */,
+				71A40D861DD5ABB300335660 /* UserVC */,
 				D7AC9F0F1DD01F7200EFD59B /* Product */,
 				D771342F1DCDBA5300B3B9C6 /* Car */,
 				D744546C1DC0A4E3008B5E27 /* LoginVC.h */,
@@ -526,8 +582,12 @@
 		D705CF081DC09C6400F65BE0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				71A40D8B1DD5AC4700335660 /* BossView */,
+				71A40D8C1DD5AC4700335660 /* UserView */,
 				D7CFB8991DC6D1DD0063A1B5 /* LoginView.h */,
 				D7CFB89A1DC6D1DD0063A1B5 /* LoginView.m */,
+				71A40D821DD55C6700335660 /* UserCommonView.h */,
+				71A40D831DD55C6700335660 /* UserCommonView.m */,
 				D71F66B21DCC289E000A6861 /* CarInputCell.h */,
 				D71F66B31DCC289E000A6861 /* CarInputCell.m */,
 				D713941D1DD5B64500FFFE84 /* InputCell.h */,
@@ -773,6 +833,7 @@
 					D705CEA31DC09BBF00F65BE0 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = QL2W84V672;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -897,6 +958,7 @@
 				D728670F1DCB144800D77B38 /* ILSettingLabelItem.m in Sources */,
 				D728671B1DCB33BE00D77B38 /* CarsNav.m in Sources */,
 				D705CF221DC09C6400F65BE0 /* TestFildJudge.m in Sources */,
+				71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */,
 				D705CF211DC09C6400F65BE0 /* RSA.m in Sources */,
 				D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */,
 				D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */,
@@ -922,8 +984,10 @@
 				D71394251DD5CEF000FFFE84 /* AdminFeedbackTVC.m in Sources */,
 				D705CF301DC09C6400F65BE0 /* RootVC.m in Sources */,
 				D705CF251DC09C6400F65BE0 /* UILabel+LabelHeightAndWidth.m in Sources */,
+				71A40D8A1DD5AC2500335660 /* MyCollectionTableVC.m in Sources */,
 				D71475601DD1B22400F48FC4 /* AdressModel.m in Sources */,
 				D705CF2C1DC09C6400F65BE0 /* MineVC.m in Sources */,
+				71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */,
 				D705CF1E1DC09C6400F65BE0 /* Foundation+Log.m in Sources */,
 				D7AB81A11DD47E1B0055E5D6 /* RechargeVC.m in Sources */,
 				D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */,
@@ -933,6 +997,7 @@
 				D705CF281DC09C6400F65BE0 /* UIView+XMGExtension.m in Sources */,
 				D705CF261DC09C6400F65BE0 /* UITableViewCell+AdjustHeight.m in Sources */,
 				D705CF2F1DC09C6400F65BE0 /* README.md in Sources */,
+				71A40D841DD55C6700335660 /* UserCommonView.m in Sources */,
 				D77134381DCDBD2300B3B9C6 /* AddCarInfo.m in Sources */,
 				D705CF311DC09C6400F65BE0 /* ShoppingCartVC.m in Sources */,
 				714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */,
@@ -1026,7 +1091,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 838971868@qq.com (RFEBVP9QVR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 838971868@qq.com (RFEBVP9QVR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1074,7 +1140,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 838971868@qq.com (RFEBVP9QVR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 838971868@qq.com (RFEBVP9QVR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1109,7 +1176,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = yysi.TianlangStar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4b0473f0-fece-4c0f-be45-1df3c808fe94";
 			};
 			name = Debug;
 		};
@@ -1126,7 +1193,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = yysi.TianlangStar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4b0473f0-fece-4c0f-be45-1df3c808fe94";
 			};
 			name = Release;
 		};
