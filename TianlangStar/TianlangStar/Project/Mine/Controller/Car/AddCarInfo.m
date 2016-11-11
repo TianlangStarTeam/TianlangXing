@@ -39,7 +39,7 @@
 
 
 /** 记录用户年月入日期选择器 */
-@property (nonatomic,assign) NSInteger selectData;
+@property (nonatomic,assign) CarInfoType selectData;
 
 
 @end
@@ -50,9 +50,8 @@
 {
     [super viewDidLoad];
     
-
-    
     [self addFooter];
+    
     [self addDatePIcker];
 }
 
@@ -86,19 +85,19 @@
     
     switch (self.selectData)
     {
-        case 6://购买日期
+        case buytime://购买日期
         {
             self.buytime=[outputFormatter stringFromDate:self.insuranceidData.date];
             self.carInfo.buytime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
-        case 8://较强险
+        case insurancetime://较强险
         {
             self.insuranceid=[outputFormatter stringFromDate:self.insuranceidData.date];
             self.carInfo.insurancetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
-        case 9://商业险
+        case commercialtime://商业险
         {
             self.commercialtime=[outputFormatter stringFromDate:self.insuranceidData.date];
             self.carInfo.commercialtime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
@@ -214,29 +213,19 @@
 
     NSString *url = [NSString stringWithFormat:@"%@carinforegistservlet",URL];
     YYLog(@"params----%@",params);
-    [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress)
+    
+    
+    [HttpTool post:url parmas:params success:^(id json)
      {
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-     {
-         YYLog(@"responseObject---%@",responseObject);
-         NSNumber *num = responseObject[@"resultCode"];
-         NSInteger result = [num integerValue];
-         if (result == 1000)
-         {
-             [SVProgressHUD showSuccessWithStatus:@"提交成功"];
-         }else if (result == 1007)
-         {
-             [HttpTool loginUpdataSession];
-         }else
-         {
-             [SVProgressHUD showErrorWithStatus:@"服务器繁忙，请稍后再试"];
-         }
-
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-     {
+         [SVProgressHUD showSuccessWithStatus:@"提交成功"];
+        
+    } failure:^(NSError *error)
+    {
          YYLog(@"error----%@",error);
-     }];
-}
+    }];
+    
+    
+  }
 
 #pragma mark - Table view data source
 
@@ -259,11 +248,12 @@
     cell.textField.placeholder = nameInput;
 
     cell.textLabel.text = name;
-    cell.textField.tag = indexPath.row;
+    self.selectData = indexPath.row;
+    cell.textField.tag = self.selectData;;
     cell.textField.delegate = self;
     
-    switch (indexPath.row) {
-        case 6:
+    switch (self.selectData) {
+        case buytime:
         {
             if (self.buytime)
             {
@@ -271,7 +261,7 @@
             }
             break;
         }
-        case 8:
+        case insurancetime:
         {
             if (self.insuranceid)
             {
@@ -279,7 +269,7 @@
             }
             break;
         }
-        case 9:
+        case commercialtime:
         {
             if (self.commercialtime)
             {
@@ -299,6 +289,13 @@
 }
 
 
+//拖动是退出键盘
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
+}
+
+
 #pragma mark====设置textField的代理事件的处理并传值
 
 //保存用户输入的信息
@@ -307,28 +304,28 @@
 //    self.textArr[textField.tag] = textField.text;
     
     switch (textField.tag) {
-        case 0:
+        case carid:
             self.carInfo.carid = textField.text;
             break;
-        case 1:
+        case brand:
             self.carInfo.brand = textField.text;
             break;
-        case 2:
+        case model:
             self.carInfo.model = textField.text;
             break;
-        case 3:
+        case cartype:
             self.carInfo.cartype = textField.text;
             break;
-        case 4:
+        case frameid:
             self.carInfo.frameid = textField.text;
             break;
-        case 5:
+        case engineid:
             self.carInfo.engineid = textField.text;
             break;
 //        case 6:
 //            self.carInfo.buytime = textField.text;
 //            break;
-        case 7:
+        case insuranceid:
             self.carInfo.insuranceid = textField.text;
             break;
             
@@ -341,7 +338,7 @@
  */
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == 8 || textField.tag == 9 || textField.tag == 6)
+    if (textField.tag == buytime || textField.tag == insurancetime || textField.tag == commercialtime)
     {
         textField.inputView=self.insuranceidData;
         self.selectData = textField.tag;

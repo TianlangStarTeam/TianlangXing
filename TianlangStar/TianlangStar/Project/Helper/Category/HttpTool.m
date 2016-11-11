@@ -29,6 +29,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
+        
         NSNumber *num = responseObject[@"resultCode"];
         NSInteger result = [num integerValue];
         
@@ -40,6 +41,7 @@
         {
             [self checkReultCode:result];
         }
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
          if (error)
@@ -88,9 +90,9 @@
 
 +(void)checkReultCode:(NSInteger )result
 {
-
+    [SVProgressHUD dismiss];
     switch (result) {
-
+            
         case 1001:
         {
             YYLog(@"reultCode=1001,数据库没有这条数据");
