@@ -57,8 +57,6 @@
     
     
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
-//    group0.header = @"设置";
-//    group0.footer = @"设置foot";
     group0.items = @[version,cache,contact,opinion];
     
     [self.dataList addObject:group0];
@@ -92,9 +90,9 @@
 //退出登录的点击事件处理
 - (void)exitLoginAction
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您是否确定退出登录？" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否确定退出登录？" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
                          {
                              //退出登录
                              [self quitLogin];
@@ -142,13 +140,10 @@
  */
 -(CGFloat)getCache
 {
-    NSInteger totalCount = [[SDImageCache sharedImageCache] getDiskCount];
     NSInteger totalSize = [[SDImageCache sharedImageCache] getSize];
     
     float totalSizeM = totalSize/1024.0/1024.0;
-//    YYLog(@"图片数量%ld",(long)totalCount);
-//    YYLog(@"图片大小%ld",(long)totalSize);
-//    YYLog(@"图片大小M%.2f",totalSizeM);
+    
     return totalSizeM;
 }
 
@@ -161,7 +156,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否清除缓存？" preferredStyle:(UIAlertControllerStyleActionSheet)];
     
     UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"清除缓存" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"清除" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         
         //清除缓存
         [[SDImageCache sharedImageCache] clearMemory];
@@ -170,7 +165,7 @@
         //缓存大小
         NSString *cache = [NSString stringWithFormat:@"%.2fM",[self getCache]];
         
-        ILSettingGroup *group =  self.dataList[0];
+        ILSettingGroup *group = self.dataList[0];
         ILSettingItem *item = group.items[1];
         item.subTitle = cache;
         
