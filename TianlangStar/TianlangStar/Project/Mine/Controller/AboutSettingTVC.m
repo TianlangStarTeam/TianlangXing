@@ -128,16 +128,36 @@
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
     NSString * url = [NSString stringWithFormat:@"%@logoutservlet",URL];
+
+    YYLog(@"退出登录参数%@",parmas);
     
+//    [[AFHTTPSessionManager manager] POST:url parameters:parmas progress:^(NSProgress * _Nonnull uploadProgress) {
+//        
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        
+//        YYLog(@"退出登录返回:%@",responseObject);
+//        
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        
+//        YYLog(@"退出登录错误：%@",error);
+//    }];
     
     [HttpTool post:url parmas:parmas success:^(id json)
      {
          YYLog(@"退出登录--%@",json);
-         [UserInfo sharedUserInfo].isLogin = NO;
-         [[UserInfo sharedUserInfo] synchronizeToSandBox];
-         //获取公钥并且弹出登录窗口
-         
-         [self.navigationController popViewControllerAnimated:YES];
+         NSInteger resultCode = [json[@"resultCode"] integerValue];
+         if (resultCode == 1000)
+         {
+             [UserInfo sharedUserInfo].isLogin = NO;
+             [[UserInfo sharedUserInfo] synchronizeToSandBox];
+             //获取公钥并且弹出登录窗口
+             
+             [self.navigationController popViewControllerAnimated:YES];
+         }
+         else
+         {
+             [[AlertView sharedAlertView] addAfterAlertMessage:@"退出登录失败" title:@"提示"];
+         }
 
      } failure:^(NSError *error)
      {
