@@ -65,16 +65,13 @@
         NSNumber *num = responseObject[@"resultCode"];
         NSInteger result = [num integerValue];
         
-        if (result == 1000 || result == 1013)//登录成功或者手机号发生改变
+        if (success)
         {
-            if (success)
-            {
-                success(responseObject);
-            }
-        }else
-        {
-            [self checkReultCode:result];
+            success(responseObject);
         }
+        
+        [self checkReultCode:result];
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (error)
         {
