@@ -39,4 +39,10 @@
 /** 判断字符串是否为URL */
 - (BOOL)isURL;
 
+
+/**
+ * 通过VIP数字直接返回等级字符串
+ */
++ (NSString *)VIPis:(NSInteger )VIP;
+
 @end

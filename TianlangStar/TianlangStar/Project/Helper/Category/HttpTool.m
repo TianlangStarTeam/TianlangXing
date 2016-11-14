@@ -65,7 +65,7 @@
         NSNumber *num = responseObject[@"resultCode"];
         NSInteger result = [num integerValue];
         
-        if (success)
+        if (success && result == 1000)
         {
             success(responseObject);
         }

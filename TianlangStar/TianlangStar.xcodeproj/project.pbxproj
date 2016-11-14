@@ -70,6 +70,9 @@
 		D744546E1DC0A4E3008B5E27 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D744546D1DC0A4E3008B5E27 /* LoginVC.m */; };
 		D74454711DC0A93A008B5E27 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454701DC0A93A008B5E27 /* UserModel.m */; };
 		D74454741DC0B4EC008B5E27 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D74454731DC0B4EC008B5E27 /* AlertView.m */; };
+		D754A53E1DD9563300C79616 /* AccountInfoListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D754A53D1DD9563300C79616 /* AccountInfoListTVC.m */; };
+		D754A5411DD956B000C79616 /* AccountInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D754A5401DD956B000C79616 /* AccountInfoCell.m */; };
+		D754A5441DD9B78300C79616 /* UserHeaderImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D754A5431DD9B78300C79616 /* UserHeaderImageCell.m */; };
 		D77134341DCDBA5300B3B9C6 /* CarInfoChangeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134311DCDBA5300B3B9C6 /* CarInfoChangeVC.m */; };
 		D77134351DCDBA5300B3B9C6 /* CarInfoListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134331DCDBA5300B3B9C6 /* CarInfoListVC.m */; };
 		D77134381DCDBD2300B3B9C6 /* AddCarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134371DCDBD2300B3B9C6 /* AddCarInfo.m */; };
@@ -223,6 +226,12 @@
 		D74454701DC0A93A008B5E27 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		D74454721DC0B4EC008B5E27 /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
 		D74454731DC0B4EC008B5E27 /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
+		D754A53C1DD9563300C79616 /* AccountInfoListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountInfoListTVC.h; sourceTree = "<group>"; };
+		D754A53D1DD9563300C79616 /* AccountInfoListTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountInfoListTVC.m; sourceTree = "<group>"; };
+		D754A53F1DD956B000C79616 /* AccountInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountInfoCell.h; sourceTree = "<group>"; };
+		D754A5401DD956B000C79616 /* AccountInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountInfoCell.m; sourceTree = "<group>"; };
+		D754A5421DD9B78300C79616 /* UserHeaderImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserHeaderImageCell.h; sourceTree = "<group>"; };
+		D754A5431DD9B78300C79616 /* UserHeaderImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserHeaderImageCell.m; sourceTree = "<group>"; };
 		D77134301DCDBA5300B3B9C6 /* CarInfoChangeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarInfoChangeVC.h; sourceTree = "<group>"; };
 		D77134311DCDBA5300B3B9C6 /* CarInfoChangeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarInfoChangeVC.m; sourceTree = "<group>"; };
 		D77134321DCDBA5300B3B9C6 /* CarInfoListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarInfoListVC.h; sourceTree = "<group>"; };
@@ -321,6 +330,8 @@
 			children = (
 				71A40D8D1DD5AC6B00335660 /* CollectionCell.h */,
 				71A40D8E1DD5AC6B00335660 /* CollectionCell.m */,
+				D754A5421DD9B78300C79616 /* UserHeaderImageCell.h */,
+				D754A5431DD9B78300C79616 /* UserHeaderImageCell.m */,
 			);
 			path = UserView;
 			sourceTree = "<group>";
@@ -555,6 +566,8 @@
 				D71394181DD5A37100FFFE84 /* AccountMTVC.m */,
 				D71394231DD5CEF000FFFE84 /* AdminFeedbackTVC.h */,
 				D71394241DD5CEF000FFFE84 /* AdminFeedbackTVC.m */,
+				D754A53C1DD9563300C79616 /* AccountInfoListTVC.h */,
+				D754A53D1DD9563300C79616 /* AccountInfoListTVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -594,6 +607,8 @@
 				D713941E1DD5B64500FFFE84 /* InputCell.m */,
 				D71394201DD5C72100FFFE84 /* YYUITextView.h */,
 				D71394211DD5C72100FFFE84 /* YYUITextView.m */,
+				D754A53F1DD956B000C79616 /* AccountInfoCell.h */,
+				D754A5401DD956B000C79616 /* AccountInfoCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -982,6 +997,7 @@
 				D71394161DD56E7300FFFE84 /* MembersTVC.m in Sources */,
 				D71394191DD5A37100FFFE84 /* AccountMTVC.m in Sources */,
 				D71394251DD5CEF000FFFE84 /* AdminFeedbackTVC.m in Sources */,
+				D754A5441DD9B78300C79616 /* UserHeaderImageCell.m in Sources */,
 				D705CF301DC09C6400F65BE0 /* RootVC.m in Sources */,
 				D705CF251DC09C6400F65BE0 /* UILabel+LabelHeightAndWidth.m in Sources */,
 				71A40D8A1DD5AC2500335660 /* MyCollectionTableVC.m in Sources */,
@@ -996,6 +1012,7 @@
 				D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */,
 				D705CF281DC09C6400F65BE0 /* UIView+XMGExtension.m in Sources */,
 				D705CF261DC09C6400F65BE0 /* UITableViewCell+AdjustHeight.m in Sources */,
+				D754A53E1DD9563300C79616 /* AccountInfoListTVC.m in Sources */,
 				D705CF2F1DC09C6400F65BE0 /* README.md in Sources */,
 				71A40D841DD55C6700335660 /* UserCommonView.m in Sources */,
 				D77134381DCDBD2300B3B9C6 /* AddCarInfo.m in Sources */,
@@ -1017,6 +1034,7 @@
 				D705CF201DC09C6400F65BE0 /* PinchPicture.m in Sources */,
 				D77134351DCDBA5300B3B9C6 /* CarInfoListVC.m in Sources */,
 				D735EAFE1DD075790051D8E7 /* HttpTool.m in Sources */,
+				D754A5411DD956B000C79616 /* AccountInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

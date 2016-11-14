@@ -22,22 +22,39 @@
     
 }
 
--(NSString *)headerpic
+-(NSString *)headimage
 {
-    return [NSString stringWithFormat:@"%@%@",picURL,_headerpic];
+    return [NSString stringWithFormat:@"%@%@",picURL,_headimage];
 }
 
 
 -(NSString *)lasttime
 {
     NSString * timeStampString = _lasttime;
-    NSTimeInterval _interval=[timeStampString doubleValue] / 1000.0;
+    NSTimeInterval _interval=[timeStampString doubleValue];
+//        NSTimeInterval _interval=[timeStampString doubleValue] / 1000.0;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
     NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
-    [objDateformat setDateFormat:@"yyyy-MM-dd"];
+    [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     return [objDateformat stringFromDate: date];
 }
+
+
+-(NSString *)createtime
+{
+    NSString * timeStampString = _createtime;
+    NSTimeInterval _interval=[timeStampString doubleValue];
+    //        NSTimeInterval _interval=[timeStampString doubleValue] / 1000.0;
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
+    NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
+    [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    return [objDateformat stringFromDate: date];
+}
+
+
+
 
 
 

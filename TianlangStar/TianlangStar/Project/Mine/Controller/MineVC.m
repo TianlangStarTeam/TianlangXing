@@ -25,6 +25,8 @@
 
 #import "UserCommonView.h"
 #import "MyCollectionTableVC.h"
+#import "AccountMTVC.h"
+#import "AccountInfoListTVC.h"
 
 @interface MineVC ()<LoginViewDelegate>
 
@@ -41,8 +43,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
 }
 
 
@@ -154,7 +154,7 @@
     
     ILSettingArrowItem *SalesStatistics = [ILSettingArrowItem itemWithIcon:nil title:@"入库登记" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"会员管理" destVcClass:[AddProductVC class]];
+    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"会员管理" destVcClass:[AccountInfoListTVC class]];
     
     ILSettingArrowItem *informationRelease = [ILSettingArrowItem itemWithIcon:nil title:@"车辆管理" destVcClass:[UserInfoManagementTVC class]];
     

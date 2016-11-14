@@ -441,7 +441,7 @@
              userInfo.RSAsessionId = RSASessionID;
              userInfo.userID = self.userM.ID;
              userInfo.userType = self.userM.type;
-             userInfo.headerpic = self.userM.headerpic;
+             userInfo.headerpic = self.userM.headimage;
              userInfo.membername = self.userM.membername;
              userInfo.isLogin = YES;
              

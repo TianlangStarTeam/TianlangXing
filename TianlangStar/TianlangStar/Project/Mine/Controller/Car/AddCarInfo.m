@@ -223,8 +223,6 @@
     {
          YYLog(@"error----%@",error);
     }];
-    
-    
   }
 
 #pragma mark - Table view data source
@@ -252,7 +250,8 @@
     cell.textField.tag = self.selectData;;
     cell.textField.delegate = self;
     
-    switch (self.selectData) {
+    switch (self.selectData)
+    {
         case buytime:
         {
             if (self.buytime)

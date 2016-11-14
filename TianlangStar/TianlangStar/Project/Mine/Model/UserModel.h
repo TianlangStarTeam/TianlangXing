@@ -12,6 +12,7 @@
 #import <Foundation/Foundation.h>
 
 @interface UserModel : NSObject
+
 @property (nonatomic,copy) NSString *ID;//后台返回为id
 /** 用户描述信息 */
 @property (nonatomic,copy) NSString *describe;//后台返回为description
@@ -24,30 +25,29 @@
 /** 员工电话 */
 @property (nonatomic,copy) NSString *telephone;
 /** 身份证 */
-@property (nonatomic,copy) NSString *cardid;
+@property (nonatomic,copy) NSString *identity;
 /** 用户性别 */
 @property (nonatomic,assign) NSInteger sex;
 /** 用户年龄 */
 @property (nonatomic,assign) NSString *age;
 /**用户是否被停用(0->false,1->true) */
 @property (nonatomic,assign) BOOL isstop; //bu tong
-/** 邮箱地址 */
-@property (nonatomic,copy) NSString *email;
+
 
 /** 上次修改时间 */
 @property (nonatomic,copy) NSString *lasttime;
 
-/** 备注及公司简单介绍 */
-@property (nonatomic,copy) NSString *instruction;
+/** 会话创建时间 */
+@property (nonatomic,copy) NSString *createtime;
+
+
 
 /** 员工姓名 */
 @property (nonatomic,copy) NSString *membername;
 
-/** 员工工号 */
-@property (nonatomic,copy) NSString *employeeId;
+/** 用户图像信息修改 */
+@property (nonatomic,copy) NSString *headimage;
 
-/** 员工头像 */
-@property (nonatomic,copy) NSString *headerpic;
 
 //额外属性
 /** 左边的按钮是否选中 */
@@ -70,10 +70,7 @@
 @property (nonatomic,copy) NSString *terminal;
 /** 登录时间 */
 @property (nonatomic,assign) NSInteger logintime;
-/** 上次登录成功时间 */
-@property (nonatomic,assign) NSInteger lastsuccessfulltime;
-/** 上次登录失败时间 */
-@property (nonatomic,assign) NSInteger lastfailtime;
+
 
 
 
@@ -83,8 +80,7 @@
 @property (nonatomic,assign) NSInteger userid;
 /** 登录ip */
 @property (nonatomic,copy) NSString *loginip;
-/** 会话创建时间 */
-@property (nonatomic,assign) NSInteger createtime;
+
 /** 会话活动时间 */
 @property (nonatomic,assign) NSInteger activetime;
 /** 手机的序列码 */

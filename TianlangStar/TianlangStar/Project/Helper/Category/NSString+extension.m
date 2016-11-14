@@ -198,6 +198,52 @@
     return result;
 }
 
+/**
+ * 通过VIP等级直接返回等级
+ */
++ (NSString *)VIPis:(NSInteger )VIP
+{
+    NSString *leval = @"LV.1";
+    switch (VIP) {
+        case 1:
+            leval = @"LV.1";
+            break;
+        case 2:
+            leval = @"LV.2";
+            break;
+        case 3:
+            leval = @"LV.3";
+            break;
+        case 4:
+            leval = @"LV.4";
+            break;
+        case 5:
+            leval = @"LV.5";
+            break;
+        case 6:
+            leval = @"LV.6";
+            break;
+        case 7:
+            leval = @"LV.7";
+            break;
+        case 8:
+            leval = @"LV.8";
+            break;
+        case 9:
+            leval = @"LV.9";
+            break;
+            
+        default:
+            break;
+    }
+    
+    return leval;
+
+}
+
+
+
+
 
 
 @end
