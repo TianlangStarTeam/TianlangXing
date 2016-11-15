@@ -8,6 +8,8 @@
 
 #import "TLStarVC.h"
 
+#import "TestInterfaceVC.h"
+
 @interface TLStarVC ()
 
 @end
@@ -16,8 +18,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    // 测试接口按钮
+    UIButton *testButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    testButton.frame = CGRectMake(50, 100, 100, 44);
+    [testButton setTitle:@"测试接口" forState:(UIControlStateNormal)];
+    [testButton addTarget:self action:@selector(testAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:testButton];
+    
 }
+
+
+
+#pragma mark - 测试接口点击事件
+- (void)testAction
+{
+    TestInterfaceVC *testInterfaceVC = [[TestInterfaceVC alloc] init];
+    [self.navigationController pushViewController:testInterfaceVC animated:YES];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

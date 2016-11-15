@@ -11,6 +11,9 @@
 		711EFA2F1DD9637D006AEF9E /* HomePageTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA2E1DD9637D006AEF9E /* HomePageTableVC.m */; };
 		711EFA321DD96718006AEF9E /* NewestActivityTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA311DD96718006AEF9E /* NewestActivityTableVC.m */; };
 		711EFA351DD96912006AEF9E /* HomePageSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA341DD96912006AEF9E /* HomePageSelectCell.m */; };
+		711EFA381DD98D63006AEF9E /* NewestListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA371DD98D63006AEF9E /* NewestListCell.m */; };
+		711EFA3B1DD9995A006AEF9E /* NewestActivityDetailTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA3A1DD9995A006AEF9E /* NewestActivityDetailTableVC.m */; };
+		711EFA3E1DD9BAD7006AEF9E /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA3D1DD9BAD7006AEF9E /* ProductCell.m */; };
 		714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 714BFDE51DCC80D1002F2042 /* CollectionModel.m */; };
 		717D0D831DC0B5620036D5F4 /* RegistVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 717D0D821DC0B5620036D5F4 /* RegistVC.m */; };
 		71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A40D801DD47EFA00335660 /* TestInterfaceVC.m */; };
@@ -110,6 +113,12 @@
 		711EFA311DD96718006AEF9E /* NewestActivityTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewestActivityTableVC.m; sourceTree = "<group>"; };
 		711EFA331DD96912006AEF9E /* HomePageSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomePageSelectCell.h; path = TianlangStar/Project/HomePage/Controller/HomePageSelectCell.h; sourceTree = SOURCE_ROOT; };
 		711EFA341DD96912006AEF9E /* HomePageSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomePageSelectCell.m; path = TianlangStar/Project/HomePage/Controller/HomePageSelectCell.m; sourceTree = SOURCE_ROOT; };
+		711EFA361DD98D63006AEF9E /* NewestListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewestListCell.h; path = TianlangStar/Project/HomePage/Controller/NewestListCell.h; sourceTree = SOURCE_ROOT; };
+		711EFA371DD98D63006AEF9E /* NewestListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewestListCell.m; path = TianlangStar/Project/HomePage/Controller/NewestListCell.m; sourceTree = SOURCE_ROOT; };
+		711EFA391DD9995A006AEF9E /* NewestActivityDetailTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewestActivityDetailTableVC.h; sourceTree = "<group>"; };
+		711EFA3A1DD9995A006AEF9E /* NewestActivityDetailTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewestActivityDetailTableVC.m; sourceTree = "<group>"; };
+		711EFA3C1DD9BAD7006AEF9E /* ProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductCell.h; path = TianlangStar/Project/HomePage/Controller/ProductCell.h; sourceTree = SOURCE_ROOT; };
+		711EFA3D1DD9BAD7006AEF9E /* ProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductCell.m; path = TianlangStar/Project/HomePage/Controller/ProductCell.m; sourceTree = SOURCE_ROOT; };
 		714BFDE41DCC80D1002F2042 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
 		714BFDE51DCC80D1002F2042 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		717D0D811DC0B5620036D5F4 /* RegistVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistVC.h; sourceTree = "<group>"; };
@@ -508,6 +517,8 @@
 				711EFA2E1DD9637D006AEF9E /* HomePageTableVC.m */,
 				711EFA301DD96718006AEF9E /* NewestActivityTableVC.h */,
 				711EFA311DD96718006AEF9E /* NewestActivityTableVC.m */,
+				711EFA391DD9995A006AEF9E /* NewestActivityDetailTableVC.h */,
+				711EFA3A1DD9995A006AEF9E /* NewestActivityDetailTableVC.m */,
 				71A40D7F1DD47EFA00335660 /* TestInterfaceVC.h */,
 				71A40D801DD47EFA00335660 /* TestInterfaceVC.m */,
 				717D0D811DC0B5620036D5F4 /* RegistVC.h */,
@@ -534,6 +545,10 @@
 			children = (
 				711EFA331DD96912006AEF9E /* HomePageSelectCell.h */,
 				711EFA341DD96912006AEF9E /* HomePageSelectCell.m */,
+				711EFA3C1DD9BAD7006AEF9E /* ProductCell.h */,
+				711EFA3D1DD9BAD7006AEF9E /* ProductCell.m */,
+				711EFA361DD98D63006AEF9E /* NewestListCell.h */,
+				711EFA371DD98D63006AEF9E /* NewestListCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -983,6 +998,7 @@
 				D728670F1DCB144800D77B38 /* ILSettingLabelItem.m in Sources */,
 				D728671B1DCB33BE00D77B38 /* CarsNav.m in Sources */,
 				D705CF221DC09C6400F65BE0 /* TestFildJudge.m in Sources */,
+				711EFA3E1DD9BAD7006AEF9E /* ProductCell.m in Sources */,
 				71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */,
 				D705CF211DC09C6400F65BE0 /* RSA.m in Sources */,
 				D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */,
@@ -1014,12 +1030,14 @@
 				D71475601DD1B22400F48FC4 /* AdressModel.m in Sources */,
 				D705CF2C1DC09C6400F65BE0 /* MineVC.m in Sources */,
 				71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */,
+				711EFA3B1DD9995A006AEF9E /* NewestActivityDetailTableVC.m in Sources */,
 				D705CF1E1DC09C6400F65BE0 /* Foundation+Log.m in Sources */,
 				D7AB81A11DD47E1B0055E5D6 /* RechargeVC.m in Sources */,
 				D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */,
 				71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */,
 				711EFA351DD96912006AEF9E /* HomePageSelectCell.m in Sources */,
 				D728670C1DCB144800D77B38 /* ILSettingGroup.m in Sources */,
+				711EFA381DD98D63006AEF9E /* NewestListCell.m in Sources */,
 				D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */,
 				D705CF281DC09C6400F65BE0 /* UIView+XMGExtension.m in Sources */,
 				D705CF261DC09C6400F65BE0 /* UITableViewCell+AdjustHeight.m in Sources */,

@@ -256,13 +256,16 @@
          NSArray *arr = [ProductModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
          
          ProductModel *model = arr[0];
+         
          YYLog(@"model---%ld",(long)model.scoreprice);
          
     } failure:^(NSError *error) {
+        
         YYLog(@"%@",error);
         
     }];
 }
+
 
 
 /**

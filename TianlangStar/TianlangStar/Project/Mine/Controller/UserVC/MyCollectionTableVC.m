@@ -31,7 +31,35 @@
 
 
 
-- (void)fetchAllCollectionData
+#pragma mark - 顶部的headerView
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, Klength44)];
+    
+    UISegmentedControl *segment = [[UISegmentedControl alloc] initWithItems:@[@"商品",@"服务",@"车辆"]];
+    segment.frame = CGRectMake(0, 0, KScreenWidth, Klength44);
+    
+    segment.tintColor = [UIColor orangeColor];
+    
+    NSDictionary *normalDic = @{NSForegroundColorAttributeName:[UIColor blackColor]};
+    NSDictionary *selectedDic = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    [segment setTitleTextAttributes:normalDic forState:(UIControlStateNormal)];
+    [segment setTitleTextAttributes:selectedDic forState:(UIControlStateSelected)];
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:Font16 forKey:NSFontAttributeName];
+    [segment setTitleTextAttributes:attributes forState:(UIControlStateNormal)];
+    
+    segment.selectedSegmentIndex = 0;
+    
+    [self.headerView addSubview:segment];
+    
+    return self.headerView;
+}
+
+
+
+#pragma mark - 获取收藏信息
+- (void)fetchAllCollectionDataWithType:(NSInteger)type
 {
     NSString *url = [NSString stringWithFormat:@"%@getallcollectionservlet",URL];
     
@@ -39,6 +67,8 @@
     
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
+    NSString *collectionType = [NSString stringWithFormat:@"%ld",type];
+    parameters[@"type"] = collectionType;
     
     YYLog(@"sessionid===%@",sessionid);
     YYLog(@"获取指定用户的全部收藏物的parameters===%@",parameters);
@@ -58,6 +88,10 @@
             self.collectionArray = [CollectionModel mj_objectArrayWithKeyValuesArray:responseObject[@"obj"]];
 
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            [self.tableView reloadData];
+        });
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -68,15 +102,19 @@
 
 
 
+#pragma mark - 视图即将出现时调用
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self fetchAllCollectionDataWithType:1];
     
     [self creatCartAndCancleCollection];
 }
 
 
 
+#pragma mark - 视图将要消失时调用
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -86,6 +124,7 @@
 
 
 
+#pragma mark - 创建加入购物车和取消收藏按钮
 - (void)creatCartAndCancleCollection
 {
     CGFloat bottomViewY = KScreenHeight - Klength44;
@@ -117,7 +156,7 @@
 
 
 
-// 加入购物车的点击事件
+#pragma mark - 加入购物车的点击事件
 - (void)addCartAction
 {
     [self addToCartData];// 调取加入购物车的接口
@@ -151,8 +190,7 @@
 
 
 
-
-// 取消收藏的点击事件
+#pragma mark - 取消收藏的点击事件
 - (void)cancleCollectionAction
 {
     [self cancleCollectionData];// 调取取消收藏的接口
@@ -205,53 +243,36 @@
 
 
 
-// 顶部的headerView
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, Klength44)];
-    
-    UISegmentedControl *segment = [[UISegmentedControl alloc] initWithItems:@[@"商品",@"服务",@"车辆"]];
-    segment.frame = CGRectMake(0, 0, KScreenWidth, Klength44);
-    
-    segment.tintColor = [UIColor orangeColor];
-    
-    NSDictionary *normalDic = @{NSForegroundColorAttributeName:[UIColor blackColor]};
-    NSDictionary *selectedDic = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
-    [segment setTitleTextAttributes:normalDic forState:(UIControlStateNormal)];
-    [segment setTitleTextAttributes:selectedDic forState:(UIControlStateSelected)];
-    
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:Font16 forKey:NSFontAttributeName];
-    [segment setTitleTextAttributes:attributes forState:(UIControlStateNormal)];
-
-    segment.selectedSegmentIndex = 0;
-    
-    [self.headerView addSubview:segment];
-    
-    return self.headerView;
-}
-
-
+// headerView的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return Klength44;
 }
 
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+#pragma mark - Table view data source
+// 分区数
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 1;
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+// 行数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    YYLog(@"数组个数%ld",self.collectionArray.count);
+    return self.collectionArray.count;
 }
 
 
 
+#pragma mark - 加载单元格
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     static NSString *identifier = @"cell";
@@ -260,9 +281,7 @@
     
     if (cell == nil)
     {
-        
         cell = [[CollectionCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
-        
     }
 
     return cell;

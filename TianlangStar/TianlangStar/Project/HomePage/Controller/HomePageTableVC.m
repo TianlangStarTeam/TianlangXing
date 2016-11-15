@@ -8,8 +8,9 @@
 
 #import "HomePageTableVC.h"
 #import "NewestActivityTableVC.h" // 最新活动头文件
-
-#import "TestInterfaceVC.h"
+#import "HomePageSelectCell.h" // 保养维护、商品、车辆信息的自定义cell
+#import "ProductModel.h" // 商品模型
+#import "ProductCell.h"
 
 @interface HomePageTableVC ()<UISearchResultsUpdating,SDCycleScrollViewDelegate>
 
@@ -19,6 +20,8 @@
 @property (nonatomic,strong) SDCycleScrollView *scrollView;
 // 轮播图
 @property (nonatomic,strong) UIView *headerView;
+// 商品数组
+@property (nonatomic,strong) NSMutableArray *productsArray;
 
 @end
 
@@ -33,24 +36,54 @@
     
     [self creatHeaderView];// 轮播图
     
-    
-    
-    // 测试接口按钮
-    UIButton *testButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    testButton.frame = CGRectMake(50, 100, 100, 44);
-    [testButton setTitle:@"测试接口" forState:(UIControlStateNormal)];
-    [testButton addTarget:self action:@selector(testAction) forControlEvents:(UIControlEventTouchUpInside)];
-    //    [self.view addSubview:testButton];
-
+    [self fetchProductInfoWithType:3];
 }
 
 
 
-#pragma mark - 测试接口点击事件
-- (void)testAction
+- (NSMutableArray *)productsArray
 {
-    TestInterfaceVC *testInterfaceVC = [[TestInterfaceVC alloc] init];
-    [self.navigationController pushViewController:testInterfaceVC animated:YES];
+    if (!_productsArray)
+    {
+        _productsArray = [NSMutableArray array];
+    }
+    
+    return _productsArray;
+}
+
+
+
+- (void)fetchProductInfoWithType:(NSInteger)type
+{
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    
+    parmas[@"sessionId"]  = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"currentPage"]  = @"1";
+    NSString *productType = [NSString stringWithFormat:@"%ld",type];
+    parmas[@"type"]  = productType;
+    
+    YYLog(@"获取所有商品列表parmas--%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@getcommodityinfoservlet",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"获取所有商品列表-%@",json);
+         
+         self.productsArray = [ProductModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         
+         ProductModel *model = self.productsArray[0];
+         
+         YYLog(@"model---%ld",(long)model.scoreprice);
+         
+         [self.tableView reloadData];
+         
+     } failure:^(NSError *error) {
+         
+         YYLog(@"%@",error);
+         
+     }];
+
 }
 
 
@@ -116,60 +149,206 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    if (section == 0 || section == 1)
+    {
+        return 1;
+    }
+    else
+    {
+        YYLog(@"车辆信息个数%ld",self.productsArray.count);
+        return self.productsArray.count;
+    }
+}
+
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0)
+    {
+        return 40;
+    }
+    else if (indexPath.section == 1)
+    {
+        return 44;
+    }
+    else
+    {
+        return 40;
+    }
+}
+
+
+
+#pragma mark - 返回最新活动的cell
+- (UITableViewCell *)tableView:(UITableView *)tableView newestActivityCellWithIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    if (cell == nil)
+    {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
+        
+    }
+    
+    cell.textLabel.text = @"最新活动";
+    cell.textLabel.textAlignment = 1;
+    
+    return cell;
+}
+
+
+
+#pragma mark - 返回保养维护、商品、车辆信息的cell
+- (HomePageSelectCell *)tableView:(UITableView *)tableView selectCellWithIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier1 = @"cell1";
+    
+    HomePageSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
+    
+    if (cell == nil)
+    {
+        
+        cell = [[HomePageSelectCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier1];
+        
+    }
+    
+    [cell.maintenanceButton setTitle:@"保养维护" forState:(UIControlStateNormal)];
+    [cell.maintenanceButton addTarget:self action:@selector(maintenanceAction) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [cell.productButton setTitle:@"商品" forState:(UIControlStateNormal)];
+    [cell.productButton addTarget:self action:@selector(productAction) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    [cell.carInfoButton setTitle:@"车辆信息" forState:(UIControlStateNormal)];
+    [cell.carInfoButton addTarget:self action:@selector(carInfoAction) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+    return cell;
+
+}
+
+
+
+#pragma mark - 返回保养维护的cell
+- (UITableViewCell *)tableView:(UITableView *)tableView maintenanceCellWithIndexPatch:(NSIndexPath *)indexPatch
+{
+    static NSString *identifier2 = @"cell2";
+    
+    ProductCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
+    
+    if (cell == nil)
+    {
+        
+        cell = [[ProductCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier2];
+        
+    }
+
+    
+//    static NSString *identifier2 = @"cell2";
+//    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
+//    
+//    if (cell == nil)
+//    {
+//        
+//        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier2];
+//        
+//    }
+//    
+//    cell.textLabel.text = @"保养维护的cell";
+    
+    return cell;
+}
+#pragma mark - 返回商品的cell
+- (UITableViewCell *)tableView:(UITableView *)tableView productCellWithIndexPatch:(NSIndexPath *)indexPatch
+{
+    static NSString *identifier3 = @"cell3";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
+    
+    if (cell == nil)
+    {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier3];
+        
+    }
+    
+    cell.textLabel.text = @"商品的cell";
+    
+    return cell;
+}
+#pragma mark - 返回车辆信息的cell
+- (UITableViewCell *)tableView:(UITableView *)tableView carInfoCellWithIndexPatch:(NSIndexPath *)indexPatch
+{
+    static NSString *identifier4 = @"cell4";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier4];
+    
+    if (cell == nil)
+    {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier4];
+        
+    }
+    
+    cell.textLabel.text = @"车辆信息的cell";
+    
+    return cell;
 }
 
 
 
 #pragma mark - 加载单元格
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.row == 0)
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0)
     {
-        static NSString *identifier = @"cell";
-        
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        
-        if (cell == nil)
-        {
-            
-            cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
-            
-        }
-        
-        cell.textLabel.text = @"最新活动";
-        cell.textLabel.textAlignment = 1;
-        
-        return cell;
-
+        return [self tableView:tableView newestActivityCellWithIndexPath:indexPath];
+    }
+    else if (indexPath.section == 1)
+    {
+        return [self tableView:tableView selectCellWithIndexPath:indexPath];
     }
     else
     {
-        static NSString *identifier1 = @"cell1";
-        
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
-        
-        if (cell == nil)
-        {
-            
-            cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier1];
-            
-        }
-        
-        cell.textLabel.text = @"12345";
-        
-        return cell;
-
+        return [self tableView:tableView maintenanceCellWithIndexPatch:indexPath];
     }
 }
 
+
+
+#pragma mark - 保养维护的点击事件
+- (void)maintenanceAction
+{
+    YYLog(@"保养维护的点击事件");
+}
+
+
+
+#pragma mark - 商品的点击事件
+- (void)productAction
+{
+    YYLog(@"商品的点击事件");
+}
+
+
+
+#pragma mark - 车辆信息的点击事件
+- (void)carInfoAction
+{
+    YYLog(@"车辆信息的点击事件");
+}
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

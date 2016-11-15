@@ -73,6 +73,8 @@
 /** 获取购物车列表 */
 @property (nonatomic,strong) UIButton *cartListButton;
 
+// 导出excel
+@property (nonatomic,strong) UIButton *exportButton;
 
 @end
 
@@ -264,10 +266,36 @@
     [self.view addSubview:self.addCartButton];
     
 
+    // 导出
+    self.addCartButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.addCartButton.frame = CGRectMake(180, 180, 100, 44);
+    [self.addCartButton setTitle:@"导出" forState:(UIControlStateNormal)];
+    [self.addCartButton addTarget:self action:@selector(exportExcelAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.addCartButton];
 
 }
 
 
+
+#pragma mark - 导出excel
+- (void)exportExcelAction
+{
+    NSString *url = [NSString stringWithFormat:@"%@exportfileuserinfoservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+
+    [HttpTool post:url parmas:parameters success:^(id json) {
+        
+        YYLog(@"导出excel返回%@",json);
+        
+    } failure:^(NSError *error) {
+        
+        YYLog(@"导出excel失败%@",error);
+    }];
+}
 
 #pragma mark - 添加进购物车
 - (void)addToCartAction

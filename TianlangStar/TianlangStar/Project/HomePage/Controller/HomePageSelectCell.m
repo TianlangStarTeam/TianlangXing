@@ -38,15 +38,9 @@
         
         
         
-        [self.maintenanceButton setTitle:@"保养维护" forState:(UIControlStateNormal)];
-        [self.maintenanceButton addTarget:self action:@selector(maintenanceAction) forControlEvents:(UIControlEventTouchUpInside)];
-        
-        [self.productButton setTitle:@"商品" forState:(UIControlStateNormal)];
-        [self.productButton addTarget:self action:@selector(productAction) forControlEvents:(UIControlEventTouchUpInside)];
-        
-        
-        [self.carInfoButton setTitle:@"车辆信息" forState:(UIControlStateNormal)];
-        [self.carInfoButton addTarget:self action:@selector(carInfoAction) forControlEvents:(UIControlEventTouchUpInside)];
+        [self.maintenanceButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+        [self.productButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+        [self.carInfoButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
         
     }
     

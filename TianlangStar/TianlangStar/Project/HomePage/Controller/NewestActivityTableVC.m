@@ -7,6 +7,8 @@
 //
 
 #import "NewestActivityTableVC.h"
+#import "NewestListCell.h"
+#import "NewestActivityDetailTableVC.h"
 
 @interface NewestActivityTableVC ()
 
@@ -18,6 +20,8 @@
     [super viewDidLoad];
 
     self.title = @"最新活动";
+    
+    self.tableView.rowHeight = 0.8 * (0.3 * KScreenWidth) + 2 * Klength5;
 }
 
 
@@ -30,34 +34,46 @@
 
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+// 分区数
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 1;
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+// 行数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return 10;
 }
 
 
+
+#pragma mark - 加载单元格
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     static NSString *identifier = @"cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    NewestListCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (cell == nil)
     {
         
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
+        cell = [[NewestListCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
         
     }
     
-    cell.textLabel.text = @"abc";
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     return cell;
 }
 
+
+
+#pragma mark - 点击单元格选中
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NewestActivityDetailTableVC *newestActivityDetailTableVC = [[NewestActivityDetailTableVC alloc] initWithStyle:(UITableViewStylePlain)];
+    [self.navigationController pushViewController:newestActivityDetailTableVC animated:YES];
+}
 
 
 
