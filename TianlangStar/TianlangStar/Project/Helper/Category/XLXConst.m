@@ -33,14 +33,15 @@ CGFloat const BtncornerRadius = 8.f;
 
 
 
-
 /** 图片和网址前段 - 云服务器 */
 //NSString const *URL = @"http://117.34.105.4:32106/carservice/";
 //NSString const *picURL = @"http://117.34.105.4:32106/";
 
 
+
 /* 图片和网址前段 - 本地 */
 NSString const *URL = @"http://192.168.1.100:8080/carservice/";
 NSString const *picURL = @"http://192.168.1.100:8080/";
+
 
 
