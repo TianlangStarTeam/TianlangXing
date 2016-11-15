@@ -7,7 +7,7 @@
 //
 
 #import "RootVC.h"
-#import "HomePageVC.h"
+#import "HomePageTableVC.h"
 #import "TLStarVC.h"
 #import "ShoppingCartVC.h"
 #import "MineVC.h"
@@ -33,7 +33,7 @@
 - (void)setTabBarController
 {
     // 首页
-    HomePageVC *homeVC = [[HomePageVC alloc] init];
+    HomePageTableVC *homeVC = [[HomePageTableVC alloc] initWithStyle:(UITableViewStylePlain)];
     CarsNav *homeNC = [[CarsNav alloc] initWithRootViewController:homeVC];
     [homeNC.tabBarItem setImage:[UIImage imageNamed:@"homePage_normal"]];
     [homeNC.tabBarItem setSelectedImage:[UIImage imageNamed:@"homePage_selected"]];
@@ -75,7 +75,7 @@
     self.viewControllers = @[homeNC,tlStarNC,shoppingCartNC,mineNC];
     self.tabBar.tintColor = [UIColor colorWithRed:0.993 green:0.673 blue:0.156 alpha:1.000];
     
-    homeVC.view.backgroundColor = [UIColor orangeColor];
+//    homeVC.view.backgroundColor = [UIColor orangeColor];
     tlStarVC.view.backgroundColor = [UIColor orangeColor];
     shoppingCartVC.view.backgroundColor = [UIColor orangeColor];
 //    mineVC.view.backgroundColor = [UIColor orangeColor];
