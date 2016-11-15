@@ -19,7 +19,7 @@
 /** 商品的名称 */
 @property (nonatomic,copy) NSString *productname;
 
-/** 商品的名称 */
+/** 库存量 */
 @property (nonatomic,assign) NSInteger inventory;
 
 /** 商品的图片地址 */
@@ -31,7 +31,29 @@
 /** 服务 */
 @property (nonatomic,copy) NSString *services;
 
+/**  */
+/** 车牌号 */
+@property (nonatomic,copy) NSString *carid;
 
+/** 车的品牌 */
+@property (nonatomic,copy) NSString *brand;
+
+/** 车的类型 */
+@property (nonatomic,copy) NSString *cartype;
+
+/** 车的型号 */
+@property (nonatomic,copy) NSString *model;
+
+/** 购买年份 */
+@property (nonatomic,copy) NSString *buytime;
+
+/** 保险id */
+@property (nonatomic,assign) NSInteger insuranceid;
 
 
 @end
+
+
+
+
+
