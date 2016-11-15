@@ -7,8 +7,30 @@
 //
 
 #import "UserCommonView.h"
+#import "AdminInfoTVC.h"
+#import "GeneralUserInfoTVC.h"
+
+@interface UserCommonView()
+
+/** 导航控制器 */
+@property (nonatomic,strong) UINavigationController *nav;
+
+@end
+
 
 @implementation UserCommonView
+
+
+-(UINavigationController *)nav
+{
+    if (!_nav)
+    {
+        UITabBarController *tableBar = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        _nav = (UINavigationController *)tableBar.selectedViewController;
+        
+    }
+    return _nav;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -21,6 +43,9 @@
         CGFloat headerPicY = Klength20;
         CGFloat headerPicHeight = headerPicWidth;
         self.headerPic = [[UIImageView alloc] initWithFrame:CGRectMake(headerPicX, headerPicY, headerPicWidth, headerPicHeight)];
+        self.headerPic.userInteractionEnabled = YES;
+        UIGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editInfoAction)];
+        [self.headerPic addGestureRecognizer:tap];
         [self addSubview:self.headerPic];
         
         
@@ -153,6 +178,32 @@
 - (void)scoreButtonAction
 {
     YYLog(@"积分");
+}
+
+
+
+-(void)editInfoAction
+{
+    GeneralUserInfoTVC *vc = [[GeneralUserInfoTVC alloc] init];
+    [self.nav pushViewController:vc animated:YES];
+    
+    return;
+    UserInfo *userInfo = [UserInfo sharedUserInfo];
+    if (userInfo.userType == 1 || userInfo.userType == 0)//老板
+    {
+        AdminInfoTVC *vc = [[AdminInfoTVC alloc] init];
+        [self.nav pushViewController:vc animated:YES];
+        
+    }else if (userInfo.userType == 2)//普通用户
+    {
+        GeneralUserInfoTVC *vc = [[GeneralUserInfoTVC alloc] init];
+        [self.nav pushViewController:vc animated:YES];
+    }
+    
+    
+    
+    
+
 }
 
 
