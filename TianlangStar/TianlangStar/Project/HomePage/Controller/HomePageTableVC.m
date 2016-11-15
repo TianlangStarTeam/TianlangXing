@@ -80,10 +80,9 @@
          
      } failure:^(NSError *error) {
          
-         YYLog(@"%@",error);
+         YYLog(@"获取所有商品列表错误%@",error);
          
      }];
-
 }
 
 
