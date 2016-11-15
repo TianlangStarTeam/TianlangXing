@@ -40,7 +40,7 @@ typedef enum : NSUInteger {
 
 
 /** 相册的控制器 */
-@property (nonatomic,strong) UIImagePickerController *imagePicker;
+//@property (nonatomic,strong) UIImagePickerController *imagePicker;
 
 @end
 
@@ -231,18 +231,18 @@ typedef enum : NSUInteger {
 // 获取照相机图片
 - (void)getCameraImage
 {
-    self.imagePicker = [[UIImagePickerController alloc] init];
-    [self.imagePicker setSourceType:(UIImagePickerControllerSourceTypeCamera)];
-    self.imagePicker.delegate = self;
-    [self presentViewController:self.imagePicker animated:YES completion:nil];
+    UIImagePickerController *CameraImage = [[UIImagePickerController alloc] init];
+    [CameraImage setSourceType:(UIImagePickerControllerSourceTypeCamera)];
+    CameraImage.delegate = self;
+    [self presentViewController:CameraImage animated:YES completion:nil];
 }
 // 获取相册图片
 - (void)getPhotoLibraryImage
 {
-    self.imagePicker = [[UIImagePickerController alloc] init];
-    [self.imagePicker setSourceType:(UIImagePickerControllerSourceTypePhotoLibrary)];
-    self.imagePicker.delegate = self;
-    [self presentViewController:self.imagePicker animated:YES completion:nil];
+    UIImagePickerController *imgC = [[UIImagePickerController alloc] init];
+    [imgC setSourceType:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)];
+    imgC.delegate = self;
+    [self presentViewController:imgC animated:YES completion:nil];
     
 }
 
@@ -251,6 +251,7 @@ typedef enum : NSUInteger {
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     UIImage *image = info[UIImagePickerControllerOriginalImage];
+    YYLog(@"image----%@",image);
     self.headerImg = image;
     
     [self dismissViewControllerAnimated:YES completion:nil];
