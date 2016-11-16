@@ -186,7 +186,7 @@
 {
     GeneralUserInfoTVC *vc = [[GeneralUserInfoTVC alloc] init];
     [self.nav pushViewController:vc animated:YES];
-    
+
     return;
     UserInfo *userInfo = [UserInfo sharedUserInfo];
     if (userInfo.userType == 1 || userInfo.userType == 0)//老板

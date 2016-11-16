@@ -75,14 +75,13 @@
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     UserInfo *userInfo = [UserInfo sharedUserInfo];
     parmas[@"sessionId"] = userInfo.RSAsessionId;
-    parmas[@"userid"] = userInfo.userID;
+    //    parmas[@"userid"] = userInfo.userID;
     
     NSString *url = [NSString stringWithFormat:@"%@getuserinfoserlvet",URL];
     
     
     [HttpTool post:url parmas:parmas success:^(id json)
      {
-         
          self.userModel = [UserModel mj_objectWithKeyValues:json[@"obj"]];
          YYLog(@"%@",json);
          
@@ -92,7 +91,6 @@
      {
          YYLog(@"%@",error);
      }];
-    
 }
 
 
@@ -318,6 +316,7 @@
         self.userInfoType = indexPath.row;
         cell.textField.tag = self.userInfoType;
         cell.textField.enabled = self.inputEnble;
+        cell.textField.textAlignment = NSTextAlignmentRight;
         
         //设置数据
         switch (self.userInfoType)
@@ -398,7 +397,7 @@
     
     if (indexPath.section == 0)
     {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"更改图像" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
                           {
@@ -485,7 +484,23 @@
     
     if (self.headerImg)
     {
+        NSString *oldheaderpic = nil;
+        //传入为空的话
+        if (self.userModel.headimage.length != 0 || self.userModel.headimage != nil)
+        {
+            NSRange rangge = [self.userModel.headimage rangeOfString:@"picture"];
+            
+            if (rangge.length !=0)
+            {
+                oldheaderpic = [self.userModel.headimage substringFromIndex:rangge.location];
+            }
+            
+            
+        };
+        parmas[@"oldheaderpic"] = oldheaderpic;
         NSString *url = [NSString stringWithFormat:@"%@upload/updateowninfoforheadservlet",URL];
+        YYLog(@"parmas----%@",parmas);
+        
         [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
          {
              NSData *data = UIImageJPEGRepresentation(self.headerImg, 0.5);

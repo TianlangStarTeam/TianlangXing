@@ -94,11 +94,12 @@
     return group.header;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    ILSettingGroup *group = self.dataList[section];
-    return group.footer;
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+//{
+//    
+//    ILSettingGroup *group = self.dataList[section];
+//    return group.footer;
+//}
 #warning 点击某一行cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
