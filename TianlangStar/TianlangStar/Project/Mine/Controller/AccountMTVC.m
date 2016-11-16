@@ -10,6 +10,7 @@
 #import "InputCell.h"
 #import "UserModel.h"
 #import "UserHeaderImageCell.h"
+#import "ResetPasword.h"
 
 
 
@@ -198,7 +199,7 @@
 {
     if (!_leftArr)
     {
-        _leftArr = @[@"姓名",@"性别",@"手机号",@"身份证",@"住址",@"级别",@"推荐人",@"备注"];
+        _leftArr = @[@"姓名",@"性别",@"手机号",@"身份证",@"住址",@"级别",@"推荐人",@"备注",@"重置密码"];
     }
     return _leftArr;
 }
@@ -286,7 +287,15 @@
         cell.textField.placeholder = @"请输入";
         self.userInfoType = indexPath.row;
         cell.textField.tag = self.userInfoType;
-        cell.textField.enabled = NO;
+        cell.textField.enabled = self.inputEnble;
+        cell.textField.textAlignment = NSTextAlignmentRight;
+
+        if (indexPath.row == 8)
+        {
+            cell.textField.placeholder = nil;
+            cell.textField.enabled = NO;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
         
         //设置数据
         switch (self.userInfoType)
@@ -296,8 +305,7 @@
                 break;
             case telephone:
             {
-                cell.textField.text = self.userModel.telephone;
-                cell.textField.enabled = self.inputEnble;
+                cell.textField.text = self.userModel.username;
                 break;
             }
             case sex://性别
@@ -317,14 +325,13 @@
             {
                 NSString *vip = [NSString VIPis:self.userModel.viplevel];
                 cell.textField.text = vip;
-                cell.textField.enabled = self.inputEnble;
                 break;
             }
             case referee://推荐人
-                cell.textField.text = self.userModel.address;
+                cell.textField.text = self.userModel.referee;
                 break;
             case description://备注
-                cell.textField.text = self.userModel.address;
+                cell.textField.text = self.userModel.describe;
                 break;
                 
                 
@@ -339,6 +346,51 @@
         return cell;
     }
     
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1 && indexPath.row == 8)
+    {
+        ResetPasword *reset = [[ResetPasword alloc] init];
+        [self.navigationController pushViewController:reset animated:YES];
+    }
+    
+    
+    if (!self.inputEnble) return;
+    
+    if (indexPath.section == 0)
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                          {
+                              [self getPhotoLibraryImage];
+                          }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                          {
+                              [self getCameraImage];
+                          }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action)
+                          {
+                              YYLog(@"取消");
+                          }]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+    if (indexPath.section == 1 && indexPath.row == 1)
+    {
+        self.coverView.hidden = NO;
+        self.contentView.hidden = NO;
+        self.tableView.tableFooterView.hidden = YES;
+        return;
+    }
+    
+
+
+
 }
 
 
@@ -405,30 +457,108 @@
 {
     
 //判断输入数据是否正确
-   
     if (![self.userModel.username isMobileNumber])
     {
         [[AlertView sharedAlertView] addAlertMessage:@"手机号输入有误，请核对" title:@"提示"];
         return;
     }
     
+    
+    //手机号
+    if (![self.userModel.username isMobileNumber])
+    {
+        [[AlertView sharedAlertView] addAlertMessage:@"手机号输入有误，请核对！" title:@"提示"];
+        return;
+    }
+    
+//    //身份证
+//    if (![self.userModel.identity isIdentityCardNo])
+//    {
+//        [[AlertView sharedAlertView] addAlertMessage:@"身份证号输入有误，请核对！" title:@"提示"];
+//        return;
+//    }
+
+    
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
-    
     parmas[@"id"] = self.userModel.ID;
     parmas[@"username"] = self.userModel.username;
     parmas[@"viplevel"] = @(self.userModel.viplevel);
+    parmas[@"membername"] = self.userModel.membername;
+    parmas[@"sex"] = @(self.userModel.sex);
+    parmas[@"identity"] = self.userModel.identity;
+    parmas[@"address"] = self.userModel.address;
+    parmas[@"referee"] = self.userModel.referee;
+    parmas[@"description"] = self.userModel.describe;
+    
+    
+    
+    if (self.headerImg)
+    {
+
+    NSString *oldheaderpic = nil;
+    //传入为空的话
+    if (self.userModel.headimage.length != 0 || self.userModel.headimage != nil)
+    {
+        NSRange rangge = [self.userModel.headimage rangeOfString:@"picture"];
+        
+        if (rangge.length != 0) {
+        
+        oldheaderpic = [self.userModel.headimage substringFromIndex:rangge.location];
+        }
+    };
+    parmas[@"oldheaderpic"] = oldheaderpic;
+    
+        NSString * url = [NSString stringWithFormat:@"%@upload/updateaccountinfoservlet",URL];
+    
     YYLog(@"修改账户信息---parmas---%@",parmas);
     
-    NSString * url = [NSString stringWithFormat:@"%@updateaccountinfoservlet",URL];
+    [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+     {
+         NSData *data = UIImageJPEGRepresentation(self.headerImg, 0.5);
+         //拼接data
+         [formData appendPartWithFileData:data name:@"headimage" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+         
+     } progress:^(NSProgress * _Nonnull uploadProgress) {
+         
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+         
+         
+         YYLog(@"responseObject---%@",responseObject);
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         YYLog(@"error---%@",error);
+     }];
+        
+    }else//不带图片的请求
+    {
+        NSString * url = [NSString stringWithFormat:@"%@updateaccountinfonoheadservlet",URL];
     
     [HttpTool post:url parmas:parmas success:^(id json)
      {
-         YYLog(@"修改用户信息json--%@",json);
+         
+         YYLog(@"不带图片-json---%@",json);
+         
      } failure:^(NSError *error)
      {
-         YYLog(@"修改用户信息error--%@",error);
+         YYLog(@"error----%@",error);
+         
      }];
+    
+    }
+    
+
+    
+    
+    
+    
+//    [HttpTool post:url parmas:parmas success:^(id json)
+//     {
+//         YYLog(@"修改用户信息json--%@",json);
+//     } failure:^(NSError *error)
+//     {
+//         YYLog(@"修改用户信息error--%@",error);
+//     }];
 }
 
 
@@ -447,8 +577,17 @@
         case telephone:
             self.userModel.username = textField.text;
             break;
+        case identity:
+            self.userModel.identity = textField.text;
+            break;
         case address:
             self.userModel.address = textField.text;
+            break;
+        case referee:
+            self.userModel.referee = textField.text;
+            break;
+        case description:
+            self.userModel.describe = textField.text;
             break;
         default:
             break;
@@ -478,29 +617,29 @@
 -(void)addAlertVip
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"请选择会员级别" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"1" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    [alert addAction:[UIAlertAction actionWithTitle:@"LV.1" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
                       {
                           self.userModel.viplevel = 1;
                           [self.tableView reloadData];
                           
                       }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"2" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    [alert addAction:[UIAlertAction actionWithTitle:@"LV.2" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
                       {
                           self.userModel.viplevel = 2;
                           [self.tableView reloadData];
                       }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"3" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    [alert addAction:[UIAlertAction actionWithTitle:@"LV.3" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
                       {
                           self.userModel.viplevel = 3;
                           [self.tableView reloadData];
                           
                       }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"4" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    [alert addAction:[UIAlertAction actionWithTitle:@"LV.4" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
                       {
                           self.userModel.viplevel = 4;
                           [self.tableView reloadData];
                       }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"5" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    [alert addAction:[UIAlertAction actionWithTitle:@"LV.5" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
                       {
                           self.userModel.viplevel = 5;
                           [self.tableView reloadData];

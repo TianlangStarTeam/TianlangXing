@@ -27,7 +27,6 @@
 /** 用户类型选中的枚举 */
 @property (nonatomic,assign) UserInfoType userInfoType;
 
-
 /** 标记输入框是否可用 */
 @property (nonatomic,assign) BOOL inputEnble;
 
@@ -157,7 +156,6 @@
     self.seletedSexButton = button;
     self.tableView.tableFooterView.hidden = NO;
     [self.tableView reloadData];
-    //    [self sendAFN];
 }
 
 
@@ -184,7 +182,7 @@
     //刷新数据
     [self.tableView reloadData];
     
-    if (self.inputEnble == YES)//是显示完成
+    if (self.inputEnble == NO)//是显示完成
     {
         [self updataUserInfo];
     }
@@ -218,11 +216,23 @@
     parmas[@"identity"] = self.userModel.identity;
     parmas[@"address"] = self.userModel.address;
     
-    YYLog(@"parmas------%@",parmas);
-
     if (self.headerImg)
     {
+        NSString *oldheaderpic = nil;
+        //传入为空的话
+        if (self.userModel.headimage.length != 0 || self.userModel.headimage != nil)
+        {
+            NSRange rangge = [self.userModel.headimage rangeOfString:@"picture"];
+            
+            if (rangge.length !=0)
+            {
+                oldheaderpic = [self.userModel.headimage substringFromIndex:rangge.location];
+            }
+        };
+        parmas[@"oldheaderpic"] = oldheaderpic;
         NSString *url = [NSString stringWithFormat:@"%@upload/updateowninfoforheadservlet",URL];
+        YYLog(@"parmas----%@",parmas);
+        
         [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
          {
              NSData *data = UIImageJPEGRepresentation(self.headerImg, 0.5);
@@ -242,7 +252,9 @@
     }
     else
     {
-        NSString *url = [NSString stringWithFormat:@"%@updateowninfoservlet",URL];
+//        NSString *url = [NSString stringWithFormat:@"%@updateowninfoservlet",URL];
+        
+        NSString *url = [NSString stringWithFormat:@"%@upload/updateuserinfoservlet",URL];
         [HttpTool post:url parmas:parmas success:^(id json)
          {
             YYLog(@"json---%@",json);
@@ -265,22 +277,23 @@
 }
 
 //获取用户的数据信息
+#pragma mark======获取当前用户数据===================
 -(void)loadUserInfo
 {
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     UserInfo *userInfo = [UserInfo sharedUserInfo];
     parmas[@"sessionId"] = userInfo.RSAsessionId;
-    parmas[@"userid"] = userInfo.userID;
+//    parmas[@"userid"] = userInfo.userID;
     
     NSString *url = [NSString stringWithFormat:@"%@getuserinfoserlvet",URL];
     
     
     [HttpTool post:url parmas:parmas success:^(id json)
     {
-        
        self.userModel = [UserModel mj_objectWithKeyValues:json[@"obj"]];
-        YYLog(@"%@",json);
         
+        YYLog(@"%@",json);
+
         [self.tableView reloadData];
 
     } failure:^(NSError *error)
@@ -352,6 +365,7 @@
         self.userInfoType = indexPath.row;
         cell.textField.tag = self.userInfoType;
         cell.textField.enabled = self.inputEnble;
+        cell.textField.textAlignment = NSTextAlignmentRight;
         
         //设置数据
         switch (self.userInfoType)
@@ -421,7 +435,7 @@
     if (indexPath.section == 0)
     {
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"更改图像" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
                           {

@@ -68,8 +68,8 @@
     
     
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
-//    group0.header = @"设置";
-//    group0.footer = @"设置foot";
+    group0.header = @"设置";
+    group0.footer = @"设置foot";
     group0.items = @[version,cache,contact,opinion];
     
     [self.dataList addObject:group0];

@@ -35,6 +35,9 @@
 /** 单元格的左边的数组显示 */
 @property (nonatomic,strong) NSArray *leftTitleArr;
 
+/** 顶部的信息 */
+@property (nonatomic,strong) UserCommonView *userCommonView;
+
 @end
 
 @implementation MineVC
@@ -62,8 +65,13 @@
             userCommonViewHeight = Klength20 + 0.23 * KScreenWidth + Klength10 + Klength30 + Klength10 + Klength30 + Klength30;
         }
         
-        UserCommonView *userCommonView = [[UserCommonView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, userCommonViewHeight)];
-        self.tableView.tableHeaderView = userCommonView;
+        if (!self.userCommonView)
+        {
+            
+            UserCommonView *userCommonView = [[UserCommonView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, userCommonViewHeight)];
+            self.userCommonView = userCommonView;
+        }
+        self.tableView.tableHeaderView = self.userCommonView;
     }
 }
 
@@ -155,7 +163,7 @@
     
     ILSettingArrowItem *SalesStatistics = [ILSettingArrowItem itemWithIcon:nil title:@"入库登记" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"会员管理" destVcClass:[AccountInfoListTVC class]];
+    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"会员信息管理" destVcClass:[AccountInfoListTVC class]];
     
     ILSettingArrowItem *informationRelease = [ILSettingArrowItem itemWithIcon:nil title:@"车辆管理" destVcClass:[UserInfoManagementTVC class]];
     
