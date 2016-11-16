@@ -279,7 +279,7 @@
     {
         static NSString *identifier1 = @"cell1";
         
-        self.cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
+        self.cell = [tableView cellForRowAtIndexPath:indexPath];
         
         if (self.cell == nil)
         {
