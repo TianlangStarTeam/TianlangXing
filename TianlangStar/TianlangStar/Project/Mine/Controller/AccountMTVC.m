@@ -12,6 +12,7 @@
 #import "UserHeaderImageCell.h"
 #import "ResetPasword.h"
 
+#import "AddCarTableVC.h"
 
 
 @interface AccountMTVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -221,6 +222,9 @@
 
 -(void)addBtnClick
 {
+    AddCarTableVC *addCarTableVC = [[AddCarTableVC alloc] initWithStyle:(UITableViewStyleGrouped)];
+    addCarTableVC.userid = [self.userModel.ID integerValue];
+    [self.navigationController pushViewController:addCarTableVC animated:YES];
     YYLog(@"按钮+");
 }
 

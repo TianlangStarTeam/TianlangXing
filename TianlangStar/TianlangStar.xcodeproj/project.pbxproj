@@ -14,6 +14,11 @@
 		711EFA381DD98D63006AEF9E /* NewestListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA371DD98D63006AEF9E /* NewestListCell.m */; };
 		711EFA3B1DD9995A006AEF9E /* NewestActivityDetailTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA3A1DD9995A006AEF9E /* NewestActivityDetailTableVC.m */; };
 		711EFA3E1DD9BAD7006AEF9E /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA3D1DD9BAD7006AEF9E /* ProductCell.m */; };
+		711EFA411DDAD80F006AEF9E /* AddCarTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA401DDAD80F006AEF9E /* AddCarTableVC.m */; };
+		711EFA441DDAE116006AEF9E /* LabelTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA431DDAE116006AEF9E /* LabelTextFieldCell.m */; };
+		711EFA471DDB0090006AEF9E /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA461DDB0090006AEF9E /* PictureCell.m */; };
+		711EFA4A1DDBFE99006AEF9E /* CarDetailInfoTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA491DDBFE99006AEF9E /* CarDetailInfoTableVC.m */; };
+		711EFA4D1DDC02F3006AEF9E /* ChekinCarInfoTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA4C1DDC02F3006AEF9E /* ChekinCarInfoTableVC.m */; };
 		714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 714BFDE51DCC80D1002F2042 /* CollectionModel.m */; };
 		717D0D831DC0B5620036D5F4 /* RegistVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 717D0D821DC0B5620036D5F4 /* RegistVC.m */; };
 		71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A40D801DD47EFA00335660 /* TestInterfaceVC.m */; };
@@ -121,6 +126,16 @@
 		711EFA3A1DD9995A006AEF9E /* NewestActivityDetailTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewestActivityDetailTableVC.m; sourceTree = "<group>"; };
 		711EFA3C1DD9BAD7006AEF9E /* ProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductCell.h; path = TianlangStar/Project/HomePage/Controller/ProductCell.h; sourceTree = SOURCE_ROOT; };
 		711EFA3D1DD9BAD7006AEF9E /* ProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductCell.m; path = TianlangStar/Project/HomePage/Controller/ProductCell.m; sourceTree = SOURCE_ROOT; };
+		711EFA3F1DDAD80F006AEF9E /* AddCarTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCarTableVC.h; sourceTree = "<group>"; };
+		711EFA401DDAD80F006AEF9E /* AddCarTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCarTableVC.m; sourceTree = "<group>"; };
+		711EFA421DDAE116006AEF9E /* LabelTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelTextFieldCell.h; path = TianlangStar/Project/HomePage/Controller/LabelTextFieldCell.h; sourceTree = SOURCE_ROOT; };
+		711EFA431DDAE116006AEF9E /* LabelTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelTextFieldCell.m; path = TianlangStar/Project/HomePage/Controller/LabelTextFieldCell.m; sourceTree = SOURCE_ROOT; };
+		711EFA451DDB0090006AEF9E /* PictureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PictureCell.h; path = TianlangStar/Project/HomePage/Controller/PictureCell.h; sourceTree = SOURCE_ROOT; };
+		711EFA461DDB0090006AEF9E /* PictureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PictureCell.m; path = TianlangStar/Project/HomePage/Controller/PictureCell.m; sourceTree = SOURCE_ROOT; };
+		711EFA481DDBFE99006AEF9E /* CarDetailInfoTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarDetailInfoTableVC.h; sourceTree = "<group>"; };
+		711EFA491DDBFE99006AEF9E /* CarDetailInfoTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarDetailInfoTableVC.m; sourceTree = "<group>"; };
+		711EFA4B1DDC02F3006AEF9E /* ChekinCarInfoTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChekinCarInfoTableVC.h; sourceTree = "<group>"; };
+		711EFA4C1DDC02F3006AEF9E /* ChekinCarInfoTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChekinCarInfoTableVC.m; sourceTree = "<group>"; };
 		714BFDE41DCC80D1002F2042 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
 		714BFDE51DCC80D1002F2042 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		717D0D811DC0B5620036D5F4 /* RegistVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistVC.h; sourceTree = "<group>"; };
@@ -529,6 +544,12 @@
 				711EFA311DD96718006AEF9E /* NewestActivityTableVC.m */,
 				711EFA391DD9995A006AEF9E /* NewestActivityDetailTableVC.h */,
 				711EFA3A1DD9995A006AEF9E /* NewestActivityDetailTableVC.m */,
+				711EFA3F1DDAD80F006AEF9E /* AddCarTableVC.h */,
+				711EFA401DDAD80F006AEF9E /* AddCarTableVC.m */,
+				711EFA481DDBFE99006AEF9E /* CarDetailInfoTableVC.h */,
+				711EFA491DDBFE99006AEF9E /* CarDetailInfoTableVC.m */,
+				711EFA4B1DDC02F3006AEF9E /* ChekinCarInfoTableVC.h */,
+				711EFA4C1DDC02F3006AEF9E /* ChekinCarInfoTableVC.m */,
 				71A40D7F1DD47EFA00335660 /* TestInterfaceVC.h */,
 				71A40D801DD47EFA00335660 /* TestInterfaceVC.m */,
 				717D0D811DC0B5620036D5F4 /* RegistVC.h */,
@@ -555,6 +576,10 @@
 			children = (
 				711EFA331DD96912006AEF9E /* HomePageSelectCell.h */,
 				711EFA341DD96912006AEF9E /* HomePageSelectCell.m */,
+				711EFA421DDAE116006AEF9E /* LabelTextFieldCell.h */,
+				711EFA431DDAE116006AEF9E /* LabelTextFieldCell.m */,
+				711EFA451DDB0090006AEF9E /* PictureCell.h */,
+				711EFA461DDB0090006AEF9E /* PictureCell.m */,
 				711EFA3C1DD9BAD7006AEF9E /* ProductCell.h */,
 				711EFA3D1DD9BAD7006AEF9E /* ProductCell.m */,
 				711EFA361DD98D63006AEF9E /* NewestListCell.h */,
@@ -1012,6 +1037,8 @@
 				71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */,
 				D705CF211DC09C6400F65BE0 /* RSA.m in Sources */,
 				D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */,
+				711EFA4D1DDC02F3006AEF9E /* ChekinCarInfoTableVC.m in Sources */,
+				711EFA471DDB0090006AEF9E /* PictureCell.m in Sources */,
 				D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */,
 				D71F66B41DCC289E000A6861 /* CarInputCell.m in Sources */,
 				D71F66C01DCC5E0D000A6861 /* CarModel.m in Sources */,
@@ -1019,8 +1046,10 @@
 				D71D845D1DD30C3600E75A8B /* AboutSettingTVC.m in Sources */,
 				D7DC69881DC8425A004C67F5 /* UserInfoManagementTVC.m in Sources */,
 				D705CF1D1DC09C6400F65BE0 /* AppDelegate.m in Sources */,
+				711EFA4A1DDBFE99006AEF9E /* CarDetailInfoTableVC.m in Sources */,
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
 				D705CF271DC09C6400F65BE0 /* UITextField+extension.m in Sources */,
+				711EFA441DDAE116006AEF9E /* LabelTextFieldCell.m in Sources */,
 				D728670E1DCB144800D77B38 /* ILSettingCell.m in Sources */,
 				D71394281DD5D13600FFFE84 /* FeedbackModel.m in Sources */,
 				D771343B1DCDE29100B3B9C6 /* ResetPasword.m in Sources */,
@@ -1030,6 +1059,7 @@
 				71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */,
 				D71F66B71DCC3773000A6861 /* ILSettingTextFieldItem.m in Sources */,
 				D728670D1DCB144800D77B38 /* ILSettingItem.m in Sources */,
+				711EFA411DDAD80F006AEF9E /* AddCarTableVC.m in Sources */,
 				D71394161DD56E7300FFFE84 /* MembersTVC.m in Sources */,
 				D71394191DD5A37100FFFE84 /* AccountMTVC.m in Sources */,
 				D71394251DD5CEF000FFFE84 /* AdminFeedbackTVC.m in Sources */,

@@ -47,11 +47,10 @@ singleton_interface(AlertView);
 - (void)addAlertMessage:(NSString *)message title:(NSString *)title okAction:(UIAlertAction *)okAction;
 
 
+- (void)addAlertMessage:(NSString *)message title:(NSString *)title cancleAction:(UIAlertAction *)cancleAction okAction:(UIAlertAction *)okAction;
 
 
-
-
-
+- (void)addAlertMessage:(NSString *)message title:(NSString *)title cancleAction:(UIAlertAction *)cancleAction photoLibraryAction:(UIAlertAction *)photoLibraryAction cameraAction:(UIAlertAction *)cameraAction;
 
 
 

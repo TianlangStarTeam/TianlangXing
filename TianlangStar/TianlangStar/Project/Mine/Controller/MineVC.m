@@ -27,6 +27,9 @@
 #import "MyCollectionTableVC.h"
 #import "AccountInfoListTVC.h"
 
+
+#import "CarDetailInfoTableVC.h"
+
 @interface MineVC ()<LoginViewDelegate>
 
 /** 公钥 */
@@ -128,7 +131,7 @@
     ILSettingArrowItem *pointsFor = [ILSettingArrowItem itemWithIcon:nil title:@"积分兑换" destVcClass:[UserInfoManagementTVC class]];
     
     
-    ILSettingArrowItem *account = [ILSettingArrowItem itemWithIcon:nil title:@"账户管理" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *account = [ILSettingArrowItem itemWithIcon:nil title:@"账户管理" destVcClass:[CarDetailInfoTableVC class]];
     
     ILSettingArrowItem *Insurance = [ILSettingArrowItem itemWithIcon:nil title:@"保单" destVcClass:[UserInfoManagementTVC class]];
     

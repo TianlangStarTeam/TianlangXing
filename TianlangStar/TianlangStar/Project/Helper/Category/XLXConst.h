@@ -50,19 +50,6 @@ UIKIT_EXTERN NSString const *picURL;
 
 
 
-/** 车辆信息录入和添加 */
-typedef enum : NSUInteger {
-    carid = 0,
-    brand =1,
-    model = 2,
-    cartype = 3,
-    frameid =4,
-    engineid = 5,
-    buytime = 6,
-    insuranceid =7,
-    insurancetime = 8,
-    commercialtime = 9,
-} CarInfoType;
 
 /** 个人信息修改 */
 typedef enum : NSUInteger {

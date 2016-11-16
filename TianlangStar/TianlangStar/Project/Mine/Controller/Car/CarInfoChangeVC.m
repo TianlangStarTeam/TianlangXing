@@ -42,7 +42,7 @@
 
 
 /** 记录用户年月入日期选择器 */
-@property (nonatomic,assign) CarInfoType selectData;
+@property (nonatomic,assign) CarInfo selectData;
 
 
 
