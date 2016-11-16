@@ -8,6 +8,7 @@
 
 #import "AddCarInfo.h"
 #import "CarInputCell.h"
+#import "PictureCell.h"
 #import "CarModel.h"
 
 @interface AddCarInfo ()<UITextFieldDelegate>
@@ -39,8 +40,9 @@
 
 
 /** 记录用户年月入日期选择器 */
-@property (nonatomic,assign) CarInfoType selectData;
+@property (nonatomic,assign) CheckinCar selectData;
 
+@property (nonatomic,strong) UIImage *carImage;
 
 @end
 
@@ -227,65 +229,154 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 1;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return self.rightArr.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return self.rightArr.count;
+    }
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.carImage)
+    {
+        if (indexPath.section == 0)
+        {
+            return 0.3 * KScreenHeight + 2 * Klength5;
+        }
+        
+        return 40;
+    }
+    
+    return 40;
+}
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CarInputCell *cell = [CarInputCell cellWithTableView:tableView];
-    
-    NSString *name = self.rightArr[indexPath.row];
-    NSString *nameInput = [NSString stringWithFormat:@"请输入%@",name];
-    cell.textField.placeholder = nameInput;
-
-    cell.textLabel.text = name;
-    self.selectData = indexPath.row;
-    cell.textField.tag = self.selectData;;
-    cell.textField.delegate = self;
-    
-    switch (self.selectData)
+    if (indexPath.section == 0)
     {
-        case buytime:
+        if (self.carImage)
         {
-            if (self.buytime)
-            {
-                cell.textField.text = self.buytime;
-            }
-            break;
-        }
-        case insurancetime:
-        {
-            if (self.insuranceid)
-            {
-                cell.textField.text = self.insuranceid;
-            }
-            break;
-        }
-        case commercialtime:
-        {
-            if (self.commercialtime)
-            {
-                cell.textField.text = self.commercialtime;
-            }
-            break;
-        }
+            static NSString *identifier0 = @"cell0";
             
-        default:
-            break;
+            PictureCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier0];
+            
+            if (cell == nil)
+            {
+                
+                cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier0];
+                
+            }
+            
+            cell.pictureView.image = self.carImage;
+            
+            return cell;
+        }
+        else
+        {
+            static NSString *identifier = @"cell";
+            
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            
+            if (cell == nil)
+            {
+                
+                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
+                
+            }
+            
+            cell.textLabel.text = @"上传照片";
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            
+            return cell;
+        }
     }
-
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
-
-    return cell;
+    else
+    {
+        CarInputCell *cell = [CarInputCell cellWithTableView:tableView];
+        
+        NSString *name = self.rightArr[indexPath.row];
+        NSString *nameInput = [NSString stringWithFormat:@"请输入%@",name];
+        cell.textField.placeholder = nameInput;
+        
+        cell.textLabel.text = name;
+        self.selectData = indexPath.row;
+        cell.textField.tag = self.selectData;;
+        cell.textField.delegate = self;
+        
+        switch (self.selectData)
+        {
+            case buytime:
+            {
+                if (self.buytime)
+                {
+                    cell.textField.text = self.buytime;
+                }
+                break;
+            }
+            case insurancetime:
+            {
+                if (self.insuranceid)
+                {
+                    cell.textField.text = self.insuranceid;
+                }
+                break;
+            }
+            case commercialtime:
+            {
+                if (self.commercialtime)
+                {
+                    cell.textField.text = self.commercialtime;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
+        
+        return cell;
+    }
 }
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0)
+    {
+        UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+        
+        UIAlertAction *photoLibraryAction = [UIAlertAction actionWithTitle:@"从相册获取" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
+                                             {
+                                                 [self getPhotoLibraryImage];
+                                             }];
+        
+        UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
+                                       {
+                                           [self getCameraImage];
+                                       }];
+        
+        [[AlertView sharedAlertView] addAlertMessage:nil title:nil cancleAction:cancleAction photoLibraryAction:photoLibraryAction cameraAction:cameraAction];
+    }
+}
+
+
+
 
 
 //拖动是退出键盘
@@ -300,7 +391,7 @@
 //保存用户输入的信息
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-//    self.textArr[textField.tag] = textField.text;
+    self.textArr[textField.tag] = textField.text;
     
     switch (textField.tag) {
         case carid:
@@ -321,9 +412,9 @@
         case engineid:
             self.carInfo.engineid = textField.text;
             break;
-//        case 6:
-//            self.carInfo.buytime = textField.text;
-//            break;
+        case 6:
+            self.carInfo.buytime = textField.text;
+            break;
         case insuranceid:
             self.carInfo.insuranceid = textField.text;
             break;
