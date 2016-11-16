@@ -64,6 +64,21 @@ typedef enum : NSUInteger {
     commercialtime = 9,
 } CarInfoType;
 
+/** 个人信息修改 */
+typedef enum : NSUInteger {
+    membername = 0,
+    sex =1,
+    telephone = 2,
+    identity = 3,
+    address =4,
+    viplevel = 5,
+    referee = 6,
+    description =7,
+    //    insurancetime = 8,
+    //    commercialtime = 9,
+} UserInfoType;
+
+
 
 
 

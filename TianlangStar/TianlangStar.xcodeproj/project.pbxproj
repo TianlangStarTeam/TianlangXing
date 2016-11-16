@@ -52,6 +52,7 @@
 		D705CF311DC09C6400F65BE0 /* ShoppingCartVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CF141DC09C6400F65BE0 /* ShoppingCartVC.m */; };
 		D705CF321DC09C6400F65BE0 /* TLStarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CF1A1DC09C6400F65BE0 /* TLStarVC.m */; };
 		D705CF351DC09CBB00F65BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CF331DC09CBB00F65BE0 /* Main.storyboard */; };
+		D71112C71DDADDF000EF8B5C /* AdminInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D71112C61DDADDF000EF8B5C /* AdminInfoTVC.m */; };
 		D71394161DD56E7300FFFE84 /* MembersTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D71394151DD56E7300FFFE84 /* MembersTVC.m */; };
 		D71394191DD5A37100FFFE84 /* AccountMTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D71394181DD5A37100FFFE84 /* AccountMTVC.m */; };
 		D713941F1DD5B64500FFFE84 /* InputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D713941E1DD5B64500FFFE84 /* InputCell.m */; };
@@ -73,6 +74,7 @@
 		D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867091DCB144800D77B38 /* ILSettingSwitchItem.m */; };
 		D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867121DCB154C00D77B38 /* FeedbackVC.m */; };
 		D728671B1DCB33BE00D77B38 /* CarsNav.m in Sources */ = {isa = PBXBuildFile; fileRef = D728671A1DCB33BE00D77B38 /* CarsNav.m */; };
+		D72D0BED1DDB19C400AA8B06 /* GeneralUserInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72D0BEC1DDB19C400AA8B06 /* GeneralUserInfoTVC.m */; };
 		D735EAFE1DD075790051D8E7 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D735EAFD1DD075790051D8E7 /* HttpTool.m */; };
 		D735EB041DD087500051D8E7 /* ProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D735EB031DD087500051D8E7 /* ProductModel.m */; };
 		D744546E1DC0A4E3008B5E27 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D744546D1DC0A4E3008B5E27 /* LoginVC.m */; };
@@ -197,6 +199,8 @@
 		D705CF191DC09C6400F65BE0 /* TLStarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLStarVC.h; sourceTree = "<group>"; };
 		D705CF1A1DC09C6400F65BE0 /* TLStarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLStarVC.m; sourceTree = "<group>"; };
 		D705CF341DC09CBB00F65BE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D71112C51DDADDF000EF8B5C /* AdminInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdminInfoTVC.h; path = TianlangStar/Project/Mine/View/UserView/AdminInfoTVC.h; sourceTree = SOURCE_ROOT; };
+		D71112C61DDADDF000EF8B5C /* AdminInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdminInfoTVC.m; path = TianlangStar/Project/Mine/View/UserView/AdminInfoTVC.m; sourceTree = SOURCE_ROOT; };
 		D71394141DD56E7300FFFE84 /* MembersTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTVC.h; sourceTree = "<group>"; };
 		D71394151DD56E7300FFFE84 /* MembersTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTVC.m; sourceTree = "<group>"; };
 		D71394171DD5A37100FFFE84 /* AccountMTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountMTVC.h; sourceTree = "<group>"; };
@@ -239,6 +243,8 @@
 		D72867121DCB154C00D77B38 /* FeedbackVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackVC.m; sourceTree = "<group>"; };
 		D72867191DCB33BE00D77B38 /* CarsNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsNav.h; sourceTree = "<group>"; };
 		D728671A1DCB33BE00D77B38 /* CarsNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsNav.m; sourceTree = "<group>"; };
+		D72D0BEB1DDB19C400AA8B06 /* GeneralUserInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeneralUserInfoTVC.h; path = TianlangStar/Project/Mine/View/UserView/GeneralUserInfoTVC.h; sourceTree = SOURCE_ROOT; };
+		D72D0BEC1DDB19C400AA8B06 /* GeneralUserInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeneralUserInfoTVC.m; path = TianlangStar/Project/Mine/View/UserView/GeneralUserInfoTVC.m; sourceTree = SOURCE_ROOT; };
 		D735EAFB1DD063E60051D8E7 /* TianlangStar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TianlangStar.entitlements; sourceTree = "<group>"; };
 		D735EAFC1DD075790051D8E7 /* HttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpTool.h; sourceTree = "<group>"; };
 		D735EAFD1DD075790051D8E7 /* HttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpTool.m; sourceTree = "<group>"; };
@@ -322,6 +328,10 @@
 		71A40D851DD5ABB300335660 /* BossVC */ = {
 			isa = PBXGroup;
 			children = (
+				D71112C51DDADDF000EF8B5C /* AdminInfoTVC.h */,
+				D71112C61DDADDF000EF8B5C /* AdminInfoTVC.m */,
+				D72D0BEB1DDB19C400AA8B06 /* GeneralUserInfoTVC.h */,
+				D72D0BEC1DDB19C400AA8B06 /* GeneralUserInfoTVC.m */,
 			);
 			path = BossVC;
 			sourceTree = "<group>";
@@ -1054,9 +1064,11 @@
 				D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */,
 				71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */,
 				711EFA351DD96912006AEF9E /* HomePageSelectCell.m in Sources */,
+				D72D0BED1DDB19C400AA8B06 /* GeneralUserInfoTVC.m in Sources */,
 				D728670C1DCB144800D77B38 /* ILSettingGroup.m in Sources */,
 				711EFA381DD98D63006AEF9E /* NewestListCell.m in Sources */,
 				D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */,
+				D71112C71DDADDF000EF8B5C /* AdminInfoTVC.m in Sources */,
 				D705CF281DC09C6400F65BE0 /* UIView+XMGExtension.m in Sources */,
 				D705CF261DC09C6400F65BE0 /* UITableViewCell+AdjustHeight.m in Sources */,
 				D754A53E1DD9563300C79616 /* AccountInfoListTVC.m in Sources */,

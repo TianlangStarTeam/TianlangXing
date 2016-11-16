@@ -1,20 +1,17 @@
 //
-//  AccountTVC.m
+//  generalUserInfoTVC.m
 //  TianlangStar
 //
-//  Created by youyousiji on 16/11/11.
+//  Created by youyousiji on 16/11/15.
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
-#import "AccountMTVC.h"
+#import "GeneralUserInfoTVC.h"
 #import "InputCell.h"
 #import "UserModel.h"
 #import "UserHeaderImageCell.h"
 
-#import "AddCarTableVC.h"
-
-
-@interface AccountMTVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface GeneralUserInfoTVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 /** 单元格的数组 */
 @property (nonatomic,strong) NSArray *leftArr;
@@ -41,10 +38,15 @@
 @property (nonatomic,strong) UIButton *seletedSexButton;
 
 
+/** 用户模型数据 */
+@property (nonatomic,strong) UserModel *userModel;
+
 
 @end
 
-@implementation AccountMTVC
+@implementation GeneralUserInfoTVC
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,18 +54,49 @@
     self.inputEnble = NO;
     
     self.title =@"会员管理";
-
+    
     YYLog(@"userModel----%@",self.userModel);
+    
+    
+    [self loadUserInfo];
     
     [self addfooter];
     
     [self setupControl];
     
     [self addRightBar];
+}
+
+
+//获取用户的数据信息
+#pragma mark---------初始化数据===============
+-(void)loadUserInfo
+{
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    UserInfo *userInfo = [UserInfo sharedUserInfo];
+    parmas[@"sessionId"] = userInfo.RSAsessionId;
+    parmas[@"userid"] = userInfo.userID;
+    
+    NSString *url = [NSString stringWithFormat:@"%@getuserinfoserlvet",URL];
+    
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         
+         self.userModel = [UserModel mj_objectWithKeyValues:json[@"obj"]];
+         YYLog(@"%@",json);
+         
+         [self.tableView reloadData];
+         
+     } failure:^(NSError *error)
+     {
+         YYLog(@"%@",error);
+     }];
     
 }
 
-#pragma mark===== 初始化性别选则的弹出框===================
+
+
 -(void)setupControl
 {
     //设置遮盖
@@ -163,9 +196,6 @@
 }
 
 
-
-
-#pragma mark  ===========添加右上角的按钮==========
 -(void)addRightBar
 {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
@@ -183,7 +213,7 @@
     self.inputEnble = !button.selected;
     
     button.selected = !button.selected;
-    
+  
     //刷新数据
     [self.tableView reloadData];
     
@@ -221,9 +251,6 @@
 
 -(void)addBtnClick
 {
-    AddCarTableVC *addCarTableVC = [[AddCarTableVC alloc] initWithStyle:(UITableViewStyleGrouped)];
-    addCarTableVC.userid = [self.userModel.ID integerValue];
-    [self.navigationController pushViewController:addCarTableVC animated:YES];
     YYLog(@"按钮+");
 }
 
@@ -234,7 +261,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    
     return 2;
 }
 
@@ -250,11 +277,11 @@
         case 1:
             count = self.leftArr.count;;
             break;
-
+            
         default:
             break;
     }
-
+    
     return count;
 }
 
@@ -277,7 +304,7 @@
             [cell.headerPic sd_setImageWithURL:[NSURL URLWithString:self.userModel.headimage] placeholderImage:[UIImage imageNamed:@"touxiang"]];
         }
         
-
+        
         return cell;
         
     }else if (indexPath.section == 1)
@@ -290,7 +317,7 @@
         cell.textField.placeholder = @"请输入";
         self.userInfoType = indexPath.row;
         cell.textField.tag = self.userInfoType;
-        cell.textField.enabled = NO;
+        cell.textField.enabled = self.inputEnble;
         
         //设置数据
         switch (self.userInfoType)
@@ -298,10 +325,10 @@
             case membername://姓名
                 cell.textField.text = self.userModel.membername;
                 break;
-            case telephone:
+            case telephone://手机号
             {
                 cell.textField.text = self.userModel.telephone;
-                cell.textField.enabled = self.inputEnble;
+                cell.textField.enabled = NO;
                 break;
             }
             case sex://性别
@@ -321,14 +348,14 @@
             {
                 NSString *vip = [NSString VIPis:self.userModel.viplevel];
                 cell.textField.text = vip;
-                cell.textField.enabled = self.inputEnble;
+                cell.textField.enabled = NO;
                 break;
             }
             case referee://推荐人
-                cell.textField.text = self.userModel.address;
+                cell.textField.text = self.userModel.referee;
                 break;
             case description://备注
-                cell.textField.text = self.userModel.address;
+                cell.textField.text = self.userModel.describe;
                 break;
                 
                 
@@ -354,14 +381,40 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     
     if (indexPath.section == 0)
     {
         return 100;
     }else
     {
-    return 40;
+        return 40;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.inputEnble) return;
+    
+    if (indexPath.section == 0)
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"更改图像" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                          {
+                              [self getPhotoLibraryImage];
+                          }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                          {
+                              [self getCameraImage];
+                          }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action)
+                          {
+                              YYLog(@"取消");
+                          }]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
@@ -393,7 +446,7 @@
     self.headerImg = image;
     YYLog(@"self.headerImg--%@",self.headerImg);
     
-//    [picker dismissViewControllerAnimated:YES completion:nil];
+    //    [picker dismissViewControllerAnimated:YES completion:nil];
     [picker dismissViewControllerAnimated:YES completion:^{
         [self.tableView reloadData];
     }];
@@ -408,31 +461,61 @@
 -(void)updataUserInfo
 {
     
-//判断输入数据是否正确
-   
-    if (![self.userModel.username isMobileNumber])
+    
+    //判断输入数据是否正确
+    
+    if (![self.userModel.identity isIdentityCardNo])
     {
-        [[AlertView sharedAlertView] addAlertMessage:@"手机号输入有误，请核对" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"身份证输入有误，请核对" title:@"提示"];
         return;
     }
     
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
     
-    parmas[@"id"] = self.userModel.ID;
-    parmas[@"username"] = self.userModel.username;
-    parmas[@"viplevel"] = @(self.userModel.viplevel);
-    YYLog(@"修改账户信息---parmas---%@",parmas);
+    parmas[@"membername"] = self.userModel.membername;
+    parmas[@"sex"] = @(self.userModel.sex);
+    parmas[@"username"] = self.userModel.telephone;
+    parmas[@"identity"] = self.userModel.identity;
+    parmas[@"address"] = self.userModel.address;
+    parmas[@"referee"] = self.userModel.referee;
+    parmas[@"description"] = self.userModel.describe;
     
-    NSString * url = [NSString stringWithFormat:@"%@updateaccountinfoservlet",URL];
+    YYLog(@"parmas------%@",parmas);
     
-    [HttpTool post:url parmas:parmas success:^(id json)
-     {
-         YYLog(@"修改用户信息json--%@",json);
-     } failure:^(NSError *error)
-     {
-         YYLog(@"修改用户信息error--%@",error);
-     }];
+    if (self.headerImg)
+    {
+        NSString *url = [NSString stringWithFormat:@"%@upload/updateowninfoforheadservlet",URL];
+        [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+         {
+             NSData *data = UIImageJPEGRepresentation(self.headerImg, 0.5);
+             //拼接data
+             [formData appendPartWithFileData:data name:@"headimage" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+             
+         } progress:^(NSProgress * _Nonnull uploadProgress) {
+             
+         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+             
+             
+             YYLog(@"responseObject---%@",responseObject);
+             
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             YYLog(@"error---%@",error);
+         }];
+    }
+    else
+    {
+        NSString *url = [NSString stringWithFormat:@"%@updateowninfoservlet",URL];
+        [HttpTool post:url parmas:parmas success:^(id json)
+         {
+             YYLog(@"json---%@",json);
+         } failure:^(NSError *error)
+         {
+             YYLog(@"error--%@",error);
+         }];
+    }
+
+
 }
 
 
@@ -448,18 +531,28 @@
         case membername:
             self.userModel.membername = textField.text;
             break;
-        case telephone:
-            self.userModel.username = textField.text;
+//        case telephone:
+//            self.userModel.membername = textField.text;
+//            break;
+        case identity:
+            self.userModel.identity = textField.text;
             break;
         case address:
             self.userModel.address = textField.text;
             break;
+        case referee:
+            self.userModel.referee = textField.text;
+            break;
+        case description:
+            self.userModel.describe = textField.text;
+            break;
         default:
             break;
     }
-    YYLog(@"%@",textField.text);
 }
 
+
+//设置性别的输入框选择事件
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if (textField.tag == sex)
@@ -470,56 +563,11 @@
         return;
     }
     
-    if (textField.tag == viplevel)
-    {
-        [self addAlertVip];
-    }
 }
 
 
 
-#pragma mark=============用户等级的弹出及数据处理=================
--(void)addAlertVip
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"请选择会员级别" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"1" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                      {
-                          self.userModel.viplevel = 1;
-                          [self.tableView reloadData];
-                          
-                      }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"2" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                      {
-                          self.userModel.viplevel = 2;
-                          [self.tableView reloadData];
-                      }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"3" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                      {
-                          self.userModel.viplevel = 3;
-                          [self.tableView reloadData];
-                          
-                      }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"4" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                      {
-                          self.userModel.viplevel = 4;
-                          [self.tableView reloadData];
-                      }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"5" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                      {
-                          self.userModel.viplevel = 5;
-                          [self.tableView reloadData];
-                      }]];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                      {
-                          
-                      }]];
-    [self presentViewController:alert animated:YES completion:^{
-    }];
-}
-
-
-
 
 
 @end

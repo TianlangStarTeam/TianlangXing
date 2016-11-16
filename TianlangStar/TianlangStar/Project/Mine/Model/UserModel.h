@@ -33,6 +33,9 @@
 /**用户是否被停用(0->false,1->true) */
 @property (nonatomic,assign) BOOL isstop; //bu tong
 
+/** 推荐人 */
+@property (nonatomic,copy) NSString *referee;
+
 
 /** 上次修改时间 */
 @property (nonatomic,copy) NSString *lasttime;

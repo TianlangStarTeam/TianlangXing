@@ -32,8 +32,9 @@
         self.leftLable = leftLable;
         [self.contentView addSubview:leftLable];
         
-
         UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(KScreenWidth * 0.55, 10, 80, 80)];
+        img.layer.cornerRadius = img.width / 2;
+        img.layer.masksToBounds = YES;
         self.headerPic = img;
         
         [self.contentView addSubview:img];
