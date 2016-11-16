@@ -149,6 +149,28 @@ singleton_implementation(AlertView);
 
 
 
+- (void)addAlertMessage:(NSString *)message title:(NSString *)title cancleAction:(UIAlertAction *)cancleAction okAction:(UIAlertAction *)okAction
+{
+    self.alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:(UIAlertControllerStyleAlert)];
+    [self.alert addAction:cancleAction];
+    [self.alert addAction:okAction];
+    [self.rootVC presentViewController:self.alert animated:YES completion:nil];
+}
+
+
+
+- (void)addAlertMessage:(NSString *)message title:(NSString *)title cancleAction:(UIAlertAction *)cancleAction photoLibraryAction:(UIAlertAction *)photoLibraryAction cameraAction:(UIAlertAction *)cameraAction
+{
+    self.alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:(UIAlertControllerStyleActionSheet)];
+    
+    [self.alert addAction:photoLibraryAction];
+    [self.alert addAction:cameraAction];
+    [self.alert addAction:cancleAction];
+    
+    [self.rootVC presentViewController:self.alert animated:YES completion:nil];
+}
+
+
 @end
 
 

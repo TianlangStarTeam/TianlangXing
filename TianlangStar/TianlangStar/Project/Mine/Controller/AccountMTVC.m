@@ -11,6 +11,7 @@
 #import "UserModel.h"
 #import "UserHeaderImageCell.h"
 
+#import "AddCarTableVC.h"
 
 /** 车辆信息录入和添加 */
 typedef enum : NSUInteger {
@@ -79,6 +80,9 @@ typedef enum : NSUInteger {
 
 -(void)addBtnClick
 {
+    AddCarTableVC *addCarTableVC = [[AddCarTableVC alloc] initWithStyle:(UITableViewStyleGrouped)];
+    addCarTableVC.userid = [self.userModel.ID integerValue];
+    [self.navigationController pushViewController:addCarTableVC animated:YES];
     YYLog(@"按钮+");
 }
 
