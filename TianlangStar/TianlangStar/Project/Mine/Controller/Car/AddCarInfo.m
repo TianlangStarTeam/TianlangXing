@@ -11,7 +11,22 @@
 #import "PictureCell.h"
 #import "CarModel.h"
 
-@interface AddCarInfo ()<UITextFieldDelegate>
+/** 车辆信息录入和添加 */
+typedef enum : NSUInteger {
+    carid = 0,
+    brand,
+    model,
+    cartype,
+    frameid,
+    engineid,
+    buytime,
+    insuranceid,
+    insurancetime,
+    commercialtime
+} CheckinCar;
+
+
+@interface AddCarInfo ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 /** 单元格左侧的描述 */
 @property (nonatomic,strong) NSArray *rightArr;
@@ -375,6 +390,41 @@
     }
 }
 
+
+
+// 获取照相机图片
+- (void)getCameraImage
+{
+    UIImagePickerController *CameraImage = [[UIImagePickerController alloc] init];
+    [CameraImage setSourceType:(UIImagePickerControllerSourceTypeCamera)];
+    CameraImage.delegate = self;
+    [self presentViewController:CameraImage animated:YES completion:nil];
+}
+// 获取相册图片
+- (void)getPhotoLibraryImage
+{
+    UIImagePickerController *imgC = [[UIImagePickerController alloc] init];
+    [imgC setSourceType:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)];
+    imgC.delegate = self;
+    [self presentViewController:imgC animated:YES completion:nil];
+    
+}
+
+
+// 从照片中获取调用的方法
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    YYLog(@"image----%@",image);
+    self.carImage = image;
+    
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    
+    [self.tableView reloadData];
+    //    });
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 
