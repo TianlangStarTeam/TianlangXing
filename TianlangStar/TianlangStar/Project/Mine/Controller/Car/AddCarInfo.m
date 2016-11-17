@@ -240,7 +240,7 @@ typedef enum : NSUInteger {
     params[@"cartype"] = self.carModel.cartype;
     params[@"frameid"] = self.carModel.frameid;
     params[@"engineid"] = self.carModel.engineid;
-    params[@"buytime"] = self.carModel.buytime;
+    params[@"buytime"] = self.buytime;
     params[@"insuranceid"] = self.carModel.insuranceid;
     params[@"insurancetime"] = self.carModel.insurancetime;
     params[@"commercialtime"] = self.carModel.commercialtime;

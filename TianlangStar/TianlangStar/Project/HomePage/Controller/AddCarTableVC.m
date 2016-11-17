@@ -53,6 +53,18 @@
 
 
 
+- (CarModel *)carModel
+{
+    if (!_carModel)
+    {
+        _carModel = [[CarModel alloc] init];
+    }
+    
+    return _carModel;
+}
+
+
+
 - (NSArray *)leftLabelArray
 {
     if (!_leftLabelArray)
@@ -61,18 +73,6 @@
     }
     
     return _leftLabelArray;
-}
-
-
-
-- (NSArray *)rightTextField
-{
-    if (!_rightPlaceholder)
-    {
-        _rightPlaceholder = @[@"请输入车辆类型",@"请输入品牌",@"型号",@"请输入车牌号",@"请输入购买年份",@"请输入车架号",@"请输入发动机号码"];
-    }
-    
-    return _rightPlaceholder;
 }
 
 
@@ -116,65 +116,58 @@
 {
     [self.view endEditing:YES];
     
-    if (self.cell.rightTF.text != nil || self.cell.rightTF.text.length != 0)
-    {
-        NSString *url = [NSString stringWithFormat:@"%@upload/carinforegistservlet",URL];
-        
-        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        
-        NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
-        parameters[@"sessionId"] = sessionid;
-        parameters[@"userid"] = [NSString stringWithFormat:@"%ld",self.userid];
-        
-        parameters[@"cartype"] = self.carModel.cartype;
-        parameters[@"brand"] = self.carModel.brand;
-        parameters[@"model"] = self.carModel.model;
-        parameters[@"carid"] = self.carModel.carid;
-        parameters[@"buytime"] = self.carModel.buytime;
-        parameters[@"frameid"] = self.carModel.frameid;
-        parameters[@"engineid"] = self.carModel.engineid;
+    NSString *url = [NSString stringWithFormat:@"%@upload/carinforegistservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"userid"] = [NSString stringWithFormat:@"%ld",self.userid];
+    
+    parameters[@"cartype"] = self.carModel.cartype;
+    parameters[@"brand"] = self.carModel.brand;
+    parameters[@"model"] = self.carModel.model;
+    parameters[@"carid"] = self.carModel.carid;
+    parameters[@"buytime"] = self.carModel.buytime;
+    parameters[@"frameid"] = self.carModel.frameid;
+    parameters[@"engineid"] = self.carModel.engineid;
 
-        YYLog(@"添加爱车的参数%@",parameters);
-        
-        if (self.carModel.cartype == nil || self.carModel.brand == nil || self.carModel.model == nil || self.carModel.carid == nil || self.carModel.buytime == nil || self.carModel.frameid == nil || self.carModel.engineid == nil)
-        {
-            [[AlertView sharedAlertView] addAfterAlertMessage:@"请完整填写车辆信息" title:@"提示"];
-        }
-        else
-        {
-            [[AFHTTPSessionManager manager] POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
-             {
-                 NSData *data = UIImageJPEGRepresentation(self.carImage, 0.5);
-                 
-                 if (data != nil)
-                 {
-                     [formData appendPartWithFileData:data name:@"picture" fileName:@"img.jpg" mimeType:@"image/jpeg"];
-                 }
-                 
-             } progress:^(NSProgress * _Nonnull uploadProgress) {
-                 
-             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-             {
-                 YYLog(@"添加爱车返回：%@",responseObject);
-                 
-                 NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
-                 
-                 if (resultCode == 1000)
-                 {
-                     [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
-                     [self.navigationController popViewControllerAnimated:YES];
-                     
-                 }
-                 
-             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-             {
-                 YYLog(@"添加爱车错误：%@",error);
-             }];
-        }
+    YYLog(@"添加爱车的参数%@",parameters);
+    
+    if (self.carModel.cartype == nil || self.carModel.brand == nil || self.carModel.model == nil || self.carModel.carid == nil || self.carModel.buytime == nil || self.carModel.frameid == nil || self.carModel.engineid == nil)
+    {
+        [[AlertView sharedAlertView] addAfterAlertMessage:@"请完整填写车辆信息" title:@"提示"];
     }
     else
     {
-        [[AlertView sharedAlertView] addAfterAlertMessage:@"有数据为空" title:@"提示"];
+        [[AFHTTPSessionManager manager] POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+         {
+             NSData *data = UIImageJPEGRepresentation(self.carImage, 0.5);
+             
+             if (data != nil)
+             {
+                 [formData appendPartWithFileData:data name:@"picture" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+             }
+             
+         } progress:^(NSProgress * _Nonnull uploadProgress) {
+             
+         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+         {
+             YYLog(@"添加爱车返回：%@",responseObject);
+             
+             NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+             
+             if (resultCode == 1000)
+             {
+                 [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
+                 [self.navigationController popViewControllerAnimated:YES];
+                 
+             }
+             
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+         {
+             YYLog(@"添加爱车错误：%@",error);
+         }];
     }
 }
 
@@ -194,10 +187,7 @@
     self.buytimeData.hidden = NO;
     self.buytimeData = startDatePicker;
     
-    //计算当前时间
-    NSDate *nowdate = [NSDate date];
-    //限制起始时间为当前时间
-    //    self.insuranceidData.minimumDate = nowdate;
+
     [self.buytimeData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
 
@@ -332,57 +322,58 @@
     }
     else
     {
+        
         static NSString *identifier1 = @"cell1";
         
-        self.cell = [tableView cellForRowAtIndexPath:indexPath];
+        LabelTextFieldCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         
-        if (self.cell == nil)
+        if (cell == nil)
         {
             
-            self.cell = [[LabelTextFieldCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier1];
+            cell = [[LabelTextFieldCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier1];
             
         }
         
-        self.cell.leftLabel.text = _leftLabelArray[indexPath.row];
-        self.cell.rightTF.delegate = self;
+        cell.leftLabel.text = _leftLabelArray[indexPath.row];
+        cell.rightTF.delegate = self;
         
         self.carInfoType = indexPath.row;
-        self.cell.rightTF.tag = self.carInfoType;
+        cell.rightTF.tag = self.carInfoType;
         
         switch (self.carInfoType)
         {
             case cartype:
-                self.cell.rightTF.text = self.carModel.cartype;
+                cell.rightTF.text = self.carModel.cartype;
                 break;
             case brand:
-                self.cell.rightTF.text = self.carModel.brand;
+                cell.rightTF.text = self.carModel.brand;
                 break;
             case model:
-                self.cell.rightTF.text = self.carModel.model;
+                cell.rightTF.text = self.carModel.model;
                 break;
             case carid:
-                self.cell.rightTF.text = self.carModel.carid;
+                cell.rightTF.text = self.carModel.carid;
                 break;
             case buytime:
             {
                 if (self.buytime)
                 {
-                    self.cell.rightTF.text = self.buytime;
+                    cell.rightTF.text = self.buytime;
                 }
-            }
                 break;
+            }
             case frameid:
-                self.cell.rightTF.text = self.carModel.frameid;
+                cell.rightTF.text = self.carModel.frameid;
                 break;
             case engineid:
-                self.cell.rightTF.text = self.carModel.engineid;
+                cell.rightTF.text = self.carModel.engineid;
                 break;
                 
             default:
                 break;
         }
         
-        return self.cell;
+        return cell;
     }
 }
 
@@ -412,9 +403,6 @@
         case carid:
             self.carModel.carid = textField.text;
             break;
-        case 4:
-            self.carModel.buytime = textField.text;
-            break;
         case frameid:
             self.carModel.frameid = textField.text;
             break;
@@ -433,9 +421,12 @@
 {
     if (textField.tag == buytime)
     {
-        textField.inputView = self.buytimeData;
-        self.carInfoType = textField.tag;
-        textField.text = @"请选择日期";
+        if (![textField.text isEqualToString:@"请选择日期"])
+        {
+            textField.inputView = self.buytimeData;
+            self.carInfoType = textField.tag;
+            textField.text = @"请选择日期";
+        }
     }
     else
     {
@@ -497,11 +488,11 @@
     YYLog(@"image----%@",image);
     self.carImage = image;
     
-//    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
     
         [self.tableView reloadData];
     
-//    });
+    });
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
