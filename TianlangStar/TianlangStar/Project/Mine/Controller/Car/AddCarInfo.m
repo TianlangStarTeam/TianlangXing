@@ -477,10 +477,10 @@ typedef enum : NSUInteger {
     YYLog(@"image----%@",image);
     self.carImage = image;
     
-    //    dispatch_async(dispatch_get_main_queue(), ^{
-    
-    [self.tableView reloadData];
-    //    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+       
+        [self.tableView reloadData];
+    });
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

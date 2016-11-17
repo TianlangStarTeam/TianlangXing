@@ -191,6 +191,8 @@
     [self.buytimeData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
 
+
+
 /** 时间选择器的点击事件--较强险提醒日期 */
 -(void)selecStarttDate
 {
@@ -500,6 +502,8 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 @end
 

@@ -40,8 +40,8 @@ CGFloat const BtncornerRadius = 8.f;
 
 
 /* 图片和网址前段 - 本地 */
-NSString const *URL = @"http://192.168.1.116:8080/carservice/";
-NSString const *picURL = @"http://192.168.1.116:8080/";
+NSString const *URL = @"http://192.168.1.104:8080/carservice/";
+NSString const *picURL = @"http://192.168.1.104:8080/";
 
 
 

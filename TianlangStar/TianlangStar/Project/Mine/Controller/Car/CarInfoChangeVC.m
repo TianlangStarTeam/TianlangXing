@@ -13,7 +13,7 @@
 #import "PictureCell.h"
 
 
-@interface CarInfoChangeVC ()<UITextFieldDelegate>
+@interface CarInfoChangeVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 
 /** 单元格左侧的描述 */
@@ -167,11 +167,10 @@
 
 -(void)addFooter
 {
-    UIView *handView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,KScreenWidth, 44)];
+    UIView *handView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,KScreenWidth, 84)];
     self.handButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    self.handButton.frame = CGRectMake(0, 20, KScreenWidth * 0.6, 30);
-    self.handButton.centerX = KScreenWidth * 0.5;
-    //    self.handButton.centerY = handView.height * 0.5;
+    CGFloat handButtonX = KScreenWidth / 2 - KScreenWidth * 0.6 / 2;
+    self.handButton.frame = CGRectMake(handButtonX, 20, KScreenWidth * 0.6, 30);
     [self.handButton setTitle:@"提交" forState:(UIControlStateNormal)];
     self.handButton.backgroundColor = [UIColor orangeColor];
     [self.handButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -183,6 +182,8 @@
     [handView addSubview:self.handButton];
     self.tableView.tableFooterView = handView;
 }
+
+
 
 - (void)handAction:(UIButton *)button
 {
@@ -294,8 +295,15 @@
             cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
         }
         
-        NSString *pic = [NSString stringWithFormat:@"%@%@",picURL,self.carInfo.picture];
-        [cell.pictureView sd_setImageWithURL:[NSURL URLWithString:pic]];
+        if (self.carImage)
+        {
+            cell.pictureView.image = self.carImage;
+        }
+        else
+        {
+            NSString *pic = [NSString stringWithFormat:@"%@%@",picURL,self.carInfo.picture];
+            [cell.pictureView sd_setImageWithURL:[NSURL URLWithString:pic]];
+        }
         
         return cell;
     }
@@ -326,8 +334,56 @@
 {
     if (indexPath.section == 0)
     {
-        YYLog(@"dfxgv");
+        UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+        
+        UIAlertAction *photoLibraryAction = [UIAlertAction actionWithTitle:@"从相册获取" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
+                                             {
+                                                 [self getPhotoLibraryImage];
+                                             }];
+        
+        UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
+                                       {
+                                           [self getCameraImage];
+                                       }];
+        
+        [[AlertView sharedAlertView] addAlertMessage:nil title:nil cancleAction:cancleAction photoLibraryAction:photoLibraryAction cameraAction:cameraAction];
     }
+}
+
+
+
+// 获取照相机图片
+- (void)getCameraImage
+{
+    UIImagePickerController *CameraImage = [[UIImagePickerController alloc] init];
+    [CameraImage setSourceType:(UIImagePickerControllerSourceTypeCamera)];
+    CameraImage.delegate = self;
+    [self presentViewController:CameraImage animated:YES completion:nil];
+}
+// 获取相册图片
+- (void)getPhotoLibraryImage
+{
+    UIImagePickerController *imgC = [[UIImagePickerController alloc] init];
+    [imgC setSourceType:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)];
+    imgC.delegate = self;
+    [self presentViewController:imgC animated:YES completion:nil];
+    
+}
+
+
+// 从照片中获取调用的方法
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    YYLog(@"image----%@",image);
+    self.carImage = image;
+    
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+        [self.tableView reloadData];
+    });
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
