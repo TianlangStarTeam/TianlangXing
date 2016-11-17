@@ -36,6 +36,7 @@
 ///** 较强险的提醒日期 */
 //@property (nonatomic,copy) NSString *commercialtime;
 
+@property (nonatomic,strong) CarModel *carModel;
 
 /** 记录输入框的内容 */
 @property (nonatomic,strong) NSMutableArray *textArr;

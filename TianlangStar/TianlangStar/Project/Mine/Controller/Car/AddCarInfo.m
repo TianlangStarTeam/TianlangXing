@@ -72,8 +72,6 @@ typedef enum : NSUInteger {
 {
     [super viewDidLoad];
     
-    self.carModel = [[CarModel alloc] init];
-    
     [self addFooter];
     
     [self addDatePIcker];
@@ -125,19 +123,19 @@ typedef enum : NSUInteger {
         case buytime://购买日期
         {
             self.buytime=[outputFormatter stringFromDate:self.insuranceidData.date];
-            self.carInfo.buytime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
+            self.carModel.buytime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
         case insurancetime://较强险
         {
             self.insuranceid=[outputFormatter stringFromDate:self.insuranceidData.date];
-            self.carInfo.insurancetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
+            self.carModel.insurancetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
         case commercialtime://商业险
         {
             self.commercialtime=[outputFormatter stringFromDate:self.insuranceidData.date];
-            self.carInfo.commercialtime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
+            self.carModel.commercialtime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
             
@@ -153,13 +151,15 @@ typedef enum : NSUInteger {
 
 }
 
--(CarModel *)carInfo
+
+- (CarModel *)carModel
 {
-    if (_carInfo == nil)
+    if (!_carModel)
     {
-        _carInfo = [[CarModel alloc] init];
+        _carModel = [[CarModel alloc] init];
     }
-    return _carInfo;
+    
+    return _carModel;
 }
 
 
@@ -191,11 +191,10 @@ typedef enum : NSUInteger {
 
 -(void)addFooter
 {
-    UIView *handView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,KScreenWidth, 44)];
+    UIView *handView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 84)];
     self.handButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    self.handButton.frame = CGRectMake(0, 20, KScreenWidth * 0.6, 30);
-    self.handButton.centerX = KScreenWidth * 0.5;
-    //    self.handButton.centerY = handView.height * 0.5;
+    CGFloat handButtonX = KScreenWidth / 2 - KScreenWidth * 0.6 / 2;
+    self.handButton.frame = CGRectMake(handButtonX, 20, KScreenWidth * 0.6, 30);
     [self.handButton setTitle:@"提交" forState:(UIControlStateNormal)];
     self.handButton.backgroundColor = [UIColor orangeColor];
     [self.handButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -216,53 +215,68 @@ typedef enum : NSUInteger {
 {
     [self.view endEditing:YES];
 
-    if (self.carInfo.carid == nil        || self.carInfo.carid.length == 0   ||
-        self.carInfo.brand == nil        || self.carInfo.brand.length == 0   ||
-        self.carInfo.model == nil        || self.carInfo.model.length == 0   ||
-        self.carInfo.cartype == nil      || self.carInfo.cartype.length == 0 ||
-        self.carInfo.frameid == nil      || self.carInfo.frameid.length == 0 ||
-        self.carInfo.engineid == nil     || self.carInfo.engineid.length == 0   ||
-        self.carInfo.buytime == nil      || self.carInfo.buytime.length == 0   ||
-        self.carInfo.insuranceid == nil  || self.carInfo.insuranceid.length == 0 ||
-        self.carInfo.insurancetime == nil || self.carInfo.insurancetime.length == 0||
-        self.carInfo.commercialtime == nil || self.carInfo.commercialtime.length == 0
+    if (self.carModel.carid == nil        || self.carModel.carid.length == 0   ||
+        self.carModel.brand == nil        || self.carModel.brand.length == 0   ||
+        self.carModel.model == nil        || self.carModel.model.length == 0   ||
+        self.carModel.cartype == nil      || self.carModel.cartype.length == 0 ||
+        self.carModel.frameid == nil      || self.carModel.frameid.length == 0 ||
+        self.carModel.engineid == nil     || self.carModel.engineid.length == 0   ||
+        self.carModel.buytime == nil      || self.carModel.buytime.length == 0   ||
+        self.carModel.insuranceid == nil  || self.carModel.insuranceid.length == 0 ||
+        self.carModel.insurancetime == nil || self.carModel.insurancetime.length == 0||
+        self.carModel.commercialtime == nil || self.carModel.commercialtime.length == 0
         )
     {
-        [[AlertView sharedAlertView] addAlertMessage:@"输入框有空，请核对" title:@"提示"];
+        [[AlertView sharedAlertView] addAlertMessage:@"请完整填写车辆信息" title:@"提示"];
         return;
-        
     }
-  
 
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
     params[@"userid"] = [UserInfo sharedUserInfo].userID;
-    params[@"carid"] = self.carInfo.carid;
-    params[@"brand"] = self.carInfo.brand;
-    params[@"model"] = self.carInfo.model;
-    params[@"cartype"] = self.carInfo.cartype;
-    params[@"frameid"] = self.carInfo.frameid;
-    params[@"engineid"] = self.carInfo.engineid;
-    params[@"buytime"] = self.carInfo.buytime;
-    params[@"insuranceid"] = self.carInfo.insuranceid;
-    params[@"insurancetime"] = self.carInfo.insurancetime;
-    params[@"commercialtime"] = self.carInfo.commercialtime;
+    params[@"carid"] = self.carModel.carid;
+    params[@"brand"] = self.carModel.brand;
+    params[@"model"] = self.carModel.model;
+    params[@"cartype"] = self.carModel.cartype;
+    params[@"frameid"] = self.carModel.frameid;
+    params[@"engineid"] = self.carModel.engineid;
+    params[@"buytime"] = self.carModel.buytime;
+    params[@"insuranceid"] = self.carModel.insuranceid;
+    params[@"insurancetime"] = self.carModel.insurancetime;
+    params[@"commercialtime"] = self.carModel.commercialtime;
 
-    NSString *url = [NSString stringWithFormat:@"%@carinforegistservlet",URL];
+    NSString *url = [NSString stringWithFormat:@"%@upload/carinforegistservlet",URL];
     YYLog(@"我的车辆信息登记params----%@",params);
     
-    
-    [HttpTool post:url parmas:params success:^(id json)
-     {
-         YYLog(@"我的车辆信息登记返回：%@",json);
-         
-         [SVProgressHUD showSuccessWithStatus:@"提交成功"];
+    [[AFHTTPSessionManager manager] POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-    } failure:^(NSError *error)
-    {
-         YYLog(@"我的车辆信息登记错误：error----%@",error);
+        NSData *data = UIImageJPEGRepresentation(self.carImage, 0.5);
+        
+        if (data != nil)
+        {
+            [formData appendPartWithFileData:data name:@"picture" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+        }
+
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        YYLog(@"我的车辆信息登记返回：%@",responseObject);
+        
+        NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+        
+        if (resultCode == 1000)
+        {
+            [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        YYLog(@"我的车辆信息登记错误：error----%@",error);
     }];
-  }
+}
+
+
 
 #pragma mark - Table view data source
 
@@ -352,7 +366,9 @@ typedef enum : NSUInteger {
             
         }
         
-        self.cell.leftLabel.width = 130;
+        self.cell.leftLabel.width = 120;
+        self.cell.rightTF.x = Klength15 + self.cell.leftLabel.width + Klength10;
+        self.cell.rightTF.width = KScreenWidth - 2 * Klength15 - self.cell.leftLabel.width - Klength10;
         
         self.cell.leftLabel.text = _leftLabelArray[indexPath.row];
         self.cell.rightTF.delegate = self;
@@ -387,7 +403,7 @@ typedef enum : NSUInteger {
             {
                 if (self.buytime)
                 {
-                    self.cell.rightTF.text = self.carModel.buytime;
+                    self.cell.rightTF.text = self.buytime;
                 }
                 break;
             }
@@ -395,7 +411,7 @@ typedef enum : NSUInteger {
             {
                 if (self.insuranceid)
                 {
-                    self.cell.rightTF.text = self.carModel.insurancetime;
+                    self.cell.rightTF.text = self.insuranceid;
                 }
                 break;
             }
@@ -403,7 +419,7 @@ typedef enum : NSUInteger {
             {
                 if (self.commercialtime)
                 {
-                    self.cell.rightTF.text = self.carModel.commercialtime;
+                    self.cell.rightTF.text = self.commercialtime;
                 }
                 break;
             }
@@ -416,53 +432,6 @@ typedef enum : NSUInteger {
         return self.cell;
     }
 
-    
-//    CarInputCell *cell = [CarInputCell cellWithTableView:tableView];
-//    
-//    NSString *name = self.rightArr[indexPath.row];
-//    NSString *nameInput = [NSString stringWithFormat:@"请输入%@",name];
-//    cell.textField.placeholder = nameInput;
-//
-//    cell.textLabel.text = name;
-//    self.selectData = indexPath.row;
-//    cell.textField.tag = self.selectData;;
-//    cell.textField.delegate = self;
-//    
-//    switch (self.selectData)
-//    {
-//        case buytime:
-//        {
-//            if (self.buytime)
-//            {
-//                cell.textField.text = self.buytime;
-//            }
-//            break;
-//        }
-//        case insurancetime:
-//        {
-//            if (self.insuranceid)
-//            {
-//                cell.textField.text = self.insuranceid;
-//            }
-//            break;
-//        }
-//        case commercialtime:
-//        {
-//            if (self.commercialtime)
-//            {
-//                cell.textField.text = self.commercialtime;
-//            }
-//            break;
-//        }
-//            
-//        default:
-//            break;
-//    }
-//
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
-//
-//    return cell;
 }
 
 
@@ -537,32 +506,32 @@ typedef enum : NSUInteger {
 //保存用户输入的信息
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    self.textArr[textField.tag] = textField.text;
+//    self.textArr[textField.tag] = textField.text;
     
     switch (textField.tag) {
         case carid:
-            self.carInfo.carid = textField.text;
+            self.carModel.carid = textField.text;
             break;
         case brand:
-            self.carInfo.brand = textField.text;
+            self.carModel.brand = textField.text;
             break;
         case model:
-            self.carInfo.model = textField.text;
+            self.carModel.model = textField.text;
             break;
         case cartype:
-            self.carInfo.cartype = textField.text;
+            self.carModel.cartype = textField.text;
             break;
         case frameid:
-            self.carInfo.frameid = textField.text;
+            self.carModel.frameid = textField.text;
             break;
         case engineid:
-            self.carInfo.engineid = textField.text;
+            self.carModel.engineid = textField.text;
             break;
         case 6:
-            self.carInfo.buytime = textField.text;
+            self.carModel.buytime = textField.text;
             break;
         case insuranceid:
-            self.carInfo.insuranceid = textField.text;
+            self.carModel.insuranceid = textField.text;
             break;
             
         default:

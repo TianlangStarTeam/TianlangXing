@@ -29,6 +29,11 @@
 
 @property (nonatomic,assign) CarInfoType carInfoType;
 
+/** 购买日期 --时间戳 */
+@property (nonatomic,strong) UIDatePicker *buytimeData;
+
+@property (nonatomic,copy) NSString *buytime;
+
 @end
 
 @implementation AddCarTableVC
@@ -43,6 +48,7 @@
     
     self.title = @"添加爱车";
     
+    [self addDatePIcker];
 }
 
 
@@ -174,6 +180,55 @@
 
 
 
+/**
+ *  添加时间选择器
+ */
+-(void)addDatePIcker
+{
+    //日期选择器
+    //iphone6/6s
+    UIDatePicker *startDatePicker=[[UIDatePicker alloc]initWithFrame:CGRectMake(0,KScreenHeight ,KScreenWidth, 162)];
+    
+    startDatePicker.datePickerMode=UIDatePickerModeDate;
+    startDatePicker.date=[NSDate date];
+    self.buytimeData.hidden = NO;
+    self.buytimeData = startDatePicker;
+    
+    //计算当前时间
+    NSDate *nowdate = [NSDate date];
+    //限制起始时间为当前时间
+    //    self.insuranceidData.minimumDate = nowdate;
+    [self.buytimeData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
+}
+
+/** 时间选择器的点击事件--较强险提醒日期 */
+-(void)selecStarttDate
+{
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    switch (self.carInfoType)
+    {
+        case buytime://购买日期
+        {
+            self.buytime=[outputFormatter stringFromDate:self.buytimeData.date];
+            self.carModel.buytime = [NSString stringWithFormat:@"%ld", (long)[self.buytimeData.date timeIntervalSince1970]];
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+    //回到主线程刷新数据
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.tableView reloadData];
+    });
+    
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -289,7 +344,6 @@
         }
         
         self.cell.leftLabel.text = _leftLabelArray[indexPath.row];
-        self.cell.rightTF.placeholder = _rightPlaceholder[indexPath.row];
         self.cell.rightTF.delegate = self;
         
         self.carInfoType = indexPath.row;
@@ -310,7 +364,12 @@
                 self.cell.rightTF.text = self.carModel.carid;
                 break;
             case buytime:
-                self.cell.rightTF.text = self.carModel.buytime;
+            {
+                if (self.buytime)
+                {
+                    self.cell.rightTF.text = self.buytime;
+                }
+            }
                 break;
             case frameid:
                 self.cell.rightTF.text = self.carModel.frameid;
@@ -325,6 +384,14 @@
         
         return self.cell;
     }
+}
+
+
+
+//拖动是退出键盘
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
 }
 
 
@@ -345,7 +412,7 @@
         case carid:
             self.carModel.carid = textField.text;
             break;
-        case buytime:
+        case 4:
             self.carModel.buytime = textField.text;
             break;
         case frameid:
@@ -358,6 +425,24 @@
         default:
             break;
     }
+}
+
+
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField.tag == buytime)
+    {
+        textField.inputView = self.buytimeData;
+        self.carInfoType = textField.tag;
+        textField.text = @"请选择日期";
+    }
+    else
+    {
+        [self.buytimeData removeFromSuperview];
+    }
+    
+    return YES;
 }
 
 
@@ -415,6 +500,7 @@
 //    dispatch_async(dispatch_get_main_queue(), ^{
     
         [self.tableView reloadData];
+    
 //    });
     
     [self dismissViewControllerAnimated:YES completion:nil];
