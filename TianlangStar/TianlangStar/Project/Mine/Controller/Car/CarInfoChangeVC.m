@@ -129,7 +129,7 @@
 
 -(NSMutableArray *)textArr
 {
-    if (_textArr == nil)
+    if (!_textArr)
     {
         //购买时间
         NSString *buytime = [self.carInfo.insurancetime getTime];
@@ -220,18 +220,33 @@
     params[@"insurancetime"] = self.carInfo.insurancetime;
     params[@"commercialtime"] = self.carInfo.commercialtime;
     
+    
     NSString *url = [NSString stringWithFormat:@"%@upload/updatecarinfoservlet",URL];
     YYLog(@"params----%@",params);
     
     [[AFHTTPSessionManager manager] POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
     {
-        NSString *pic = [NSString stringWithFormat:@"%@%@",picURL,self.carInfo.picture];
-        UIImage *oldPicture = [UIImage imageNamed:pic];
-        NSData *data = UIImageJPEGRepresentation(oldPicture, 0.5);
+        NSString *oldheaderpic = nil;
+        
+        if (self.carInfo.picture.length != 0 || self.carInfo.picture != nil)
+        {
+            NSRange range = [self.carInfo.picture rangeOfString:@"picture"];
+            
+            if (range.length != 0)
+            {
+                oldheaderpic = [self.carInfo.picture substringFromIndex:range.location];
+            }
+        }
+        
+        YYLog(@"oldheaderpic===%@",oldheaderpic);
+        
+        params[@"oldheaderpic"] = oldheaderpic;
+        
+        NSData *data = UIImageJPEGRepresentation(self.carImage, 0.5);
         
         if (data != nil)
         {
-            [formData appendPartWithFileData:data name:@"oldheaderpic" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:data name:@"picture" fileName:@"img.jpg" mimeType:@"image/jpeg"];
         }
         
     } progress:^(NSProgress * _Nonnull uploadProgress)
@@ -301,7 +316,7 @@
         }
         else
         {
-            NSString *pic = [NSString stringWithFormat:@"%@%@",picURL,self.carInfo.picture];
+            NSString *pic = [NSString stringWithFormat:@"%@",self.carInfo.picture];
             [cell.pictureView sd_setImageWithURL:[NSURL URLWithString:pic]];
         }
         
