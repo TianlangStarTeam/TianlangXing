@@ -9,6 +9,7 @@
 #import "CheckCarInfoTVC.h"
 #import "PictureCell.h"
 #import "LabelTextFieldCell.h"
+#import "CarModel.h"
 
 /** 车辆信息录入和添加 */
 typedef enum : NSUInteger {
@@ -21,7 +22,7 @@ typedef enum : NSUInteger {
     engineid
 } CarInfoType;
 
-@interface CheckCarInfoTVC ()<UITextFieldDelegate>
+@interface CheckCarInfoTVC ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 
 /** 左边的标题栏 */
@@ -37,6 +38,13 @@ typedef enum : NSUInteger {
 @property (nonatomic,assign) CarInfoType carInfoType;
 
 
+/** 设置用户是否可以编辑 */
+@property (nonatomic,assign) BOOL inputEnble;
+
+/** 日期选择器 */
+@property (nonatomic,strong) UIDatePicker *buytimeData;
+
+
 
 
 
@@ -44,12 +52,66 @@ typedef enum : NSUInteger {
 
 @implementation CheckCarInfoTVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    
+    [self addRightBar];
+    
+    [self addDatePIcker];
 
     self.title = @"他的爱车";
+}
+
+
+/**
+ *  添加时间选择器
+ */
+-(void)addDatePIcker
+{
+    //日期选择器
+    //iphone6/6s
+    UIDatePicker *startDatePicker=[[UIDatePicker alloc]initWithFrame:CGRectMake(0,KScreenHeight ,KScreenWidth, 162)];
+    
+    startDatePicker.datePickerMode=UIDatePickerModeDate;
+    startDatePicker.date=[NSDate date];
+    self.buytimeData = startDatePicker;
+    self.buytimeData.hidden = NO;
+    
+    //计算当前时间
+    NSDate *nowdate = [NSDate date];
+    //限制起始时间为当前时间
+    self.buytimeData.maximumDate = nowdate;
+    
+    [self.buytimeData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
+}
+
+/** 时间选择器的点击事件--较强险提醒日期 */
+-(void)selecStarttDate
+{
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    switch (self.carInfoType)
+    {
+        case buytime://购买日期
+        {
+            self.carModel.buytime = [NSString stringWithFormat:@"%ld", (long)[self.buytimeData.date timeIntervalSince1970]];
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+    //回到主线程刷新数据
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.tableView reloadData];
+    });
     
 }
+
 
 
 
@@ -76,81 +138,130 @@ typedef enum : NSUInteger {
 }
 
 
+-(void)addRightBar
+{
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
+    [button setTitle:@"编辑" forState:UIControlStateNormal];
+    [button setTitle:@"保存" forState:UIControlStateSelected];
+    [button addTarget:self action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+}
 
-- (void)finishAction
+-(void)rightBarClick:(UIButton *)button
 {
     [self.view endEditing:YES];
-//    
-//    if (self.cell.rightTF.text != nil || self.cell.rightTF.text.length != 0)
-//    {
-//        NSString *url = [NSString stringWithFormat:@"%@upload/carinforegistservlet",URL];
-//        
-//        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-//        
-//        NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
-//        parameters[@"sessionId"] = sessionid;
-//        parameters[@"userid"] = [NSString stringWithFormat:@"%ld",self.userid];
-//        
-//        parameters[@"cartype"] = self.carModel.cartype;
-//        parameters[@"brand"] = self.carModel.brand;
-//        parameters[@"model"] = self.carModel.model;
-//        parameters[@"carid"] = self.carModel.carid;
-//        parameters[@"buytime"] = self.carModel.buytime;
-//        parameters[@"frameid"] = self.carModel.frameid;
-//        parameters[@"engineid"] = self.carModel.engineid;
-//        
-//        YYLog(@"添加爱车的参数%@",parameters);
-//        
-//        if (self.carModel.cartype == nil || self.carModel.brand == nil || self.carModel.model == nil || self.carModel.carid == nil || self.carModel.buytime == nil || self.carModel.frameid == nil || self.carModel.engineid == nil)
+    
+    self.inputEnble = !button.selected;
+    
+    button.selected = !button.selected;
+    
+    //刷新数据
+    [self.tableView reloadData];
+    
+    if (self.inputEnble == NO)//是显示完成
+    {
+        [self updataUserInfo];
+    }
+}
+
+
+#pragma mark=====更新数据请求=======================
+//更新数据的请求
+-(void)updataUserInfo
+{
+    [self.view endEditing:YES];
+    
+    NSString *url = [NSString stringWithFormat:@"%@upload/updatecarinfoservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    parameters[@"id"] = self.carModel.ID;
+    parameters[@"userid"] = self.carModel.userid;
+    parameters[@"carid"] = self.carModel.carid;
+    parameters[@"brand"] = self.carModel.brand;
+    parameters[@"model"] = self.carModel.model;
+    parameters[@"cartype"] = self.carModel.cartype;
+    parameters[@"frameid"] = self.carModel.frameid;
+    parameters[@"engineid"] = self.carModel.engineid;
+    parameters[@"buytime"] = self.carModel.buytime;
+    
+    YYLog(@"修改爱车的参数%@",parameters);
+    
+    /*
+     String sessionId 用户登录标记
+     String id 车辆信息的标识
+     String userid 用户身份
+     String carid 车牌号
+     String brand 品牌
+     String model 型号
+     String cartype 车型
+     String usertype 使用性质（客运、货运等）
+     String frameid 车架号
+     String engineid 发动机号
+     Long buytime 购买时间
+     String picture车辆照片
+     Double travelmileage 行驶里程（公里）
+     String insuranceid 保险信息
+     Long insurancetime 交强险到期提醒
+     Long commercialtime 商业险到期提醒
+
+     */
+    
+//    if (self.carModel.cartype == nil || self.carModel.brand == nil || self.carModel.model == nil || self.carModel.carid == nil || self.carModel.buytime == nil || self.carModel.frameid == nil || self.carModel.engineid == nil)
 //        {
 //            [[AlertView sharedAlertView] addAfterAlertMessage:@"请完整填写车辆信息" title:@"提示"];
 //            return;
 //        }
-//        else
-//        {
-//            [[AFHTTPSessionManager manager] POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
-//             {
-//                 NSData *data = UIImageJPEGRepresentation(self.carImage, 0.5);
-//                 
-//                 if (data != nil)
-//                 {
-//                     [formData appendPartWithFileData:data name:@"picture" fileName:@"img.jpg" mimeType:@"image/jpeg"];
-//                 }
-//                 
-//             } progress:^(NSProgress * _Nonnull uploadProgress) {
-//                 
-//             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-//             {
-//                 YYLog(@"添加爱车返回：%@",responseObject);
-//                 
-//                 NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
-//                 
-//                 if (resultCode == 1000)
-//                 {
-//                     [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
-//                     [self.navigationController popViewControllerAnimated:YES];
-//                     
-//                 }
-//                 
-//             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-//             {
-//                 YYLog(@"添加爱车错误：%@",error);
-//             }];
-//        }
-//    }
-//    else
-//    {
-//        [[AlertView sharedAlertView] addAfterAlertMessage:@"有数据为空" title:@"提示"];
-//    }
+    
+    
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+     {
+         NSData *data = UIImageJPEGRepresentation(self.carImage, 0.5);
+         
+         if (data != nil)
+         {
+             NSString *oldheaderpic = nil;
+             //传入为空的话
+             if (self.carModel.picture.length != 0 || self.carModel.picture != nil)
+             {
+                 NSRange rangge = [self.carModel.picture rangeOfString:@"picture"];
+                 
+                 if (rangge.length !=0)
+                 {
+                     oldheaderpic = [self.carModel.picture substringFromIndex:rangge.location];
+                 }
+                 parameters[@"oldheaderpic"] = oldheaderpic;
+             }
+             
+             [formData appendPartWithFileData:data name:@"picture" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+         }
+         
+     } progress:^(NSProgress * _Nonnull uploadProgress) {
+         
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         YYLog(@"修改爱车返回：%@",responseObject);
+         
+         NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+         
+         if (resultCode == 1000)
+         {
+             [SVProgressHUD showSuccessWithStatus:@"修改成功！"];
+         }
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         YYLog(@"添加爱车错误：%@",error);
+     }];
+    
+    
+    YYLog(@"parameters----%@",parameters);
 }
 
-
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
@@ -174,17 +285,15 @@ typedef enum : NSUInteger {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.carImage)
-    {
+
         if (indexPath.section == 0)
         {
             return 0.3 * KScreenHeight + 2 * Klength5;
-        }
-        
-        return 40;
-    }
-    
+        }else
+        {
+ 
     return 40;
+        }
 }
 
 
@@ -211,41 +320,25 @@ typedef enum : NSUInteger {
 {
     if (indexPath.section == 0)
     {
+        
+        static NSString *identifier0 = @"cell0";
+        
+        PictureCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier0];
+        
+        if (cell == nil)
+        {
+            cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier0];
+            
+        }
         if (self.carImage)
         {
-            static NSString *identifier0 = @"cell0";
-            
-            PictureCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier0];
-            
-            if (cell == nil)
-            {
-                
-                cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier0];
-                
-            }
-            
             cell.pictureView.image = self.carImage;
-            
-            return cell;
         }
         else
         {
-            static NSString *identifier = @"cell";
-            
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-            
-            if (cell == nil)
-            {
-                
-                cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
-                
-            }
-            
-            cell.textLabel.text = @"上传照片";
-            cell.textLabel.textAlignment = NSTextAlignmentCenter;
-            
-            return cell;
+            [cell.pictureView sd_setImageWithURL:[NSURL URLWithString:self.carModel.picture] placeholderImage:[UIImage imageNamed:@"touxiang"]];
         }
+        return cell;
     }
     else
     {
@@ -264,69 +357,90 @@ typedef enum : NSUInteger {
         
         self.carInfoType = indexPath.row;
         cell.rightTF.tag = self.carInfoType;
+        cell.rightTF.textAlignment = NSTextAlignmentRight;
         
-//        switch (self.carInfoType)
-//        {
-//            case cartype:
-//                cell.rightTF.text = self.carModel.cartype;
-//                break;
-//            case brand:
-//               cell.rightTF.text = self.carModel.brand;
-//                break;
-//            case model:
-//               cell.rightTF.text = self.carModel.model;
-//                break;
-//            case carid:
-//               cell.rightTF.text = self.carModel.carid;
-//                break;
-//            case buytime:
-//               cell.rightTF.text = self.carModel.buytime;
-//                break;
-//            case frameid:
-//               cell.rightTF.text = self.carModel.frameid;
-//                break;
-//            case engineid:
-//               cell.rightTF.text = self.carModel.engineid;
-//                break;
-//                
-//            default:
-//                break;
-//        }
         
+        switch (self.carInfoType)
+        {
+            case cartype:
+                cell.rightTF.text = self.carModel.cartype;
+                break;
+            case brand:
+               cell.rightTF.text = self.carModel.brand;
+                break;
+            case model:
+               cell.rightTF.text = self.carModel.model;
+                break;
+            case carid:
+               cell.rightTF.text = self.carModel.carid;
+                break;
+            case buytime:
+               cell.rightTF.text = [self.carModel.buytime getTime];
+                break;
+            case frameid:
+               cell.rightTF.text = self.carModel.frameid;
+                break;
+            case engineid:
+               cell.rightTF.text = self.carModel.engineid;
+                break;
+                
+            default:
+                break;
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.rightTF.enabled = self.inputEnble;
         return cell;
     }
 }
 
 
 
+
+#pragma mark=====textField 的代理事件处理=============
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField.tag == buytime)
+    {
+        textField.inputView = self.buytimeData;
+        self.carInfoType = textField.tag;
+        textField.text = @"请选择日期";
+    }
+    else
+    {
+        [self.buytimeData removeFromSuperview];
+    }
+    
+    return YES;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     switch (textField.tag)
     {
-//        case cartype:
-//            self.carModel.cartype = textField.text;
-//            break;
-//        case brand:
-//            self.carModel.brand = textField.text;
-//            break;
-//        case model:
-//            self.carModel.model = textField.text;
-//            break;
-//        case carid:
-//            self.carModel.carid = textField.text;
-//            break;
+        case cartype:
+            self.carModel.cartype = textField.text;
+            break;
+        case brand:
+            self.carModel.brand = textField.text;
+            break;
+        case model:
+            self.carModel.model = textField.text;
+            break;
+        case carid:
+            self.carModel.carid = textField.text;
+            break;
 //        case buytime:
 //            self.carModel.buytime = textField.text;
 //            break;
-//        case frameid:
-//            self.carModel.frameid = textField.text;
-//            break;
-//        case engineid:
-//            self.carModel.engineid = textField.text;
-//            break;
-//            
-//        default:
-//            break;
+        case frameid:
+            self.carModel.frameid = textField.text;
+            break;
+        case engineid:
+            self.carModel.engineid = textField.text;
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -336,8 +450,7 @@ typedef enum : NSUInteger {
 {
     if (indexPath.section == 0)
     {
-        
-        
+        if (!self.inputEnble) return;
         UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
         
         UIAlertAction *photoLibraryAction = [UIAlertAction actionWithTitle:@"从相册获取" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
