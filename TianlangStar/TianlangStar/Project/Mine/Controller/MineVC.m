@@ -26,7 +26,7 @@
 #import "UserCommonView.h"
 #import "MyCollectionTableVC.h"
 #import "AccountInfoListTVC.h"
-
+#import "AddCarInfo.h"
 
 #import "CarDetailInfoTableVC.h"
 
@@ -176,7 +176,7 @@
     
     ILSettingArrowItem *InfoRegister = [ILSettingArrowItem itemWithIcon:nil title:@"最新活动" destVcClass:[CarInfoListVC class]];
     
-    ILSettingArrowItem *TopupQuery= [ILSettingArrowItem itemWithIcon:nil title:@"优惠信息" destVcClass:[CarInfoListVC class]];
+    ILSettingArrowItem *TopupQuery= [ILSettingArrowItem itemWithIcon:nil title:@"优惠信息" destVcClass:[AddCarInfo class]];
     
     ILSettingArrowItem *setting = [ILSettingArrowItem itemWithIcon:nil title:@"设置" destVcClass:[AboutSettingTVC class]];
     
