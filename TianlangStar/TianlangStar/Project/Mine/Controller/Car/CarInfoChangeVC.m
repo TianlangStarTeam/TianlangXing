@@ -10,7 +10,7 @@
 #import "CarInputCell.h"
 #import "CarModel.h"
 
-
+#import "PictureCell.h"
 
 
 @interface CarInfoChangeVC ()<UITextFieldDelegate>
@@ -36,7 +36,6 @@
 ///** 较强险的提醒日期 */
 //@property (nonatomic,copy) NSString *commercialtime;
 
-@property (nonatomic,strong) CarModel *carModel;
 
 /** 记录输入框的内容 */
 @property (nonatomic,strong) NSMutableArray *textArr;
@@ -45,7 +44,7 @@
 /** 记录用户年月入日期选择器 */
 @property (nonatomic,assign) CarInfo selectData;
 
-
+@property (nonatomic,strong) UIImage *carImage;
 
 
 @end
@@ -78,12 +77,10 @@
     self.insuranceidData.hidden = NO;
     self.insuranceidData = startDatePicker;
     
-    //计算当前时间
-    NSDate *nowdate = [NSDate date];
-    //限制起始时间为当前时间
-//    self.insuranceidData.minimumDate = nowdate;
     [self.insuranceidData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
+
+
 
 /** 时间选择器的点击事件--较强险提醒日期 */
 -(void)selecStarttDate
@@ -130,15 +127,10 @@
 
 
 
-
-
-
-
 -(NSMutableArray *)textArr
 {
     if (_textArr == nil)
     {
-        
         //购买时间
         NSString *buytime = [self.carInfo.insurancetime getTime];
         //较强险
@@ -153,6 +145,7 @@
 }
 
 
+
 -(NSArray *)rightArr
 {
     if (_rightArr == nil)
@@ -163,10 +156,13 @@
     return _rightArr;
 }
 
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
 }
+
 
 
 -(void)addFooter
@@ -184,7 +180,6 @@
     self.handButton.layer.cornerRadius = 6;
     [self.handButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-//        handView.backgroundColor = [UIColor grayColor];
     [handView addSubview:self.handButton];
     self.tableView.tableFooterView = handView;
 }
@@ -224,59 +219,124 @@
     params[@"insurancetime"] = self.carInfo.insurancetime;
     params[@"commercialtime"] = self.carInfo.commercialtime;
     
-    NSString *url = [NSString stringWithFormat:@"%@updatecarinfoservlet",URL];
+    NSString *url = [NSString stringWithFormat:@"%@upload/updatecarinfoservlet",URL];
     YYLog(@"params----%@",params);
     
-    [HttpTool post:url parmas:params success:^(id json)
-     {
-         [SVProgressHUD showSuccessWithStatus:@"提交成功"];
-         
-     } failure:^(NSError *error)
-     {
-         YYLog(@"error----%@",error);
-     }];
+    [[AFHTTPSessionManager manager] POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+    {
+        NSString *pic = [NSString stringWithFormat:@"%@%@",picURL,self.carInfo.picture];
+        UIImage *oldPicture = [UIImage imageNamed:pic];
+        NSData *data = UIImageJPEGRepresentation(oldPicture, 0.5);
+        
+        if (data != nil)
+        {
+            [formData appendPartWithFileData:data name:@"oldheaderpic" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+        }
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress)
+    {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    {
+        YYLog(@"修改车辆信息返回：%@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    {
+        YYLog(@"修改车辆信息错误：%@",error);
+        
+    }];
 }
-
 
 
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return 1;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return self.rightArr.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+ 
+    if (section == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return self.rightArr.count;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0)
+    {
+        return 0.3 * KScreenHeight + 2 * Klength5;
+    }
+    else
+    {
+        return 40;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CarInputCell *cell = [CarInputCell cellWithTableView:tableView];
-    
-    NSString *name = self.rightArr[indexPath.row];
-    NSString *nameInput = self.textArr[indexPath.row];
-    cell.textField.text = nameInput;
-    
-    cell.textLabel.text = name;
-    
-    self.selectData = indexPath.row;
-    cell.textField.tag = self.selectData;
-    cell.textField.delegate = self;
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
-    
-    return cell;
+    if (indexPath.section == 0)
+    {
+        static NSString *identifier = @"cell";
+        
+        PictureCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        
+        if (cell == nil)
+        {
+            cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier];
+        }
+        
+        NSString *pic = [NSString stringWithFormat:@"%@%@",picURL,self.carInfo.picture];
+        [cell.pictureView sd_setImageWithURL:[NSURL URLWithString:pic]];
+        
+        return cell;
+    }
+    else
+    {
+        CarInputCell *cell = [CarInputCell cellWithTableView:tableView];
+        
+        NSString *name = self.rightArr[indexPath.row];
+        NSString *nameInput = self.textArr[indexPath.row];
+        cell.textField.text = nameInput;
+        
+        cell.textLabel.text = name;
+        
+        self.selectData = indexPath.row;
+        cell.textField.tag = self.selectData;
+        cell.textField.delegate = self;
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];// 取消选中
+        
+        return cell;
+    }
 }
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0)
+    {
+        YYLog(@"dfxgv");
+    }
+}
+
 
 
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
     [self.view endEditing:YES];
 }
+
 
 
 #pragma mark====设置textField的代理事件的处理并传值
@@ -314,16 +374,37 @@
             break;
     }
 }
+
+
+
 /**
  *  当输入框的文字发生改变的时候调用，弹出时间选择器--下面为了防止UItextfield弹出键盘
  */
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == buytime || textField.tag ==insurancetime  || textField.tag == commercialtime)
+    if (textField.tag == buytime || textField.tag == insurancetime || textField.tag == commercialtime)
     {
-        textField.inputView=self.insuranceidData;
-        self.selectData = textField.tag;
-        textField.placeholder = @"请选择日期";
+        if (![textField.text isEqualToString:@"请选择日期"])
+        {
+            textField.inputView=self.insuranceidData;
+            self.selectData = textField.tag;
+            textField.text = @"请选择日期";
+        }
+        else
+        {
+//            if (textField.tag == buytime)
+//            {
+//                textField.text = self.buytime;
+//            }
+//            else if (textField.tag == insurancetime)
+//            {
+//                textField.text = self.insuranceid;
+//            }
+//            else
+//            {
+//                textField.text = self.commercialtime;
+//            }
+        }
     }else
     {
         [self.insuranceidData removeFromSuperview];

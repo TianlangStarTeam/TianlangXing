@@ -427,6 +427,10 @@
             self.carInfoType = textField.tag;
             textField.text = @"请选择日期";
         }
+        else
+        {
+            textField.text = self.buytime;
+        }
     }
     else
     {
