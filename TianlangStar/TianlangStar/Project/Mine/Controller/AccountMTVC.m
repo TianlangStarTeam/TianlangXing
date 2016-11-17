@@ -11,8 +11,9 @@
 #import "UserModel.h"
 #import "UserHeaderImageCell.h"
 #import "ResetPasword.h"
-
+#import "CarModel.h"
 #import "AddCarTableVC.h"
+#import "CheckCarInfoTVC.h"
 
 
 @interface AccountMTVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -42,6 +43,9 @@
 @property (nonatomic,strong) UIButton *seletedSexButton;
 
 
+/** 保存服务器返回的车辆列表数组 */
+@property (nonatomic,strong) NSArray *carInfoArr;
+
 
 @end
 
@@ -58,10 +62,40 @@
     
     [self addfooter];
     
+    //设置男女性别选择
     [self setupControl];
     
     [self addRightBar];
     
+    //获取车辆信息
+    [self setupCarInfoData];
+    
+}
+
+/** 获取当前用户名下对应的车辆 */
+-(void)setupCarInfoData
+{
+    
+    NSString *url = [NSString stringWithFormat:@"%@getallcarinfoservlet",URL];
+    
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    YYLog(@"parmas----%@",parmas);
+    
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         self.carInfoArr = [CarModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         [self.tableView reloadData];
+         
+     } failure:^(NSError *error)
+     {
+         YYLog(@"error---%@",error);
+         
+     }];
+         
+
 }
 
 #pragma mark===== 初始化性别选则的弹出框===================
@@ -160,7 +194,6 @@
     self.seletedSexButton = button;
     self.tableView.tableFooterView.hidden = NO;
     [self.tableView reloadData];
-    //    [self sendAFN];
 }
 
 
@@ -171,7 +204,7 @@
 {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
     [button setTitle:@"编辑" forState:UIControlStateNormal];
-    [button setTitle:@"完成" forState:UIControlStateSelected];
+    [button setTitle:@"保存" forState:UIControlStateSelected];
     [button addTarget:self action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
     [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -236,7 +269,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -250,6 +283,9 @@
             break;
         case 1:
             count = self.leftArr.count;;
+            break;
+        case 2:
+            count = self.carInfoArr.count + 1;
             break;
 
         default:
@@ -344,12 +380,26 @@
         }
         
         return cell;
-    }else
+    }else//车辆信息
     {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        InputCell *cell = [InputCell cellWithTableView:tableView];
+        cell.leftLB.text = @"他的爱车";
+        cell.textField.x  = 100;
+        cell.textField.width = KScreenWidth - CGRectGetMaxX(cell.leftLB.frame) - 20;
+        cell.textField.enabled = NO;
+        cell.textField.textAlignment = NSTextAlignmentRight;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (indexPath.row == self.carInfoArr.count)
+        {
+            cell.leftLB.text = @"添加爱车";
+        }else{
+            
+            CarModel *model = self.carInfoArr[indexPath.row];
+            cell.textField.text = model.carid;
+        }
+        
         return cell;
     }
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -358,6 +408,28 @@
     {
         ResetPasword *reset = [[ResetPasword alloc] init];
         [self.navigationController pushViewController:reset animated:YES];
+    }
+    
+    //车辆
+    if (indexPath.section == 2)
+    {
+        if (indexPath.row == self.carInfoArr.count)
+        {
+            AddCarTableVC *vc = [[AddCarTableVC alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+        
+        CarModel *Model = self.carInfoArr[indexPath.row];
+        CheckCarInfoTVC *vc = [[CheckCarInfoTVC alloc] init];
+        vc.carModel = Model;
+        [self.navigationController pushViewController:vc
+                                             animated:YES];
+        }
+    }
+    
+    if (indexPath.section == 2 && indexPath.row == self.carInfoArr.count)
+    {
+
     }
     
     
@@ -391,6 +463,7 @@
         self.tableView.tableFooterView.hidden = YES;
         return;
     }
+
     
 
 
@@ -475,12 +548,12 @@
         return;
     }
     
-//    //身份证
-//    if (![self.userModel.identity isIdentityCardNo])
-//    {
-//        [[AlertView sharedAlertView] addAlertMessage:@"身份证号输入有误，请核对！" title:@"提示"];
-//        return;
-//    }
+    //身份证
+    if (![self.userModel.identity isIdentityCardNo])
+    {
+        [[AlertView sharedAlertView] addAlertMessage:@"身份证号输入有误，请核对！" title:@"提示"];
+        return;
+    }
 
     
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];

@@ -50,7 +50,7 @@ typedef enum : NSUInteger {
 
 
 /** 记录输入框的内容 */
-@property (nonatomic,strong) NSMutableArray *textArr;
+//@property (nonatomic,strong) NSMutableArray *textArr;
 
 
 /** 记录用户年月入日期选择器 */
@@ -164,14 +164,14 @@ typedef enum : NSUInteger {
 
 
 
--(NSMutableArray *)textArr
-{
-    if (_textArr == nil)
-    {
-        _textArr = [NSMutableArray array];
-    }
-    return _textArr;
-}
+//-(NSMutableArray *)textArr
+//{
+//    if (_textArr == nil)
+//    {
+//        _textArr = [NSMutableArray array];
+//    }
+//    return _textArr;
+//}
 
 
 -(NSArray *)rightArr
@@ -387,7 +387,7 @@ typedef enum : NSUInteger {
             {
                 if (self.buytime)
                 {
-                    self.cell.rightTF.text = self.carModel.buytime;
+                    self.cell.rightTF.text = self.buytime;
                 }
                 break;
             }
@@ -537,7 +537,7 @@ typedef enum : NSUInteger {
 //保存用户输入的信息
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    self.textArr[textField.tag] = textField.text;
+//    self.textArr[textField.tag] = textField.text;
     
     switch (textField.tag) {
         case carid:

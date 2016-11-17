@@ -27,6 +27,7 @@
 #import "MyCollectionTableVC.h"
 #import "AccountInfoListTVC.h"
 #import "AddCarInfo.h"
+#import "InsuranceManagement.h"
 
 #import "CarDetailInfoTableVC.h"
 
@@ -170,7 +171,7 @@
     
     ILSettingArrowItem *informationRelease = [ILSettingArrowItem itemWithIcon:nil title:@"车辆管理" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"保单管理" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"保单管理" destVcClass:[InsuranceManagement class]];
     
     ILSettingArrowItem *carInfochange = [ILSettingArrowItem itemWithIcon:nil title:@"轮播图" destVcClass:[CarInfoListVC class]];
     
@@ -179,10 +180,7 @@
     ILSettingArrowItem *TopupQuery= [ILSettingArrowItem itemWithIcon:nil title:@"优惠信息" destVcClass:[AddCarInfo class]];
     
     ILSettingArrowItem *setting = [ILSettingArrowItem itemWithIcon:nil title:@"设置" destVcClass:[AboutSettingTVC class]];
-    
-    
-    
-    
+
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
     group0.items = @[order,topup,CFOOrders,Warehouse,SalesStatistics,GoodsReleased,informationRelease,orderquery,carInfochange,InfoRegister,TopupQuery,setting];
     
