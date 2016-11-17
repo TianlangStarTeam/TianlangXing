@@ -68,6 +68,7 @@
 		D71F66B71DCC3773000A6861 /* ILSettingTextFieldItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66B61DCC3773000A6861 /* ILSettingTextFieldItem.m */; };
 		D71F66C01DCC5E0D000A6861 /* CarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D71F66BF1DCC5E0D000A6861 /* CarModel.m */; };
 		D7203F681DDC37AB00B6526F /* InsuranceManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = D7203F671DDC37AB00B6526F /* InsuranceManagement.m */; };
+		D7203F6B1DDC43BE00B6526F /* InsuranceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7203F6A1DDC43BE00B6526F /* InsuranceModel.m */; };
 		D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D72866FB1DCB144800D77B38 /* ILBaseTableViewController.m */; };
 		D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D72866FE1DCB144800D77B38 /* ILSettingArrowItem.m */; };
 		D728670C1DCB144800D77B38 /* ILSettingGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867001DCB144800D77B38 /* ILSettingGroup.m */; };
@@ -77,6 +78,7 @@
 		D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867091DCB144800D77B38 /* ILSettingSwitchItem.m */; };
 		D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867121DCB154C00D77B38 /* FeedbackVC.m */; };
 		D728671B1DCB33BE00D77B38 /* CarsNav.m in Sources */ = {isa = PBXBuildFile; fileRef = D728671A1DCB33BE00D77B38 /* CarsNav.m */; };
+		D72B9D2A1DDD519100C446D3 /* CheckCarInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72B9D291DDD519100C446D3 /* CheckCarInfoTVC.m */; };
 		D72D0BED1DDB19C400AA8B06 /* GeneralUserInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72D0BEC1DDB19C400AA8B06 /* GeneralUserInfoTVC.m */; };
 		D735EAFE1DD075790051D8E7 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D735EAFD1DD075790051D8E7 /* HttpTool.m */; };
 		D735EB041DD087500051D8E7 /* ProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D735EB031DD087500051D8E7 /* ProductModel.m */; };
@@ -234,6 +236,8 @@
 		D71F66BF1DCC5E0D000A6861 /* CarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarModel.m; sourceTree = "<group>"; };
 		D7203F661DDC37AB00B6526F /* InsuranceManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsuranceManagement.h; sourceTree = "<group>"; };
 		D7203F671DDC37AB00B6526F /* InsuranceManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsuranceManagement.m; sourceTree = "<group>"; };
+		D7203F691DDC43BE00B6526F /* InsuranceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsuranceModel.h; sourceTree = "<group>"; };
+		D7203F6A1DDC43BE00B6526F /* InsuranceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsuranceModel.m; sourceTree = "<group>"; };
 		D72866FA1DCB144800D77B38 /* ILBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILBaseTableViewController.h; sourceTree = "<group>"; };
 		D72866FB1DCB144800D77B38 /* ILBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILBaseTableViewController.m; sourceTree = "<group>"; };
 		D72866FD1DCB144800D77B38 /* ILSettingArrowItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingArrowItem.h; sourceTree = "<group>"; };
@@ -252,6 +256,8 @@
 		D72867121DCB154C00D77B38 /* FeedbackVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackVC.m; sourceTree = "<group>"; };
 		D72867191DCB33BE00D77B38 /* CarsNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsNav.h; sourceTree = "<group>"; };
 		D728671A1DCB33BE00D77B38 /* CarsNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsNav.m; sourceTree = "<group>"; };
+		D72B9D281DDD519100C446D3 /* CheckCarInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckCarInfoTVC.h; sourceTree = "<group>"; };
+		D72B9D291DDD519100C446D3 /* CheckCarInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckCarInfoTVC.m; sourceTree = "<group>"; };
 		D72D0BEB1DDB19C400AA8B06 /* GeneralUserInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeneralUserInfoTVC.h; path = TianlangStar/Project/Mine/View/UserView/GeneralUserInfoTVC.h; sourceTree = SOURCE_ROOT; };
 		D72D0BEC1DDB19C400AA8B06 /* GeneralUserInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeneralUserInfoTVC.m; path = TianlangStar/Project/Mine/View/UserView/GeneralUserInfoTVC.m; sourceTree = SOURCE_ROOT; };
 		D735EAFB1DD063E60051D8E7 /* TianlangStar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TianlangStar.entitlements; sourceTree = "<group>"; };
@@ -651,6 +657,8 @@
 				D71475621DD1BCB400F48FC4 /* VirtualcenterModel.m */,
 				D71394261DD5D13600FFFE84 /* FeedbackModel.h */,
 				D71394271DD5D13600FFFE84 /* FeedbackModel.m */,
+				D7203F691DDC43BE00B6526F /* InsuranceModel.h */,
+				D7203F6A1DDC43BE00B6526F /* InsuranceModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -829,6 +837,8 @@
 				D77134331DCDBA5300B3B9C6 /* CarInfoListVC.m */,
 				D7203F661DDC37AB00B6526F /* InsuranceManagement.h */,
 				D7203F671DDC37AB00B6526F /* InsuranceManagement.m */,
+				D72B9D281DDD519100C446D3 /* CheckCarInfoTVC.h */,
+				D72B9D291DDD519100C446D3 /* CheckCarInfoTVC.m */,
 			);
 			path = Car;
 			sourceTree = "<group>";
@@ -1099,6 +1109,7 @@
 				D705CF241DC09C6400F65BE0 /* UIImage+Tool.m in Sources */,
 				D705CF1F1DC09C6400F65BE0 /* NSString+extension.m in Sources */,
 				711EFA2F1DD9637D006AEF9E /* HomePageTableVC.m in Sources */,
+				D7203F6B1DDC43BE00B6526F /* InsuranceModel.m in Sources */,
 				D77134341DCDBA5300B3B9C6 /* CarInfoChangeVC.m in Sources */,
 				D74454741DC0B4EC008B5E27 /* AlertView.m in Sources */,
 				D705CF2A1DC09C6400F65BE0 /* UserInfo.m in Sources */,
@@ -1109,6 +1120,7 @@
 				D7AC9F121DD01FA900EFD59B /* AddProductVC.m in Sources */,
 				D71394221DD5C72100FFFE84 /* YYUITextView.m in Sources */,
 				717D0D831DC0B5620036D5F4 /* RegistVC.m in Sources */,
+				D72B9D2A1DDD519100C446D3 /* CheckCarInfoTVC.m in Sources */,
 				D705CF201DC09C6400F65BE0 /* PinchPicture.m in Sources */,
 				D77134351DCDBA5300B3B9C6 /* CarInfoListVC.m in Sources */,
 				D735EAFE1DD075790051D8E7 /* HttpTool.m in Sources */,

@@ -54,7 +54,7 @@
         
 
         UITextField *textField = [[UITextField alloc] init];
-        textField.frame = CGRectMake(0, 10, KScreenWidth - CGRectGetMaxX(lable.frame) - 10, 35);
+        textField.frame = CGRectMake(KScreenWidth * 0.3, 10, KScreenWidth - CGRectGetMaxX(lable.frame) - 10, 35);
         textField.backgroundColor = [UIColor clearColor];
         textField.backgroundColor =[UIColor colorWithWhite:1 alpha:0];
         self.textField = textField;

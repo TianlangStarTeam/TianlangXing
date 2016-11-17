@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
 
 
 /** 记录输入框的内容 */
-@property (nonatomic,strong) NSMutableArray *textArr;
+//@property (nonatomic,strong) NSMutableArray *textArr;
 
 
 /** 记录用户年月入日期选择器 */
@@ -157,14 +157,14 @@ typedef enum : NSUInteger {
 
 
 
--(NSMutableArray *)textArr
-{
-    if (_textArr == nil)
-    {
-        _textArr = [NSMutableArray array];
-    }
-    return _textArr;
-}
+//-(NSMutableArray *)textArr
+//{
+//    if (_textArr == nil)
+//    {
+//        _textArr = [NSMutableArray array];
+//    }
+//    return _textArr;
+//}
 
 
 -(NSArray *)rightArr
