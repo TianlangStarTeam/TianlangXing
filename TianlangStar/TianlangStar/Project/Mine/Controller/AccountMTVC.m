@@ -59,8 +59,7 @@
     self.title =@"会员管理";
 
     YYLog(@"userModel----%@",self.userModel);
-    
-    [self addfooter];
+
     
     //设置男女性别选择
     [self setupControl];
@@ -241,28 +240,6 @@
 
 
 
--(void)addfooter
-{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 10, KScreenWidth, 44)];
-    UIButton *button = [[UIButton alloc] initWithFrame:view.bounds];
-    [button addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor grayColor];
-    [button setTitle:@"➕" forState:UIControlStateNormal];
-    [view addSubview:button];
-    
-    self.tableView.tableFooterView = view;
-}
-
--(void)addBtnClick
-{
-    AddCarTableVC *addCarTableVC = [[AddCarTableVC alloc] initWithStyle:(UITableViewStyleGrouped)];
-    addCarTableVC.userid = [self.userModel.ID integerValue];
-    [self.navigationController pushViewController:addCarTableVC animated:YES];
-    YYLog(@"按钮+");
-}
-
-
-
 
 
 #pragma mark - Table view data source
@@ -413,25 +390,21 @@
     //车辆
     if (indexPath.section == 2)
     {
-        if (indexPath.row == self.carInfoArr.count)
+        if (indexPath.row == self.carInfoArr.count)//添加爱车
         {
             AddCarTableVC *vc = [[AddCarTableVC alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
-        }else{
-        
-        CarModel *Model = self.carInfoArr[indexPath.row];
-        CheckCarInfoTVC *vc = [[CheckCarInfoTVC alloc] init];
-        vc.carModel = Model;
-        [self.navigationController pushViewController:vc
-                                             animated:YES];
+        }else{//他的爱车
+            
+            CarModel *Model = self.carInfoArr[indexPath.row];
+            CheckCarInfoTVC *vc = [[CheckCarInfoTVC alloc] initWithStyle:UITableViewStyleGrouped];
+            vc.carModel = Model;
+            vc.accountMTVC = self;
+            [self.navigationController pushViewController:vc
+                                                 animated:YES];
         }
     }
-    
-    if (indexPath.section == 2 && indexPath.row == self.carInfoArr.count)
-    {
 
-    }
-    
     
     if (!self.inputEnble) return;
     
@@ -555,7 +528,6 @@
         return;
     }
 
-    
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
     parmas[@"id"] = self.userModel.ID;
@@ -567,9 +539,7 @@
     parmas[@"address"] = self.userModel.address;
     parmas[@"referee"] = self.userModel.referee;
     parmas[@"description"] = self.userModel.describe;
-    
-    
-    
+
     if (self.headerImg)
     {
 
@@ -581,26 +551,24 @@
         
         if (rangge.length != 0) {
         
-        oldheaderpic = [self.userModel.headimage substringFromIndex:rangge.location];
+            oldheaderpic = [self.userModel.headimage substringFromIndex:rangge.location];
         }
     };
-    parmas[@"oldheaderpic"] = oldheaderpic;
-    
+        parmas[@"oldheaderpic"] = oldheaderpic;
         NSString * url = [NSString stringWithFormat:@"%@upload/updateaccountinfoservlet",URL];
-    
-    YYLog(@"修改账户信息---parmas---%@",parmas);
-    
-    [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
-     {
-         NSData *data = UIImageJPEGRepresentation(self.headerImg, 0.5);
-         //拼接data
-         [formData appendPartWithFileData:data name:@"headimage" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+        
+        YYLog(@"修改账户信息---parmas---%@",parmas);
+        
+        [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+         {
+             NSData *data = UIImageJPEGRepresentation(self.headerImg, 0.5);
+             //拼接data
+             [formData appendPartWithFileData:data name:@"headimage" fileName:@"img.jpg" mimeType:@"image/jpeg"];
          
      } progress:^(NSProgress * _Nonnull uploadProgress) {
          
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-         
-         
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
          YYLog(@"responseObject---%@",responseObject);
          
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -610,12 +578,10 @@
     }else//不带图片的请求
     {
         NSString * url = [NSString stringWithFormat:@"%@updateaccountinfonoheadservlet",URL];
-    
-    [HttpTool post:url parmas:parmas success:^(id json)
-     {
-         
-         YYLog(@"不带图片-json---%@",json);
-         
+        
+        [HttpTool post:url parmas:parmas success:^(id json)
+         {
+             YYLog(@"不带图片-json---%@",json);
      } failure:^(NSError *error)
      {
          YYLog(@"error----%@",error);

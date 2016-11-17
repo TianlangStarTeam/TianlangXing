@@ -10,6 +10,7 @@
 #import "PictureCell.h"
 #import "LabelTextFieldCell.h"
 #import "CarModel.h"
+#import "InsuranceManagement.h"
 
 /** 车辆信息录入和添加 */
 typedef enum : NSUInteger {
@@ -44,8 +45,12 @@ typedef enum : NSUInteger {
 /** 日期选择器 */
 @property (nonatomic,strong) UIDatePicker *buytimeData;
 
+/** 右上角的保存和点按钮 */
+@property (nonatomic,strong) UIButton *rightBarBtn;
 
 
+/** 遮盖 */
+@property (nonatomic,weak) UIView *coverView;
 
 
 @end
@@ -54,13 +59,142 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad
 {
+
     [super viewDidLoad];
     
     [self addRightBar];
     
     [self addDatePIcker];
-
+    
+    [self addCoverView];
+    
     self.title = @"他的爱车";
+
+}
+
+
+-(void)addCoverView
+{
+    UIView *cover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 800, 800)];
+    cover.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.5];
+    
+    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(KScreenWidth -90, 0, 80, 80)];
+    rightView.backgroundColor = [UIColor whiteColor];
+    [cover addSubview:rightView];
+    
+    UIButton *modificationBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, 50, 30)];
+    [modificationBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [modificationBtn setTitle:@"修改" forState:UIControlStateNormal ];
+    [modificationBtn addTarget:self action:@selector(modificationBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightView addSubview:modificationBtn];
+    
+    UIButton *deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 30, 50, 50)];
+    [deleteBtn setTitle:@"删除" forState:UIControlStateNormal ];
+    [deleteBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [deleteBtn addTarget:self action:@selector(deleteBtnClick) forControlEvents:UIControlEventTouchUpInside];
+     [rightView addSubview:deleteBtn];
+    
+    self.coverView = cover;
+    UIGestureRecognizer *touch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touch)];
+    [cover addGestureRecognizer:touch];
+    
+    [self.view addSubview:cover];
+    cover.hidden = YES;
+}
+
+//点击蒙版消除
+-(void)touch
+{
+    self.coverView.hidden = YES;
+}
+
+
+
+#pragma mark===== 修改，删除按钮的点击事件=======
+//修改按钮的点击事件
+-(void)modificationBtnClick
+{
+    self.inputEnble = YES;
+    self.rightBarBtn.selected = YES;
+
+    //刷新数据
+    [self.tableView reloadData];
+    
+    self.coverView.hidden = YES;
+}
+
+//修改按钮的点击事件---删除车辆
+-(void)deleteBtnClick
+{
+    self.coverView.hidden = YES;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认删除爱车？" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+        parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+        parmas[@"id"] = self.carModel.ID;
+        
+        
+        NSString *oldheaderpic = nil;
+        //传入为空的话
+        if (self.carModel.picture.length != 0 || self.carModel.picture != nil)
+        {
+            NSRange rangge = [self.carModel.picture rangeOfString:@"picture"];
+            
+            if (rangge.length !=0)
+            {
+                oldheaderpic = [self.carModel.picture substringFromIndex:rangge.location];
+            }
+        };
+        parmas[@"oldheaderpic"] = oldheaderpic;
+
+        YYLog(@"parmas--删除车辆%@",parmas);
+        
+        NSString *url = [NSString stringWithFormat:@"%@deletecarinfoservlet",URL];
+        
+        [HttpTool post:url parmas:parmas success:^(id json) {
+            YYLog(@"%@",json);
+            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+            
+            //刷新数据
+            [self.accountMTVC setupCarInfoData];
+            [self.navigationController popViewControllerAnimated:YES];
+        } failure:^(NSError *error) {
+            YYLog(@"%@",error);
+        }];
+
+        
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+-(void)addRightBar
+{
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
+    self.rightBarBtn = button;
+    [button setTitle:@"..." forState:UIControlStateNormal];
+    [button setTitle:@"保存" forState:UIControlStateSelected];
+    [button addTarget:self action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
+-(void)rightBarClick:(UIButton *)button
+{
+    [self.view endEditing:YES];
+    if (button.selected)//是显示完成
+    {
+        self.rightBarBtn.selected = NO;
+        [self updataUserInfo];
+    }else
+    {
+        self.coverView.hidden = NO;
+    }
 }
 
 
@@ -135,36 +269,6 @@ typedef enum : NSUInteger {
     }
     
     return _rightPlaceholder;
-}
-
-
--(void)addRightBar
-{
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
-    [button setTitle:@"编辑" forState:UIControlStateNormal];
-    [button setTitle:@"保存" forState:UIControlStateSelected];
-    [button addTarget:self action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-}
-
--(void)rightBarClick:(UIButton *)button
-{
-    [self.view endEditing:YES];
-    
-    self.inputEnble = !button.selected;
-    
-    button.selected = !button.selected;
-    
-    //刷新数据
-    [self.tableView reloadData];
-    
-    if (self.inputEnble == NO)//是显示完成
-    {
-        [self updataUserInfo];
-    }
 }
 
 
@@ -267,12 +371,12 @@ typedef enum : NSUInteger {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
+    if (section == 0 || section == 2)
     {
         return 1;
     }
@@ -306,29 +410,19 @@ typedef enum : NSUInteger {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 1)
-    {
-        return 1;
-    }
-    else
-    {
-        return 15;
-    }
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
     {
-        
         static NSString *identifier0 = @"cell0";
         
         PictureCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier0];
-        
         if (cell == nil)
         {
             cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier0];
-            
         }
         if (self.carImage)
         {
@@ -339,8 +433,7 @@ typedef enum : NSUInteger {
             [cell.pictureView sd_setImageWithURL:[NSURL URLWithString:self.carModel.picture] placeholderImage:[UIImage imageNamed:@"touxiang"]];
         }
         return cell;
-    }
-    else
+    }else if (indexPath.section == 1)
     {
         static NSString *identifier1 = @"cell1";
         
@@ -366,22 +459,22 @@ typedef enum : NSUInteger {
                 cell.rightTF.text = self.carModel.cartype;
                 break;
             case brand:
-               cell.rightTF.text = self.carModel.brand;
+                cell.rightTF.text = self.carModel.brand;
                 break;
             case model:
-               cell.rightTF.text = self.carModel.model;
+                cell.rightTF.text = self.carModel.model;
                 break;
             case carid:
-               cell.rightTF.text = self.carModel.carid;
+                cell.rightTF.text = self.carModel.carid;
                 break;
             case buytime:
-               cell.rightTF.text = [self.carModel.buytime getTime];
+                cell.rightTF.text = [self.carModel.buytime getTime];
                 break;
             case frameid:
-               cell.rightTF.text = self.carModel.frameid;
+                cell.rightTF.text = self.carModel.frameid;
                 break;
             case engineid:
-               cell.rightTF.text = self.carModel.engineid;
+                cell.rightTF.text = self.carModel.engineid;
                 break;
                 
             default:
@@ -390,8 +483,15 @@ typedef enum : NSUInteger {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.rightTF.enabled = self.inputEnble;
         return cell;
+    }else//保单管理
+    {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        cell.textLabel.text = @"保单管理";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
     }
-}
+    }
 
 
 
@@ -464,6 +564,13 @@ typedef enum : NSUInteger {
                                        }];
         
         [[AlertView sharedAlertView] addAlertMessage:nil title:nil cancleAction:cancleAction photoLibraryAction:photoLibraryAction cameraAction:cameraAction];
+    }
+    
+    if (indexPath.section == 2)
+    {
+        InsuranceManagement *vc = [[InsuranceManagement alloc] initWithStyle:UITableViewStyleGrouped];
+        vc.carID = self.carModel.ID;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

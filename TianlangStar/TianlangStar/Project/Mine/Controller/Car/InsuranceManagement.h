@@ -10,4 +10,8 @@
 
 @interface InsuranceManagement : UITableViewController
 
+
+/** 当前车辆的ID */
+@property (nonatomic,copy) NSString *carID;
+
 @end

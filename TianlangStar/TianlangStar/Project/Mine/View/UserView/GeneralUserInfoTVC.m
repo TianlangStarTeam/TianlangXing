@@ -198,7 +198,7 @@
 {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
     [button setTitle:@"编辑" forState:UIControlStateNormal];
-    [button setTitle:@"保存" forState:UIControlStateSelected];
+    [button setTitle:@"完成" forState:UIControlStateSelected];
     [button addTarget:self action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
     [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
