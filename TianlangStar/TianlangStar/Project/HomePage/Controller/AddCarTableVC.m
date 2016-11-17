@@ -191,6 +191,8 @@
     [self.buytimeData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
 
+
+
 /** 时间选择器的点击事件--较强险提醒日期 */
 -(void)selecStarttDate
 {
@@ -427,6 +429,10 @@
             self.carInfoType = textField.tag;
             textField.text = @"请选择日期";
         }
+        else
+        {
+            textField.text = self.buytime;
+        }
     }
     else
     {
@@ -496,6 +502,8 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 @end
 

@@ -31,9 +31,6 @@ typedef enum : NSUInteger {
 @property (nonatomic,strong) NSArray *rightArr;
 
 
-/** 汽车模型 */
-@property (nonatomic,strong) CarModel *carInfo;
-
 /** 提交按钮 */
 @property (nonatomic,strong) UIButton *handButton;
 
@@ -105,10 +102,6 @@ typedef enum : NSUInteger {
     self.insuranceidData.hidden = NO;
     self.insuranceidData = startDatePicker;
     
-    //计算当前时间
-    NSDate *nowdate = [NSDate date];
-    //限制起始时间为当前时间
-//    self.insuranceidData.minimumDate = nowdate;
     [self.insuranceidData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
 
@@ -240,7 +233,7 @@ typedef enum : NSUInteger {
     params[@"cartype"] = self.carModel.cartype;
     params[@"frameid"] = self.carModel.frameid;
     params[@"engineid"] = self.carModel.engineid;
-    params[@"buytime"] = self.buytime;
+    params[@"buytime"] = self.carModel.buytime;
     params[@"insuranceid"] = self.carModel.insuranceid;
     params[@"insurancetime"] = self.carModel.insurancetime;
     params[@"commercialtime"] = self.carModel.commercialtime;
@@ -484,10 +477,10 @@ typedef enum : NSUInteger {
     YYLog(@"image----%@",image);
     self.carImage = image;
     
-    //    dispatch_async(dispatch_get_main_queue(), ^{
-    
-    [self.tableView reloadData];
-    //    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+       
+        [self.tableView reloadData];
+    });
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -527,9 +520,6 @@ typedef enum : NSUInteger {
         case engineid:
             self.carModel.engineid = textField.text;
             break;
-        case 6:
-            self.carModel.buytime = textField.text;
-            break;
         case insuranceid:
             self.carModel.insuranceid = textField.text;
             break;
@@ -545,9 +535,27 @@ typedef enum : NSUInteger {
 {
     if (textField.tag == buytime || textField.tag == insurancetime || textField.tag == commercialtime)
     {
-        textField.inputView=self.insuranceidData;
-        self.checkinCar = textField.tag;
-        textField.text = @"请选择日期";
+        if (![textField.text isEqualToString:@"请选择日期"])
+        {
+            textField.inputView=self.insuranceidData;
+            self.checkinCar = textField.tag;
+            textField.text = @"请选择日期";
+        }
+        else
+        {
+            if (textField.tag == buytime)
+            {
+                textField.text = self.buytime;
+            }
+            else if (textField.tag == insurancetime)
+            {
+                textField.text = self.insuranceid;
+            }
+            else
+            {
+                textField.text = self.commercialtime;
+            }
+        }
     }else
     {
         [self.insuranceidData removeFromSuperview];

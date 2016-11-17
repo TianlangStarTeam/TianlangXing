@@ -42,17 +42,19 @@
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
-    YYLog(@"parmas----%@",parmas);
+    YYLog(@"car info list parmas----%@",parmas);
     
     
     [HttpTool post:url parmas:parmas success:^(id json)
      {
+         YYLog(@"car info list::%@",json);
+         
          self.carInfoArr = [CarModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
          [self.tableView reloadData];
          
      } failure:^(NSError *error)
      {
-         YYLog(@"error---%@",error);
+         YYLog(@"car info list error---%@",error);
          
      }];
     
