@@ -40,4 +40,8 @@
 /** 商业险到期提醒 */
 @property (nonatomic,copy) NSString *commercialtime;
 
+
+/** 车辆的ID */
+@property (nonatomic,copy) NSString *cid;
+
 @end

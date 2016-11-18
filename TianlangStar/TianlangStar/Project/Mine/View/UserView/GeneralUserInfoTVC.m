@@ -10,8 +10,11 @@
 #import "InputCell.h"
 #import "UserModel.h"
 #import "UserHeaderImageCell.h"
+#import "CarModel.h"
+#import "AddCarTableVC.h"
+#import "CheckCarInfoTVC.h"
 
-@interface GeneralUserInfoTVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface GeneralUserInfoTVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,AddCarTableVCDlelegate>
 
 /** 单元格的数组 */
 @property (nonatomic,strong) NSArray *leftArr;
@@ -21,6 +24,10 @@
 
 /** 头像 */
 @property (nonatomic,strong) UIImage *headerImg;
+
+
+/** 获取服务器返回的当前用户对应的所有车辆信息 */
+@property (nonatomic,strong) NSArray *carInfoArr;
 
 
 
@@ -56,16 +63,43 @@
     self.title =@"会员管理";
     
     YYLog(@"userModel----%@",self.userModel);
-    
-    
     [self loadUserInfo];
-    
-    [self addfooter];
     
     [self setupControl];
     
     [self addRightBar];
+    
+    /** 获取当前用户名下对应的车辆 */
+    [self setupCarInfoData];
+    
+    
 }
+
+
+/** 获取当前用户名下对应的车辆 */
+-(void)setupCarInfoData
+{
+    
+    /*getusercarinfoservlet*/
+    NSString *url = [NSString stringWithFormat:@"%@getallcarinfoservlet",URL];
+    
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"id"] = self.userModel.ID;
+    YYLog(@"parmas----%@",parmas);
+    
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         YYLog(@"获取车辆----%@",json);
+         self.carInfoArr = [CarModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         [self.tableView reloadData];
+         
+     } failure:^(NSError *error)
+     {
+         YYLog(@"error---%@",error);
+     }];
+}
+
 
 
 //获取用户的数据信息
@@ -235,23 +269,6 @@
 
 
 
--(void)addfooter
-{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 10, KScreenWidth, 44)];
-    UIButton *button = [[UIButton alloc] initWithFrame:view.bounds];
-    [button addTarget:self action:@selector(addBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor grayColor];
-    [button setTitle:@"➕" forState:UIControlStateNormal];
-    [view addSubview:button];
-    
-    self.tableView.tableFooterView = view;
-}
-
--(void)addBtnClick
-{
-    YYLog(@"按钮+");
-}
-
 
 
 
@@ -260,7 +277,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -275,6 +292,9 @@
         case 1:
             count = self.leftArr.count;;
             break;
+        case 2:
+            count = self.carInfoArr.count + 1;
+            break;
             
         default:
             break;
@@ -286,7 +306,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (indexPath.section == 0)
     {
         UserHeaderImageCell *cell = [[UserHeaderImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -299,10 +318,8 @@
             cell.headerPic.image = self.headerImg;
         }else
         {
-            [cell.headerPic sd_setImageWithURL:[NSURL URLWithString:self.userModel.headimage] placeholderImage:[UIImage imageNamed:@"touxiang"]];
+            [cell.headerPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",picURL,self.userModel.headimage]] placeholderImage:[UIImage imageNamed:@"touxiang"]];
         }
-        
-        
         return cell;
         
     }else if (indexPath.section == 1)
@@ -312,7 +329,7 @@
         cell.leftLB.text = self.leftArr[indexPath.row];
         cell.textField.delegate = self;
         cell.textField.x  = 100;
-        cell.textField.placeholder = @"请输入";
+        cell.textField.placeholder = [NSString stringWithFormat:@"请输入%@",self.leftArr[indexPath.row]];
         self.userInfoType = indexPath.row;
         cell.textField.tag = self.userInfoType;
         cell.textField.enabled = self.inputEnble;
@@ -326,7 +343,7 @@
                 break;
             case telephone://手机号
             {
-                cell.textField.text = self.userModel.telephone;
+                cell.textField.text = self.userModel.username;
                 cell.textField.enabled = NO;
                 break;
             }
@@ -363,12 +380,25 @@
         }
         
         return cell;
-    }else
+    }else//车辆信息
     {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        InputCell *cell = [InputCell cellWithTableView:tableView];
+        cell.leftLB.text = @"他的爱车";
+        cell.textField.x  = 100;
+        cell.textField.width = KScreenWidth - CGRectGetMaxX(cell.leftLB.frame) - 20;
+        cell.textField.enabled = NO;
+        cell.textField.textAlignment = NSTextAlignmentRight;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (indexPath.row == self.carInfoArr.count)
+        {
+            cell.leftLB.text = @"添加爱车";
+        }else
+        {
+            CarModel *model = self.carInfoArr[indexPath.row];
+            cell.textField.text = model.carid;
+        }
         return cell;
     }
-    
 }
 
 
@@ -393,6 +423,27 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    //车辆
+    if (indexPath.section == 2)
+    {
+        if (indexPath.row == self.carInfoArr.count)//添加爱车
+        {
+            AddCarTableVC *vc = [[AddCarTableVC alloc] init];
+            vc.delegate = self;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{//他的爱车
+            
+            CarModel *Model = self.carInfoArr[indexPath.row];
+            CheckCarInfoTVC *vc = [[CheckCarInfoTVC alloc] initWithStyle:UITableViewStyleGrouped];
+            vc.carModel = Model;
+            vc.accountMTVC = self;
+            [self.navigationController pushViewController:vc
+                                                 animated:YES];
+        }
+    }
+
+    
     if (!self.inputEnble) return;
     
     if (indexPath.section == 0)
@@ -484,20 +535,7 @@
     
     if (self.headerImg)
     {
-        NSString *oldheaderpic = nil;
-        //传入为空的话
-        if (self.userModel.headimage.length != 0 || self.userModel.headimage != nil)
-        {
-            NSRange rangge = [self.userModel.headimage rangeOfString:@"picture"];
-            
-            if (rangge.length !=0)
-            {
-                oldheaderpic = [self.userModel.headimage substringFromIndex:rangge.location];
-            }
-            
-            
-        };
-        parmas[@"oldheaderpic"] = oldheaderpic;
+        parmas[@"oldheaderpic"] = self.userModel.headimage;
         NSString *url = [NSString stringWithFormat:@"%@upload/updateowninfoforheadservlet",URL];
         YYLog(@"parmas----%@",parmas);
         
@@ -529,8 +567,6 @@
              YYLog(@"error--%@",error);
          }];
     }
-
-
 }
 
 
@@ -577,7 +613,14 @@
         self.tableView.tableFooterView.hidden = YES;
         return;
     }
-    
+}
+
+
+
+#pragma mark-=========添加车辆信息成功后调用代理====
+-(void)addCarInfoSuccess
+{
+    [self loadUserInfo];
 }
 
 

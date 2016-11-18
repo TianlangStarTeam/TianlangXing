@@ -6,14 +6,14 @@
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
-#import "AccountInfoListTVC.h"
+#import "BossAccountInfoListTVC.h"
 #import "AccountInfoCell.h"
 #import "UserModel.h"
-#import "AccountMTVC.h"
+#import "BossAccountInfoMTVC.h"
 
 
 
-@interface AccountInfoListTVC ()
+@interface BossAccountInfoListTVC ()
 
 /** 保存服务器返回的数据 */
 @property (nonatomic,strong) NSMutableArray *allPeopleArray;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation AccountInfoListTVC
+@implementation BossAccountInfoListTVC
 
 - (void)viewDidLoad
 {
@@ -375,7 +375,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UserModel *model = self.allPeopleArray[indexPath.row];
-    AccountMTVC *vc = [[AccountMTVC alloc] init];
+    BossAccountInfoMTVC *vc = [[BossAccountInfoMTVC alloc] init];
     vc.userModel = model;
     [self.navigationController pushViewController:vc animated:YES];
 }

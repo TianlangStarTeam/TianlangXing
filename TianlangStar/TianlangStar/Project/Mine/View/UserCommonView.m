@@ -184,25 +184,18 @@
 
 -(void)editInfoAction
 {
-    GeneralUserInfoTVC *vc = [[GeneralUserInfoTVC alloc] init];
-    [self.nav pushViewController:vc animated:YES];
 
-    return;
     UserInfo *userInfo = [UserInfo sharedUserInfo];
     if (userInfo.userType == 1 || userInfo.userType == 0)//老板
     {
-        AdminInfoTVC *vc = [[AdminInfoTVC alloc] init];
+        AdminInfoTVC *vc = [[AdminInfoTVC alloc] initWithStyle:UITableViewStyleGrouped];
         [self.nav pushViewController:vc animated:YES];
         
     }else if (userInfo.userType == 2)//普通用户
     {
-        GeneralUserInfoTVC *vc = [[GeneralUserInfoTVC alloc] init];
+        GeneralUserInfoTVC *vc = [[GeneralUserInfoTVC alloc] initWithStyle:UITableViewStyleGrouped];
         [self.nav pushViewController:vc animated:YES];
     }
-    
-    
-    
-    
 
 }
 

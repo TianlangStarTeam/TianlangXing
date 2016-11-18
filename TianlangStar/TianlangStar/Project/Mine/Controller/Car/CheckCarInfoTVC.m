@@ -10,7 +10,8 @@
 #import "PictureCell.h"
 #import "LabelTextFieldCell.h"
 #import "CarModel.h"
-#import "InsuranceManagement.h"
+#import "BossInsuranceManagement.h"
+#import "UserInsurecemangement.h"
 
 /** 车辆信息录入和添加 */
 typedef enum : NSUInteger {
@@ -233,7 +234,6 @@ typedef enum : NSUInteger {
             self.carModel.buytime = [NSString stringWithFormat:@"%ld", (long)[self.buytimeData.date timeIntervalSince1970]];
             break;
         }
-            
         default:
             break;
     }
@@ -568,9 +568,20 @@ typedef enum : NSUInteger {
     
     if (indexPath.section == 2)
     {
-        InsuranceManagement *vc = [[InsuranceManagement alloc] initWithStyle:UITableViewStyleGrouped];
-        vc.carID = self.carModel.ID;
-        [self.navigationController pushViewController:vc animated:YES];
+        UserInfo *userInfo = [UserInfo sharedUserInfo];
+        if (userInfo.userType == 1 || userInfo.userType == 0)
+        {
+            BossInsuranceManagement *vc = [[BossInsuranceManagement alloc] initWithStyle:UITableViewStyleGrouped];
+            vc.carID = self.carModel.cid;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else
+        {
+            UserInsurecemangement *vc = [[UserInsurecemangement alloc] initWithStyle:UITableViewStyleGrouped];
+            vc.carID = self.carModel.ID;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }
+        
     }
 }
 
