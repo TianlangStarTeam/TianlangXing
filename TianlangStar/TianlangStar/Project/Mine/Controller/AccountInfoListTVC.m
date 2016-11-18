@@ -6,14 +6,21 @@
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
+
+// 缓存主目录
+#define HSCachesDirectory [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"HSCache"]
+
+
 #import "AccountInfoListTVC.h"
 #import "AccountInfoCell.h"
 #import "UserModel.h"
 #import "AccountMTVC.h"
+#import "HSDownloadManager.h"
 
+#import "WebExcelVC.h"
+#import "ExcelModel.h"
 
-
-@interface AccountInfoListTVC ()
+@interface AccountInfoListTVC ()<NSURLSessionDelegate,NSURLSessionDataDelegate>
 
 /** 保存服务器返回的数据 */
 @property (nonatomic,strong) NSMutableArray *allPeopleArray;
@@ -25,6 +32,7 @@
 /** 当前页面 */
 @property (nonatomic,assign) NSInteger currentPage;
 
+@property (nonatomic,strong) NSURL *downloadURL;
 
 @end
 
@@ -52,10 +60,6 @@
 
 - (void)exportExcelAction
 {
-//    http://192.168.1.116:8080/exportfileuserinfoservlet
-//    
-//    http://192.168.1.116:8080/carservice/exportfileuserinfoservlet
-    
     NSString *url = [NSString stringWithFormat:@"%@exportfileuserinfoservlet",URL];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -77,44 +81,61 @@
             
             NSString *obj = responseObject[@"obj"];
             
-            YYLog(@"http://192.168.1.116:8080/%@",obj);
+            YYLog(@"导出excel链接： http://192.168.1.113:8080/%@",obj);
             
-            NSString *objString = [NSString stringWithFormat:@"http://192.168.1.116:8080/%@",obj];
+            NSString *objString = [NSString stringWithFormat:@"http://192.168.1.113:8080/%@",obj];
             
             NSURL *uRL = [NSURL URLWithString:objString];
             
-            NSURLRequest *request = [NSURLRequest requestWithURL:uRL cachePolicy:0 timeoutInterval:60];
-            
-            NSURLSession *session = [NSURLSession sharedSession];
-            
-            NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"导出" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action)
+            {
+                NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
                 
-                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
                 
+                NSURLRequest *request = [NSURLRequest requestWithURL:uRL];
+                
+                NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response)
+                {
+                    NSString *cachesPatch = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                    
+                    NSString *patchs = [cachesPatch stringByAppendingPathComponent:response.suggestedFilename];
+                    
+                    return [NSURL fileURLWithPath:patchs];
+                    
+                } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error)
+                {
+                    YYLog(@"response=  %@",response);
+                    YYLog(@"下载的文件路径：filePath=  %@",filePath);// 下载的文件路径
+                    YYLog(@"下载错误信息：%@",error);
+                    
+                    NSString *string = [filePath path];
+                    
+                    NSURL *url = [NSURL  URLWithString:string];
+                    
+                    [[UIApplication sharedApplication] openURL:url];
+                }];
+                
+                [downloadTask resume];
             }];
             
-//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否导出" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
-//            
-//            UIAlertAction *okAction = [UIAlertAction actionWithTitle:obj style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-//                
-//            }];
-//            
-//            UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
-//            
-//            [alert addAction:okAction];
-//            [alert addAction:cancleAction];
-//            
-//            [self presentViewController:alert animated:YES completion:nil];
             
+            
+            [[AlertView sharedAlertView] addAlertMessage:nil title:@"是否导出" okAction:okAction];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
         YYLog(@"导出excel失败%@",error);
-        
     }];
 }
 
+
+// 获取caches文件路径
+- (NSString *)cacheaPath
+{
+    return NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+}
 
 
 #pragma mark====== 增加上下拉功能======
