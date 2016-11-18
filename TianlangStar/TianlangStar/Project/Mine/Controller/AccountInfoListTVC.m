@@ -37,8 +37,84 @@
     [self addHeaderView];
     
     [self setupRefresh];
+    
+    [self rightItemExportExcel];
 
 }
+
+
+
+- (void)rightItemExportExcel
+{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"导出" style:(UIBarButtonItemStylePlain) target:self action:@selector(exportExcelAction)];
+}
+
+
+- (void)exportExcelAction
+{
+//    http://192.168.1.116:8080/exportfileuserinfoservlet
+//    
+//    http://192.168.1.116:8080/carservice/exportfileuserinfoservlet
+    
+    NSString *url = [NSString stringWithFormat:@"%@exportfileuserinfoservlet",URL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
+    parameters[@"sessionId"] = sessionid;
+    
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    {
+        YYLog(@"导出excel返回%@",responseObject);
+        
+        NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+        
+        if (resultCode == 1000)
+        {
+            YYLog(@"导出excel");
+            
+            NSString *obj = responseObject[@"obj"];
+            
+            YYLog(@"http://192.168.1.116:8080/%@",obj);
+            
+            NSString *objString = [NSString stringWithFormat:@"http://192.168.1.116:8080/%@",obj];
+            
+            NSURL *uRL = [NSURL URLWithString:objString];
+            
+            NSURLRequest *request = [NSURLRequest requestWithURL:uRL cachePolicy:0 timeoutInterval:60];
+            
+            NSURLSession *session = [NSURLSession sharedSession];
+            
+            NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                
+            }];
+            
+//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否导出" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+//            
+//            UIAlertAction *okAction = [UIAlertAction actionWithTitle:obj style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+//                
+//            }];
+//            
+//            UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+//            
+//            [alert addAction:okAction];
+//            [alert addAction:cancleAction];
+//            
+//            [self presentViewController:alert animated:YES completion:nil];
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    {
+        YYLog(@"导出excel失败%@",error);
+        
+    }];
+}
+
 
 
 #pragma mark====== 增加上下拉功能======
