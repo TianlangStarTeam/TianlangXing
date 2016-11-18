@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InsuranceManagement : UITableViewController
+@interface BossInsuranceManagement : UITableViewController
 
 
 /** 当前车辆的ID */

@@ -218,18 +218,7 @@
     
     if (self.headerImg)
     {
-        NSString *oldheaderpic = nil;
-        //传入为空的话
-        if (self.userModel.headimage.length != 0 || self.userModel.headimage != nil)
-        {
-            NSRange rangge = [self.userModel.headimage rangeOfString:@"picture"];
-            
-            if (rangge.length !=0)
-            {
-                oldheaderpic = [self.userModel.headimage substringFromIndex:rangge.location];
-            }
-        };
-        parmas[@"oldheaderpic"] = oldheaderpic;
+        parmas[@"oldheaderpic"] = self.userModel.headimage;
         NSString *url = [NSString stringWithFormat:@"%@upload/updateowninfoforheadservlet",URL];
         YYLog(@"parmas----%@",parmas);
         
@@ -239,13 +228,12 @@
              //拼接data
              [formData appendPartWithFileData:data name:@"headimage" fileName:@"img.jpg" mimeType:@"image/jpeg"];
              
-         } progress:^(NSProgress * _Nonnull uploadProgress) {
+         } progress:^(NSProgress * _Nonnull uploadProgress)
+        {
              
-         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-             
-             
+         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+        {
              YYLog(@"responseObject---%@",responseObject);
-             
          } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
              YYLog(@"error---%@",error);
          }];
@@ -283,7 +271,6 @@
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     UserInfo *userInfo = [UserInfo sharedUserInfo];
     parmas[@"sessionId"] = userInfo.RSAsessionId;
-//    parmas[@"userid"] = userInfo.userID;
     
     NSString *url = [NSString stringWithFormat:@"%@getuserinfoserlvet",URL];
     
@@ -350,7 +337,7 @@
             cell.headerPic.image = self.headerImg;
         }else
         {
-            [cell.headerPic sd_setImageWithURL:[NSURL URLWithString:self.userModel.headimage] placeholderImage:[UIImage imageNamed:@"touxiang"]];
+            [cell.headerPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@,%@",picURL,self.userModel.headimage]] placeholderImage:[UIImage imageNamed:@"touxiang"]];
         }
         
         return cell;

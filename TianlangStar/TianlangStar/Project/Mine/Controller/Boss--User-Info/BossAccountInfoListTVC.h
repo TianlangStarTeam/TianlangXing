@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AccountInfoListTVC : UITableViewController
+@interface BossAccountInfoListTVC : UITableViewController
 
 @end

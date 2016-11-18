@@ -7,7 +7,7 @@
 //  他的爱车
 
 #import <UIKit/UIKit.h>
-#import "AccountMTVC.h"
+#import "BossAccountInfoMTVC.h"
 @class CarModel;
 
 
@@ -17,9 +17,7 @@
 @property (nonatomic,strong) CarModel *carModel;
 
 /** 会员管理控制器 */
-@property (nonatomic,strong) AccountMTVC *accountMTVC;
-
-
+@property (nonatomic,strong) BossAccountInfoMTVC *accountMTVC;
 
 
 @end

@@ -25,9 +25,10 @@
 
 #import "UserCommonView.h"
 #import "MyCollectionTableVC.h"
-#import "AccountInfoListTVC.h"
+#import "BossAccountInfoListTVC.h"
 #import "AddCarInfo.h"
-#import "InsuranceManagement.h"
+#import "BossInsuranceManagement.h"
+#import "UserInsurecemangement.h"
 
 #import "CarDetailInfoTableVC.h"
 
@@ -41,6 +42,8 @@
 
 /** 顶部的信息 */
 @property (nonatomic,strong) UserCommonView *userCommonView;
+
+
 
 @end
 
@@ -131,10 +134,10 @@
     
     ILSettingArrowItem *pointsFor = [ILSettingArrowItem itemWithIcon:nil title:@"积分兑换" destVcClass:[UserInfoManagementTVC class]];
     
+//    
+//    ILSettingArrowItem *account = [ILSettingArrowItem itemWithIcon:nil title:@"账户管理" destVcClass:[CarDetailInfoTableVC class]];
     
-    ILSettingArrowItem *account = [ILSettingArrowItem itemWithIcon:nil title:@"账户管理" destVcClass:[CarDetailInfoTableVC class]];
-    
-    ILSettingArrowItem *Insurance = [ILSettingArrowItem itemWithIcon:nil title:@"保单" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *Insurance = [ILSettingArrowItem itemWithIcon:nil title:@"保单" destVcClass:[UserInsurecemangement class]];
     
     
     ILSettingArrowItem *carInfoRegist = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息登记" destVcClass:[AddCarInfo class]];
@@ -144,7 +147,7 @@
     
 
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
-    group0.items = @[collection,orderquery,pointsFor,prepaidRecords,account,Insurance,carInfoRegist,setting];
+    group0.items = @[collection,orderquery,pointsFor,prepaidRecords,Insurance,carInfoRegist,setting];
     
     [self.dataList addObject:group0];
 }
@@ -167,11 +170,11 @@
     
     ILSettingArrowItem *SalesStatistics = [ILSettingArrowItem itemWithIcon:nil title:@"入库登记" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"会员信息管理" destVcClass:[AccountInfoListTVC class]];
+    ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"会员信息管理" destVcClass:[BossAccountInfoListTVC class]];
     
     ILSettingArrowItem *informationRelease = [ILSettingArrowItem itemWithIcon:nil title:@"车辆管理" destVcClass:[UserInfoManagementTVC class]];
     
-    ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"保单管理" destVcClass:[InsuranceManagement class]];
+    ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"保单管理" destVcClass:[BossInsuranceManagement class]];
     
     ILSettingArrowItem *carInfochange = [ILSettingArrowItem itemWithIcon:nil title:@"轮播图" destVcClass:[CarInfoListVC class]];
     

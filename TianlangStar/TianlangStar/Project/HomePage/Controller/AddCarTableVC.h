@@ -20,8 +20,20 @@ typedef enum : NSUInteger {
 } CarInfoType;
 
 
+@protocol AddCarTableVCDlelegate <NSObject>
+
+@optional
+-(void)addCarInfoSuccess;
+
+@end
+
+
 @interface AddCarTableVC : UITableViewController
 
 @property (nonatomic,assign) NSInteger userid;
+
+/** 添加此车成功的代理事件 */
+@property (nonatomic,weak) id <AddCarTableVCDlelegate> delegate;
+
 
 @end

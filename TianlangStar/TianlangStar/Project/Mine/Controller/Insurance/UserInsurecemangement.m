@@ -1,17 +1,21 @@
 //
-//  InsuranceManagement.m
+//  UInsurecemangement.m
 //  TianlangStar
 //
-//  Created by youyousiji on 16/11/16.
+//  Created by youyousiji on 16/11/18.
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
-#import "InsuranceManagement.h"
+#import "UserInsurecemangement.h"
 #import "InputCell.h"
 #import "InsuranceModel.h"
 #import "UserHeaderImageCell.h"
 #import "CheckInsureceTVC.h"
 #import "PictureCell.h"
+#import "AddInsuranceTVC.h"
+
+
+
 typedef enum : NSUInteger {
     expenses = 0,
     payment,
@@ -20,7 +24,7 @@ typedef enum : NSUInteger {
     continuetime
 } InsuranceType;
 
-@interface InsuranceManagement ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface UserInsurecemangement ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 /** 左侧的数组信息 */
 @property (nonatomic,strong) NSArray *leftArr;
@@ -42,6 +46,10 @@ typedef enum : NSUInteger {
 @property (nonatomic,strong) UIImage *headerImg;
 
 
+/** 右上角的编辑按钮 */
+@property (nonatomic,weak) UIButton *rightBarBtn;
+
+
 
 /** 保险的枚举类型 */
 @property (nonatomic,assign) InsuranceType selectedData;
@@ -55,7 +63,7 @@ typedef enum : NSUInteger {
 
 @end
 
-@implementation InsuranceManagement
+@implementation UserInsurecemangement
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,7 +74,7 @@ typedef enum : NSUInteger {
     [self loadData];
     
     [self addRightBar];
-
+    
     [self addDatePIcker];
 }
 
@@ -101,10 +109,16 @@ typedef enum : NSUInteger {
     
     switch (segment.selectedSegmentIndex) {
         case 0://强险
+        {
             self.insuranceType = 1;
+            self.rightBarBtn.hidden = NO;
             break;
-        case 1://强险
+        }
+        case 1://商业险
+        {
             self.insuranceType = 2;
+            self.rightBarBtn.hidden = YES;
+        }
             break;
             
         default:
@@ -133,9 +147,9 @@ typedef enum : NSUInteger {
     self.insuranceidData = startDatePicker;
     
     //计算当前时间
-//    NSDate *nowdate = [NSDate date];
-//    //    限制起始时间为当前时间
-//    self.insuranceidData.maximumDate = nowdate;
+    //    NSDate *nowdate = [NSDate date];
+    //    //    限制起始时间为当前时间
+    //    self.insuranceidData.maximumDate = nowdate;
     [self.insuranceidData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
 
@@ -146,9 +160,9 @@ typedef enum : NSUInteger {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString * time=[outputFormatter stringFromDate:self.insuranceidData.date];
-//    //更改输入框的数据
-//    //    self.textArr[_selectData] = time;
-//    [self.textArr replaceObjectAtIndex:_selectData withObject:time];
+    //    //更改输入框的数据
+    //    //    self.textArr[_selectData] = time;
+    //    [self.textArr replaceObjectAtIndex:_selectData withObject:time];
     
     //记录数据
     switch (self.selectedData)
@@ -163,7 +177,7 @@ typedef enum : NSUInteger {
             self.insuranceModel.continuetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
-
+            
             
         default:
             break;
@@ -171,21 +185,17 @@ typedef enum : NSUInteger {
     
     //回到主线程刷新数据，刷新对应的单元格
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        //        [self.tableView reloadData];
-        //单个单元格刷新
-        NSIndexPath *index = [NSIndexPath indexPathForRow:self.selectedData inSection:0];
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index, nil] withRowAnimation:(UITableViewRowAnimationNone)];
+        [self.tableView reloadData];
     });
 }
 
 
 -(void)addRightBar
 {
-    
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
     [button setTitle:@"编辑" forState:UIControlStateNormal];
     [button setTitle:@"保存" forState:UIControlStateSelected];
+    self.rightBarBtn = button;
     [button addTarget:self action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
     [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -215,21 +225,26 @@ typedef enum : NSUInteger {
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     UserInfo *userInfo = [UserInfo sharedUserInfo];
     parmas[@"sessionId"] = userInfo.RSAsessionId;
-    parmas[@"id"] = self.carID;
     parmas[@"type"] = @(self.insuranceType);
-    NSString *url = [NSString stringWithFormat:@"%@querycarinsuranceservlet",URL];
+    parmas[@"id"] = self.carID;
     
+    NSString *url = [NSString stringWithFormat:@"%@querycarinsuranceservlet",URL];
+    YYLog(@"self.carID-----%@",self.carID);
     YYLog(@"parmas-----%@",parmas);
     [HttpTool post:url parmas:parmas success:^(id json)
      {
+         YYLog(@"json----%@",json);
+         
          self.insuranceArr = [InsuranceModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
-         if (self.insuranceType == 1)
+         
+         
+         if (self.insuranceType == 1 && self.insuranceArr  && self.insuranceArr.count > 0)
          {
              self.insuranceModel = self.insuranceArr[0];
          }
          
          YYLog(@"%@",json);
-         YYLog(@"self.insuranceModel.insurancetype---%@",self.insuranceModel.insurancetype);
+         YYLog(@"self.insuranceModel.insurancetype---%@",self.insuranceArr);
          
          [self.tableView reloadData];
          
@@ -237,7 +252,7 @@ typedef enum : NSUInteger {
      {
          YYLog(@"%@",error);
      }];
-
+    
 }
 
 //更新数据
@@ -280,16 +295,15 @@ typedef enum : NSUInteger {
          
          if (resultCode == 1000)
          {
-             [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
+             [SVProgressHUD showSuccessWithStatus:@"修改成功"];
              [self.navigationController popViewControllerAnimated:YES];
-             
          }
          
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
          YYLog(@"添加爱车错误：%@",error);
      }];
-
+    
 }
 
 
@@ -321,42 +335,48 @@ typedef enum : NSUInteger {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.insuranceType == 1)
+    NSInteger count = 1;
+    if (self.insuranceType == 1 && section == 1)
     {
-        NSInteger count = 1;
-        
-        if (section == 1)
-        {
-            count = self.leftArr.count;
-        }
+        count = self.leftArr.count;
         return count;
-
+    }else if(self.insuranceType ==1 && section == 0)
+    {
+        return self.insuranceArr.count * 1;
     }else
     {
-        return 1;
+        return self.insuranceArr.count + 1;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.insuranceType == 2)//较强险
+    if (self.insuranceType == 2)//商业险
     {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         
-        InsuranceModel *model = self.insuranceArr[indexPath.row];
-        cell.textLabel.text = model.insurancetype;
-        cell.detailTextLabel.text = model.expenses;
+        YYLog(@"self.insuranceArr.count--%lu",(unsigned long)self.insuranceArr.count);
+        YYLog(@"self.insuranceArr.count--%@",self.insuranceArr);
+        
+        if (self.insuranceArr.count == indexPath.row)
+        {
+            cell.textLabel.text = @"添加保险";
+        }else
+        {
+            InsuranceModel *model = self.insuranceArr[indexPath.row];
+            cell.textLabel.text = model.insurancetype;
+            cell.detailTextLabel.text = model.expenses;
+        }
+  
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         return cell;
-    }else
+    }else//较强险
     {
         if (indexPath.section == 0)
         {
-            
             PictureCell *cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:nil];
-            
             if (self.headerImg)
             {
                 cell.pictureView.image = self.headerImg;
@@ -378,11 +398,13 @@ typedef enum : NSUInteger {
             cell.textField.tag = self.selectedData;
             cell.textField.delegate = self;
             cell.textField.textAlignment = NSTextAlignmentRight;
+            cell.textField.enabled  = self.inputEnble;
             //设置数据
             switch (self.selectedData)
             {
                 case expenses:
-                    cell.leftLB.text = self.insuranceModel.insurancetype;
+//                    cell.leftLB.text = self.insuranceModel.insurancetype;
+                    cell.leftLB.text = @"交强险";
                     cell.textField.text = self.insuranceModel.expenses;
                     
                     break;
@@ -413,16 +435,39 @@ typedef enum : NSUInteger {
     [self.view endEditing:YES];
 }
 
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.insuranceType == 1 && indexPath.section == 0)
+    {
+        
+        return 220;
+    }else
+    {
+        return 40;
+    }
+    
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.insuranceType == 2)
+    if (self.insuranceType == 2)//商业险
     {
-        InsuranceModel *model = self.insuranceArr[indexPath.row];
-        CheckInsureceTVC *vc = [[CheckInsureceTVC alloc] initWithStyle:UITableViewStyleGrouped];
-        vc.title = model.insurancetype;
-        vc.insuranceModel = model;
-        [self.navigationController pushViewController:vc animated:YES];
+        if (self.insuranceArr.count == indexPath.row )
+        {
+            AddInsuranceTVC *vc = [[AddInsuranceTVC alloc] initWithStyle:UITableViewStyleGrouped];
+            vc.carID = self.carID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else//显示险种闲情
+        {
+            InsuranceModel *model = self.insuranceArr[indexPath.row];
+            CheckInsureceTVC *vc = [[CheckInsureceTVC alloc] init];
+            vc.insuranceModel = model;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
     }
+
     
     if (self.insuranceType == 1 && indexPath.section == 0 && self.inputEnble)
     {
@@ -443,7 +488,7 @@ typedef enum : NSUInteger {
                               YYLog(@"取消");
                           }]];
         [self presentViewController:alert animated:YES completion:nil];
-
+        
     }
     
 }

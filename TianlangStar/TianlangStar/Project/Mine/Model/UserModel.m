@@ -22,10 +22,10 @@
     
 }
 
--(NSString *)headimage
-{
-    return [NSString stringWithFormat:@"%@%@",picURL,_headimage];
-}
+//-(NSString *)headimage
+//{
+//    return [NSString stringWithFormat:@"%@%@",picURL,_headimage];
+//}
 
 
 -(NSString *)lasttime

@@ -6,7 +6,7 @@
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
-#import "AccountMTVC.h"
+#import "BossAccountInfoMTVC.h"
 #import "InputCell.h"
 #import "UserModel.h"
 #import "UserHeaderImageCell.h"
@@ -16,7 +16,7 @@
 #import "CheckCarInfoTVC.h"
 
 
-@interface AccountMTVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface BossAccountInfoMTVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 /** 单元格的数组 */
 @property (nonatomic,strong) NSArray *leftArr;
@@ -49,7 +49,7 @@
 
 @end
 
-@implementation AccountMTVC
+@implementation BossAccountInfoMTVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,27 +74,23 @@
 /** 获取当前用户名下对应的车辆 */
 -(void)setupCarInfoData
 {
-    
-    NSString *url = [NSString stringWithFormat:@"%@getallcarinfoservlet",URL];
+    NSString *url = [NSString stringWithFormat:@"%@getusercarinfoservlet",URL];
     
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
-    
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"id"] = self.userModel.ID;
     YYLog(@"parmas----%@",parmas);
-    
     
     [HttpTool post:url parmas:parmas success:^(id json)
      {
+         YYLog(@"json----%@",json);
          self.carInfoArr = [CarModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
          [self.tableView reloadData];
          
      } failure:^(NSError *error)
      {
          YYLog(@"error---%@",error);
-         
      }];
-         
-
 }
 
 #pragma mark===== 初始化性别选则的弹出框===================
@@ -400,7 +396,6 @@
             CarModel *Model = self.carInfoArr[indexPath.row];
             CheckCarInfoTVC *vc = [[CheckCarInfoTVC alloc] initWithStyle:UITableViewStyleGrouped];
             vc.carModel = Model;
-            vc.accountMTVC = self;
             [self.navigationController pushViewController:vc
                                                  animated:YES];
         }
@@ -437,11 +432,6 @@
         self.tableView.tableFooterView.hidden = YES;
         return;
     }
-
-    
-
-
-
 }
 
 
@@ -586,23 +576,8 @@
      } failure:^(NSError *error)
      {
          YYLog(@"error----%@",error);
-         
      }];
-    
     }
-    
-
-    
-    
-    
-    
-//    [HttpTool post:url parmas:parmas success:^(id json)
-//     {
-//         YYLog(@"修改用户信息json--%@",json);
-//     } failure:^(NSError *error)
-//     {
-//         YYLog(@"修改用户信息error--%@",error);
-//     }];
 }
 
 

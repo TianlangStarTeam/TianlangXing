@@ -52,6 +52,7 @@ typedef enum : NSUInteger {
 {
     [super viewDidLoad];
     
+    
     self.inputEnble = NO;
     
     [self addDatePIcker];
@@ -130,6 +131,8 @@ typedef enum : NSUInteger {
 
 -(void)addRightBar
 {
+    //只有管理员有权限
+    if ([UserInfo sharedUserInfo].userType == 2) return;
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
     [button setTitle:@"编辑" forState:UIControlStateNormal];
     [button setTitle:@"保存" forState:UIControlStateSelected];
@@ -186,20 +189,21 @@ typedef enum : NSUInteger {
          
      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
-         YYLog(@"添加爱车返回：%@",responseObject);
+         YYLog(@"修改保险信息返回返回：%@",responseObject);
          
          NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
          
          if (resultCode == 1000)
          {
-             [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
+             //             [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
+             [SVProgressHUD showSuccessWithStatus:@"修改成功"];
              [self.navigationController popViewControllerAnimated:YES];
              
          }
          
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
-         YYLog(@"添加爱车错误：%@",error);
+         YYLog(@"修改保险错误：%@",error);
      }];
 
 }
@@ -212,6 +216,8 @@ typedef enum : NSUInteger {
 
     return 2;
 }
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 

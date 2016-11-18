@@ -166,6 +166,12 @@
              if (resultCode == 1000)
              {
                  [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
+                 
+                 //调用代理
+                 if ([self.delegate respondsToSelector:@selector(addCarInfoSuccess)])
+                 {
+                     [self.delegate addCarInfoSuccess];
+                 }
                  [self.navigationController popViewControllerAnimated:YES];
                  
              }

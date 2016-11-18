@@ -88,7 +88,7 @@
     
     NSString *leval = [NSString VIPis:userModel.viplevel];
     self.viplevel.text = leval;
-    self.time.text = [userModel.lasttime substringFromIndex:10];
+    self.time.text = [userModel.createtime substringFromIndex:10];
     self.lasttime.text = [userModel.createtime substringToIndex:10];
 }
 
@@ -109,9 +109,9 @@
 
 
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     [super awakeFromNib];
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

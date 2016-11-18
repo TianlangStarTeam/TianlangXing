@@ -120,10 +120,8 @@
      Int resultCode  1018添加操作没有成功
      */
     [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
      {
-         
          NSLog(@"管理员创建用户返回---%@",responseObject);
          NSNumber *num = responseObject[@"resultCode"];
          NSInteger result = [num integerValue];
@@ -150,8 +148,6 @@
              default:
                  break;
          }
-
-         
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
          NSLog(@"管理员创建用户失败---%@",error);
