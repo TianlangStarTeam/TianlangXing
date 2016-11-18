@@ -79,6 +79,7 @@
 		D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72867121DCB154C00D77B38 /* FeedbackVC.m */; };
 		D728671B1DCB33BE00D77B38 /* CarsNav.m in Sources */ = {isa = PBXBuildFile; fileRef = D728671A1DCB33BE00D77B38 /* CarsNav.m */; };
 		D72B9D2A1DDD519100C446D3 /* CheckCarInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72B9D291DDD519100C446D3 /* CheckCarInfoTVC.m */; };
+		D72B9D2D1DDDCEC900C446D3 /* CheckInsureceTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72B9D2C1DDDCEC900C446D3 /* CheckInsureceTVC.m */; };
 		D72D0BED1DDB19C400AA8B06 /* GeneralUserInfoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D72D0BEC1DDB19C400AA8B06 /* GeneralUserInfoTVC.m */; };
 		D735EAFE1DD075790051D8E7 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D735EAFD1DD075790051D8E7 /* HttpTool.m */; };
 		D735EB041DD087500051D8E7 /* ProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D735EB031DD087500051D8E7 /* ProductModel.m */; };
@@ -258,6 +259,8 @@
 		D728671A1DCB33BE00D77B38 /* CarsNav.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsNav.m; sourceTree = "<group>"; };
 		D72B9D281DDD519100C446D3 /* CheckCarInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckCarInfoTVC.h; sourceTree = "<group>"; };
 		D72B9D291DDD519100C446D3 /* CheckCarInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckCarInfoTVC.m; sourceTree = "<group>"; };
+		D72B9D2B1DDDCEC900C446D3 /* CheckInsureceTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInsureceTVC.h; sourceTree = "<group>"; };
+		D72B9D2C1DDDCEC900C446D3 /* CheckInsureceTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInsureceTVC.m; sourceTree = "<group>"; };
 		D72D0BEB1DDB19C400AA8B06 /* GeneralUserInfoTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeneralUserInfoTVC.h; path = TianlangStar/Project/Mine/View/UserView/GeneralUserInfoTVC.h; sourceTree = SOURCE_ROOT; };
 		D72D0BEC1DDB19C400AA8B06 /* GeneralUserInfoTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeneralUserInfoTVC.m; path = TianlangStar/Project/Mine/View/UserView/GeneralUserInfoTVC.m; sourceTree = SOURCE_ROOT; };
 		D735EAFB1DD063E60051D8E7 /* TianlangStar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TianlangStar.entitlements; sourceTree = "<group>"; };
@@ -839,6 +842,8 @@
 				D7203F671DDC37AB00B6526F /* InsuranceManagement.m */,
 				D72B9D281DDD519100C446D3 /* CheckCarInfoTVC.h */,
 				D72B9D291DDD519100C446D3 /* CheckCarInfoTVC.m */,
+				D72B9D2B1DDDCEC900C446D3 /* CheckInsureceTVC.h */,
+				D72B9D2C1DDDCEC900C446D3 /* CheckInsureceTVC.m */,
 			);
 			path = Car;
 			sourceTree = "<group>";
@@ -1048,6 +1053,7 @@
 				D728670F1DCB144800D77B38 /* ILSettingLabelItem.m in Sources */,
 				D728671B1DCB33BE00D77B38 /* CarsNav.m in Sources */,
 				D705CF221DC09C6400F65BE0 /* TestFildJudge.m in Sources */,
+				D72B9D2D1DDDCEC900C446D3 /* CheckInsureceTVC.m in Sources */,
 				711EFA3E1DD9BAD7006AEF9E /* ProductCell.m in Sources */,
 				71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */,
 				D705CF211DC09C6400F65BE0 /* RSA.m in Sources */,

@@ -1,16 +1,15 @@
 //
-//  InsuranceManagement.m
+//  CheckInsureceTVC.m
 //  TianlangStar
 //
-//  Created by youyousiji on 16/11/16.
+//  Created by youyousiji on 16/11/17.
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
-#import "InsuranceManagement.h"
-#import "InputCell.h"
+#import "CheckInsureceTVC.h"
 #import "InsuranceModel.h"
 #import "UserHeaderImageCell.h"
-#import "CheckInsureceTVC.h"
+#import "InputCell.h"
 #import "PictureCell.h"
 typedef enum : NSUInteger {
     expenses = 0,
@@ -20,7 +19,7 @@ typedef enum : NSUInteger {
     continuetime
 } InsuranceType;
 
-@interface InsuranceManagement ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface CheckInsureceTVC ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 /** 左侧的数组信息 */
 @property (nonatomic,strong) NSArray *leftArr;
@@ -29,16 +28,7 @@ typedef enum : NSUInteger {
 /** 标记输入框是否可用 */
 @property (nonatomic,assign) BOOL inputEnble;
 
-
-/** 接收到的保险类型 */
-@property (nonatomic,strong) InsuranceModel *insuranceModel;
-
-
-/** 接收到的保险数据 */
-@property (nonatomic,strong) NSMutableArray *insuranceArr;
-
-
-/** 车辆保险图片 */
+/** 保险的图片信息 */
 @property (nonatomic,strong) UIImage *headerImg;
 
 
@@ -53,69 +43,30 @@ typedef enum : NSUInteger {
 /** 险种的类型 */
 @property (nonatomic,assign) NSInteger insuranceType;
 
+
 @end
 
-@implementation InsuranceManagement
+@implementation CheckInsureceTVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    self.insuranceType = 1;
-    [self addTitleView];
+    self.inputEnble = NO;
     
-    [self loadData];
+    [self addDatePIcker];
     
     [self addRightBar];
-
-    [self addDatePIcker];
+    
 }
 
-
--(InsuranceModel *)insuranceModel
+-(NSArray *)leftArr
 {
-    if (!_insuranceModel)
-    {
-        _insuranceModel = [[InsuranceModel alloc] init];
+    if (!_leftArr) {
+        _leftArr = @[@"险种",@"投保公司",@"投保日期",@"投保单号",@"续保日期"];
     }
-    return _insuranceModel;
+    return _leftArr;
 }
-
-
-
-//设置顶部的分割按钮
--(void)addTitleView
-{
-    NSArray *arr = [NSArray arrayWithObjects:@"交强险",@"商业险",nil];
-    UISegmentedControl *segment = [[UISegmentedControl alloc] initWithItems:arr];
-    segment.frame = CGRectMake(0, 10, 100, 30);
-    [segment addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
-    segment.apportionsSegmentWidthsByContent = YES;
-    
-    //设置默认选择较强险
-    segment.selectedSegmentIndex = 0;
-    self.navigationItem.titleView = segment;
-}
-
--(void)segmentChange:(UISegmentedControl *)segment
-{
-    
-    switch (segment.selectedSegmentIndex) {
-        case 0://强险
-            self.insuranceType = 1;
-            break;
-        case 1://强险
-            self.insuranceType = 2;
-            break;
-            
-        default:
-            break;
-    }
-    YYLog(@"self.type---%ld",(long)self.insuranceType);
-    
-    [self loadData];
-}
-
-
 
 
 /**
@@ -133,9 +84,9 @@ typedef enum : NSUInteger {
     self.insuranceidData = startDatePicker;
     
     //计算当前时间
-//    NSDate *nowdate = [NSDate date];
-//    //    限制起始时间为当前时间
-//    self.insuranceidData.maximumDate = nowdate;
+    //    NSDate *nowdate = [NSDate date];
+    //    //    限制起始时间为当前时间
+    //    self.insuranceidData.maximumDate = nowdate;
     [self.insuranceidData addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
 
@@ -146,9 +97,9 @@ typedef enum : NSUInteger {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString * time=[outputFormatter stringFromDate:self.insuranceidData.date];
-//    //更改输入框的数据
-//    //    self.textArr[_selectData] = time;
-//    [self.textArr replaceObjectAtIndex:_selectData withObject:time];
+    //    //更改输入框的数据
+    //    //    self.textArr[_selectData] = time;
+    //    [self.textArr replaceObjectAtIndex:_selectData withObject:time];
     
     //记录数据
     switch (self.selectedData)
@@ -163,7 +114,7 @@ typedef enum : NSUInteger {
             self.insuranceModel.continuetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
-
+            
             
         default:
             break;
@@ -172,17 +123,13 @@ typedef enum : NSUInteger {
     //回到主线程刷新数据，刷新对应的单元格
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        //        [self.tableView reloadData];
-        //单个单元格刷新
-        NSIndexPath *index = [NSIndexPath indexPathForRow:self.selectedData inSection:0];
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index, nil] withRowAnimation:(UITableViewRowAnimationNone)];
+        [self.tableView reloadData];
     });
 }
 
 
 -(void)addRightBar
 {
-    
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
     [button setTitle:@"编辑" forState:UIControlStateNormal];
     [button setTitle:@"保存" forState:UIControlStateSelected];
@@ -208,41 +155,6 @@ typedef enum : NSUInteger {
     }
 }
 
-
-#pragma mark=============初始化请求数据=====================
--(void)loadData
-{
-    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
-    UserInfo *userInfo = [UserInfo sharedUserInfo];
-    parmas[@"sessionId"] = userInfo.RSAsessionId;
-    parmas[@"id"] = self.carID;
-    parmas[@"type"] = @(self.insuranceType);
-    NSString *url = [NSString stringWithFormat:@"%@querycarinsuranceservlet",URL];
-    
-    YYLog(@"parmas-----%@",parmas);
-    [HttpTool post:url parmas:parmas success:^(id json)
-     {
-         self.insuranceArr = [InsuranceModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
-         if (self.insuranceType == 1)
-         {
-             self.insuranceModel = self.insuranceArr[0];
-         }
-         
-         YYLog(@"%@",json);
-         YYLog(@"self.insuranceModel.insurancetype---%@",self.insuranceModel.insurancetype);
-         
-         [self.tableView reloadData];
-         
-     } failure:^(NSError *error)
-     {
-         YYLog(@"%@",error);
-     }];
-
-}
-
-//更新数据
-
-#pragma mark=============更新数据=====================
 -(void)updataUserInfo
 {
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
@@ -293,139 +205,98 @@ typedef enum : NSUInteger {
 }
 
 
--(NSArray *)leftArr
-{
-    if (!_leftArr) {
-        _leftArr = @[@"险种",@"投保公司",@"投保日期",@"投保单号",@"续保日期"];
-    }
-    return _leftArr;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
     NSInteger count = 1;
-    if (self.insuranceType == 1)
-    {
-        count = 2;
-    }
     
+    if (section == 1)
+    {
+        count = self.leftArr.count;
+    }
     return count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.insuranceType == 1)
+    if (indexPath.section == 0)
     {
-        NSInteger count = 1;
+        PictureCell *cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:nil];
         
-        if (section == 1)
+        if (self.headerImg)
         {
-            count = self.leftArr.count;
+            cell.pictureView.image = self.headerImg;
         }
-        return count;
-
-    }else
-    {
-        return 1;
-    }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.insuranceType == 2)//较强险
-    {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        
-        InsuranceModel *model = self.insuranceArr[indexPath.row];
-        cell.textLabel.text = model.insurancetype;
-        cell.detailTextLabel.text = model.expenses;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+        else
+        {
+            [cell.pictureView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",picURL,self.insuranceModel.images]] placeholderImage:[UIImage imageNamed:@"touxiang"]];
+        }
         return cell;
     }else
     {
-        if (indexPath.section == 0)
+        InputCell *cell = [InputCell cellWithTableView:tableView];
+        cell.leftLB.text = self.leftArr[indexPath.row];
+        cell.leftLB.width = 100;
+        cell.textField.x = KScreenWidth * 0.25;
+        self.selectedData = indexPath.row;
+        cell.textField.tag = self.selectedData;
+        cell.textField.delegate = self;
+        cell.textField.textAlignment = NSTextAlignmentRight;
+        cell.textField.enabled = self.inputEnble;
+        //设置数据
+        switch (self.selectedData)
         {
-            
-            PictureCell *cell = [[PictureCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:nil];
-            
-            if (self.headerImg)
+            case expenses:
+                cell.leftLB.text = self.insuranceModel.insurancetype;
+                cell.textField.text = self.insuranceModel.expenses;
+                
+                break;
+            case payment:
+                cell.textField.text = self.insuranceModel.company;
+                break;
+            case buytime:
             {
-                cell.pictureView.image = self.headerImg;
+                cell.textField.text = [self.insuranceModel.buytime getTime];
+                break;
             }
-            else
-            {
-                [cell.pictureView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",picURL,self.insuranceModel.images]] placeholderImage:[UIImage imageNamed:@"touxiang"]];
-            }
-            return cell;
-            
-        }else
-        {
-            InputCell *cell = [InputCell cellWithTableView:tableView];
-            
-            cell.leftLB.text = self.leftArr[indexPath.row];
-            cell.leftLB.width = 100;
-            cell.textField.x = KScreenWidth * 0.25;
-            self.selectedData = indexPath.row;
-            cell.textField.tag = self.selectedData;
-            cell.textField.delegate = self;
-            cell.textField.textAlignment = NSTextAlignmentRight;
-            //设置数据
-            switch (self.selectedData)
-            {
-                case expenses:
-                    cell.leftLB.text = self.insuranceModel.insurancetype;
-                    cell.textField.text = self.insuranceModel.expenses;
-                    
-                    break;
-                case payment:
-                    cell.textField.text = self.insuranceModel.company;
-                    break;
-                case buytime:
-                {
-                    cell.textField.text = [self.insuranceModel.buytime getTime];
-                    break;
-                }
-                case policyid:
-                    cell.textField.text = self.insuranceModel.policyid;
-                    break;
-                case continuetime:
-                    cell.textField.text = [self.insuranceModel.continuetime getTime];
-                    break;
-                default:
-                    break;
-            }
-            return cell;
+            case policyid:
+                cell.textField.text = self.insuranceModel.policyid;
+                break;
+            case continuetime:
+                cell.textField.text = [self.insuranceModel.continuetime getTime];
+                break;
+            default:
+                break;
         }
+        return cell;
     }
 }
 
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.view endEditing:YES];
+    if (indexPath.section == 0)
+    {
+        return 220;
+    }else
+    {
+        return 40;
+    }
 }
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.insuranceType == 2)
+    if (indexPath.section == 0 && self.inputEnble )
     {
-        InsuranceModel *model = self.insuranceArr[indexPath.row];
-        CheckInsureceTVC *vc = [[CheckInsureceTVC alloc] initWithStyle:UITableViewStyleGrouped];
-        vc.title = model.insurancetype;
-        vc.insuranceModel = model;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    
-    if (self.insuranceType == 1 && indexPath.section == 0 && self.inputEnble)
-    {
+        
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
@@ -444,8 +315,9 @@ typedef enum : NSUInteger {
                           }]];
         [self presentViewController:alert animated:YES completion:nil];
 
+        
     }
-    
+
 }
 
 
@@ -481,7 +353,6 @@ typedef enum : NSUInteger {
         [self.tableView reloadData];
     }];
 }
-
 
 
 
@@ -525,6 +396,9 @@ typedef enum : NSUInteger {
     }
     return YES;
 }
+
+
+
 
 
 

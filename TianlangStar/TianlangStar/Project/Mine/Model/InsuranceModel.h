@@ -58,7 +58,7 @@
 @property (nonatomic,copy) NSString *buytime;
 
 
-/** 续保日趋 */
+/** 续保日期 */
 @property (nonatomic,copy) NSString *continuetime;
 
 
