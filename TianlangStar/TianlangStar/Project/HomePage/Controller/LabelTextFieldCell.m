@@ -34,7 +34,8 @@
         CGFloat rightTFWidth = KScreenWidth - 2 * leftLabelX - leftLabelWidth - hor;
         self.rightTF = [[UITextField alloc] initWithFrame:CGRectMake(rightTFX, leftLabelY, rightTFWidth, leftLabelHeight)];
         self.rightTF.font = Font14;
-//        self.rightTF.borderStyle = UITextBorderStyleRoundedRect;
+        self.rightTF.backgroundColor = [UIColor colorWithRed:239.0 / 255.0 green:239.0 / 255.0 blue:239.0 / 255.0 alpha:1.0];
+        self.rightTF.borderStyle = UITextBorderStyleRoundedRect;
         [self.contentView addSubview:self.rightTF];
         
         

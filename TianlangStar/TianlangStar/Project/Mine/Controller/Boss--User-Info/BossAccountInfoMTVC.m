@@ -389,6 +389,7 @@
         if (indexPath.row == self.carInfoArr.count)//添加爱车
         {
             AddCarTableVC *vc = [[AddCarTableVC alloc] init];
+            vc.userid = [self.userModel.ID integerValue];
             [self.navigationController pushViewController:vc animated:YES];
         }else{//他的爱车
             

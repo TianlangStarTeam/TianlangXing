@@ -11,6 +11,8 @@
 #import "HomePageSelectCell.h" // 保养维护、商品、车辆信息的自定义cell
 #import "ProductModel.h" // 商品模型
 #import "ProductCell.h"
+#import "ProductPublishTableVC.h"
+
 
 @interface HomePageTableVC ()<UISearchResultsUpdating,SDCycleScrollViewDelegate>
 
@@ -37,6 +39,17 @@
     [self creatHeaderView];// 轮播图
     
     [self fetchProductInfoWithType:3];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"商品发布" style:(UIBarButtonItemStylePlain) target:self action:@selector(productPublishAction)];
+}
+
+
+
+- (void)productPublishAction
+{
+    ProductPublishTableVC *productPublishTableVC = [[ProductPublishTableVC alloc] initWithStyle:(UITableViewStylePlain)];
+    
+    [self.navigationController pushViewController:productPublishTableVC animated:YES];
 }
 
 

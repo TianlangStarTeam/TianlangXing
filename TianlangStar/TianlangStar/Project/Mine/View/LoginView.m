@@ -332,6 +332,14 @@
 }
 
 
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self endEditing:YES];
+}
+
+
+
 //登录按钮的点击事件
 - (void)okAction
 {

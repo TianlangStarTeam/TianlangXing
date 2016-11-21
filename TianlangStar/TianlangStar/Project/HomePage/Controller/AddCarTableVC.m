@@ -122,7 +122,13 @@
     
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
-    parameters[@"userid"] = [NSString stringWithFormat:@"%ld",self.userid];
+    
+    if ([UserInfo sharedUserInfo].userType == 1)
+    {
+        parameters[@"userid"] = [NSString stringWithFormat:@"%ld",self.userid];
+        
+        YYLog(@"self.userid === %ld",self.userid);
+    }
     
     parameters[@"cartype"] = self.carModel.cartype;
     parameters[@"brand"] = self.carModel.brand;
