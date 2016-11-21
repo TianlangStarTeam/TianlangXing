@@ -169,8 +169,6 @@ typedef enum : NSUInteger {
     parmas[@"policyid"] = self.insuranceModel.policyid;
     parmas[@"continuetime"] = self.insuranceModel.continuetime;
     
-    
-    
     YYLog(@"parmas---更新数据%@",parmas);
     NSString *url = [NSString stringWithFormat:@"%@upload/updateadmininsuranceservlet",URL];
     
