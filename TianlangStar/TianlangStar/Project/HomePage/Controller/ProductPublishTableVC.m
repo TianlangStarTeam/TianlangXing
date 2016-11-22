@@ -10,14 +10,18 @@
 
 #import "LabelTextFieldCell.h"
 #import "LabelTFLabelCell.h"
+#import "AddImagesCollectionVC.h"
+#import "AddImages.h"
 
 @interface ProductPublishTableVC ()
 
 @property (nonatomic,strong) NSArray *leftBaseLabelArray;
 
-@property (nonatomic,strong) NSArray *saleLabelArray;
+@property (nonatomic,strong) NSArray *leftSeviceLabelArray;
 
-@property (nonatomic,strong) NSArray *introduceLabelArray;
+@property (nonatomic,strong) NSArray *leftSecondcarLabelArray;
+
+@property (nonatomic,strong) UISegmentedControl *segment;
 
 @end
 
@@ -26,11 +30,51 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _leftBaseLabelArray = @[@"商品名称",@"商品类型",@"商品规格",@"适用车型",@"供应商",@"入库时间",@"入库数量",@"进价(元)"];
-    _saleLabelArray = @[@"售价",@"积分"];
-    _introduceLabelArray = @[@"简介",@"备注"];
+    _leftBaseLabelArray = @[@"商品名称",@"商品类型",@"商品规格",@"适用车型",@"供应商",@"入库时间",@"入库数量",@"进价(元)",@"售价",@"积分",@"简介",@"备注"];
+    
+    _leftSeviceLabelArray = @[@"服务项目",@"服务类型",@"服务内容",@"保修期限",@"预计耗时",@"售价",@"积分"];
+    
+    _leftSecondcarLabelArray = @[@"品牌",@"报价",@"型号",@"车型",@"行驶里程",@"购买年份",@"车牌号",@"原车主",@"车架号",@"发动机号",@"使用性质",@"车辆简介"];
     
     [self rightItem];
+    
+    [self creatAddImagesView];
+    
+    [self creatTitleView];
+}
+
+
+
+- (void)creatTitleView
+{
+    self.segment = [[UISegmentedControl alloc] initWithItems:@[@"商品",@"服务",@"二手车"]];
+    self.segment.frame = CGRectMake(0, 10, 120, 30);
+    [self.segment addTarget:self action:@selector(segmentChange:) forControlEvents:(UIControlEventValueChanged)];
+    self.segment.apportionsSegmentWidthsByContent = YES;
+    
+    self.segment.selectedSegmentIndex = 0;
+    self.navigationItem.titleView = self.segment;
+}
+
+
+
+- (void)segmentChange:(UISegmentedControl *)segment
+{
+    switch (segment.selectedSegmentIndex)
+    {
+        case 0:
+            YYLog(@"商品");
+            break;
+        case 1:
+            YYLog(@"服务");
+            break;
+        case 2:
+            YYLog(@"二手车");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 
@@ -56,32 +100,59 @@
 
 
 
+- (void)creatAddImagesView
+{
+    AddImages *addImages = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 0.3 * KScreenHeight)];
+    addImages.backgroundColor = [UIColor redColor];
+    self.tableView.tableHeaderView = addImages;
+}
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    switch (self.segment.selectedSegmentIndex)
+    {
+        case 1:
+            return 2;
+            break;
+            
+        default:
+            break;
+    }
+    
     return 3;
 }
 
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
-    {
-        return _leftBaseLabelArray.count;
+    switch (self.segment.selectedSegmentIndex) {
+        case 0:
+            return _leftBaseLabelArray.count;
+            break;
+        case 1:
+            return _leftSeviceLabelArray.count;
+            break;
+        case 2:
+            return _leftSecondcarLabelArray.count;
+            break;
+            
+        default:
+            break;
     }
-    else if (section == 1)
-    {
-        return _saleLabelArray.count;
-    }
-    else
-    {
-        return _introduceLabelArray.count;
-    }
+    
+    return _leftBaseLabelArray.count;
 }
 
 
@@ -111,7 +182,32 @@
         
     }
     
-    cell.leftLabel.text = _leftBaseLabelArray[indexPath.row];
+    switch (self.segment.selectedSegmentIndex) {
+        case 0:
+        {
+            if (indexPath.row == self.leftBaseLabelArray.count - 1 || indexPath.row == self.leftBaseLabelArray.count)
+            {
+                cell.rightTF.height = 100;
+            }
+            cell.leftLabel.text = _leftBaseLabelArray[indexPath.row];
+        }
+            break;
+        case 1:
+            cell.leftLabel.text = _leftSeviceLabelArray[indexPath.row];
+            break;
+        case 2:
+        {
+            if (indexPath.row == self.leftSecondcarLabelArray.count)
+            {
+                cell.rightTF.height = 100;
+            }
+            cell.leftLabel.text = _leftSecondcarLabelArray[indexPath.row];
+        }
+            break;
+            
+        default:
+            break;
+    }
     
     return cell;
 }
@@ -133,7 +229,7 @@
     }
     
     NSArray *array = @[@"星币",@"积分"];
-    cell.salePriceLabel.text = _saleLabelArray[indexPath.row];
+//    cell.salePriceLabel.text = _saleLabelArray[indexPath.row];
     cell.priceLabel.text = array[indexPath.row];
     
     return cell;
@@ -156,7 +252,7 @@
     }
     
     cell.rightTF.height = 100;
-    cell.leftLabel.text = _introduceLabelArray[indexPath.row];
+//    cell.leftLabel.text = _introduceLabelArray[indexPath.row];
     
     return cell;
 }
