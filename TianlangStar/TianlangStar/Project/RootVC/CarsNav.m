@@ -14,6 +14,15 @@
 
 @implementation CarsNav
 
+
+
++(void)initialize
+{
+    UINavigationBar *bar = [UINavigationBar appearance];
+//    [bar setBackgroundColor:[UIColor blueColor]];
+    [bar setBarTintColor:XLXcolor(25, 125, 290)];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

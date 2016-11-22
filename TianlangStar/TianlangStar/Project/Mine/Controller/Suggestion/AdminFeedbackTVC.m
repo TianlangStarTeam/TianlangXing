@@ -9,6 +9,7 @@
 #import "AdminFeedbackTVC.h"
 #import "FeedbackModel.h"
 #import "InputCell.h"
+#import "ReFeedbackVC.h"
 
 @interface AdminFeedbackTVC ()
 
@@ -97,7 +98,7 @@
          YYLog(@"查询客户提交的意见列表返回：%@",json);
          self.currentPage++;
          self.feedbackArr = [FeedbackModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
-         YYLog(@"%@",self.feedbackArr);
+         YYLog(@"self.feedbackArr.count----%lu",(unsigned long)self.feedbackArr.count);
          [self.tableView reloadData];
      } failure:^(NSError *error)
      {
@@ -167,9 +168,18 @@
     cell.textLabel.text = model.userid;
     cell.detailTextLabel.text = model.lasttime;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    
     return cell;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    FeedbackModel *model = self.feedbackArr[indexPath.row];
+    ReFeedbackVC *vc = [[ReFeedbackVC alloc] init];
+    vc.feedbackModel = model;
+    [self.navigationController pushViewController:vc animated:YES];
+
 
 
 }

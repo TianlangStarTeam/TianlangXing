@@ -34,4 +34,10 @@
 /** 用户ID */
 @property (nonatomic,copy) NSString *userId;
 
+/** 用户ID */
+@property (nonatomic,copy) NSString *price;
+
+
+
+
 @end

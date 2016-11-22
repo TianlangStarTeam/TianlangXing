@@ -105,6 +105,9 @@
 		D77134341DCDBA5300B3B9C6 /* CarInfoChangeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134311DCDBA5300B3B9C6 /* CarInfoChangeVC.m */; };
 		D77134351DCDBA5300B3B9C6 /* CarInfoListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134331DCDBA5300B3B9C6 /* CarInfoListVC.m */; };
 		D77134381DCDBD2300B3B9C6 /* AddCarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134371DCDBD2300B3B9C6 /* AddCarInfo.m */; };
+		D785E94A1DE41847008D8CB9 /* RechargeHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D785E9491DE41847008D8CB9 /* RechargeHistoryCell.m */; };
+		D785E94D1DE43612008D8CB9 /* ReFeedbackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D785E94C1DE43612008D8CB9 /* ReFeedbackVC.m */; };
+		D785E9501DE436EA008D8CB9 /* FeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = D785E94F1DE436EA008D8CB9 /* FeedbackView.m */; };
 		D7AB81A11DD47E1B0055E5D6 /* RechargeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D7AB81A01DD47E1B0055E5D6 /* RechargeVC.m */; };
 		D7AC9F121DD01FA900EFD59B /* AddProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D7AC9F111DD01FA900EFD59B /* AddProductVC.m */; };
 		D7CFB89B1DC6D1DD0063A1B5 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7CFB89A1DC6D1DD0063A1B5 /* LoginView.m */; };
@@ -322,6 +325,12 @@
 		D77134331DCDBA5300B3B9C6 /* CarInfoListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarInfoListVC.m; sourceTree = "<group>"; };
 		D77134361DCDBD2300B3B9C6 /* AddCarInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCarInfo.h; sourceTree = "<group>"; };
 		D77134371DCDBD2300B3B9C6 /* AddCarInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCarInfo.m; sourceTree = "<group>"; };
+		D785E9481DE41847008D8CB9 /* RechargeHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeHistoryCell.h; sourceTree = "<group>"; };
+		D785E9491DE41847008D8CB9 /* RechargeHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeHistoryCell.m; sourceTree = "<group>"; };
+		D785E94B1DE43612008D8CB9 /* ReFeedbackVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReFeedbackVC.h; sourceTree = "<group>"; };
+		D785E94C1DE43612008D8CB9 /* ReFeedbackVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReFeedbackVC.m; sourceTree = "<group>"; };
+		D785E94E1DE436EA008D8CB9 /* FeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackView.h; sourceTree = "<group>"; };
+		D785E94F1DE436EA008D8CB9 /* FeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackView.m; sourceTree = "<group>"; };
 		D7AB819F1DD47E1B0055E5D6 /* RechargeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeVC.h; sourceTree = "<group>"; };
 		D7AB81A01DD47E1B0055E5D6 /* RechargeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeVC.m; sourceTree = "<group>"; };
 		D7AC9F101DD01FA900EFD59B /* AddProductVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductVC.h; sourceTree = "<group>"; };
@@ -730,6 +739,10 @@
 				D71394211DD5C72100FFFE84 /* YYUITextView.m */,
 				D754A53F1DD956B000C79616 /* AccountInfoCell.h */,
 				D754A5401DD956B000C79616 /* AccountInfoCell.m */,
+				D785E9481DE41847008D8CB9 /* RechargeHistoryCell.h */,
+				D785E9491DE41847008D8CB9 /* RechargeHistoryCell.m */,
+				D785E94E1DE436EA008D8CB9 /* FeedbackView.h */,
+				D785E94F1DE436EA008D8CB9 /* FeedbackView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -914,6 +927,8 @@
 				D7408FCB1DE3084400F532CA /* FeedbackVC.h */,
 				D7408FCC1DE3084400F532CA /* FeedbackVC.m */,
 				D7408FCD1DE3084400F532CA /* FeedbackVC.xib */,
+				D785E94B1DE43612008D8CB9 /* ReFeedbackVC.h */,
+				D785E94C1DE43612008D8CB9 /* ReFeedbackVC.m */,
 			);
 			path = Suggestion;
 			sourceTree = "<group>";
@@ -1160,6 +1175,7 @@
 				D74454711DC0A93A008B5E27 /* UserModel.m in Sources */,
 				D735EB041DD087500051D8E7 /* ProductModel.m in Sources */,
 				D705CF291DC09C6400F65BE0 /* XLXConst.m in Sources */,
+				D785E94D1DE43612008D8CB9 /* ReFeedbackVC.m in Sources */,
 				71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */,
 				D71F66B71DCC3773000A6861 /* ILSettingTextFieldItem.m in Sources */,
 				D728670D1DCB144800D77B38 /* ILSettingItem.m in Sources */,
@@ -1173,6 +1189,7 @@
 				71A40D8A1DD5AC2500335660 /* MyCollectionTableVC.m in Sources */,
 				D71475601DD1B22400F48FC4 /* AdressModel.m in Sources */,
 				D705CF2C1DC09C6400F65BE0 /* MineVC.m in Sources */,
+				D785E94A1DE41847008D8CB9 /* RechargeHistoryCell.m in Sources */,
 				D7408FBE1DE288FF00F532CA /* AddInsuranceTVC.m in Sources */,
 				71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */,
 				711EFA3B1DD9995A006AEF9E /* NewestActivityDetailTableVC.m in Sources */,
@@ -1205,6 +1222,7 @@
 				D7203F6B1DDC43BE00B6526F /* InsuranceModel.m in Sources */,
 				D77134341DCDBA5300B3B9C6 /* CarInfoChangeVC.m in Sources */,
 				D74454741DC0B4EC008B5E27 /* AlertView.m in Sources */,
+				D785E9501DE436EA008D8CB9 /* FeedbackView.m in Sources */,
 				D705CF2A1DC09C6400F65BE0 /* UserInfo.m in Sources */,
 				D7408FBF1DE288FF00F532CA /* BossInsuranceManagement.m in Sources */,
 				711EFA541DDEA00B006AEF9E /* HSSessionModel.m in Sources */,
