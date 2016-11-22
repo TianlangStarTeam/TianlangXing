@@ -11,7 +11,7 @@
 @interface ProductModel : NSObject
 
 /** 积分价格 */
-@property (nonatomic,assign) NSInteger scoreprice;
+@property (nonatomic,copy) NSString *scoreprice;
 
 /** 商品的ID */
 @property (nonatomic,copy) NSString *ID;
@@ -19,14 +19,41 @@
 /** 商品的名称 */
 @property (nonatomic,copy) NSString *productname;
 
+/** 商品的类型 */
+@property (nonatomic,copy) NSString *productmodel;
+
+/** 商品的规格 */
+@property (nonatomic,copy) NSString *specifications;
+
+/** 商品的适用车型 */
+@property (nonatomic,copy) NSString *applycar;
+
+/** 商品的供应商 */
+@property (nonatomic,copy) NSString *vendors;
+
 /** 库存量 */
-@property (nonatomic,assign) NSInteger inventory;
+@property (nonatomic,copy) NSString *inventory;
+
+/** 商品的进价 */
+@property (nonatomic,copy) NSString *purchaseprice;
+
+/** 商品的星币 */
+//@property (nonatomic,copy) NSString *price;
+
+/** 商品的积分 */
+//@property (nonatomic,copy) NSString *scoreprice;
+
+/** 商品的简介 */
+@property (nonatomic,copy) NSString *introduction;
+
+/** 商品的备注 */
+@property (nonatomic,copy) NSString *remark;
 
 /** 商品的图片地址 */
 @property (nonatomic,copy) NSString *images;
 
 /** 商品的价格 */
-@property (nonatomic,assign) NSInteger price;
+@property (nonatomic,copy) NSString *price;
 
 /** 服务 */
 @property (nonatomic,copy) NSString *services;

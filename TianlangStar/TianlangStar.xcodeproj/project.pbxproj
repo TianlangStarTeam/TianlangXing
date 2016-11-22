@@ -8,6 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		2EA5BADAA63B9509A3B0A5A3 /* libPods-TianlangStar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */; };
+		711EC3301DE3EA0700C51E40 /* CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC30F1DE3EA0700C51E40 /* CellModel.m */; };
+		711EC3311DE3EA0700C51E40 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3111DE3EA0700C51E40 /* Common.m */; };
+		711EC3321DE3EA0700C51E40 /* HouseImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3131DE3EA0700C51E40 /* HouseImageCell.m */; };
+		711EC3331DE3EA0700C51E40 /* HouseImageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3151DE3EA0700C51E40 /* HouseImageHeaderView.m */; };
+		711EC3341DE3EA0700C51E40 /* SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3171DE3EA0700C51E40 /* SectionModel.m */; };
+		711EC3351DE3EA0700C51E40 /* UIImage+Aspect.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3191DE3EA0700C51E40 /* UIImage+Aspect.m */; };
+		711EC3361DE3EA0700C51E40 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC31B1DE3EA0700C51E40 /* UIImage+FixOrientation.m */; };
+		711EC3371DE3EA0700C51E40 /* UIView+MyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC31D1DE3EA0700C51E40 /* UIView+MyExtension.m */; };
+		711EC3381DE3EA0700C51E40 /* UIViewController+Default.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC31F1DE3EA0700C51E40 /* UIViewController+Default.m */; };
+		711EC3391DE3EA0700C51E40 /* WUAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3211DE3EA0700C51E40 /* WUAlbum.m */; };
+		711EC33A1DE3EA0700C51E40 /* WUAlbumAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3231DE3EA0700C51E40 /* WUAlbumAsset.m */; };
+		711EC33B1DE3EA0700C51E40 /* WUAlbumGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3251DE3EA0700C51E40 /* WUAlbumGroupViewController.m */; };
+		711EC33C1DE3EA0700C51E40 /* WUAlbumNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3271DE3EA0700C51E40 /* WUAlbumNavigationController.m */; };
+		711EC33D1DE3EA0700C51E40 /* WUAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3291DE3EA0700C51E40 /* WUAlbumViewController.m */; };
+		711EC33E1DE3EA0700C51E40 /* WUImageBrowseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC32B1DE3EA0700C51E40 /* WUImageBrowseView.m */; };
+		711EC33F1DE3EA0700C51E40 /* WUImageCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC32D1DE3EA0700C51E40 /* WUImageCollectionView.m */; };
+		711EC3401DE3EA0700C51E40 /* WUPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC32F1DE3EA0700C51E40 /* WUPreviewViewController.m */; };
+		711EC3421DE413AF00C51E40 /* WUImagePicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 711EC3411DE413AF00C51E40 /* WUImagePicker.bundle */; };
+		711EC3451DE41BF900C51E40 /* ServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EC3441DE41BF900C51E40 /* ServiceModel.m */; };
 		711EFA2F1DD9637D006AEF9E /* HomePageTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA2E1DD9637D006AEF9E /* HomePageTableVC.m */; };
 		711EFA321DD96718006AEF9E /* NewestActivityTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA311DD96718006AEF9E /* NewestActivityTableVC.m */; };
 		711EFA351DD96912006AEF9E /* HomePageSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA341DD96912006AEF9E /* HomePageSelectCell.m */; };
@@ -133,6 +152,43 @@
 
 /* Begin PBXFileReference section */
 		2B90E1B38CD70A4ED6F4D1C9 /* libPods-TianlangStar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TianlangStar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		711EC30E1DE3EA0700C51E40 /* CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellModel.h; sourceTree = "<group>"; };
+		711EC30F1DE3EA0700C51E40 /* CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellModel.m; sourceTree = "<group>"; };
+		711EC3101DE3EA0700C51E40 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		711EC3111DE3EA0700C51E40 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		711EC3121DE3EA0700C51E40 /* HouseImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HouseImageCell.h; sourceTree = "<group>"; };
+		711EC3131DE3EA0700C51E40 /* HouseImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HouseImageCell.m; sourceTree = "<group>"; };
+		711EC3141DE3EA0700C51E40 /* HouseImageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HouseImageHeaderView.h; sourceTree = "<group>"; };
+		711EC3151DE3EA0700C51E40 /* HouseImageHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HouseImageHeaderView.m; sourceTree = "<group>"; };
+		711EC3161DE3EA0700C51E40 /* SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionModel.h; sourceTree = "<group>"; };
+		711EC3171DE3EA0700C51E40 /* SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionModel.m; sourceTree = "<group>"; };
+		711EC3181DE3EA0700C51E40 /* UIImage+Aspect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Aspect.h"; sourceTree = "<group>"; };
+		711EC3191DE3EA0700C51E40 /* UIImage+Aspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Aspect.m"; sourceTree = "<group>"; };
+		711EC31A1DE3EA0700C51E40 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
+		711EC31B1DE3EA0700C51E40 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
+		711EC31C1DE3EA0700C51E40 /* UIView+MyExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MyExtension.h"; sourceTree = "<group>"; };
+		711EC31D1DE3EA0700C51E40 /* UIView+MyExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MyExtension.m"; sourceTree = "<group>"; };
+		711EC31E1DE3EA0700C51E40 /* UIViewController+Default.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Default.h"; sourceTree = "<group>"; };
+		711EC31F1DE3EA0700C51E40 /* UIViewController+Default.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Default.m"; sourceTree = "<group>"; };
+		711EC3201DE3EA0700C51E40 /* WUAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUAlbum.h; sourceTree = "<group>"; };
+		711EC3211DE3EA0700C51E40 /* WUAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUAlbum.m; sourceTree = "<group>"; };
+		711EC3221DE3EA0700C51E40 /* WUAlbumAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUAlbumAsset.h; sourceTree = "<group>"; };
+		711EC3231DE3EA0700C51E40 /* WUAlbumAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUAlbumAsset.m; sourceTree = "<group>"; };
+		711EC3241DE3EA0700C51E40 /* WUAlbumGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUAlbumGroupViewController.h; sourceTree = "<group>"; };
+		711EC3251DE3EA0700C51E40 /* WUAlbumGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUAlbumGroupViewController.m; sourceTree = "<group>"; };
+		711EC3261DE3EA0700C51E40 /* WUAlbumNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUAlbumNavigationController.h; sourceTree = "<group>"; };
+		711EC3271DE3EA0700C51E40 /* WUAlbumNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUAlbumNavigationController.m; sourceTree = "<group>"; };
+		711EC3281DE3EA0700C51E40 /* WUAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUAlbumViewController.h; sourceTree = "<group>"; };
+		711EC3291DE3EA0700C51E40 /* WUAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUAlbumViewController.m; sourceTree = "<group>"; };
+		711EC32A1DE3EA0700C51E40 /* WUImageBrowseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUImageBrowseView.h; sourceTree = "<group>"; };
+		711EC32B1DE3EA0700C51E40 /* WUImageBrowseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUImageBrowseView.m; sourceTree = "<group>"; };
+		711EC32C1DE3EA0700C51E40 /* WUImageCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUImageCollectionView.h; sourceTree = "<group>"; };
+		711EC32D1DE3EA0700C51E40 /* WUImageCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUImageCollectionView.m; sourceTree = "<group>"; };
+		711EC32E1DE3EA0700C51E40 /* WUPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUPreviewViewController.h; sourceTree = "<group>"; };
+		711EC32F1DE3EA0700C51E40 /* WUPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUPreviewViewController.m; sourceTree = "<group>"; };
+		711EC3411DE413AF00C51E40 /* WUImagePicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WUImagePicker.bundle; sourceTree = "<group>"; };
+		711EC3431DE41BF900C51E40 /* ServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServiceModel.h; path = TianlangStar/Project/Helper/addImage/ServiceModel.h; sourceTree = SOURCE_ROOT; };
+		711EC3441DE41BF900C51E40 /* ServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServiceModel.m; path = TianlangStar/Project/Helper/addImage/ServiceModel.m; sourceTree = SOURCE_ROOT; };
 		711EFA2D1DD9637D006AEF9E /* HomePageTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTableVC.h; sourceTree = "<group>"; };
 		711EFA2E1DD9637D006AEF9E /* HomePageTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageTableVC.m; sourceTree = "<group>"; };
 		711EFA301DD96718006AEF9E /* NewestActivityTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewestActivityTableVC.h; sourceTree = "<group>"; };
@@ -388,6 +444,48 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		711EC30D1DE3EA0700C51E40 /* addImage */ = {
+			isa = PBXGroup;
+			children = (
+				711EC30E1DE3EA0700C51E40 /* CellModel.h */,
+				711EC30F1DE3EA0700C51E40 /* CellModel.m */,
+				711EC3101DE3EA0700C51E40 /* Common.h */,
+				711EC3111DE3EA0700C51E40 /* Common.m */,
+				711EC3121DE3EA0700C51E40 /* HouseImageCell.h */,
+				711EC3131DE3EA0700C51E40 /* HouseImageCell.m */,
+				711EC3141DE3EA0700C51E40 /* HouseImageHeaderView.h */,
+				711EC3151DE3EA0700C51E40 /* HouseImageHeaderView.m */,
+				711EC3161DE3EA0700C51E40 /* SectionModel.h */,
+				711EC3171DE3EA0700C51E40 /* SectionModel.m */,
+				711EC3181DE3EA0700C51E40 /* UIImage+Aspect.h */,
+				711EC3191DE3EA0700C51E40 /* UIImage+Aspect.m */,
+				711EC31A1DE3EA0700C51E40 /* UIImage+FixOrientation.h */,
+				711EC31B1DE3EA0700C51E40 /* UIImage+FixOrientation.m */,
+				711EC31C1DE3EA0700C51E40 /* UIView+MyExtension.h */,
+				711EC31D1DE3EA0700C51E40 /* UIView+MyExtension.m */,
+				711EC31E1DE3EA0700C51E40 /* UIViewController+Default.h */,
+				711EC31F1DE3EA0700C51E40 /* UIViewController+Default.m */,
+				711EC3201DE3EA0700C51E40 /* WUAlbum.h */,
+				711EC3211DE3EA0700C51E40 /* WUAlbum.m */,
+				711EC3221DE3EA0700C51E40 /* WUAlbumAsset.h */,
+				711EC3231DE3EA0700C51E40 /* WUAlbumAsset.m */,
+				711EC3241DE3EA0700C51E40 /* WUAlbumGroupViewController.h */,
+				711EC3251DE3EA0700C51E40 /* WUAlbumGroupViewController.m */,
+				711EC3261DE3EA0700C51E40 /* WUAlbumNavigationController.h */,
+				711EC3271DE3EA0700C51E40 /* WUAlbumNavigationController.m */,
+				711EC3281DE3EA0700C51E40 /* WUAlbumViewController.h */,
+				711EC3291DE3EA0700C51E40 /* WUAlbumViewController.m */,
+				711EC32A1DE3EA0700C51E40 /* WUImageBrowseView.h */,
+				711EC32B1DE3EA0700C51E40 /* WUImageBrowseView.m */,
+				711EC32C1DE3EA0700C51E40 /* WUImageCollectionView.h */,
+				711EC32D1DE3EA0700C51E40 /* WUImageCollectionView.m */,
+				711EC32E1DE3EA0700C51E40 /* WUPreviewViewController.h */,
+				711EC32F1DE3EA0700C51E40 /* WUPreviewViewController.m */,
+				711EC3411DE413AF00C51E40 /* WUImagePicker.bundle */,
+			);
+			path = addImage;
+			sourceTree = "<group>";
+		};
 		711EFA4E1DDEA00B006AEF9E /* HSDownloadManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,6 +635,7 @@
 		D705CEDE1DC09C6400F65BE0 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				711EC30D1DE3EA0700C51E40 /* addImage */,
 				711EFA4E1DDEA00B006AEF9E /* HSDownloadManager */,
 				D72866F81DCB144800D77B38 /* ILSetting */,
 				D705CEDF1DC09C6400F65BE0 /* Category */,
@@ -648,6 +747,8 @@
 		D705CF011DC09C6400F65BE0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				711EC3431DE41BF900C51E40 /* ServiceModel.h */,
+				711EC3441DE41BF900C51E40 /* ServiceModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1072,6 +1173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D705CF2D1DC09C6400F65BE0 /* LICENCE.txt in Resources */,
+				711EC3421DE413AF00C51E40 /* WUImagePicker.bundle in Resources */,
 				D705CEB71DC09BBF00F65BE0 /* LaunchScreen.storyboard in Resources */,
 				D705CEB41DC09BBF00F65BE0 /* Assets.xcassets in Resources */,
 				D705CF351DC09CBB00F65BE0 /* Main.storyboard in Resources */,
@@ -1152,13 +1254,17 @@
 				D728670F1DCB144800D77B38 /* ILSettingLabelItem.m in Sources */,
 				D728671B1DCB33BE00D77B38 /* CarsNav.m in Sources */,
 				D705CF221DC09C6400F65BE0 /* TestFildJudge.m in Sources */,
+				711EC3381DE3EA0700C51E40 /* UIViewController+Default.m in Sources */,
 				711EFA3E1DD9BAD7006AEF9E /* ProductCell.m in Sources */,
 				71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */,
 				D705CF211DC09C6400F65BE0 /* RSA.m in Sources */,
 				D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */,
 				711EFA4D1DDC02F3006AEF9E /* ChekinCarInfoTableVC.m in Sources */,
 				711EFA471DDB0090006AEF9E /* PictureCell.m in Sources */,
+				711EC33A1DE3EA0700C51E40 /* WUAlbumAsset.m in Sources */,
+				711EC33C1DE3EA0700C51E40 /* WUAlbumNavigationController.m in Sources */,
 				D72867141DCB154C00D77B38 /* FeedbackVC.m in Sources */,
+				711EC3311DE3EA0700C51E40 /* Common.m in Sources */,
 				D71F66B41DCC289E000A6861 /* CarInputCell.m in Sources */,
 				D71F66C01DCC5E0D000A6861 /* CarModel.m in Sources */,
 				711EFA321DD96718006AEF9E /* NewestActivityTableVC.m in Sources */,
@@ -1177,9 +1283,11 @@
 				D705CF291DC09C6400F65BE0 /* XLXConst.m in Sources */,
 				71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */,
 				D71F66B71DCC3773000A6861 /* ILSettingTextFieldItem.m in Sources */,
+				711EC33F1DE3EA0700C51E40 /* WUImageCollectionView.m in Sources */,
 				D728670D1DCB144800D77B38 /* ILSettingItem.m in Sources */,
 				D7408FB21DE288A200F532CA /* BossAccountInfoMTVC.m in Sources */,
 				715AA3371DE2A6D500CD5C5D /* AddImagesCollectionCell.m in Sources */,
+				711EC33E1DE3EA0700C51E40 /* WUImageBrowseView.m in Sources */,
 				711EFA411DDAD80F006AEF9E /* AddCarTableVC.m in Sources */,
 				D71394161DD56E7300FFFE84 /* MembersTVC.m in Sources */,
 				D71394251DD5CEF000FFFE84 /* AdminFeedbackTVC.m in Sources */,
@@ -1188,23 +1296,30 @@
 				D705CF251DC09C6400F65BE0 /* UILabel+LabelHeightAndWidth.m in Sources */,
 				711EFA571DDEA03D006AEF9E /* NSString+Hash.m in Sources */,
 				71A40D8A1DD5AC2500335660 /* MyCollectionTableVC.m in Sources */,
+				711EC3341DE3EA0700C51E40 /* SectionModel.m in Sources */,
+				711EC33D1DE3EA0700C51E40 /* WUAlbumViewController.m in Sources */,
 				D71475601DD1B22400F48FC4 /* AdressModel.m in Sources */,
+				711EC3391DE3EA0700C51E40 /* WUAlbum.m in Sources */,
 				D705CF2C1DC09C6400F65BE0 /* MineVC.m in Sources */,
 				D7408FBE1DE288FF00F532CA /* AddInsuranceTVC.m in Sources */,
 				71A40D811DD47EFA00335660 /* TestInterfaceVC.m in Sources */,
 				711EFA3B1DD9995A006AEF9E /* NewestActivityDetailTableVC.m in Sources */,
 				D705CF1E1DC09C6400F65BE0 /* Foundation+Log.m in Sources */,
 				715AA3311DE2900100CD5C5D /* AddImages.m in Sources */,
+				711EC3371DE3EA0700C51E40 /* UIView+MyExtension.m in Sources */,
 				D7408FB11DE288A200F532CA /* BossAccountInfoListTVC.m in Sources */,
 				D7AB81A11DD47E1B0055E5D6 /* RechargeVC.m in Sources */,
 				714E15121DDF11DF006598D3 /* AddPictureCell.m in Sources */,
 				D728670A1DCB144800D77B38 /* ILBaseTableViewController.m in Sources */,
 				71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */,
+				711EC3451DE41BF900C51E40 /* ServiceModel.m in Sources */,
 				711EFA351DD96912006AEF9E /* HomePageSelectCell.m in Sources */,
 				715AA3341DE2A67900CD5C5D /* AddImagesCollectionVC.m in Sources */,
 				D72D0BED1DDB19C400AA8B06 /* GeneralUserInfoTVC.m in Sources */,
+				711EC3301DE3EA0700C51E40 /* CellModel.m in Sources */,
 				D728670C1DCB144800D77B38 /* ILSettingGroup.m in Sources */,
 				711EFA381DD98D63006AEF9E /* NewestListCell.m in Sources */,
+				711EC3321DE3EA0700C51E40 /* HouseImageCell.m in Sources */,
 				D728670B1DCB144800D77B38 /* ILSettingArrowItem.m in Sources */,
 				D71112C71DDADDF000EF8B5C /* AdminInfoTVC.m in Sources */,
 				D7408FC11DE288FF00F532CA /* UserInsurecemangement.m in Sources */,
@@ -1216,11 +1331,15 @@
 				D705CF311DC09C6400F65BE0 /* ShoppingCartVC.m in Sources */,
 				D7408FB41DE288A200F532CA /* UserInfoManagementTVC.m in Sources */,
 				714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */,
+				711EC3361DE3EA0700C51E40 /* UIImage+FixOrientation.m in Sources */,
 				D705CF321DC09C6400F65BE0 /* TLStarVC.m in Sources */,
 				D7CFB89B1DC6D1DD0063A1B5 /* LoginView.m in Sources */,
+				711EC3331DE3EA0700C51E40 /* HouseImageHeaderView.m in Sources */,
 				D705CF241DC09C6400F65BE0 /* UIImage+Tool.m in Sources */,
 				D705CF1F1DC09C6400F65BE0 /* NSString+extension.m in Sources */,
 				711EFA2F1DD9637D006AEF9E /* HomePageTableVC.m in Sources */,
+				711EC3351DE3EA0700C51E40 /* UIImage+Aspect.m in Sources */,
+				711EC3401DE3EA0700C51E40 /* WUPreviewViewController.m in Sources */,
 				715AA33D1DE2EC1600CD5C5D /* SecondCarPublishTableVC.m in Sources */,
 				D7203F6B1DDC43BE00B6526F /* InsuranceModel.m in Sources */,
 				D77134341DCDBA5300B3B9C6 /* CarInfoChangeVC.m in Sources */,
@@ -1242,6 +1361,7 @@
 				D705CF201DC09C6400F65BE0 /* PinchPicture.m in Sources */,
 				D77134351DCDBA5300B3B9C6 /* CarInfoListVC.m in Sources */,
 				711EFA5A1DDEA3F4006AEF9E /* WebExcelVC.m in Sources */,
+				711EC33B1DE3EA0700C51E40 /* WUAlbumGroupViewController.m in Sources */,
 				D735EAFE1DD075790051D8E7 /* HttpTool.m in Sources */,
 				D754A5411DD956B000C79616 /* AccountInfoCell.m in Sources */,
 				D7408FC71DE28AB500F532CA /* CheckInsureceTVC.m in Sources */,

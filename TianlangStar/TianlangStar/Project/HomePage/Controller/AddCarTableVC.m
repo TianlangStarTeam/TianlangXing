@@ -44,8 +44,6 @@
 //    http://192.168.10.114:8080/carservice/carinforegistservlet
     
     
-    self.carModel = [[CarModel alloc] init];
-    
     self.title = @"添加爱车";
     
     [self addDatePIcker];
