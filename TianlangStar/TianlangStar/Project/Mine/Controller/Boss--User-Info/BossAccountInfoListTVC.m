@@ -306,63 +306,71 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"是否确认删除此会员？" preferredStyle:UIAlertControllerStyleActionSheet];
         
-        /** 管理员删除用户 */
-        UserInfo * userInfo = [UserInfo sharedUserInfo];
-        NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        UserModel *model = self.allPeopleArray[indexPath.row];
-        params[@"sessionId"] = userInfo.RSAsessionId;
-        params[@"id"] = model.ID;
-        NSString *url = [NSString stringWithFormat:@"%@deleteusersevlet",URL];
-        
-        YYLog(@"params---%@",params);
-        
-        /*
-         Int resultCode  1000表示成功
-         Int resultCode  1007用户没有登录
-         Int resultCode  1016用户没有权限
-         Int resultCode  1019删除操作没有成功
-         */
-        [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-         {
-             
-             NSLog(@"管理员删除用户返回---%@",responseObject);
-             NSNumber *num = responseObject[@"resultCode"];
-             NSInteger result = [num integerValue];
-             switch (result)
+            /** 管理员删除用户 */
+            UserInfo * userInfo = [UserInfo sharedUserInfo];
+            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            UserModel *model = self.allPeopleArray[indexPath.row];
+            params[@"sessionId"] = userInfo.RSAsessionId;
+            params[@"id"] = model.ID;
+            NSString *url = [NSString stringWithFormat:@"%@deleteusersevlet",URL];
+            
+            YYLog(@"params---%@",params);
+            
+            [self.allPeopleArray removeObjectAtIndex:indexPath.row];
+            // Delete the row from the data source.
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
+            
+            /*
+             Int resultCode  1000表示成功
+             Int resultCode  1007用户没有登录
+             Int resultCode  1016用户没有权限
+             Int resultCode  1019删除操作没有成功
+             */
+            [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
              {
-                 case 1000:
-                     YYLog(@"删除成功");
-                     break;
-                 case 1007:
-                     YYLog(@"没登录");
-                     [HttpTool loginUpdataSession];
-                     break;
-                 case 1016:
-                     YYLog(@"用户没有权限");
-                     break;
-                 case 1009:
-                     YYLog(@"删除操作没有成功");
-                     break;
-                     
-                 default:
-                     break;
-             }
-             
-         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
-         {
-             NSLog(@"管理员创建用户失败---%@",error);
-         }];
+                 
+                 NSLog(@"管理员删除用户返回---%@",responseObject);
+                 NSNumber *num = responseObject[@"resultCode"];
+                 NSInteger result = [num integerValue];
+                 switch (result)
+                 {
+                     case 1000:
+                         YYLog(@"删除成功");
+                         break;
+                     case 1007:
+                         YYLog(@"没登录");
+                         [HttpTool loginUpdataSession];
+                         break;
+                     case 1016:
+                         YYLog(@"用户没有权限");
+                         break;
+                     case 1009:
+                         YYLog(@"删除操作没有成功");
+                         break;
+                         
+                     default:
+                         break;
+                 }
+                 
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+             {
+                 NSLog(@"管理员创建用户失败---%@",error);
+             }];
 
-        
-        
-        
+            
+ 
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
 
-        [self.allPeopleArray removeObjectAtIndex:indexPath.row];
-        // Delete the row from the data source.
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {

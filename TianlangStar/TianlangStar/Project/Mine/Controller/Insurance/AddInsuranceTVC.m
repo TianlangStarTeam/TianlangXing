@@ -45,6 +45,11 @@ typedef enum : NSUInteger {
 /** 险种的类型 */
 @property (nonatomic,assign) NSInteger insuranceType;
 
+/** 右上角的保存按钮 */
+@property (nonatomic,strong) UIButton *saveBtn;
+
+
+
 
 @end
 
@@ -144,17 +149,16 @@ typedef enum : NSUInteger {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
     [button setTitle:@"保存" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    self.saveBtn = button;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 
 -(void)rightBarClick:(UIButton *)button
 {
     [self.view endEditing:YES];
-
-
-        [self updataUserInfo];
-    
+    [self updataUserInfo];
 }
 
 -(void)updataUserInfo
@@ -195,8 +199,9 @@ typedef enum : NSUInteger {
          
          if (resultCode == 1000)
          {
-             //             [[AlertView sharedAlertView] addAfterAlertMessage:@"添加爱车成功" title:@"提示"];
+
              [SVProgressHUD showSuccessWithStatus:@"添加成功"];
+             self.saveBtn.enabled = NO;
             
 //             [self.navigationController popViewControllerAnimated:YES];
              
@@ -310,7 +315,6 @@ typedef enum : NSUInteger {
 {
     if (indexPath.section == 0  )
     {
-        
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
@@ -328,10 +332,7 @@ typedef enum : NSUInteger {
                               YYLog(@"取消");
                           }]];
         [self presentViewController:alert animated:YES completion:nil];
-        
-        
     }
-    
 }
 
 
@@ -351,7 +352,6 @@ typedef enum : NSUInteger {
     [imgC setSourceType:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)];
     imgC.delegate = self;
     [self presentViewController:imgC animated:YES completion:nil];
-    
 }
 
 // 从照片中获取调用的方法

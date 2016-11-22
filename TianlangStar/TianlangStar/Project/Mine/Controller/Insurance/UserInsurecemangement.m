@@ -69,6 +69,7 @@ typedef enum : NSUInteger {
     [super viewDidLoad];
     
     self.insuranceType = 1;
+    
     [self addTitleView];
     
     [self loadData];
@@ -89,6 +90,17 @@ typedef enum : NSUInteger {
 }
 
 
+//视图即将出现的时候，调用刷新
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (self.insuranceType == 2)
+    {
+        [self loadData];
+    }
+}
+
+
 
 //设置顶部的分割按钮
 -(void)addTitleView
@@ -106,8 +118,8 @@ typedef enum : NSUInteger {
 
 -(void)segmentChange:(UISegmentedControl *)segment
 {
-    
-    switch (segment.selectedSegmentIndex) {
+    switch (segment.selectedSegmentIndex)
+    {
         case 0://强险
         {
             self.insuranceType = 1;
@@ -124,11 +136,8 @@ typedef enum : NSUInteger {
         default:
             break;
     }
-    YYLog(@"self.type---%ld",(long)self.insuranceType);
-    
     [self loadData];
 }
-
 
 
 
@@ -462,11 +471,16 @@ typedef enum : NSUInteger {
         {
             InsuranceModel *model = self.insuranceArr[indexPath.row];
             CheckInsureceTVC *vc = [[CheckInsureceTVC alloc] init];
+            vc.title = model.insurancetype;
             vc.insuranceModel = model;
             [self.navigationController pushViewController:vc animated:YES];
         }
         
     }
+    
+    
+    
+    
 
     
     if (self.insuranceType == 1 && indexPath.section == 0 && self.inputEnble)
@@ -491,6 +505,107 @@ typedef enum : NSUInteger {
         
     }
     
+}
+
+
+#pragma mark==== 添加左滑删除功能======
+//添加编辑模式
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.insuranceType == 2)
+    {
+        return YES;
+    }else
+    {
+        return NO;
+    }
+}
+
+
+
+//删除所做的动作
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
+}
+
+
+//删除所做的动作
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"是否确认删除此会员？" preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            /** 管理员删除用户 */
+            UserInfo * userInfo = [UserInfo sharedUserInfo];
+            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            InsuranceModel *model = self.insuranceArr[indexPath.row];
+            params[@"sessionId"] = userInfo.RSAsessionId;
+            params[@"id"] = model.ID;
+            NSString *url = [NSString stringWithFormat:@"%@deleteowninsuranceservlet",URL];
+            YYLog(@"params---%@",params);
+            /*
+             Int resultCode  1000表示成功
+             Int resultCode  1007用户没有登录
+             Int resultCode  1016用户没有权限
+             Int resultCode  1019删除操作没有成功
+             */
+            
+            [self.insuranceArr removeObjectAtIndex:indexPath.row];
+            // Delete the row from the data source.
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
+            //管理员删除保险信息-----暂未做接口
+            
+            [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+             {
+                 NSLog(@"管理员删除用户返回---%@",responseObject);
+                 NSNumber *num = responseObject[@"resultCode"];
+                 NSInteger result = [num integerValue];
+                 switch (result)
+                 {
+                     case 1000:
+                     {
+                         YYLog(@"删除成功");
+                         [SVProgressHUD showSuccessWithStatus:@"删除成功！"];
+                         break;
+                     }
+                     case 1007:
+                         YYLog(@"没登录");
+                         [HttpTool loginUpdataSession];
+                         break;
+                     case 1016:
+                         YYLog(@"用户没有权限");
+                         break;
+                     case 1009:
+                         YYLog(@"删除操作没有成功");
+                         break;
+                         
+                     default:
+                         break;
+                 }
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+             {
+                 NSLog(@"管理员创建用户失败---%@",error);
+             }];
+            
+            
+            
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    }
 }
 
 
