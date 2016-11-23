@@ -23,5 +23,11 @@
 /** 意见内容 */
 @property (nonatomic,copy) NSString *content;
 
+/** 用户的id */
+@property (nonatomic,copy) NSString *userid;
+
+
+
+
 
 @end

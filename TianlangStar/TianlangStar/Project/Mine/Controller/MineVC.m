@@ -29,6 +29,7 @@
 #import "AddCarInfo.h"
 #import "BossInsuranceManagement.h"
 #import "UserInsurecemangement.h"
+#import "MembersTVC.h"
 
 #import "CarDetailInfoTableVC.h"
 
@@ -137,8 +138,8 @@
 //    
 //    ILSettingArrowItem *account = [ILSettingArrowItem itemWithIcon:nil title:@"账户管理" destVcClass:[CarDetailInfoTableVC class]];
     
-    ILSettingArrowItem *Insurance = [ILSettingArrowItem itemWithIcon:nil title:@"保单" destVcClass:[UserInsurecemangement class]];
-    
+//    ILSettingArrowItem *Insurance = [ILSettingArrowItem itemWithIcon:nil title:@"保单" destVcClass:[UserInsurecemangement class]];
+
     
     ILSettingArrowItem *carInfoRegist = [ILSettingArrowItem itemWithIcon:nil title:@"车辆信息登记" destVcClass:[AddCarInfo class]];
     ILSettingArrowItem *prepaidRecords = [ILSettingArrowItem itemWithIcon:nil title:@"充值记录查询" destVcClass:[UserInfoManagementTVC class]];
@@ -147,7 +148,7 @@
     
 
     ILSettingGroup *group0 = [[ILSettingGroup alloc] init];
-    group0.items = @[collection,orderquery,pointsFor,prepaidRecords,Insurance,carInfoRegist,setting];
+    group0.items = @[collection,orderquery,pointsFor,prepaidRecords,carInfoRegist,setting];
     
     [self.dataList addObject:group0];
 }
@@ -180,7 +181,7 @@
     
     ILSettingArrowItem *InfoRegister = [ILSettingArrowItem itemWithIcon:nil title:@"最新活动" destVcClass:[CarInfoListVC class]];
     
-    ILSettingArrowItem *TopupQuery= [ILSettingArrowItem itemWithIcon:nil title:@"优惠信息" destVcClass:[AddCarInfo class]];
+    ILSettingArrowItem *TopupQuery= [ILSettingArrowItem itemWithIcon:nil title:@"优惠信息" destVcClass:[MembersTVC class]];
     
     ILSettingArrowItem *setting = [ILSettingArrowItem itemWithIcon:nil title:@"设置" destVcClass:[AboutSettingTVC class]];
 

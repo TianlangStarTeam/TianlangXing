@@ -75,6 +75,9 @@ typedef enum : NSUInteger {
 }
 
 
+
+
+
 -(InsuranceModel *)insuranceModel
 {
     if (!_insuranceModel)
@@ -82,6 +85,16 @@ typedef enum : NSUInteger {
         _insuranceModel = [[InsuranceModel alloc] init];
     }
     return _insuranceModel;
+}
+
+//视图即将出现的时候，调用刷新
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (self.insuranceType == 2)
+    {
+        [self loadData];
+    }
 }
 
 
@@ -173,12 +186,9 @@ typedef enum : NSUInteger {
             self.insuranceModel.continuetime = [NSString stringWithFormat:@"%ld", (long)[self.insuranceidData.date timeIntervalSince1970]];
             break;
         }
-
-            
         default:
             break;
     }
-    
     //回到主线程刷新数据，刷新对应的单元格
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -336,12 +346,16 @@ typedef enum : NSUInteger {
     if (self.insuranceType == 1 && section == 1)
     {
         count = self.leftArr.count;
-        return count;
+
         
+    }else if (self.insuranceType == 1 && section == 0)
+    {
+        count = 1;
     }else
     {
-        return 1;
+      count =  self.insuranceArr.count;
     }
+    return count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -349,13 +363,15 @@ typedef enum : NSUInteger {
     if (self.insuranceType == 2)//较强险
     {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        
-        InsuranceModel *model = self.insuranceArr[indexPath.row];
-        cell.textLabel.text = model.insurancetype;
-        cell.detailTextLabel.text = model.expenses;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+        if (self.insuranceArr.count > 0)
+        {
+            InsuranceModel *model = self.insuranceArr[indexPath.row];
+            cell.textLabel.text = model.insurancetype;
+            cell.detailTextLabel.text = model.expenses;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+
         return cell;
     }else
     {
@@ -437,6 +453,7 @@ typedef enum : NSUInteger {
 {
     if (self.insuranceType == 2)
     {
+#warning todo  pand判断为零
         InsuranceModel *model = self.insuranceArr[indexPath.row];
         CheckInsureceTVC *vc = [[CheckInsureceTVC alloc] initWithStyle:UITableViewStyleGrouped];
         vc.title = model.insurancetype;
@@ -463,10 +480,114 @@ typedef enum : NSUInteger {
                               YYLog(@"取消");
                           }]];
         [self presentViewController:alert animated:YES completion:nil];
-
     }
-    
 }
+
+
+#pragma mark==== 添加左滑删除功能======
+//添加编辑模式
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        if (self.insuranceType == 2)
+        {
+            return YES;
+        }else
+        {
+            return NO;
+        }
+}
+
+
+
+//删除所做的动作
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
+}
+
+
+//删除所做的动作
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"是否确认删除此会员？" preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            /** 管理员删除用户 */
+            UserInfo * userInfo = [UserInfo sharedUserInfo];
+            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            InsuranceModel *model = self.insuranceArr[indexPath.row];
+            params[@"sessionId"] = userInfo.RSAsessionId;
+            params[@"id"] = model.ID;
+            NSString *url = [NSString stringWithFormat:@"%@deleteowninsuranceservlet",URL];
+            YYLog(@"params---%@",params);
+            /*
+             Int resultCode  1000表示成功
+             Int resultCode  1007用户没有登录
+             Int resultCode  1016用户没有权限
+             Int resultCode  1019删除操作没有成功
+             */
+            
+            [self.insuranceArr removeObjectAtIndex:indexPath.row];
+            // Delete the row from the data source.
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
+            
+            //管理员删除保险信息-----暂未做接口
+
+            [[AFHTTPSessionManager manager]POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+             {
+                 NSLog(@"管理员删除用户返回---%@",responseObject);
+                 NSNumber *num = responseObject[@"resultCode"];
+                 NSInteger result = [num integerValue];
+                 switch (result)
+                 {
+                     case 1000:
+                     {
+                         YYLog(@"删除成功");
+                         [SVProgressHUD showSuccessWithStatus:@"删除成功！"];
+                         break;
+                     }
+                     case 1007:
+                         YYLog(@"没登录");
+                         [HttpTool loginUpdataSession];
+                         break;
+                     case 1016:
+                         YYLog(@"用户没有权限");
+                         break;
+                     case 1009:
+                         YYLog(@"删除操作没有成功");
+                         break;
+                         
+                     default:
+                         break;
+                 }
+                 
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+             {
+                 NSLog(@"管理员创建用户失败---%@",error);
+             }];
+            
+            
+            
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    }
+}
+
+
+
 
 
 #pragma mark========UIImagePickerController的代理方法=====

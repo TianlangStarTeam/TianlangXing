@@ -18,5 +18,18 @@
 }
 
 
+-(NSString *)lasttime
+{
+    NSTimeInterval _interval = [_lasttime doubleValue] / 1000;
+    NSDate *data = [NSDate dateWithTimeIntervalSince1970:_interval];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd  HH:mm:ss"];
+    return [formatter stringFromDate:data];
+}
+
+
+
+
+
 
 @end
