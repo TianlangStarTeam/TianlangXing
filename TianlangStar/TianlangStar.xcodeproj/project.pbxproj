@@ -47,6 +47,7 @@
 		714E15091DDEE9A7006598D3 /* ProductPublishTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 714E15081DDEE9A6006598D3 /* ProductPublishTableVC.m */; };
 		714E150C1DDEEED3006598D3 /* LabelTFLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 714E150B1DDEEED3006598D3 /* LabelTFLabelCell.m */; };
 		714E15121DDF11DF006598D3 /* AddPictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 714E15111DDF11DF006598D3 /* AddPictureCell.m */; };
+		71548A281DE5473700262E4D /* StorageManagementTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71548A271DE5473700262E4D /* StorageManagementTableVC.m */; };
 		715AA3311DE2900100CD5C5D /* AddImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 715AA3301DE2900100CD5C5D /* AddImages.m */; };
 		715AA3341DE2A67900CD5C5D /* AddImagesCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 715AA3331DE2A67900CD5C5D /* AddImagesCollectionVC.m */; };
 		715AA3371DE2A6D500CD5C5D /* AddImagesCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 715AA3361DE2A6D500CD5C5D /* AddImagesCollectionCell.m */; };
@@ -237,6 +238,8 @@
 		714E150B1DDEEED3006598D3 /* LabelTFLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelTFLabelCell.m; path = TianlangStar/Project/HomePage/Controller/LabelTFLabelCell.m; sourceTree = SOURCE_ROOT; };
 		714E15101DDF11DF006598D3 /* AddPictureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddPictureCell.h; path = TianlangStar/Project/HomePage/Controller/AddPictureCell.h; sourceTree = SOURCE_ROOT; };
 		714E15111DDF11DF006598D3 /* AddPictureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddPictureCell.m; path = TianlangStar/Project/HomePage/Controller/AddPictureCell.m; sourceTree = SOURCE_ROOT; };
+		71548A261DE5473700262E4D /* StorageManagementTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageManagementTableVC.h; sourceTree = "<group>"; };
+		71548A271DE5473700262E4D /* StorageManagementTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageManagementTableVC.m; sourceTree = "<group>"; };
 		715AA32F1DE2900100CD5C5D /* AddImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddImages.h; sourceTree = "<group>"; };
 		715AA3301DE2900100CD5C5D /* AddImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddImages.m; sourceTree = "<group>"; };
 		715AA3321DE2A67900CD5C5D /* AddImagesCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddImagesCollectionVC.h; sourceTree = "<group>"; };
@@ -737,6 +740,8 @@
 				711EFA2E1DD9637D006AEF9E /* HomePageTableVC.m */,
 				714E15071DDEE9A6006598D3 /* ProductPublishTableVC.h */,
 				714E15081DDEE9A6006598D3 /* ProductPublishTableVC.m */,
+				71548A261DE5473700262E4D /* StorageManagementTableVC.h */,
+				71548A271DE5473700262E4D /* StorageManagementTableVC.m */,
 				715AA3381DE2EBD300CD5C5D /* ServicePublishTableVC.h */,
 				715AA3391DE2EBD300CD5C5D /* ServicePublishTableVC.m */,
 				715AA33B1DE2EC1600CD5C5D /* SecondCarPublishTableVC.h */,
@@ -1328,6 +1333,7 @@
 				D71D845D1DD30C3600E75A8B /* AboutSettingTVC.m in Sources */,
 				714E15091DDEE9A7006598D3 /* ProductPublishTableVC.m in Sources */,
 				D705CF1D1DC09C6400F65BE0 /* AppDelegate.m in Sources */,
+				71548A281DE5473700262E4D /* StorageManagementTableVC.m in Sources */,
 				711EFA4A1DDBFE99006AEF9E /* CarDetailInfoTableVC.m in Sources */,
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
 				D705CF271DC09C6400F65BE0 /* UITextField+extension.m in Sources */,

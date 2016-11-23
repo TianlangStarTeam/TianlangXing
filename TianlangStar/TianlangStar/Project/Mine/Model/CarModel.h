@@ -44,4 +44,17 @@
 /** 车辆的ID */
 @property (nonatomic,copy) NSString *cid;
 
+
+@property (nonatomic,copy) NSString *price;
+
+@property (nonatomic,copy) NSString *mileage;
+
+@property (nonatomic,copy) NSString *number;
+
+@property (nonatomic,copy) NSString *person;
+
+@property (nonatomic,copy) NSString *property;
+
+@property (nonatomic,copy) NSString *carDescription;
+
 @end

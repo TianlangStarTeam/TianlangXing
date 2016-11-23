@@ -44,8 +44,8 @@ UIKIT_EXTERN NSString const *picURL;
 
 
 
-
-
+/** 网址前段 - 新 */
+UIKIT_EXTERN NSString const *uRL;
 
 
 
