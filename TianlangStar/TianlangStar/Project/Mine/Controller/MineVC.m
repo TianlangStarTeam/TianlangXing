@@ -30,6 +30,7 @@
 #import "BossInsuranceManagement.h"
 #import "UserInsurecemangement.h"
 #import "MembersTVC.h"
+#import "WaitHandleOrderTVC.h"
 
 #import "CarDetailInfoTableVC.h"
 
@@ -163,7 +164,7 @@
     //管理员
     ILSettingArrowItem *order= [ILSettingArrowItem itemWithIcon:nil title:@"充值" destVcClass:[RechargeVC class]];
     
-    ILSettingArrowItem *topup= [ILSettingArrowItem itemWithIcon:nil title:@"待处理订单" destVcClass:[CarInfoListVC class]];
+    ILSettingArrowItem *topup= [ILSettingArrowItem itemWithIcon:nil title:@"待处理订单" destVcClass:[WaitHandleOrderTVC class]];
     
     ILSettingArrowItem *CFOOrders = [ILSettingArrowItem itemWithIcon:nil title:@"财务统计" destVcClass:[UserInfoManagementTVC class]];
     

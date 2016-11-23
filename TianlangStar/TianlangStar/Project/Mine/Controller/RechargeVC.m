@@ -412,7 +412,7 @@
     }
     
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
-    parmas[@"userid"] = self.virtualcenterModel.userId;
+    parmas[@"userid"] = self.virtualcenterModel.userid;
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
     YYLog(@"parmas---%@",parmas);
     
@@ -448,12 +448,16 @@
     [HttpTool post:url parmas:parmas success:^(id json)
      {
          YYLog(@"json-获取账户余额%@",json);
-         self.virtualcenterModel = [VirtualcenterModel mj_objectWithKeyValues:json[@"obj"]];
+//         self.virtualcenterModel = [VirtualcenterModel mj_objectWithKeyValues:json[@"obj"]];
+         NSArray *arr = [VirtualcenterModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         if (arr && arr.count > 0)
+         {
+             self.virtualcenterModel = arr[0];
+         }
          YYLog(@"self.virtualcenterModel.balance--%f",self.virtualcenterModel.balance);
          self.balanceLable.text = [NSString stringWithFormat:@"%.0f星币",self.virtualcenterModel.balance];
-         self.username.text = self.virtualcenterModel.userId;
+         self.username.text = self.virtualcenterModel.membername;
 
-         
      } failure:^(NSError *error)
      {
          YYLog(@"json-获取账户余额%@",error);
