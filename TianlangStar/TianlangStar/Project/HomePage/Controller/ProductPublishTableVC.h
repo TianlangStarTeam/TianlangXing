@@ -30,14 +30,14 @@ typedef enum : NSUInteger {
     content,
     warranty,
     manhours,
-//    price,
-//    scoreprice
+    servicePrice,
+    serviceScoreprice
 } ServicePublish;
 
 /** 二手车入库 */
 typedef enum : NSUInteger {
     brand = 0,
-//    price,
+    carPrice,
     model,
     cartype,
     mileage,
@@ -47,9 +47,52 @@ typedef enum : NSUInteger {
     frameid,
     engineid,
     property,
-//    description
+    carDescription
 } SecondCarPublish;
 
 @interface ProductPublishTableVC : UITableViewController
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

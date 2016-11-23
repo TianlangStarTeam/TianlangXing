@@ -55,10 +55,10 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
 @property (nonatomic,strong) NSMutableArray *imagesArray;
 
 /** 时间选择器 */
-@property (nonatomic,strong) UIDatePicker *publishTimePicker;
+@property (nonatomic,strong) UIDatePicker *buytimePicker;
 
-/** 接收时间的字符串 */
-@property (nonatomic,copy) NSString *publishTime;
+/** 接收购买时间的字符串 */
+@property (nonatomic,copy) NSString *buytime;
 
 /** 商品数组 */
 @property (nonatomic,strong) NSArray *leftBaseLabelArray;
@@ -106,7 +106,7 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     [self.segment addTarget:self action:@selector(segmentChange:) forControlEvents:(UIControlEventValueChanged)];
     self.segment.apportionsSegmentWidthsByContent = YES;
     
-    self.segment.selectedSegmentIndex = 0;
+    self.segment.selectedSegmentIndex = 1;
     self.navigationItem.titleView = self.segment;
 }
 
@@ -173,7 +173,7 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
 
 
 
-/** 商品入库 */
+#pragma mark - 商品入库
 - (void)productPutinStorage
 {
     [self.view endEditing:YES];
@@ -246,12 +246,181 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
         
         if (resultCode == 1000)
         {
-            [[AlertView sharedAlertView] addAfterAlertMessage:@"入库成功" title:@"提示"];
+            [[AlertView sharedAlertView] addAfterAlertMessage:@"商品入库成功" title:@"提示"];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
     {
         YYLog(@"商品入库错误：%@",error);
+    }];
+}
+
+
+
+#pragma mark - 服务入库
+- (void)servicePutinStorage
+{
+    [self.view endEditing:YES];
+    
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    
+    parmas[@"sessionId"]  = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"type"]  = @"2";
+    parmas[@"services"] = self.serviceModel.services;
+    parmas[@"servicetype"] = self.serviceModel.servicetype;
+    parmas[@"content"] = self.serviceModel.content;
+    parmas[@"warranty"] = self.serviceModel.warranty;
+    parmas[@"manhours"] = self.serviceModel.manhours;
+    parmas[@"price"] = self.serviceModel.price;
+    parmas[@"scoreprice"] = self.serviceModel.scoreprice;
+    
+    YYLog(@"服务入库参数parmas--%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@upload/releasecommodityservlet",URL];
+
+    [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+    {
+        _imagesArray = [NSMutableArray arrayWithArray:[self getAllImages]];
+        
+        if (_imagesArray.count == 0)
+        {
+            YYLog(@"没有添加入库图片");
+        }
+        
+        YYLog(@"图片个数：%ld",_imagesArray.count);
+        
+        if (_imagesArray.count == 1)
+        {
+            NSData *data = UIImageJPEGRepresentation(self.cell.imageView.image, 0.5);
+            
+            YYLog(@"选择的图片：%@",self.cell.imageView.image);
+            
+            if (data != nil)
+            {
+                [formData appendPartWithFileData:data name:@"images" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+            }
+        }
+        
+        if (_imagesArray.count > 1)
+        {
+            // 上传 多张图片
+            for(NSInteger i = 0; i < self.imagesArray.count; i++)
+            {
+                NSData *imageData = [self.imagesArray objectAtIndex: i];
+                // 上传的参数名
+                NSString *Name = [NSString stringWithFormat:@"%@%zi", self.image, i+1];
+                // 上传filename
+                NSString *fileName = [NSString stringWithFormat:@"%@.jpg", Name];
+                
+                [formData appendPartWithFileData:imageData name:Name fileName:fileName mimeType:@"image/jpeg"];
+            }
+        }
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress)
+    {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    {
+        YYLog(@"服务入库返回：%@",responseObject);
+        
+        NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+        
+        if (resultCode == 1000)
+        {
+            [[AlertView sharedAlertView] addAfterAlertMessage:@"服务入库成功" title:@"提示"];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    {
+        YYLog(@"服务入库错误：%@",error);
+        
+    }];
+}
+
+
+
+#pragma mark - 二手车入库
+- (void)secondCarPutinStorage
+{
+    [self.view endEditing:YES];
+    
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    
+    parmas[@"sessionId"]  = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"type"]  = @"3";
+    parmas[@"brand"] = self.carModel.brand;
+    parmas[@"price"] = self.carModel.price;
+    parmas[@"model"] = self.carModel.model;
+    parmas[@"cartype"] = self.carModel.cartype;
+    parmas[@"mileage"] = self.carModel.mileage;
+    parmas[@"buytime"] = self.carModel.buytime;
+    parmas[@"number"] = self.carModel.number;
+    parmas[@"person"] = self.carModel.person;
+    parmas[@"frameid"] = self.carModel.frameid;
+    parmas[@"engineid"] = self.carModel.engineid;
+    parmas[@"property"] = self.carModel.property;
+    parmas[@"description"] = self.carModel.carDescription;
+    
+    YYLog(@"二手车入库参数parmas--%@",parmas);
+    
+    NSString *url = [NSString stringWithFormat:@"%@upload/releasecommodityservlet",URL];
+    
+    [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+    {
+        _imagesArray = [NSMutableArray arrayWithArray:[self getAllImages]];
+        
+        if (_imagesArray.count == 0)
+        {
+            YYLog(@"没有添加入库图片");
+        }
+        
+        YYLog(@"图片个数：%ld",_imagesArray.count);
+        
+        if (_imagesArray.count == 1)
+        {
+            NSData *data = UIImageJPEGRepresentation(self.cell.imageView.image, 0.5);
+            
+            YYLog(@"选择的图片：%@",self.cell.imageView.image);
+            
+            if (data != nil)
+            {
+                [formData appendPartWithFileData:data name:@"images" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+            }
+        }
+        
+        if (_imagesArray.count > 1)
+        {
+            // 上传 多张图片
+            for(NSInteger i = 0; i < self.imagesArray.count; i++)
+            {
+                NSData *imageData = [self.imagesArray objectAtIndex: i];
+                // 上传的参数名
+                NSString *Name = [NSString stringWithFormat:@"%@%zi", self.image, i+1];
+                // 上传filename
+                NSString *fileName = [NSString stringWithFormat:@"%@.jpg", Name];
+                
+                [formData appendPartWithFileData:imageData name:Name fileName:fileName mimeType:@"image/jpeg"];
+            }
+        }
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    {
+        YYLog(@"二手车入库返回：%@",responseObject);
+        
+        NSInteger resultCode = [responseObject[@"resultCode"] integerValue];
+        
+        if (resultCode == 1000)
+        {
+            [[AlertView sharedAlertView] addAfterAlertMessage:@"二手车入库成功" title:@"提示"];
+        }
+
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    {
+        YYLog(@"二手车入库错误：%@",error);
+        
     }];
 }
 
@@ -268,11 +437,11 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     
     startDatePicker.datePickerMode = UIDatePickerModeDate;
     startDatePicker.date=[NSDate date];
-    self.publishTimePicker.hidden = NO;
-    self.publishTimePicker = startDatePicker;
+    self.buytimePicker.hidden = NO;
+    self.buytimePicker = startDatePicker;
     
     
-    [self.publishTimePicker addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
+    [self.buytimePicker addTarget:self action:@selector(selecStarttDate) forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -285,12 +454,12 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     
     switch (self.productPublish)
     {
-//        case buytime://购买日期
-//        {
-//            self.buytime=[outputFormatter stringFromDate:self.buytimeData.date];
-//            self.carModel.buytime = [NSString stringWithFormat:@"%ld", (long)[self.buytimeData.date timeIntervalSince1970]];
-//            break;
-//        }
+        case buytime://购买日期
+        {
+            self.buytime=[outputFormatter stringFromDate:self.buytimePicker.date];
+            self.carModel.buytime = [NSString stringWithFormat:@"%ld", (long)[self.buytimePicker.date timeIntervalSince1970]];
+            break;
+        }
             
         default:
             break;
@@ -301,7 +470,6 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
         
         [self.tableView reloadData];
     });
-    
 }
 
 
@@ -434,7 +602,41 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
         }
             break;
         case 1:
+        {
             cell.leftLabel.text = _leftSeviceLabelArray[indexPath.row];
+            cell.rightTF.delegate = self;
+            self.servicePublish = indexPath.row;
+            cell.rightTF.tag = self.servicePublish;
+            
+            switch (self.servicePublish)
+            {
+                case services:
+                    cell.rightTF.text = self.serviceModel.services;
+                    break;
+                case servicetype:
+                    cell.rightTF.text = self.serviceModel.servicetype;
+                    break;
+                case content:
+                    cell.rightTF.text = self.serviceModel.content;
+                    break;
+                case warranty:
+                    cell.rightTF.text = self.serviceModel.warranty;
+                    break;
+                case manhours:
+                    cell.rightTF.text = self.serviceModel.manhours;
+                    break;
+                case servicePrice:
+                    cell.rightTF.text = self.serviceModel.price;
+                    break;
+                case serviceScoreprice:
+                    cell.rightTF.text = self.serviceModel.scoreprice;
+                    break;
+                    
+                    
+                default:
+                    break;
+            }
+        }
             break;
         case 2:
         {
@@ -443,6 +645,58 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
                 cell.rightTF.height = 100;
             }
             cell.leftLabel.text = _leftSecondcarLabelArray[indexPath.row];
+            cell.rightTF.delegate = self;
+            self.secondCarPublish = indexPath.row;
+            cell.rightTF.tag = self.secondCarPublish;
+            
+            switch (self.secondCarPublish)
+            {
+                case brand:
+                    cell.rightTF.text = self.carModel.brand;
+                    break;
+                case carPrice:
+                    cell.rightTF.text = self.carModel.price;
+                    break;
+                case model:
+                    cell.rightTF.text = self.carModel.model;
+                    break;
+                case cartype:
+                    cell.rightTF.text = self.carModel.cartype;
+                    break;
+                case mileage:
+                    cell.rightTF.text = self.carModel.mileage;
+                    break;
+                case buytime:
+                {
+                    if (self.buytime)
+                    {
+                        cell.rightTF.text = self.buytime;
+                    }
+                }
+                    break;
+                case number:
+                    cell.rightTF.text = self.carModel.number;
+                    break;
+                case person:
+                    cell.rightTF.text = self.carModel.person;
+                    break;
+                case frameid:
+                    cell.rightTF.text = self.carModel.frameid;
+                    break;
+                case engineid:
+                    cell.rightTF.text = self.carModel.engineid;
+                    break;
+                case property:
+                    cell.rightTF.text = self.carModel.property;
+                    break;
+                case carDescription:
+                    cell.rightTF.text = self.carModel.carDescription;
+                    break;
+
+                    
+                default:
+                    break;
+            }
         }
             break;
             
@@ -520,10 +774,78 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
             break;
         case 1:
         {
+            switch (textField.tag)
+            {
+                case services:
+                    self.serviceModel.services = textField.text;
+                    break;
+                case servicetype:
+                    self.serviceModel.servicetype = textField.text;
+                    break;
+                case content:
+                    self.serviceModel.content = textField.text;
+                    break;
+                case warranty:
+                    self.serviceModel.warranty = textField.text;
+                    break;
+                case manhours:
+                    self.serviceModel.manhours = textField.text;
+                    break;
+                case servicePrice:
+                    self.serviceModel.price = textField.text;
+                    break;
+                case serviceScoreprice:
+                    self.serviceModel.scoreprice = textField.text;
+                    break;
+                    
+                    
+                default:
+                    break;
+            }
+
         }
             break;
         case 2:
         {
+            switch (textField.tag)
+            {
+                case brand:
+                    self.carModel.brand = textField.text;
+                    break;
+                case carPrice:
+                    self.carModel.price = textField.text;
+                    break;
+                case model:
+                    self.carModel.model = textField.text;
+                    break;
+                case cartype:
+                    self.carModel.cartype = textField.text;
+                    break;
+                case mileage:
+                    self.carModel.mileage = textField.text;
+                    break;
+                case number:
+                    self.carModel.number = textField.text;
+                    break;
+                case person:
+                    self.carModel.person = textField.text;
+                    break;
+                case frameid:
+                    self.carModel.frameid = textField.text;
+                    break;
+                case engineid:
+                    self.carModel.engineid = textField.text;
+                    break;
+                case property:
+                    self.carModel.property = textField.text;
+                    break;
+                case carDescription:
+                    self.carModel.carDescription = textField.text;
+                    break;
+                    
+                default:
+                    break;
+            }
         }
             break;
             
@@ -837,6 +1159,7 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     [array addObjectsFromArray:s.mutableCells];
     if([s.mutableCells.lastObject isEqual:_plusImage]) {
         [array removeLastObject];
+        
     }
     
     return [NSArray arrayWithArray:array];
