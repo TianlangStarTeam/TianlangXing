@@ -33,6 +33,9 @@
 //按钮的字体颜色设置
 #define buttonTitleC [UIColor whiteColor]
 
+//设置背景颜色
+#define BGcolor XLXcolor(240, 240, 242)
+
 
 
 #pragma mark - 字体大小

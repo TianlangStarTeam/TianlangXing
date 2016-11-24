@@ -6,9 +6,10 @@
 //  Copyright © 2016年 yysj. All rights reserved.
 //
 
-#import "OkdetailOrderVC.h"
+#import "BossOkdetailOrderVC.h"
+#import "OrderModel.h"
 
-@interface OkdetailOrderVC ()
+@interface BossOkdetailOrderVC ()
 
 
 /** 用户名 */
@@ -16,14 +17,14 @@
 
 @end
 
-@implementation OkdetailOrderVC
+@implementation BossOkdetailOrderVC
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.title = @"确认订单";
-    self.view.backgroundColor = XLXcolor(240, 240, 242);
+    self.view.backgroundColor = BGcolor;
     
     [self setupControls];
 }
@@ -52,24 +53,47 @@
         
         //设置右边的数据
         UILabel *rightlable = [[UILabel alloc] init];
-        rightlable.width = 180;
+        rightlable.width = 200;
         rightlable.height = 45;
         rightlable.x = CGRectGetMaxX(lable.frame) + 10;
         rightlable.y = startY + i * lable.height;
-        rightlable.text = @"796234796";
+//        rightlable.text = @"796234796";
 //        rightlable.backgroundColor = [UIColor redColor];
+        
+        //设置数据
+        switch (i) {
+            case 0:
+                rightlable.text = self.orderModel.membername;
+                break;
+            case 1:
+                rightlable.text = self.orderModel.username;
+                break;
+            case 2:
+                rightlable.text = self.orderModel.productname;
+                break;
+            case 3:
+                rightlable.text = self.orderModel.date;
+                break;
+            case 4:
+                rightlable.text = self.orderModel.saleid;
+                break;
+            case 5:
+                rightlable.text = self.orderModel.price;
+                break;
+                
+            default:
+                break;
+        }
+        
         
         [self.view addSubview:rightlable];
     }
     
     
     //设置顶部的确认取消按钮
-    
-    
     CGFloat height = 50;
     UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, KScreenHeight - height, KScreenWidth, height)];
     [self.view addSubview:bottomView];
-    
     CGFloat Width = (KScreenWidth - 1) /2;
     UIButton *cancelbutton = [[UIButton alloc] init];
     cancelbutton.x = 0;
@@ -97,7 +121,6 @@
     [okbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [okbutton addTarget:self action:@selector(okbuttonClick) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:okbutton];
-
 }
 
 
@@ -105,7 +128,6 @@
 -(void)cancelBtnClick
 {
     [self.navigationController popViewControllerAnimated:YES];
-
 }
 
 
@@ -113,13 +135,8 @@
 -(void)okbuttonClick
 {
     YYLog(@"QUEREN");
-    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 
 

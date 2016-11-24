@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 
 @class OrderModel;
-@interface OkdetailOrderVC : UIViewController
+@interface BossOkdetailOrderVC : UIViewController
 
 /** 传入的订单模型 */
 @property (nonatomic,strong) OrderModel *orderModel;

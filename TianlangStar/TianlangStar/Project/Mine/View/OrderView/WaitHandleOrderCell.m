@@ -7,6 +7,7 @@
 //
 
 #import "WaitHandleOrderCell.h"
+#import "OrderModel.h"
 
 
 @interface WaitHandleOrderCell ()
@@ -94,7 +95,7 @@
 -(void)setOrderModel:(OrderModel *)orderModel
 {
     _orderModel = orderModel;
-    self.username.text = @"用户23423";
+    self.username.text = orderModel.membername;
     self.saletype.text = @"交易中";
     self.star.text = @"+2300星币";
 }
