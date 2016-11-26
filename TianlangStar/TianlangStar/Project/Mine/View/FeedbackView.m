@@ -29,7 +29,6 @@
 
 
 
-
 -(instancetype)initWithFrame:(CGRect)frame
 {
     if ([super initWithFrame:frame])
@@ -38,19 +37,19 @@
         UILabel *user = [[UILabel alloc] init];
         user.x = 0;
         user.y = 10;
-        user.width = 100;
+        user.width = 150;
         user.height = 30;
-//        user.backgroundColor = [UIColor redColor];
+        user.backgroundColor = [UIColor redColor];
         self.user = user;
         [self addSubview:user];
         
         //手机号
         UILabel *username = [[UILabel alloc] init];
-        username.x = CGRectGetMaxX(user.frame) + 10;
+        username.x = KScreenWidth * 0.5 + 10;
         username.y = user.y;
         username.width = 150;
         username.height = 30;
-//        username.backgroundColor = [UIColor redColor];
+        username.backgroundColor = [UIColor redColor];
         self.username = username;
         [self addSubview:username];
         
@@ -82,7 +81,6 @@
 
     }
     return self;
-
 }
 
 
@@ -95,24 +93,17 @@
     self.username.text = feedbackModel.lasttime;
     self.content.text = feedbackModel.content;
     self.time.text = feedbackModel.lasttime;
+    self.content.height = feedbackModel.textH;
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-//    self.content.
-    
-    //计算时间的高度
 
-    
-    
-    CGSize maxSize = CGSizeMake(self.width, MAXFLOAT);
-    // 计算文字的高度
-    CGFloat textH = [self.content.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : Font16} context:nil].size.height;
-    self.content.height = textH;
     self.content.width = self.width;
 
     self.time.y = CGRectGetMaxY(self.content.frame) + 5;
+    
     self.time.x = self.width - self.time.width;
     
     self.width = CGRectGetMaxY(self.time.frame);

@@ -15,6 +15,13 @@
 /** 用户名 */
 @property (nonatomic,weak) UILabel *username;
 
+
+/** 确认按钮 */
+@property (nonatomic,weak) UIButton *okBtn;
+
+
+
+
 @end
 
 @implementation BossOkdetailOrderVC
@@ -32,6 +39,9 @@
 
 -(void)setupControls
 {
+    
+//    UIView *contentView = [UIView alloc];
+    
     //设置数据
     NSArray *Arr= @[@"用户名:",@"手机号:",@"商品名称:",@"交易时间:",@"交易单号:",@"交易金额:"];
     
@@ -42,21 +52,24 @@
     {
         //设置左边的标签数据
         UILabel *lable = [[UILabel alloc] init];
-        lable.width = 80;
+        lable.width = 75;
         lable.height = 45;
         lable.x = margin;
         lable.y = startY + i * lable.height;
-        lable.textAlignment = NSTextAlignmentRight;
+        lable.textAlignment = NSTextAlignmentLeft;
+        lable.font = Font14;
         lable.text = Arr[i];
-        //        lable.backgroundColor = [UIColor redColor];
+//                lable.backgroundColor = [UIColor redColor];
         [self.view addSubview:lable];
         
         //设置右边的数据
         UILabel *rightlable = [[UILabel alloc] init];
-        rightlable.width = 200;
+        rightlable.width = KScreenWidth - CGRectGetMaxX(lable.frame) - margin;
         rightlable.height = 45;
-        rightlable.x = CGRectGetMaxX(lable.frame) + 10;
+        rightlable.x = CGRectGetMaxX(lable.frame) + 5;
         rightlable.y = startY + i * lable.height;
+        rightlable.textAlignment = NSTextAlignmentRight;
+        rightlable.font = Font14;
 //        rightlable.text = @"796234796";
 //        rightlable.backgroundColor = [UIColor redColor];
         
@@ -115,10 +128,12 @@
     okbutton.width = Width;
     okbutton.height = height;
     [okbutton setTitle:@"确认订单" forState:UIControlStateNormal];
-    okbutton.backgroundColor = [UIColor whiteColor];
+    okbutton.backgroundColor = XLXcolor(25, 125, 290);
     okbutton.layer.cornerRadius = BtncornerRadius;
     okbutton.layer.masksToBounds = YES;
+    self.okBtn = okbutton;
     [okbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [okbutton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     [okbutton addTarget:self action:@selector(okbuttonClick) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:okbutton];
 }
@@ -127,14 +142,48 @@
 //取消确认点击事件的处理
 -(void)cancelBtnClick
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"id"] = self.orderModel.ID;
+    
+    NSString *url = [NSString stringWithFormat:@"%@cannelorderservlet",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json) {
+        [SVProgressHUD showSuccessWithStatus:@"提交成功！"];
+        [self.navigationController popViewControllerAnimated:YES];
+        YYLog(@"json---%@",json);
+        
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"网络繁忙，请稍后再试！"];
+        YYLog(@"error---%@",error);
+    }];
 }
 
 
 //取消确认点击事件的处理
 -(void)okbuttonClick
 {
-    YYLog(@"QUEREN");
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"id"] = self.orderModel.ID;
+
+    
+    
+    NSString *url = [NSString stringWithFormat:@"%@confirmorderservlet",URL];
+    
+    [HttpTool post:url parmas:parmas success:^(id json) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"提交成功！"];
+        self.okBtn.enabled = NO;
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        YYLog(@"json---%@",json);
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"网络繁忙，请稍后再试！"];
+        YYLog(@"error---%@",error);
+    }];
+
 }
 
 

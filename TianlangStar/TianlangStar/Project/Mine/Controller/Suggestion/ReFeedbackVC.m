@@ -8,6 +8,7 @@
 
 #import "ReFeedbackVC.h"
 #import "FeedbackView.h"
+#import "FeedbackModel.h"
 
 @interface ReFeedbackVC ()
 
@@ -20,7 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"反馈回执";
+    self.title = @"未回复";
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self setupControls];
@@ -29,7 +30,9 @@
 //设置子控件
 -(void)setupControls
 {
-    FeedbackView *view = [[FeedbackView alloc] initWithFrame:CGRectMake(10, 80, KScreenWidth - 20, 200)];
+    FeedbackView *view = [[FeedbackView alloc] initWithFrame:CGRectMake(10, 80, KScreenWidth - 20, self.feedbackModel.textH)];
+    
+    
     view.feedbackModel = self.feedbackModel;
 //    view.backgroundColor = [UIColor grayColor];
     

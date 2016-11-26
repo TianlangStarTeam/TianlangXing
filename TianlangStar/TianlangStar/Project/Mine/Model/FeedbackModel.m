@@ -28,6 +28,21 @@
 }
 
 
+-(CGFloat)textH
+{
+    if (!_textH)
+    {
+        CGSize maxsize = CGSizeMake(KScreenWidth - 30, MAXFLOAT);
+        
+        //计算文字高度
+        CGFloat textH = [self.content boundingRectWithSize:maxsize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:Font16} context:nil].size.height;
+        _textH = textH;
+    }
+
+    return _textH;
+}
+
+
 
 
 

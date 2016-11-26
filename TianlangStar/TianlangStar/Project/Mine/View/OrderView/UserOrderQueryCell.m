@@ -52,7 +52,7 @@
         
         //商品图片
         CGFloat margin = 20;
-        UIImageView *images = [[UIImageView alloc] initWithFrame:CGRectMake(margin, 30, 80, 80)];
+        UIImageView *images = [[UIImageView alloc] initWithFrame:CGRectMake(margin, 30, 100, 100)];
         self.images = images;
         [self.contentView addSubview:images];
         
@@ -62,6 +62,7 @@
         productname.width = KScreenWidth -images.width - 2 * margin -100;
         productname.x = CGRectGetMaxX(images.frame) + 10;
         productname.centerY = images.centerY;
+        productname.font = Font14;
 //        productname.backgroundColor = [UIColor greenColor];
         self.productname = productname;
         [self.contentView addSubview:productname];
@@ -86,6 +87,13 @@
         self.count = count;
         [self.contentView addSubview:count];
         
+        
+        //设置分割线
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(images.frame) + 10, KScreenWidth, 1)];
+        view.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+        [self.contentView addSubview:view];
+        
         //购买商品时间
         UILabel *date = [[UILabel alloc] init];
         date.height = price.height;
@@ -94,15 +102,18 @@
         date.y = CGRectGetMaxY(images.frame) + margin;
 //        date.backgroundColor = [UIColor orangeColor];
         self.date = date;
+        self.date.font = Font14;
         [self.contentView addSubview:date];
+        
         
         
         //购买商品的交易状态
         UILabel *confirm = [[UILabel alloc] init];
         confirm.height = price.height;
         confirm.width = 100;
-        confirm.x = CGRectGetMaxX(date.frame) + 10;
+        confirm.x = KScreenWidth - 110;
         confirm.y = date.y;
+        confirm.textColor = [UIColor redColor];
     
         self.confirm = confirm;
         [self.contentView addSubview:confirm];
@@ -118,9 +129,9 @@
     
     [self.images sd_setImageWithURL:[NSURL URLWithString:orderModel.picture] placeholderImage:[UIImage imageNamed:@"touxiang"]];
     self.productname.text = orderModel.productname;
-    self.price.text = orderModel.price;
-    self.count.text = orderModel.count;
-    self.date.text = orderModel.date;
+    self.price.text = [NSString stringWithFormat:@"%@星币",orderModel.price];
+    self.count.text = [NSString stringWithFormat:@"* %@",orderModel.count];
+    self.date.text = orderModel.lasttime;
     self.confirm.text = @"交易成功";
 }
 
@@ -135,8 +146,14 @@
     }
     return cell;
 }
-
-
+//
+//
+//-(void)setFrame:(CGRect)frame
+//{
+//    frame.size.height -= 10;
+//
+//
+//}
 
 
 

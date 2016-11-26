@@ -36,7 +36,7 @@
 @property (nonatomic,assign) NSInteger confirm;
 
 /** 消费类型（1--虚拟币 2--积分）*/
-@property (nonatomic,copy) NSString *purchasetype;
+@property (nonatomic,assign) NSInteger purchasetype;
 
 /** 商品名称 */
 @property (nonatomic,copy) NSString *productname;

@@ -17,6 +17,13 @@
 /** 接收到的数据 */
 @property (nonatomic,strong) NSMutableArray *orderArr;
 
+/** 当前页码 */
+@property (nonatomic,assign) NSInteger currentPage;
+
+/** 标记确认是否调整 */
+@property (nonatomic,assign) BOOL flag;
+
+
 
 @end
 
@@ -26,8 +33,21 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = BGcolor;
+    
     [self setupRefresh];
 
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (self.flag)
+    {
+        [self loadNewOrderInfo];
+    }
 }
 
 
@@ -49,6 +69,7 @@
     
     NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
     parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"currentPage"] = @(1);
     
     NSString *url = [NSString stringWithFormat:@"%@findorderinfoservlet",URL];
     
@@ -57,21 +78,46 @@
     {
         [self.tableView.mj_header endRefreshing];
         self.orderArr = [WaitOrderModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
-        [self.tableView reloadData];
+        if (self.orderArr.count > 0) {
+            self.currentPage++;
+            [self.tableView reloadData];
+        }
+        
         YYLog(@"json---%@",json);
         
     } failure:^(NSError *error) {
         [self.tableView.mj_header endRefreshing];
         YYLog(@"error---%@",error);
     }];
-
 }
 
 //上啦刷新加载更多
 -(void)loadMoreOrderInfo
 {
+    [self.tableView.mj_header endRefreshing];
     
+    NSMutableDictionary *parmas = [NSMutableDictionary dictionary];
+    parmas[@"sessionId"] = [UserInfo sharedUserInfo].RSAsessionId;
+    parmas[@"currentPage"] = @(self.currentPage);
     
+    NSString *url = [NSString stringWithFormat:@"%@findorderinfoservlet",URL];
+    
+    YYLog(@"待处理订单下来刷新parmas---%@",parmas);
+    [HttpTool post:url parmas:parmas success:^(id json)
+     {
+         [self.tableView.mj_footer endRefreshing];
+         NSArray *newArr = [WaitOrderModel mj_objectArrayWithKeyValuesArray:json[@"obj"]];
+         
+         if (newArr.count > 0) {
+             [self.orderArr addObjectsFromArray:newArr];
+             self.currentPage++;
+             [self.tableView reloadData];
+         }
+         YYLog(@"待处理订单加载更多json---%@",json);
+     } failure:^(NSError *error) {
+         [self.tableView.mj_footer endRefreshing];
+         YYLog(@"error---%@",error);
+     }];
 }
 
 
@@ -110,12 +156,7 @@
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     WaitOrderModel *model = self.orderArr[section];
-    NSString *date = nil;
-    if (model.date)
-    {
-        date = [model.date substringToIndex:10];
-    }
-    return date;
+    return model.date;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,8 +165,8 @@
     OrderModel *orderM = model.valueList[indexPath.row];
     BossOkdetailOrderVC *vc = [[BossOkdetailOrderVC alloc] init];
     vc.orderModel = orderM;
+    self.flag = YES;
     [self.navigationController pushViewController:vc animated:YES];
-    
 }
 
 

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CFOStatisticsTVC : UITableViewController
+@interface CFOStatisticsTVC : UIViewController
 
 @end

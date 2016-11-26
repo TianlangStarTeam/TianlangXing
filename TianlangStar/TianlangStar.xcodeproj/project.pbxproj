@@ -60,6 +60,9 @@
 		71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A40D8E1DD5AC6B00335660 /* CollectionCell.m */; };
 		71BE7FC81DC324B4000E0BFB /* RegistProtocolVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71BE7FC71DC324B4000E0BFB /* RegistProtocolVC.m */; };
 		71BE7FD11DC336E6000E0BFB /* ForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 71BE7FD01DC336E6000E0BFB /* ForgetPwdVC.m */; };
+		D70220AE1DE8377D00C36227 /* UWDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D70220AC1DE8377D00C36227 /* UWDatePickerView.m */; };
+		D70220AF1DE8377D00C36227 /* UWDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D70220AD1DE8377D00C36227 /* UWDatePickerView.xib */; };
+		D70252CD1DE960ED00F179E5 /* VIPLevelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D70252CC1DE960ED00F179E5 /* VIPLevelModel.m */; };
 		D705CEA91DC09BBF00F65BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CEA81DC09BBF00F65BE0 /* main.m */; };
 		D705CEB41DC09BBF00F65BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */; };
 		D705CEB71DC09BBF00F65BE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB51DC09BBF00F65BE0 /* LaunchScreen.storyboard */; };
@@ -139,8 +142,12 @@
 		D77134381DCDBD2300B3B9C6 /* AddCarInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D77134371DCDBD2300B3B9C6 /* AddCarInfo.m */; };
 		D773EC491DE54217001F5FA9 /* BossOkdetailOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D773EC481DE54217001F5FA9 /* BossOkdetailOrderVC.m */; };
 		D773EC4D1DE565DF001F5FA9 /* CFOStatisticsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D773EC4C1DE565DF001F5FA9 /* CFOStatisticsTVC.m */; };
+		D77927831DE6B537002D19EA /* BossCFOCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D77927821DE6B537002D19EA /* BossCFOCell.m */; };
+		D77DA89A1DE6B7BA00BD90CF /* CFOModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D77DA8991DE6B7BA00BD90CF /* CFOModel.m */; };
+		D77DA89D1DE6E94600BD90CF /* CFOBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = D77DA89C1DE6E94600BD90CF /* CFOBarView.m */; };
 		D780C8FD1DE571F400C3A34C /* UserOrderQueryTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D780C8FC1DE571F400C3A34C /* UserOrderQueryTVC.m */; };
 		D780C9001DE576AA00C3A34C /* WaitOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D780C8FF1DE576AA00C3A34C /* WaitOrderModel.m */; };
+		D79BCF431DE85C5600473AE0 /* CFOTotalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D79BCF421DE85C5600473AE0 /* CFOTotalModel.m */; };
 		D7AB81A11DD47E1B0055E5D6 /* RechargeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D7AB81A01DD47E1B0055E5D6 /* RechargeVC.m */; };
 		D7AC9F121DD01FA900EFD59B /* AddProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D7AC9F111DD01FA900EFD59B /* AddProductVC.m */; };
 		D7CFB89B1DC6D1DD0063A1B5 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7CFB89A1DC6D1DD0063A1B5 /* LoginView.m */; };
@@ -268,6 +275,11 @@
 		71BE7FC71DC324B4000E0BFB /* RegistProtocolVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistProtocolVC.m; sourceTree = "<group>"; };
 		71BE7FCF1DC336E6000E0BFB /* ForgetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdVC.h; sourceTree = "<group>"; };
 		71BE7FD01DC336E6000E0BFB /* ForgetPwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPwdVC.m; sourceTree = "<group>"; };
+		D70220AB1DE8377D00C36227 /* UWDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UWDatePickerView.h; sourceTree = "<group>"; };
+		D70220AC1DE8377D00C36227 /* UWDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UWDatePickerView.m; sourceTree = "<group>"; };
+		D70220AD1DE8377D00C36227 /* UWDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UWDatePickerView.xib; sourceTree = "<group>"; };
+		D70252CB1DE960ED00F179E5 /* VIPLevelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIPLevelModel.h; sourceTree = "<group>"; };
+		D70252CC1DE960ED00F179E5 /* VIPLevelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIPLevelModel.m; sourceTree = "<group>"; };
 		D705CEA41DC09BBF00F65BE0 /* TianlangStar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TianlangStar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D705CEA81DC09BBF00F65BE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -425,10 +437,18 @@
 		D773EC481DE54217001F5FA9 /* BossOkdetailOrderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BossOkdetailOrderVC.m; sourceTree = "<group>"; };
 		D773EC4B1DE565DF001F5FA9 /* CFOStatisticsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFOStatisticsTVC.h; sourceTree = "<group>"; };
 		D773EC4C1DE565DF001F5FA9 /* CFOStatisticsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFOStatisticsTVC.m; sourceTree = "<group>"; };
+		D77927811DE6B537002D19EA /* BossCFOCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BossCFOCell.h; sourceTree = "<group>"; };
+		D77927821DE6B537002D19EA /* BossCFOCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BossCFOCell.m; sourceTree = "<group>"; };
+		D77DA8981DE6B7BA00BD90CF /* CFOModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFOModel.h; sourceTree = "<group>"; };
+		D77DA8991DE6B7BA00BD90CF /* CFOModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFOModel.m; sourceTree = "<group>"; };
+		D77DA89B1DE6E94600BD90CF /* CFOBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFOBarView.h; sourceTree = "<group>"; };
+		D77DA89C1DE6E94600BD90CF /* CFOBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFOBarView.m; sourceTree = "<group>"; };
 		D780C8FB1DE571F400C3A34C /* UserOrderQueryTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOrderQueryTVC.h; sourceTree = "<group>"; };
 		D780C8FC1DE571F400C3A34C /* UserOrderQueryTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserOrderQueryTVC.m; sourceTree = "<group>"; };
 		D780C8FE1DE576AA00C3A34C /* WaitOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitOrderModel.h; sourceTree = "<group>"; };
 		D780C8FF1DE576AA00C3A34C /* WaitOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitOrderModel.m; sourceTree = "<group>"; };
+		D79BCF411DE85C5600473AE0 /* CFOTotalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFOTotalModel.h; sourceTree = "<group>"; };
+		D79BCF421DE85C5600473AE0 /* CFOTotalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFOTotalModel.m; sourceTree = "<group>"; };
 		D7AB819F1DD47E1B0055E5D6 /* RechargeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeVC.h; sourceTree = "<group>"; };
 		D7AB81A01DD47E1B0055E5D6 /* RechargeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeVC.m; sourceTree = "<group>"; };
 		D7AC9F101DD01FA900EFD59B /* AddProductVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductVC.h; sourceTree = "<group>"; };
@@ -713,6 +733,9 @@
 				D74454731DC0B4EC008B5E27 /* AlertView.m */,
 				D735EAFC1DD075790051D8E7 /* HttpTool.h */,
 				D735EAFD1DD075790051D8E7 /* HttpTool.m */,
+				D70220AB1DE8377D00C36227 /* UWDatePickerView.h */,
+				D70220AC1DE8377D00C36227 /* UWDatePickerView.m */,
+				D70220AD1DE8377D00C36227 /* UWDatePickerView.xib */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -879,6 +902,12 @@
 				D756036D1DE538D300CE4D0C /* OrderModel.m */,
 				D780C8FE1DE576AA00C3A34C /* WaitOrderModel.h */,
 				D780C8FF1DE576AA00C3A34C /* WaitOrderModel.m */,
+				D77DA8981DE6B7BA00BD90CF /* CFOModel.h */,
+				D77DA8991DE6B7BA00BD90CF /* CFOModel.m */,
+				D79BCF411DE85C5600473AE0 /* CFOTotalModel.h */,
+				D79BCF421DE85C5600473AE0 /* CFOTotalModel.m */,
+				D70252CB1DE960ED00F179E5 /* VIPLevelModel.h */,
+				D70252CC1DE960ED00F179E5 /* VIPLevelModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -905,6 +934,10 @@
 				D75603601DE525DE00CE4D0C /* RechargeHistoryCell.m */,
 				D75603621DE5263D00CE4D0C /* FeedbackView.h */,
 				D75603631DE5263D00CE4D0C /* FeedbackView.m */,
+				D77927811DE6B537002D19EA /* BossCFOCell.h */,
+				D77927821DE6B537002D19EA /* BossCFOCell.m */,
+				D77DA89B1DE6E94600BD90CF /* CFOBarView.h */,
+				D77DA89C1DE6E94600BD90CF /* CFOBarView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1222,7 +1255,7 @@
 				TargetAttributes = {
 					D705CEA31DC09BBF00F65BE0 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = QL2W84V672;
+						DevelopmentTeam = QNUK69R48D;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -1268,6 +1301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D705CF2D1DC09C6400F65BE0 /* LICENCE.txt in Resources */,
+				D70220AF1DE8377D00C36227 /* UWDatePickerView.xib in Resources */,
 				711EC3421DE413AF00C51E40 /* WUImagePicker.bundle in Resources */,
 				D705CEB71DC09BBF00F65BE0 /* LaunchScreen.storyboard in Resources */,
 				D705CEB41DC09BBF00F65BE0 /* Assets.xcassets in Resources */,
@@ -1351,6 +1385,7 @@
 				D728670F1DCB144800D77B38 /* ILSettingLabelItem.m in Sources */,
 				D728671B1DCB33BE00D77B38 /* CarsNav.m in Sources */,
 				D705CF221DC09C6400F65BE0 /* TestFildJudge.m in Sources */,
+				D77DA89A1DE6B7BA00BD90CF /* CFOModel.m in Sources */,
 				711EC3381DE3EA0700C51E40 /* UIViewController+Default.m in Sources */,
 				711EFA3E1DD9BAD7006AEF9E /* ProductCell.m in Sources */,
 				71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */,
@@ -1368,12 +1403,14 @@
 				711EFA321DD96718006AEF9E /* NewestActivityTableVC.m in Sources */,
 				715AA33A1DE2EBD300CD5C5D /* ServicePublishTableVC.m in Sources */,
 				D71D845D1DD30C3600E75A8B /* AboutSettingTVC.m in Sources */,
+				D70252CD1DE960ED00F179E5 /* VIPLevelModel.m in Sources */,
 				714E15091DDEE9A7006598D3 /* ProductPublishTableVC.m in Sources */,
 				D705CF1D1DC09C6400F65BE0 /* AppDelegate.m in Sources */,
 				71548A281DE5473700262E4D /* StorageManagementTableVC.m in Sources */,
 				711EFA4A1DDBFE99006AEF9E /* CarDetailInfoTableVC.m in Sources */,
 				D705CEA91DC09BBF00F65BE0 /* main.m in Sources */,
 				D705CF271DC09C6400F65BE0 /* UITextField+extension.m in Sources */,
+				D77927831DE6B537002D19EA /* BossCFOCell.m in Sources */,
 				711EFA441DDAE116006AEF9E /* LabelTextFieldCell.m in Sources */,
 				D728670E1DCB144800D77B38 /* ILSettingCell.m in Sources */,
 				D71394281DD5D13600FFFE84 /* FeedbackModel.m in Sources */,
@@ -1387,6 +1424,7 @@
 				D7408FB21DE288A200F532CA /* BossAccountInfoMTVC.m in Sources */,
 				715AA3371DE2A6D500CD5C5D /* AddImagesCollectionCell.m in Sources */,
 				711EC33E1DE3EA0700C51E40 /* WUImageBrowseView.m in Sources */,
+				D77DA89D1DE6E94600BD90CF /* CFOBarView.m in Sources */,
 				711EFA411DDAD80F006AEF9E /* AddCarTableVC.m in Sources */,
 				D71394161DD56E7300FFFE84 /* MembersTVC.m in Sources */,
 				D754A5441DD9B78300C79616 /* UserHeaderImageCell.m in Sources */,
@@ -1397,6 +1435,7 @@
 				711EC3341DE3EA0700C51E40 /* SectionModel.m in Sources */,
 				711EC33D1DE3EA0700C51E40 /* WUAlbumViewController.m in Sources */,
 				D71475601DD1B22400F48FC4 /* AdressModel.m in Sources */,
+				D79BCF431DE85C5600473AE0 /* CFOTotalModel.m in Sources */,
 				D7091C081DE59133002B1119 /* WaitHandleOrderCell.m in Sources */,
 				711EC3391DE3EA0700C51E40 /* WUAlbum.m in Sources */,
 				D705CF2C1DC09C6400F65BE0 /* MineVC.m in Sources */,
@@ -1466,6 +1505,7 @@
 				D773EC491DE54217001F5FA9 /* BossOkdetailOrderVC.m in Sources */,
 				711EFA5D1DDEAC4E006AEF9E /* ExcelModel.m in Sources */,
 				D72B9D2A1DDD519100C446D3 /* CheckCarInfoTVC.m in Sources */,
+				D70220AE1DE8377D00C36227 /* UWDatePickerView.m in Sources */,
 				D705CF201DC09C6400F65BE0 /* PinchPicture.m in Sources */,
 				D77134351DCDBA5300B3B9C6 /* CarInfoListVC.m in Sources */,
 				711EFA5A1DDEA3F4006AEF9E /* WebExcelVC.m in Sources */,
@@ -1625,9 +1665,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TianlangStar/TianlangStar.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = QL2W84V672;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 979246278@qq.com (K7678Y26UR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 979246278@qq.com (K7678Y26UR)";
+				DEVELOPMENT_TEAM = QNUK69R48D;
 				INFOPLIST_FILE = TianlangStar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1643,9 +1683,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TianlangStar/TianlangStar.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = QL2W84V672;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 979246278@qq.com (K7678Y26UR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 979246278@qq.com (K7678Y26UR)";
+				DEVELOPMENT_TEAM = QNUK69R48D;
 				INFOPLIST_FILE = TianlangStar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

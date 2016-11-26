@@ -28,27 +28,29 @@
     {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-    {
-        
-        NSNumber *num = responseObject[@"resultCode"];
-        NSInteger result = [num integerValue];
-        
-        if (result == 1000) {
-            if (success) {
-                success(responseObject);
-            }
-        }else
-        {
-            [self checkReultCode:result];
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         
+         NSNumber *num = responseObject[@"resultCode"];
+         NSInteger result = [num integerValue];
+         YYLog(@"success-http%@",responseObject);
+         
+         if (result == 1000) {
+             if (success) {
+                 success(responseObject);
+             }
+         }else
+         {
+             [self checkReultCode:result];
+         }
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
          if (error)
          {
              failure(error);
+             YYLog(@"error-http%@",error);
          }
-    }];
+     }];
 }
 
 

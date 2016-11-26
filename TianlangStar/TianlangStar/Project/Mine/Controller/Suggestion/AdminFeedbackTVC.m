@@ -46,7 +46,7 @@
     [segment addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     segment.apportionsSegmentWidthsByContent = YES;
     segment.selectedSegmentIndex = 0;
-    segment.tintColor = [UIColor grayColor];
+    segment.tintColor = [UIColor whiteColor];
     self.navigationItem.titleView = segment;
     self.revertType = 0;
 

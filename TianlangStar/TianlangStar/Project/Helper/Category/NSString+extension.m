@@ -169,8 +169,13 @@
 -(NSString *)getCurrentTime
 {
     NSDate *currentDate = [NSDate date];//获取当前时间，日期
-    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[currentDate timeIntervalSince1970]];
-    return [NSString stringWithFormat:@"%@000",timeSp];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+//        [dateFormatter setDateFormat:@"YYYY/MM/dd hh:mm:ss SS"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+    NSLog(@"dateString:%@",dateString);
+    
+    return dateString;
 }
 
 /**

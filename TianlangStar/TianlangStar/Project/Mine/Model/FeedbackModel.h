@@ -28,6 +28,10 @@
 
 
 
+/** 文字内容的高度 */
+@property (nonatomic,assign) CGFloat textH;
+
+
 
 
 @end
