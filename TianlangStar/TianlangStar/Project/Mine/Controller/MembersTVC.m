@@ -62,7 +62,7 @@
     NSString *url = [NSString stringWithFormat:@"%@find/vip/level/info",uRL];
     
     YYLog(@"url--%@",url);
-    [SVProgressHUD showWithStatus:@"数据加载中。。。"];
+    [SVProgressHUD showWithStatus:@"数据加载中,请稍后!"];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeCustom];
     [HttpTool get:url parmas:nil success:^(id json) {
         [SVProgressHUD dismiss];
@@ -165,24 +165,23 @@
     
     UILabel * rank = [[UILabel alloc] init];
     rank.height = 30;
-    rank.width = KScreenWidth * 0.5;
-    rank.centerY = header.height * 0.5;
-    rank.x = 0;
+    rank.width = KScreenWidth * 0.4;
+    rank.y = 14;
+    rank.x = 78;
     rank.text = @"会员等级";
-    rank.font = Font16;
-    rank.textAlignment = NSTextAlignmentCenter;
+    rank.font = Font17;
+    rank.textAlignment = NSTextAlignmentLeft;
     [header addSubview:rank];
     
     
     UILabel * discount = [[UILabel alloc] init];
     discount.height = 30;
-    discount.width = KScreenWidth * 0.5;
+    discount.width = KScreenWidth * 0.4;
     discount.y = rank.y;
-//    discount.x = KScreenWidth * 0.5;
-    discount.centerX = KScreenWidth * 0.65;
+    discount.x = KScreenWidth - 92 - discount.width;
     discount.text = @"折扣      ";
     discount.font = rank.font;
-    discount.textAlignment = rank.textAlignment;
+    discount.textAlignment = NSTextAlignmentRight;
     [header addSubview:discount];
     
 
@@ -191,7 +190,7 @@
     //会员等级列表
     self.rankArr = [NSMutableArray array];
     NSArray *rankArr =@[@"Lv.1",@"Lv.2",@"Lv.3",@"Lv.4",@"Lv.5"];
-    double rankOY = CGRectGetMaxY(header.frame);
+    double rankOY = CGRectGetMaxY(header.frame) + 33;
     
     for (NSInteger i = 0; i < rankArr.count; i++)
     {
@@ -199,8 +198,9 @@
         rank.text = rankArr[i];
         rank.x = 0;
         rank.width = KScreenWidth * 0.5;
-        rank.height = 30;
-        rank.y = rankOY + 10 + i * 45;
+        rank.height = 17;
+        rank.y = rankOY + i * 49.5;
+        rank.font = Font17;
         rank.textAlignment = NSTextAlignmentCenter;
         [self.rankArr addObject:rank];
         YYLog(@"%lu",(unsigned long)self.rankArr.count);
@@ -209,8 +209,7 @@
     
     //折扣输入框列表
     NSArray *discountA = @[@"100",@"100",@"100",@"100",@"100"];
-    CGFloat margin = 20;
-    CGFloat inputW = KScreenWidth * 0.5 - 7 * margin;
+    CGFloat inputW = 45;
     
     self.discountArr = [NSMutableArray array];
     for (NSInteger i = 1; i <= discountA.count; i++)
@@ -219,11 +218,12 @@
         input.enabled = self.textEnable;
 //        input.backgroundColor = [UIColor orangeColor];
 //        input.x = inputX;
-        input.y = rankOY + 10 + (i - 1) * 45;
+        input.y = rankOY  + (i - 1) * 45;
         input.width = inputW;
-        input.height = 30;
-        input.centerX = KScreenWidth * 0.65;
+        input.height = 35;
+        input.x = KScreenWidth - 92 - input.width;
         input.tag = i;
+        input.font = Font17;
         input.keyboardType = UIKeyboardTypeNumberPad;
         input.delegate = self;
         input.textAlignment = NSTextAlignmentCenter;

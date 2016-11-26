@@ -63,6 +63,7 @@
 		D70220AE1DE8377D00C36227 /* UWDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D70220AC1DE8377D00C36227 /* UWDatePickerView.m */; };
 		D70220AF1DE8377D00C36227 /* UWDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D70220AD1DE8377D00C36227 /* UWDatePickerView.xib */; };
 		D70252CD1DE960ED00F179E5 /* VIPLevelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D70252CC1DE960ED00F179E5 /* VIPLevelModel.m */; };
+		D70252D01DE9908500F179E5 /* ReplyFeedbackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D70252CF1DE9908500F179E5 /* ReplyFeedbackVC.m */; };
 		D705CEA91DC09BBF00F65BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CEA81DC09BBF00F65BE0 /* main.m */; };
 		D705CEB41DC09BBF00F65BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */; };
 		D705CEB71DC09BBF00F65BE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB51DC09BBF00F65BE0 /* LaunchScreen.storyboard */; };
@@ -280,6 +281,8 @@
 		D70220AD1DE8377D00C36227 /* UWDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UWDatePickerView.xib; sourceTree = "<group>"; };
 		D70252CB1DE960ED00F179E5 /* VIPLevelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIPLevelModel.h; sourceTree = "<group>"; };
 		D70252CC1DE960ED00F179E5 /* VIPLevelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIPLevelModel.m; sourceTree = "<group>"; };
+		D70252CE1DE9908500F179E5 /* ReplyFeedbackVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyFeedbackVC.h; sourceTree = "<group>"; };
+		D70252CF1DE9908500F179E5 /* ReplyFeedbackVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplyFeedbackVC.m; sourceTree = "<group>"; };
 		D705CEA41DC09BBF00F65BE0 /* TianlangStar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TianlangStar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D705CEA81DC09BBF00F65BE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1135,6 +1138,8 @@
 				D75603581DE5254900CE4D0C /* FeedbackVC.xib */,
 				D75603591DE5254900CE4D0C /* ReFeedbackVC.h */,
 				D756035A1DE5254900CE4D0C /* ReFeedbackVC.m */,
+				D70252CE1DE9908500F179E5 /* ReplyFeedbackVC.h */,
+				D70252CF1DE9908500F179E5 /* ReplyFeedbackVC.m */,
 			);
 			path = Suggestion;
 			sourceTree = "<group>";
@@ -1395,6 +1400,7 @@
 				D75603611DE525DE00CE4D0C /* RechargeHistoryCell.m in Sources */,
 				711EFA471DDB0090006AEF9E /* PictureCell.m in Sources */,
 				711EC33A1DE3EA0700C51E40 /* WUAlbumAsset.m in Sources */,
+				D70252D01DE9908500F179E5 /* ReplyFeedbackVC.m in Sources */,
 				711EC33C1DE3EA0700C51E40 /* WUAlbumNavigationController.m in Sources */,
 				711EC3311DE3EA0700C51E40 /* Common.m in Sources */,
 				D71F66B41DCC289E000A6861 /* CarInputCell.m in Sources */,

@@ -32,14 +32,21 @@
 {
     if (!_textH)
     {
-        CGSize maxsize = CGSizeMake(KScreenWidth - 30, MAXFLOAT);
+        CGSize maxsize = CGSizeMake(KScreenWidth - 36, MAXFLOAT);
         
         //计算文字高度
-        CGFloat textH = [self.content boundingRectWithSize:maxsize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:Font16} context:nil].size.height;
+        CGFloat textH = [self.content boundingRectWithSize:maxsize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:Font12} context:nil].size.height;
         _textH = textH;
     }
 
     return _textH;
+}
+
+-(NSString *)content
+{
+
+    //设置首行空格
+    return [NSString stringWithFormat:@"      %@",_content];
 }
 
 

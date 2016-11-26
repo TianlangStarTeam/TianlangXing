@@ -10,6 +10,7 @@
 #import "FeedbackModel.h"
 #import "InputCell.h"
 #import "ReFeedbackVC.h"
+#import "ReplyFeedbackVC.h"
 
 @interface AdminFeedbackTVC ()
 
@@ -83,14 +84,13 @@
     
     [self.tableView.mj_footer endRefreshing];
     NSString *url = [NSString stringWithFormat:@"%@findsuggestionlistservlet",URL];
-    
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
     self.currentPage = 1;
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
     parameters[@"currentPage"] = @(self.currentPage);
-    //    parameters[@"flag"] = @(self.revertType);
+    parameters[@"flag"] = @(self.revertType);
     
     [HttpTool post:url parmas:parameters success:^(id json)
      {
@@ -119,7 +119,7 @@
     NSString *sessionid = [UserInfo sharedUserInfo].RSAsessionId;
     parameters[@"sessionId"] = sessionid;
     parameters[@"currentPage"] = @(self.currentPage);
-    //    parameters[@"flag"] = @(self.revertType);
+    parameters[@"flag"] = @(self.revertType);
     
     
     [HttpTool post:url parmas:parameters success:^(id json)
@@ -165,23 +165,48 @@
     }
     
     FeedbackModel *model = self.feedbackArr[indexPath.row];
-    cell.textLabel.text = model.userid;
-    cell.detailTextLabel.text = model.lasttime;
+    cell.textLabel.text = model.membername;
+    cell.detailTextLabel.textColor = [UIColor blackColor];
+    cell.detailTextLabel.text = model.username;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     FeedbackModel *model = self.feedbackArr[indexPath.row];
-    ReFeedbackVC *vc = [[ReFeedbackVC alloc] init];
-    vc.feedbackModel = model;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if (self.revertType == 0)//未回复
+    {
+        ReFeedbackVC *vc = [[ReFeedbackVC alloc] init];
+        vc.feedbackModel = model;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else//已回复
+    {
+        ReplyFeedbackVC *vc = [[ReplyFeedbackVC alloc] init];
+        vc.feedbackModel = model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
 
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *foot = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 30)];
+    UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth * 0.5, 14)];
+    lable.centerX = KScreenWidth * 0.5;
+    lable.backgroundColor = [UIColor redColor];
+    [foot addSubview:lable];
 
+    return foot;
+}
 
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 30;
 }
 
 
