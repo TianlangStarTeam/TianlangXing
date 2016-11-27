@@ -32,7 +32,10 @@
 @property (nonatomic,assign) CGFloat balance;
 
 /** 用户ID */
-@property (nonatomic,copy) NSString *userId;
+@property (nonatomic,copy) NSString *userid;
+
+/** 用户昵称 */
+@property (nonatomic,copy) NSString *membername;
 
 /** 用户ID */
 @property (nonatomic,copy) NSString *price;

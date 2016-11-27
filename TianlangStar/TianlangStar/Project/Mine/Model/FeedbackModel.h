@@ -26,6 +26,16 @@
 /** 用户的id */
 @property (nonatomic,copy) NSString *userid;
 
+/** 用户的昵称 */
+@property (nonatomic,copy) NSString *membername;
+
+/** 用户名 */
+@property (nonatomic,copy) NSString *username;
+
+
+
+/** 文字内容的高度 */
+@property (nonatomic,assign) CGFloat textH;
 
 
 

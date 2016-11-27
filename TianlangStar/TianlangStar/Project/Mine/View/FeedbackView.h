@@ -11,6 +11,8 @@
 @class FeedbackModel;
 @interface FeedbackView : UIView
 
+
+
 /** 返回信息的View */
 @property (nonatomic,strong) FeedbackModel *feedbackModel;
 

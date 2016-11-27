@@ -30,8 +30,11 @@
 #import "BossInsuranceManagement.h"
 #import "UserInsurecemangement.h"
 #import "MembersTVC.h"
+#import "WaitHandleOrderTVC.h"
+#import "CFOStatisticsTVC.h"
 
 #import "CarDetailInfoTableVC.h"
+#import "UserOrderQueryTVC.h"
 
 #import "StorageManagementTableVC.h"
 
@@ -57,7 +60,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     
 }
 
@@ -135,7 +137,7 @@
     // 0组
     ILSettingArrowItem *collection = [ILSettingArrowItem itemWithIcon:nil title:@"收藏" destVcClass:[MyCollectionTableVC class]];
     
-    ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"订单查询" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *orderquery = [ILSettingArrowItem itemWithIcon:nil title:@"订单查询" destVcClass:[UserOrderQueryTVC class]];
     
     ILSettingArrowItem *pointsFor = [ILSettingArrowItem itemWithIcon:nil title:@"积分兑换" destVcClass:[UserInfoManagementTVC class]];
     
@@ -167,9 +169,9 @@
     //管理员
     ILSettingArrowItem *order= [ILSettingArrowItem itemWithIcon:nil title:@"充值" destVcClass:[RechargeVC class]];
     
-    ILSettingArrowItem *topup= [ILSettingArrowItem itemWithIcon:nil title:@"待处理订单" destVcClass:[CarInfoListVC class]];
+    ILSettingArrowItem *topup= [ILSettingArrowItem itemWithIcon:nil title:@"待处理订单" destVcClass:[WaitHandleOrderTVC class]];
     
-    ILSettingArrowItem *CFOOrders = [ILSettingArrowItem itemWithIcon:nil title:@"财务统计" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *CFOOrders = [ILSettingArrowItem itemWithIcon:nil title:@"财务统计" destVcClass:[CFOStatisticsTVC class]];
     
     ILSettingArrowItem *Warehouse = [ILSettingArrowItem itemWithIcon:nil title:@"仓库管理" destVcClass:[StorageManagementTableVC class]];
     

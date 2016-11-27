@@ -28,27 +28,29 @@
     {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
-    {
-        
-        NSNumber *num = responseObject[@"resultCode"];
-        NSInteger result = [num integerValue];
-        
-        if (result == 1000) {
-            if (success) {
-                success(responseObject);
-            }
-        }else
-        {
-            [self checkReultCode:result];
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+         
+         NSNumber *num = responseObject[@"resultCode"];
+         NSInteger result = [num integerValue];
+         YYLog(@"success-http%@",responseObject);
+         
+         if (result == 1000) {
+             if (success) {
+                 success(responseObject);
+             }
+         }else
+         {
+             [self checkReultCode:result];
+         }
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
      {
          if (error)
          {
              failure(error);
+             YYLog(@"error-http%@",error);
          }
-    }];
+     }];
 }
 
 
@@ -88,6 +90,7 @@
 +(void)checkReultCode:(NSInteger )result
 {
     [SVProgressHUD dismiss];
+    YYLog(@"num------%ld",(long)result);
     switch (result) {
             
         case 1001:
@@ -221,6 +224,12 @@
         {
             //                [SVProgressHUD showErrorWithStatus:@"操作没有成功"];
             YYLog(@"reultCode=1022,请核对金额");
+            break;
+        }
+        case 1023:
+        {
+            //                [SVProgressHUD showErrorWithStatus:@"操作没有成功"];
+            YYLog(@"reultCode=1022,用户名不存在");
             break;
         }
         default:

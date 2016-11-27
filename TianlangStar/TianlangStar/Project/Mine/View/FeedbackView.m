@@ -24,8 +24,10 @@
 
 @end
 
-@implementation FeedbackView
 
+
+
+@implementation FeedbackView
 
 
 
@@ -36,21 +38,25 @@
     {
         //用户名
         UILabel *user = [[UILabel alloc] init];
-        user.x = 0;
+        user.x = 18;
         user.y = 10;
-        user.width = 100;
+        user.width = 150;
         user.height = 30;
 //        user.backgroundColor = [UIColor redColor];
+        user.textColor = lableTextcolor;
         self.user = user;
+        user.font = Font14;
         [self addSubview:user];
         
         //手机号
         UILabel *username = [[UILabel alloc] init];
-        username.x = CGRectGetMaxX(user.frame) + 10;
+        username.x = KScreenWidth * 0.5 + 10;
         username.y = user.y;
         username.width = 150;
         username.height = 30;
 //        username.backgroundColor = [UIColor redColor];
+        username.textColor = lableTextcolor;
+        username.font = Font14;
         self.username = username;
         [self addSubview:username];
         
@@ -58,31 +64,33 @@
         //内容
         UILabel *content = [[UILabel alloc] init];
         content.x = user.x;
-        content.y = CGRectGetMaxY(user.frame) + 10;
+        content.y = CGRectGetMaxY(user.frame) + 15;
         content.width = self.width;
         content.height = 30;
         content.numberOfLines = 0;
-        content.font = Font16;
+        content.font = Font12;
+        content.textColor = lableTextcolor;
         self.content = content;
         
-//        content.backgroundColor = [UIColor redColor];
+        //        content.backgroundColor = [UIColor redColor];
         [self addSubview:content];
         
         
         //时间
         UILabel *time = [[UILabel alloc] init];
         time.x = user.x;
-        time.y = CGRectGetMaxY(user.frame) + 10;
+        time.y = CGRectGetMaxY(user.frame) + 15;
         time.width = 180;
         time.height = 30;
+        time.font = Font11;
         self.time = time;
+        time.textColor = lableTextcolor;
         
-//        time.backgroundColor = [UIColor orangeColor];
+        //        time.backgroundColor = [UIColor orangeColor];
         [self addSubview:time];
 
     }
     return self;
-
 }
 
 
@@ -91,31 +99,26 @@
 -(void)setFeedbackModel:(FeedbackModel *)feedbackModel
 {
     _feedbackModel = feedbackModel;
-    self.user.text = feedbackModel.ID;
-    self.username.text = feedbackModel.lasttime;
+    self.user.text = feedbackModel.membername;
+    self.username.text = feedbackModel.username;
     self.content.text = feedbackModel.content;
     self.time.text = feedbackModel.lasttime;
+    self.content.height = feedbackModel.textH;
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-//    self.content.
-    
-    //计算时间的高度
 
-    
-    
-    CGSize maxSize = CGSizeMake(self.width, MAXFLOAT);
-    // 计算文字的高度
-    CGFloat textH = [self.content.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : Font16} context:nil].size.height;
-    self.content.height = textH;
-    self.content.width = self.width;
+
+    self.content.width = self.width - 36;
 
     self.time.y = CGRectGetMaxY(self.content.frame) + 5;
+    
     self.time.x = self.width - self.time.width;
     
-    self.width = CGRectGetMaxY(self.time.frame);
+    self.width = KScreenWidth;
+    
 
 }
 

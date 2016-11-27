@@ -581,7 +581,6 @@ typedef enum : NSUInteger {
             [self.navigationController pushViewController:vc animated:YES];
             
         }
-        
     }
 }
 
