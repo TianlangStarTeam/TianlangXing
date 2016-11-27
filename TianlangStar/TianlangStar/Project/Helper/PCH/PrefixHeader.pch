@@ -172,5 +172,6 @@
 #import "UserInfo.h"
 #define KScreenWidth [UIScreen mainScreen].bounds.size.width
 #define KScreenHeight [UIScreen mainScreen].bounds.size.height
+#define KBgColor [UIColor colorWithRed:239.0 / 255.0 green:239.0 / 255.0 blue:244.0 / 255.0 alpha:1];
 
 #endif /* PrefixHeader_pch */
