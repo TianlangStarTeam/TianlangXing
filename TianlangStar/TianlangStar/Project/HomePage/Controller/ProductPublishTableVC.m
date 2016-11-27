@@ -31,6 +31,21 @@ NSString *const commissionImageViewCellIdentifier = @"HouseImageViewCellIdentifi
 NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIdentifier";
 
 
+/** 二手车入库 */
+typedef enum : NSUInteger {
+    brand = 0,
+    carPrice,
+    model,
+    cartype,
+    mileage,
+    buytime,
+    number,
+    person,
+    frameid,
+    engineid,
+    property,
+    carDescription
+} SecondCarPublish;
 
 @interface ProductPublishTableVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HouseImageCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,WUAlbumDelegate,WUImageBrowseViewDelegate,UIViewControllerPreviewingDelegate,UITextFieldDelegate>
 
@@ -56,9 +71,11 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
 
 /** 时间选择器 */
 @property (nonatomic,strong) UIDatePicker *buytimePicker;
+@property (nonatomic,strong) UIDatePicker *warrantyPicker;
 
 /** 接收购买时间的字符串 */
 @property (nonatomic,copy) NSString *buytime;
+@property (nonatomic,copy) NSString *warranty;
 
 /** 商品数组 */
 @property (nonatomic,strong) NSArray *leftBaseLabelArray;
@@ -75,6 +92,8 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
 
 @property (nonatomic,strong) UIImage *image;
 
+@property (nonatomic,strong) UIImage *selectImage;
+
 @property (nonatomic,strong) HouseImageCell *cell;
 
 @end
@@ -90,11 +109,13 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     
     _leftSecondcarLabelArray = @[@"品牌",@"报价",@"型号",@"车型",@"行驶里程",@"购买年份",@"车牌号",@"原车主",@"车架号",@"发动机号",@"使用性质",@"车辆简介"];
     
-    [self rightItem];// 入库按钮
+    
     
     [self creatAddImagesView];// 添加图片的headerView
     
     [self creatTitleView];// 导航栏的选择title
+    
+    [self addDatePIcker];
 }
 
 
@@ -106,8 +127,10 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     [self.segment addTarget:self action:@selector(segmentChange:) forControlEvents:(UIControlEventValueChanged)];
     self.segment.apportionsSegmentWidthsByContent = YES;
     
-    self.segment.selectedSegmentIndex = 1;
+    self.segment.selectedSegmentIndex = 0;
     self.navigationItem.titleView = self.segment;
+    
+    [self rightItem];// 入库按钮
 }
 
 
@@ -136,12 +159,15 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     {
         case 0:
             YYLog(@"商品");
+            [self productPutinStorage];
             break;
         case 1:
             YYLog(@"服务");
+            [self servicePutinStorage];
             break;
         case 2:
             YYLog(@"二手车");
+            [self secondCarPutinStorage];
             break;
             
         default:
@@ -200,39 +226,35 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     
     [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
     {
-        _imagesArray = [NSMutableArray arrayWithArray:[self getAllImages]];
+        NSArray *imagearray = [NSArray array];
         
-        if (_imagesArray.count == 0)
+        imagearray = [self getAllImages];
+        
+        for (NSArray *array in imagearray)
         {
-            YYLog(@"没有添加入库图片");
-        }
-        
-        YYLog(@"图片个数：%ld",_imagesArray.count);
-        
-        if (_imagesArray.count == 1)
-        {
-            NSData *data = UIImageJPEGRepresentation(self.cell.imageView.image, 0.5);
+            YYLog(@"图片数组：：：%@",array);
             
-            YYLog(@"选择的图片：%@",self.cell.imageView.image);
             
-            if (data != nil)
+            if (array.count == 1)
             {
-                [formData appendPartWithFileData:data name:@"images" fileName:@"img.jpg" mimeType:@"image/jpeg"];
-            }
-        }
-        
-        if (_imagesArray.count > 1)
-        {
-            // 上传 多张图片
-            for(NSInteger i = 0; i < self.imagesArray.count; i++)
-            {
-                NSData *imageData = [self.imagesArray objectAtIndex: i];
-                // 上传的参数名
-                NSString *Name = [NSString stringWithFormat:@"%@%zi", self.image, i+1];
-                // 上传filename
-                NSString *fileName = [NSString stringWithFormat:@"%@.jpg", Name];
+                YYLog(@"图片：%@",array.lastObject);
+                NSData *data = UIImageJPEGRepresentation(array.lastObject, 0.5);
                 
-                [formData appendPartWithFileData:imageData name:Name fileName:fileName mimeType:@"image/jpeg"];
+                if (data != nil)
+                {
+                    [formData appendPartWithFileData:data name:@"images" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+                }
+            }
+            
+            if (array.count > 1)
+            {
+                YYLog(@"图片个数大于1");
+                
+                for (UIImage *image in array)
+                {
+                    YYLog(@"图片：：%@",image);
+                    
+                }
             }
         }
         
@@ -280,6 +302,36 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
 
     [[AFHTTPSessionManager manager] POST:url parameters:parmas constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
     {
+        
+        NSArray *imagearray = [NSArray array];
+        
+        imagearray = [self getAllImages];
+
+        YYLog(@"图片个数%ld",imagearray.count);
+        
+        for (NSArray *array in imagearray)
+        {
+            YYLog(@"图片数组：：：%@",array);
+        }
+        
+        if (imagearray.count == 1)
+        {
+            NSData *data = UIImageJPEGRepresentation(imagearray.lastObject, 0.5);
+            
+            YYLog(@"选择的一张图片：%@",imagearray.lastObject);
+            
+            if (data != nil)
+            {
+                [formData appendPartWithFileData:data name:@"images" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+            }
+        }
+
+        
+        
+        
+        
+        
+        
         _imagesArray = [NSMutableArray arrayWithArray:[self getAllImages]];
         
         if (_imagesArray.count == 0)
@@ -291,9 +343,9 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
         
         if (_imagesArray.count == 1)
         {
-            NSData *data = UIImageJPEGRepresentation(self.cell.imageView.image, 0.5);
+            NSData *data = UIImageJPEGRepresentation(_imagesArray.firstObject, 0.5);
             
-            YYLog(@"选择的图片：%@",self.cell.imageView.image);
+            YYLog(@"选择的一张图片：%@",_imagesArray.firstObject);
             
             if (data != nil)
             {
@@ -378,9 +430,9 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
         
         if (_imagesArray.count == 1)
         {
-            NSData *data = UIImageJPEGRepresentation(self.cell.imageView.image, 0.5);
+            NSData *data = UIImageJPEGRepresentation(_imagesArray.firstObject, 0.5);
             
-            YYLog(@"选择的图片：%@",self.cell.imageView.image);
+            YYLog(@"选择的一张图片：%@",_imagesArray.firstObject);
             
             if (data != nil)
             {
@@ -452,12 +504,25 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
     
-    switch (self.productPublish)
+    switch (self.secondCarPublish)
     {
         case buytime://购买日期
         {
             self.buytime=[outputFormatter stringFromDate:self.buytimePicker.date];
             self.carModel.buytime = [NSString stringWithFormat:@"%ld", (long)[self.buytimePicker.date timeIntervalSince1970]];
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+    switch (self.servicePublish)
+    {
+        case warranty://保修期限
+        {
+            self.buytime=[outputFormatter stringFromDate:self.warrantyPicker.date];
+            self.carModel.warranty = [NSString stringWithFormat:@"%ld", (long)[self.warrantyPicker.date timeIntervalSince1970]];
             break;
         }
             
@@ -519,7 +584,7 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
             break;
         case 2:
         {
-            if (indexPath.row == self.leftSecondcarLabelArray.count)
+            if (indexPath.row == self.leftSecondcarLabelArray.count - 1)
             {
                 return 110;
             }
@@ -620,7 +685,12 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
                     cell.rightTF.text = self.serviceModel.content;
                     break;
                 case warranty:
-                    cell.rightTF.text = self.serviceModel.warranty;
+                {
+                    if (self.warranty)
+                    {
+                        cell.rightTF.text = self.warranty;
+                    }
+                }
                     break;
                 case manhours:
                     cell.rightTF.text = self.serviceModel.manhours;
@@ -640,7 +710,7 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
             break;
         case 2:
         {
-            if (indexPath.row == self.leftSecondcarLabelArray.count)
+            if (indexPath.row == self.leftSecondcarLabelArray.count - 1)
             {
                 cell.rightTF.height = 100;
             }
@@ -785,9 +855,6 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
                 case content:
                     self.serviceModel.content = textField.text;
                     break;
-                case warranty:
-                    self.serviceModel.warranty = textField.text;
-                    break;
                 case manhours:
                     self.serviceModel.manhours = textField.text;
                     break;
@@ -858,24 +925,48 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-//    if (textField.tag == buytime)
-//    {
-//        if (![textField.text isEqualToString:@"请选择日期"])
-//        {
-//            textField.inputView = self.buytimeData;
-//            self.carInfoType = textField.tag;
-//            textField.text = @"请选择日期";
-//        }
-//        else
-//        {
-//            textField.text = self.buytime;
-//        }
-//    }
-//    else
-//    {
-//        [self.buytimeData removeFromSuperview];
-//    }
+    if (self.segment.selectedSegmentIndex == 2)
+    {
+        if (textField.tag == buytime)
+        {
+            if (![textField.text isEqualToString:@"请选择日期"])
+            {
+                textField.inputView = self.buytimePicker;
+                self.secondCarPublish = textField.tag;
+                textField.text = @"请选择日期";
+            }
+            else
+            {
+                textField.text = self.buytime;
+            }
+        }
+        else
+        {
+            [self.buytimePicker removeFromSuperview];
+        }
+    }
     
+    if (self.segment.selectedSegmentIndex == 1)
+    {
+        if (textField.tag == warranty)
+        {
+            if (![textField.text isEqualToString:@"请选择日期"])
+            {
+                textField.inputView = self.buytimePicker;
+                self.servicePublish = textField.tag;
+                textField.text = @"请选择日期";
+            }
+            else
+            {
+                textField.text = self.warranty;
+            }
+        }
+        else
+        {
+            [self.warrantyPicker removeFromSuperview];
+        }
+    }
+
     return YES;
 }
 
@@ -967,8 +1058,10 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
     
     if([row isKindOfClass:[WUAlbumAsset class]]) {
         self.image = [row imageWithSize:bounds.size];
+        self.selectImage = self.image;
     } else if([row isKindOfClass:[UIImage class]]) {
         self.image = row;
+        self.selectImage = self.image;
     } else {
         return nil;
     }
@@ -1134,8 +1227,10 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
             UIImage *image;
             if([self isAsset:row]) {
                 image = [row imageWithSize:[[UIScreen mainScreen] bounds].size];
+                self.selectImage = image;
             } else if([row isKindOfClass:[UIImage class]]) {
                 image = row;
+                self.selectImage = image;
             } else if([row isKindOfClass:[NSString class]]) {
                 //http 请求
             }
@@ -1174,7 +1269,6 @@ NSString *const commissionImageViewHeaderIdentifier = @"HouseImageViewHeaderIden
         NSArray *images = [self getImagesWithSection:i];
         if(images || images.count > 0) {
             [array addObject:images];
-            
         }
     }
     

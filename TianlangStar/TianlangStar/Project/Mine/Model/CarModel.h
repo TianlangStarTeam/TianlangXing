@@ -57,4 +57,6 @@
 
 @property (nonatomic,copy) NSString *carDescription;
 
+@property (nonatomic,copy) NSString *warranty;
+
 @end
