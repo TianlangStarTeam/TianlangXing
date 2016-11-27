@@ -97,6 +97,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    YYLog(@"测试测试测试。。。。。");
+    
 }
 
 
