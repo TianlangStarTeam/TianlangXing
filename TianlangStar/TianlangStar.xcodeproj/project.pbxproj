@@ -43,6 +43,8 @@
 		711EFA571DDEA03D006AEF9E /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA561DDEA03D006AEF9E /* NSString+Hash.m */; };
 		711EFA5A1DDEA3F4006AEF9E /* WebExcelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA591DDEA3F4006AEF9E /* WebExcelVC.m */; };
 		711EFA5D1DDEAC4E006AEF9E /* ExcelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 711EFA5C1DDEAC4E006AEF9E /* ExcelModel.m */; };
+		712D2BEA1DE6DD540022802F /* StorageManagementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 712D2BE91DE6DD540022802F /* StorageManagementCell.m */; };
+		7130ABA51DE80C9000D07AC6 /* StorageManagementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7130ABA41DE80C9000D07AC6 /* StorageManagementModel.m */; };
 		714BFDE61DCC80D1002F2042 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 714BFDE51DCC80D1002F2042 /* CollectionModel.m */; };
 		714E15091DDEE9A7006598D3 /* ProductPublishTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 714E15081DDEE9A6006598D3 /* ProductPublishTableVC.m */; };
 		714E150C1DDEEED3006598D3 /* LabelTFLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 714E150B1DDEEED3006598D3 /* LabelTFLabelCell.m */; };
@@ -63,7 +65,6 @@
 		D70220AE1DE8377D00C36227 /* UWDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D70220AC1DE8377D00C36227 /* UWDatePickerView.m */; };
 		D70220AF1DE8377D00C36227 /* UWDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D70220AD1DE8377D00C36227 /* UWDatePickerView.xib */; };
 		D70252CD1DE960ED00F179E5 /* VIPLevelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D70252CC1DE960ED00F179E5 /* VIPLevelModel.m */; };
-		D70252D01DE9908500F179E5 /* ReplyFeedbackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D70252CF1DE9908500F179E5 /* ReplyFeedbackVC.m */; };
 		D705CEA91DC09BBF00F65BE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D705CEA81DC09BBF00F65BE0 /* main.m */; };
 		D705CEB41DC09BBF00F65BE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */; };
 		D705CEB71DC09BBF00F65BE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D705CEB51DC09BBF00F65BE0 /* LaunchScreen.storyboard */; };
@@ -242,6 +243,10 @@
 		711EFA591DDEA3F4006AEF9E /* WebExcelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebExcelVC.m; sourceTree = "<group>"; };
 		711EFA5B1DDEAC4E006AEF9E /* ExcelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExcelModel.h; sourceTree = "<group>"; };
 		711EFA5C1DDEAC4E006AEF9E /* ExcelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExcelModel.m; sourceTree = "<group>"; };
+		712D2BE81DE6DD540022802F /* StorageManagementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageManagementCell.h; path = TianlangStar/Project/HomePage/Controller/StorageManagementCell.h; sourceTree = SOURCE_ROOT; };
+		712D2BE91DE6DD540022802F /* StorageManagementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StorageManagementCell.m; path = TianlangStar/Project/HomePage/Controller/StorageManagementCell.m; sourceTree = SOURCE_ROOT; };
+		7130ABA31DE80C9000D07AC6 /* StorageManagementModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageManagementModel.h; path = TianlangStar/Project/HomePage/Controller/StorageManagementModel.h; sourceTree = SOURCE_ROOT; };
+		7130ABA41DE80C9000D07AC6 /* StorageManagementModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StorageManagementModel.m; path = TianlangStar/Project/HomePage/Controller/StorageManagementModel.m; sourceTree = SOURCE_ROOT; };
 		714BFDE41DCC80D1002F2042 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
 		714BFDE51DCC80D1002F2042 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
 		714E15071DDEE9A6006598D3 /* ProductPublishTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductPublishTableVC.h; sourceTree = "<group>"; };
@@ -281,8 +286,6 @@
 		D70220AD1DE8377D00C36227 /* UWDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UWDatePickerView.xib; sourceTree = "<group>"; };
 		D70252CB1DE960ED00F179E5 /* VIPLevelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIPLevelModel.h; sourceTree = "<group>"; };
 		D70252CC1DE960ED00F179E5 /* VIPLevelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VIPLevelModel.m; sourceTree = "<group>"; };
-		D70252CE1DE9908500F179E5 /* ReplyFeedbackVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyFeedbackVC.h; sourceTree = "<group>"; };
-		D70252CF1DE9908500F179E5 /* ReplyFeedbackVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplyFeedbackVC.m; sourceTree = "<group>"; };
 		D705CEA41DC09BBF00F65BE0 /* TianlangStar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TianlangStar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D705CEA81DC09BBF00F65BE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D705CEB31DC09BBF00F65BE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -815,6 +818,8 @@
 			children = (
 				711EC3431DE41BF900C51E40 /* ServiceModel.h */,
 				711EC3441DE41BF900C51E40 /* ServiceModel.m */,
+				7130ABA31DE80C9000D07AC6 /* StorageManagementModel.h */,
+				7130ABA41DE80C9000D07AC6 /* StorageManagementModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -828,6 +833,8 @@
 				711EFA431DDAE116006AEF9E /* LabelTextFieldCell.m */,
 				714E150A1DDEEED3006598D3 /* LabelTFLabelCell.h */,
 				714E150B1DDEEED3006598D3 /* LabelTFLabelCell.m */,
+				712D2BE81DE6DD540022802F /* StorageManagementCell.h */,
+				712D2BE91DE6DD540022802F /* StorageManagementCell.m */,
 				714E15101DDF11DF006598D3 /* AddPictureCell.h */,
 				714E15111DDF11DF006598D3 /* AddPictureCell.m */,
 				711EFA451DDB0090006AEF9E /* PictureCell.h */,
@@ -1138,8 +1145,6 @@
 				D75603581DE5254900CE4D0C /* FeedbackVC.xib */,
 				D75603591DE5254900CE4D0C /* ReFeedbackVC.h */,
 				D756035A1DE5254900CE4D0C /* ReFeedbackVC.m */,
-				D70252CE1DE9908500F179E5 /* ReplyFeedbackVC.h */,
-				D70252CF1DE9908500F179E5 /* ReplyFeedbackVC.m */,
 			);
 			path = Suggestion;
 			sourceTree = "<group>";
@@ -1396,11 +1401,11 @@
 				71A40D8F1DD5AC6B00335660 /* CollectionCell.m in Sources */,
 				D705CF211DC09C6400F65BE0 /* RSA.m in Sources */,
 				D72867101DCB144800D77B38 /* ILSettingSwitchItem.m in Sources */,
+				712D2BEA1DE6DD540022802F /* StorageManagementCell.m in Sources */,
 				711EFA4D1DDC02F3006AEF9E /* ChekinCarInfoTableVC.m in Sources */,
 				D75603611DE525DE00CE4D0C /* RechargeHistoryCell.m in Sources */,
 				711EFA471DDB0090006AEF9E /* PictureCell.m in Sources */,
 				711EC33A1DE3EA0700C51E40 /* WUAlbumAsset.m in Sources */,
-				D70252D01DE9908500F179E5 /* ReplyFeedbackVC.m in Sources */,
 				711EC33C1DE3EA0700C51E40 /* WUAlbumNavigationController.m in Sources */,
 				711EC3311DE3EA0700C51E40 /* Common.m in Sources */,
 				D71F66B41DCC289E000A6861 /* CarInputCell.m in Sources */,
@@ -1485,6 +1490,7 @@
 				711EC3331DE3EA0700C51E40 /* HouseImageHeaderView.m in Sources */,
 				D705CF241DC09C6400F65BE0 /* UIImage+Tool.m in Sources */,
 				D705CF1F1DC09C6400F65BE0 /* NSString+extension.m in Sources */,
+				7130ABA51DE80C9000D07AC6 /* StorageManagementModel.m in Sources */,
 				711EFA2F1DD9637D006AEF9E /* HomePageTableVC.m in Sources */,
 				D7091C0B1DE59189002B1119 /* UserOrderQueryCell.m in Sources */,
 				D780C8FD1DE571F400C3A34C /* UserOrderQueryTVC.m in Sources */,
@@ -1671,9 +1677,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TianlangStar/TianlangStar.entitlements;
+<<<<<<< HEAD
+				CODE_SIGN_IDENTITY = "iPhone Developer: 838971868@qq.com (RFEBVP9QVR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = QL2W84V672;
+=======
 				CODE_SIGN_IDENTITY = "iPhone Developer: 979246278@qq.com (K7678Y26UR)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 979246278@qq.com (K7678Y26UR)";
 				DEVELOPMENT_TEAM = QNUK69R48D;
+>>>>>>> 7b04a5771e77a94809c98f900923f2f5ca3b0c07
 				INFOPLIST_FILE = TianlangStar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1689,9 +1701,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TianlangStar/TianlangStar.entitlements;
+<<<<<<< HEAD
+				CODE_SIGN_IDENTITY = "iPhone Developer: 838971868@qq.com (RFEBVP9QVR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = QL2W84V672;
+=======
 				CODE_SIGN_IDENTITY = "iPhone Developer: 979246278@qq.com (K7678Y26UR)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 979246278@qq.com (K7678Y26UR)";
 				DEVELOPMENT_TEAM = QNUK69R48D;
+>>>>>>> 7b04a5771e77a94809c98f900923f2f5ca3b0c07
 				INFOPLIST_FILE = TianlangStar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
