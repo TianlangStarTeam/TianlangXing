@@ -33,7 +33,7 @@
     if (self.viewControllers.count > 0)
     {
         UIButton *button = [[UIButton alloc] init];
-        [button setImage:[UIImage imageNamed:@"return"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
 //        [button setTitle:@"返回" forState:UIControlStateNormal];
 //                button.titleLabel.font = [UIFont systemFontOfSize:15];
         button.size = CGSizeMake(70, 30);
