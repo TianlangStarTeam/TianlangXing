@@ -36,6 +36,10 @@
 #import "CarDetailInfoTableVC.h"
 #import "UserOrderQueryTVC.h"
 
+#import "StorageManagementTableVC.h"
+
+#import "ProductPublishTableVC.h"
+
 @interface MineVC ()<LoginViewDelegate>
 
 /** 公钥 */
@@ -169,9 +173,9 @@
     
     ILSettingArrowItem *CFOOrders = [ILSettingArrowItem itemWithIcon:nil title:@"财务统计" destVcClass:[CFOStatisticsTVC class]];
     
-    ILSettingArrowItem *Warehouse = [ILSettingArrowItem itemWithIcon:nil title:@"仓库管理" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *Warehouse = [ILSettingArrowItem itemWithIcon:nil title:@"仓库管理" destVcClass:[StorageManagementTableVC class]];
     
-    ILSettingArrowItem *SalesStatistics = [ILSettingArrowItem itemWithIcon:nil title:@"入库登记" destVcClass:[UserInfoManagementTVC class]];
+    ILSettingArrowItem *SalesStatistics = [ILSettingArrowItem itemWithIcon:nil title:@"入库登记" destVcClass:[ProductPublishTableVC class]];
     
     ILSettingArrowItem *GoodsReleased = [ILSettingArrowItem itemWithIcon:nil title:@"会员信息管理" destVcClass:[BossAccountInfoListTVC class]];
     
